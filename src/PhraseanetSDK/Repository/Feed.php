@@ -13,7 +13,7 @@ class Feed extends RepositoryAbstract
 
     public function findById($id, $offset = 0, $perPage = 5)
     {
-        $path = sprintf('/feeds/%d/content/%d/%d', $id, $offset, $perPage);
+        $path = sprintf('/feeds/%d/content/%d/%d/', $id, $offset, $perPage);
 
         $response = $this->getClient()->call($path, array(), 'GET');
 
