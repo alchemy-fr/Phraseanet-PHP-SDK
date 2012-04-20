@@ -1,0 +1,5 @@
+/composer.phar
+/composer.lock
+/nbProject
+/vendor
+.DS_Store
