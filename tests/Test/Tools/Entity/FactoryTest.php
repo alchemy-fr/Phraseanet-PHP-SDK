@@ -2,7 +2,7 @@
 
 namespace Test\Tools\Entity;
 
-use Alchemy\Sdk\Tools\Entity\Factory as EntityFactory;
+use PhraseanetSDK\Tools\Entity\Factory as EntityFactory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
   }
 
   /**
-   * @expectedException Alchemy\Sdk\Exception\InvalidArgumentException
+   * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
    */
   public function testExceptionFactory()
   {

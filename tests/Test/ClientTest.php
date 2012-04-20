@@ -3,8 +3,8 @@
 namespace Test;
 
 use Guzzle;
-use Alchemy\Sdk\Client;
-use Alchemy\Sdk\Response;
+use PhraseanetSDK\Client;
+use PhraseanetSDK\Response;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +65,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider methodProvider
-     * @expectedException Alchemy\Sdk\Exception\BadRequestException
+     * @expectedException PhraseanetSDK\Exception\BadRequestException
      */
     public function testBadRequestException($method)
     {
@@ -87,7 +87,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider httpCodeProvider
-     * @expectedException Alchemy\Sdk\Exception\BadResponseException
+     * @expectedException PhraseanetSDK\Exception\BadResponseException
      */
     public function testBadResponseException($httpCode)
     {

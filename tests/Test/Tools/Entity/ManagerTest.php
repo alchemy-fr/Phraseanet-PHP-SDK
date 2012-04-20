@@ -2,8 +2,8 @@
 
 namespace Test\Tools\Entity;
 
-use Alchemy\Sdk\Tools\Entity\Manager;
-use Alchemy\Sdk\Tools\Repository\RepositoryAbstract;
+use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {

@@ -2,13 +2,13 @@
 
 namespace Test\Tools\Entity;
 
-use Alchemy\Sdk\Entity\Feed;
-use Alchemy\Sdk\Entity\Entry;
-use Alchemy\Sdk\Entity\Item;
-use Alchemy\Sdk\Entity\Record;
-use Alchemy\Sdk\Entity\Subdef;
-use Alchemy\Sdk\Entity\Permalink;
-use Alchemy\Sdk\Tools\Entity\Hydrator;
+use PhraseanetSDK\Entity\Feed;
+use PhraseanetSDK\Entity\Entry;
+use PhraseanetSDK\Entity\Item;
+use PhraseanetSDK\Entity\Record;
+use PhraseanetSDK\Entity\Subdef;
+use PhraseanetSDK\Entity\Permalink;
+use PhraseanetSDK\Tools\Entity\Hydrator;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class HydratorTest extends \PHPUnit_Framework_TestCase
@@ -133,7 +133,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getUpdatedOn()->format(\DateTime::ATOM));
 
     $entry = Hydrator::hydrate(new Entry(), $this->getOneFeedEntry());
-    /* @var $entry \Alchemy\Sdk\Entity\Entry */
+    /* @var $entry \PhraseanetSDK\Entity\Entry */
     $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorEmail());
     $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorName());
     $this->assertEquals('2011-11-04T14:39:47+01:00', $entry->getCreatedOn()->format(\DateTime::ATOM));

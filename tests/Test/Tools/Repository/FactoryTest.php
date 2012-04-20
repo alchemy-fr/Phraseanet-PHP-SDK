@@ -2,8 +2,8 @@
 
 namespace Test\Tools\Repository;
 
-use Alchemy\Sdk\Tools\Repository\Factory as RepoFactory;
-use Alchemy\Sdk\Tools\Repository\RepositoryAbstract;
+use PhraseanetSDK\Tools\Repository\Factory as RepoFactory;
+use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testFactory($type)
     {
         $em = $this->getMock(
-                'Alchemy\\Sdk\\Tools\\Entity\\Manager'
+                'PhraseanetSDK\\Tools\\Entity\\Manager'
                 , array()
                 , array()
                 , ''
@@ -27,12 +27,12 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Alchemy\Sdk\Exception\InvalidArgumentException
+     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testExceptionFactory()
     {
          $em = $this->getMock(
-                'Alchemy\\Sdk\\Tools\\Entity\\Manager'
+                'PhraseanetSDK\\Tools\\Entity\\Manager'
                 , array()
                 , array()
                 , ''
