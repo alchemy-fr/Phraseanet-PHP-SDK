@@ -12,23 +12,37 @@ class Feed extends RepositoryAbstract
     public function findById($id, $offset = 0, $perPage = 5)
     {
         $path = sprintf('/feeds/%d/content/%d/%d', $id, $offset, $perPage);
-        
+
         $response = $this->getClient()->call($path, array(), 'GET');
-        
-        $feedCollection = new ArrayCollection();
-        
-        if($response->isOk())
+
+        if ($response->isOk())
         {
-            $collection = $this->findAll()->filter(function($el)
-                    {
-                        if ($el->getId() == $id)
-                        {
-                            return true;
-                        }
-                    });
+            $entriesCollection = new ArrayCollection();
+
+            if ($feedDatas = $response->getResult()->feed)
+            {
+                $feed = Hydrator::hydrate(
+                                Factory::factory('feed')
+                                , $feedDatas
+                );
+            }
+
+            foreach ($response->getResult()->entries->entries as $entryId => $entryDatas)
+            {
+                $entry = Hydrator::hydrate(
+                                Factory::factory('entry')
+                                , $entryDatas
+                );
+                
+                $entry->setId($entryId);
+                
+                $entriesCollection->add($entry);
+            }
+
+            $feed->setEntries($entriesCollection);
         }
-        
-        return $feedCollection;
+
+        return $feed;
     }
 
     public function findAll()
