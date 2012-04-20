@@ -9,20 +9,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Feed extends RepositoryAbstract
 {
 
-    public function findById($id)
+    public function findById($id, $offset = 0, $perPage = 5)
     {
-        $collection = $this->findAll()->filter(function($el)
-                {
-                    if ($el->getId() == $id)
-                    {
-                        return true;
-                    }
-                });
-
-        if ($collection->count() === 0)
+        $path = sprintf('/feeds/%d/%d/%d', $id, $offset, $perPage);
+        
+        $response = $this->getClient()->call($path, array(), 'GET');
+        
+        $feedCollection = new ArrayCollection();
+        
+        if($response->isOk())
         {
-            
+            $collection = $this->findAll()->filter(function($el)
+                    {
+                        if ($el->getId() == $id)
+                        {
+                            return true;
+                        }
+                    });
         }
+        
+        return $feedCollection;
     }
 
     public function findAll()
