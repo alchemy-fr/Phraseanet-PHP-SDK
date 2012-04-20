@@ -346,7 +346,7 @@ class Client extends ClientAbstract
 
         $template = '{?' . (null !== $this->getAccessToken() ? 'oauth_token,' : '') . 'data*}';
 
-        $path = sprintf('%s%s', $path, $template);
+        $path = sprintf('%s%s', ltrim($path, '/'), $template);
 
         if ( ! $throwException)
         {
