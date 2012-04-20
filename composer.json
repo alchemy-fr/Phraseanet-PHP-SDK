@@ -13,15 +13,8 @@
     "require": {
         "php": ">=5.3.6",
         "doctrine/common": "2.2.*",
-        "guzzle/guzzle" : "2.3.*",
-        "alchemy/phraseanet-clients": "master"
+        "guzzle/guzzle" : "2.3.*"
     },
-    "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/alchemy-fr/Phraseanet-Clients"
-    }
-    ],
     "autoload": {
         "psr-0": {
             "Alchemy": "src"
