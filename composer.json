@@ -1,20 +1,29 @@
 {
-  "name": "phraseanet/sdk-php",
-  "description": "A library to interact with phraseanet Apis",
-  "require": {
-    "php": ">=5.3.6",
-    "doctrine/common": "2.2.*",
-    "alchemy/phraseanet-clients": "master"
-  },
-  "repositories": [
+    "name": "phraseanet/php-sdk",
+    "description": "A library to interact with phraseanet Apis",
+    "type": "library",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
     {
-      "type": "vcs",
-      "url": "https://github.com/alchemy-fr/Phraseanet-Clients"
+        "name": "nlegoff",
+        "email": "legoff.n@gmail.com"
     }
-  ],
-  "autoload": {
-    "psr-0": {
-      "Alchemy": "src"
+    ],
+    "require": {
+        "php": ">=5.3.6",
+        "doctrine/common": "2.2.*",
+        "alchemy/phraseanet-clients": "master"
+    },
+    "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/alchemy-fr/Phraseanet-Clients"
     }
-  }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Alchemy": "src"
+        }
+    }
 }
