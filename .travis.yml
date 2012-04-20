@@ -3,7 +3,6 @@ language: php
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
-  - git submodule update --init
 
 php:
   - 5.3
