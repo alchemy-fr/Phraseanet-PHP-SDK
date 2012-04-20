@@ -13,6 +13,7 @@
     "require": {
         "php": ">=5.3.6",
         "doctrine/common": "2.2.*",
+        "guzzle/guzzle" : "2.3.*",
         "alchemy/phraseanet-clients": "master"
     },
     "repositories": [

@@ -8,16 +8,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class Feed extends RepositoryAbstract
 {
+
     public function findById($id)
     {
-        $collection =  $this->findAll()->filter(function($el){
-            if($el->getId() == $id)
-            {
-                return true;
-            }
-        });
-        
-        if($collection->count() === 0)
+        $collection = $this->findAll()->filter(function($el)
+                {
+                    if ($el->getId() == $id)
+                    {
+                        return true;
+                    }
+                });
+
+        if ($collection->count() === 0)
         {
             
         }
@@ -31,19 +33,13 @@ class Feed extends RepositoryAbstract
 
         if ($response->isOk())
         {
-            throw new ApiRequestException(
-                    $response->getErrorMessage()
-                    , $response->getHttpStatusCode()
-            );
+            foreach ($response->getResult()->feeds as $feedDatas)
+            {
+                $feed = Hydrator::hydrate($this->em->getEntity('feed'), $feedDatas);
+
+                $feedCollection->add($feed);
+            }
         }
-
-        foreach ($response->getResult()->feeds as $feedDatas)
-        {
-            $feed = Hydrator::hydrate($this->em->getEntity('feed'), $feedDatas);
-
-            $feedCollection->add($feed);
-        }
-
         return $feedCollection;
     }
 
