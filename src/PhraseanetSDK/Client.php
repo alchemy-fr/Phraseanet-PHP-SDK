@@ -337,14 +337,19 @@ class Client extends ClientAbstract
      */
     public function call($path, $args = array(), $http_method = 'POST', $throwException = true)
     {
-        $queryDatas = array('data' => $args);
+        $queryDatas = array();
+
+        if ( ! empty($args))
+        {
+            $queryDatas['data'] = $args;
+        }
 
         if ($this->getAccessToken())
         {
             $queryDatas['oauth_token'] = $this->getAccessToken();
         }
 
-        $template = '{?' . (null !== $this->getAccessToken() ? 'oauth_token,' : '') . 'data*}';
+        $template = '{?' . (null !== $this->getAccessToken() ? 'oauth_token,' : '') . (! empty($args) ? 'data*' : '' ) . '}';
 
         $path = sprintf('%s%s', ltrim($path, '/'), $template);
 
