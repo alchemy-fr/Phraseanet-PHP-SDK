@@ -2,8 +2,10 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 use PhraseanetSDK\Exception\ApiRequestException;
+use PhraseanetSDK\Tools\Repository\Factory;
+use PhraseanetSDK\Tools\Repository\Hydrator;
+use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Feed extends RepositoryAbstract
