@@ -8,7 +8,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 {
 
   /**
-   * @dataProvider classprovider
+   * @dataProvider classProvider
    */
   public function testFactory($type)
   {
