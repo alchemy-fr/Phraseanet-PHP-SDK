@@ -3,8 +3,8 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\ApiRequestException;
-use PhraseanetSDK\Tools\Repository\Factory;
-use PhraseanetSDK\Tools\Repository\Hydrator;
+use PhraseanetSDK\Tools\Entity\Factory;
+use PhraseanetSDK\Tools\Entity\Hydrator;
 use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 use Doctrine\Common\Collections\ArrayCollection;
 
