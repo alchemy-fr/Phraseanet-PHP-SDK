@@ -14,7 +14,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetRepository($type)
     {
         $client = $this->getMock(
-                '\\\PhraseanetApi'
+                '\\\PhraseanetSDK\\Client'
                 , array()
                 , array()
                 , ''
@@ -34,7 +34,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetEntity($type)
     {
         $client = $this->getMock(
-                '\\\PhraseanetApi'
+                '\\\PhraseanetSDK\\Client'
                 , array()
                 , array()
                 , ''
