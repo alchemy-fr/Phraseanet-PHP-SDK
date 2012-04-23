@@ -392,7 +392,7 @@ class Client extends ClientAbstract
                     break;
             }
         }
-        catch (Guzzle\Http\Message\BadResponseException $e)
+        catch (Guzzle\Http\Exception\BadResponseException $e)
         {
             throw new Exception\BadResponseException(
                     $e->getMessage()
