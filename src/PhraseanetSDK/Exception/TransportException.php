@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-class TransportException extends \InvalidArgumentException
+class TransportException extends \Exception
 {
   
 }

@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-class ApiResponseException extends \InvalidArgumentException
+class ApiResponseException extends \Exception
 {
     
 }

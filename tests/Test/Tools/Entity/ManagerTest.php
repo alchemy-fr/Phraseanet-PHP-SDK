@@ -9,6 +9,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @covers PhraseanetSDK\Tools\Entity\Manager::getRepository
      * @dataProvider classprovider
      */
     public function testGetRepository($type)
@@ -29,6 +30,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PhraseanetSDK\Tools\Entity\Manager::getEntity
      * @dataProvider classprovider
      */
     public function testGetEntity($type)
@@ -46,6 +48,25 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $entity = $em->getEntity($type);
 
         $this->assertTrue(is_object($entity));
+    }
+    
+    /**
+     * @covers PhraseanetSDK\Tools\Entity\Manager::__construct
+     * @covers PhraseanetSDK\Tools\Entity\Manager::getClient
+     */
+    public function testGetClient()
+    {
+        $client = $this->getMock(
+                '\\\PhraseanetSDK\\Client'
+                , array()
+                , array()
+                , ''
+                , false
+        );
+
+        $em = new Manager($client);
+
+        $this->assertEquals($client, $em->getClient());
     }
 
     public function classProvider()

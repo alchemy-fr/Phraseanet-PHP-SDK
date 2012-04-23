@@ -14,6 +14,9 @@ abstract class RepositoryAbstract
         $this->em = $em;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function getClient()
     {
         return $this->em->getClient();

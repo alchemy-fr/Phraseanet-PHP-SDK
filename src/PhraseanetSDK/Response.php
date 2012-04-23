@@ -98,7 +98,7 @@ class Response
      */
     public function getResponseTime()
     {
-        return new DateTime($this->meta->response_time);
+        return new \DateTime($this->meta->response_time);
     }
 
     /**

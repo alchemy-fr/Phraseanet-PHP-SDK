@@ -12,19 +12,13 @@ class Hydrator
      * Transform a string to CamelStyle pr pascalCase
      * 
      * @param string $string the string to transform
-     * @param boolean $pascalCase enbale pascalCase mode
      * @return string 
      */
-    protected static function camelize($string, $pascalCase = false)
+    protected static function camelize($string)
     {
         $string = str_replace(' ', '', ucwords(str_replace(array('-', '_'), ' ', $string)));
 
-        if ( ! $pascalCase)
-        {
-            return lcfirst($string);
-        }
-
-        return $string;
+        return lcfirst($string);
     }
 
     /**

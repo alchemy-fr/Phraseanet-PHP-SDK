@@ -106,6 +106,12 @@ class Client extends ClientAbstract
     protected $grantInfo;
 
     /**
+     * Api access token
+     * @var string
+     */
+    protected $accessToken;
+
+    /**
      * To create an API key/secret pair, go to your account adminstation panel
      * in your phraseanet application.
      * 
@@ -143,7 +149,7 @@ class Client extends ClientAbstract
      */
     public function getAccessToken()
     {
-        return;
+        return $this->accessToken;
     }
 
     /**
@@ -151,6 +157,7 @@ class Client extends ClientAbstract
      */
     public function setAccessToken($token)
     {
+        $this->accessToken = $token;
         return $this;
     }
 
@@ -158,7 +165,7 @@ class Client extends ClientAbstract
      * Return the Guzzle client which handle HTTP requests to the Phraseanet API
      * @return Guzzle\Http\Client 
      */
-    public function GetHttpClient()
+    public function getHttpClient()
     {
         return $this->httpClient;
     }
@@ -199,6 +206,11 @@ class Client extends ClientAbstract
                 if ( ! isset($info['redirect_uri']))
                 {
                     $info['redirect_uri'] = $this->getCurrentUrl();
+                }
+                
+                if ( ! isset($info['scope']))
+                {
+                    $info['scope'] = '';
                 }
                 break;
             default:
@@ -252,24 +264,11 @@ class Client extends ClientAbstract
      */
     public function retrieveAccessToken()
     {
-        /**
-         *  If no grant type defined, the request will not be authenticated
-         */
-        if ($this->grantType === null)
-        {
-            return;
-        }
-
         $token = $this->getAccessToken();
-
-        if (trim($token) !== '' && $token !== null)
-        {
-            return;
-        }
 
         try
         {
-            if ($this->grantType === self::GRANT_TYPE_AUTHORIZATION)
+            if ($this->grantType === self::GRANT_TYPE_AUTHORIZATION && null === $token)
             {
                 if (isset($_GET['code']))
                 {
@@ -287,9 +286,9 @@ class Client extends ClientAbstract
                             ->addPostFields($args);
 
                     $response = $request->send();
-
-                    $token = json_decode($response->getBody());
-
+             
+                    $token = json_decode($response->getBody(), true);
+                    
                     $this->setAccessToken($token["access_token"]);
                 }
                 elseif (isset($_GET['error']))
@@ -440,7 +439,7 @@ class Client extends ClientAbstract
 
         // Remove oauth callback params
         $query = '';
-        if ($parts['query'] !== '')
+        if (isset($parts['query']))
         {
             parse_str($parts['query'], $params);
             foreach (array('code', 'scope', 'error', 'error_description') as $name)

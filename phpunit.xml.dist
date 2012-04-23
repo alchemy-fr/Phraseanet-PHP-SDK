@@ -14,6 +14,8 @@
 >
     <php>
       <ini name="display_errors" value="on"/>
+      <server name="HTTP_HOST" value="dev.phrasea.net"/>
+      <server name="REQUEST_URI" value="/test.php?key=value"/>
     </php>
 
     <testsuites>
