@@ -45,9 +45,11 @@ class Feed extends RepositoryAbstract
             }
 
             $feed->setEntries($entriesCollection);
+            
+            return $feed;
         }
-
-        return $feed;
+        
+        return null;
     }
 
     public function findAll()
