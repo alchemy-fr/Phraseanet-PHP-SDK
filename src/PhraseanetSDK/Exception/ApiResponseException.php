@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-class ApiResponseException extends \Exception
+class ApiResponseException extends \Exception implements Exception
 {
     
 }

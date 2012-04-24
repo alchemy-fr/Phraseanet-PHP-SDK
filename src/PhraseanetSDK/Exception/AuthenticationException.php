@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-class AuthenticationException extends \Exception
+class AuthenticationException extends \Exception implements Exception
 {
     
 }
