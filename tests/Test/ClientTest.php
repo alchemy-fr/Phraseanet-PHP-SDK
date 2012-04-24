@@ -13,6 +13,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers PhraseanetSDK\Client::__construct
      * @covers PhraseanetSDK\Client::isValidUrl
      * @covers PhraseanetSDK\Exception\InvalidArgumentException
+     * @covers PhraseanetSDK\Exception\Exception
      * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testInvalidUrl()
