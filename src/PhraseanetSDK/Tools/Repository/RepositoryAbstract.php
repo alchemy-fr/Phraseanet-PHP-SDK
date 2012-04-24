@@ -22,8 +22,5 @@ abstract class RepositoryAbstract
         return $this->em->getClient();
     }
     
-    abstract public function findById($id);
-    abstract public function findAll();
-
 }
 
