@@ -4,29 +4,29 @@ namespace PhraseanetSDK\Entity;
 
 class Metadatas
 {
-  protected $id;
-  protected $structureId;
+  protected $metaId;
+  protected $metaStructureId;
   protected $name;
   protected $value;
   
-  public function getId()
+  public function getMetaId()
   {
-    return $this->id;
+    return $this->metaId;
   }
 
-  public function setId($id)
+  public function setMetaId($id)
   {
-    $this->id = $id;
+    $this->metaId = $id;
   }
 
-  public function getStructureId()
+  public function getMetaStructureId()
   {
-    return $this->structureId;
+    return $this->metaStructureId;
   }
 
-  public function setStructureId($structureId)
+  public function setMetaStructureId($structureId)
   {
-    $this->structureId = $structureId;
+    $this->metaStructureId = $structureId;
   }
 
   public function getName()
