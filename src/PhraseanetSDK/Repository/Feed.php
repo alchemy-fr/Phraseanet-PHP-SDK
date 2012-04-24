@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Exception\ApiRequestException;
+use PhraseanetSDK\Exception\ApiResponseException;
 use PhraseanetSDK\Tools\Entity\Factory;
 use PhraseanetSDK\Tools\Entity\Hydrator;
 use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
@@ -18,38 +18,43 @@ class Feed extends RepositoryAbstract
         $response = $this->getClient()->call($path, array(
             'offset_start' => $offset,
             'per_page' => $perPage
-        ), 'GET');
+                ), 'GET');
+
+        $feed = null;
 
         if ($response->isOk())
         {
-            $entriesCollection = new ArrayCollection();
-
             if ($feedDatas = $response->getResult()->feed)
             {
                 $feed = Hydrator::hydrate(
                                 Factory::factory('feed')
                                 , $feedDatas
                 );
+
+                $entriesCollection = new ArrayCollection();
+
+                foreach ($response->getResult()->entries->entries as $entryId => $entryDatas)
+                {
+                    $entry = Hydrator::hydrate(
+                                    Factory::factory('entry')
+                                    , $entryDatas
+                    );
+
+                    $entry->setId($entryId);
+
+                    $entriesCollection->add($entry);
+                }
+
+                $feed->setEntries($entriesCollection);
             }
 
-            foreach ($response->getResult()->entries->entries as $entryId => $entryDatas)
-            {
-                $entry = Hydrator::hydrate(
-                                Factory::factory('entry')
-                                , $entryDatas
-                );
-                
-                $entry->setId($entryId);
-                
-                $entriesCollection->add($entry);
-            }
-
-            $feed->setEntries($entriesCollection);
-            
             return $feed;
         }
-        
-        return null;
+        else
+        {
+            throw new ApiResponseException(
+                    $response->getErrorMessage(), $response->getHttpStatusCode());
+        }
     }
 
     public function findAll()
@@ -66,8 +71,14 @@ class Feed extends RepositoryAbstract
 
                 $feedCollection->add($feed);
             }
+
+            return $feedCollection;
         }
-        return $feedCollection;
+        else
+        {
+            throw new ApiResponseException(
+                    $response->getErrorMessage(), $response->getHttpStatusCode());
+        }
     }
 
 }
