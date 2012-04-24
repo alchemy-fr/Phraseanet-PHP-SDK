@@ -10,7 +10,7 @@ class Subdef
   protected $width;
   protected $fileSize;
   protected $playerType;
-  protected $mime;
+  protected $mimeType;
   protected $permalink;
 
   public function getName()
