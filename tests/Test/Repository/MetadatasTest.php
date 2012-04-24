@@ -11,6 +11,7 @@ use PhraseanetSDK\Tools\Entity\Manager;
 
 class MetadatasTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testFindAll()
     {
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
@@ -30,17 +31,17 @@ class MetadatasTest extends \PHPUnit_Framework_TestCase
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
-        
+
         $metaRepository = new Metadatas(new Manager($client));
 
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record');
-        
+        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
+
         $metas = $metaRepository->findAll($record);
 
         $this->assertTrue($metas instanceof ArrayCollection);
         $this->assertEquals(6, $metas->count());
     }
-    
+
     /**
      * @expectedException PhraseanetSDK\Exception\ApiResponseException
      */
@@ -63,18 +64,18 @@ class MetadatasTest extends \PHPUnit_Framework_TestCase
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
-        
+
         $metaRepository = new Metadatas(new Manager($client));
 
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record');
-        
-        $metaRepository->findAll($record);
+        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
 
+        $metaRepository->findAll($record);
     }
-    
+
     private function getSampleResponse($filename)
     {
         $filename = __DIR__ . '/../../ressources/response_samples/' . $filename . '.json';
         return file_get_contents($filename);
     }
+
 }

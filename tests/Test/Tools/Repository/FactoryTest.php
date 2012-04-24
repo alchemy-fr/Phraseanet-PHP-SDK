@@ -3,7 +3,7 @@
 namespace Test\Tools\Repository;
 
 use PhraseanetSDK\Tools\Repository\Factory as RepoFactory;
-use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
+use PhraseanetSDK\Repository\RepositoryAbstract;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {

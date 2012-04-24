@@ -9,14 +9,15 @@ use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Subdef;
 use PhraseanetSDK\Entity\Permalink;
 use PhraseanetSDK\Tools\Entity\Hydrator;
+use PhraseanetSDK\Tools\Entity\Manager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class HydratorTest extends \PHPUnit_Framework_TestCase
 {
 
-  private function getOneFeed()
-  {
-    $json = '{
+    private function getOneFeed()
+    {
+        $json = '{
                 "id": 3,
                 "title": "hellow world",
                 "subtitle": "what\'s up",
@@ -26,12 +27,12 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
                 "updated_on": "2011-07-20T18:45:20+02:00"
             }';
 
-    return json_decode($json);
-  }
+        return json_decode($json);
+    }
 
-  private function getOneFeedEntry()
-  {
-    $json = '{
+    private function getOneFeedEntry()
+    {
+        $json = '{
                 "author_email": "legoff@alchemy.fr",
                 "author_name": "legoff@alchemy.fr",
                 "created_on": "2011-11-04T14:39:47+01:00",
@@ -116,45 +117,59 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
                 ]
             }';
 
-    return json_decode($json);
-  }
-
-  public function testHydrate()
-  {
-    $feed = new Feed();
-    $feed = Hydrator::hydrate($feed, $this->getOneFeed());
-
-    $this->assertEquals(3, $feed->getId());
-    $this->assertEquals('hellow world', $feed->getTitle());
-    $this->assertEquals('good bye', $feed->getIcon());
-    $this->assertEquals('what\'s up', $feed->getSubTitle());
-    $this->assertEquals(4, $feed->getTotalEntries());
-    $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getCreatedOn()->format(\DateTime::ATOM));
-    $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getUpdatedOn()->format(\DateTime::ATOM));
-
-    $entry = Hydrator::hydrate(new Entry(), $this->getOneFeedEntry());
-    /* @var $entry \PhraseanetSDK\Entity\Entry */
-    $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorEmail());
-    $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorName());
-    $this->assertEquals('2011-11-04T14:39:47+01:00', $entry->getCreatedOn()->format(\DateTime::ATOM));
-    $this->assertEquals('2011-11-04T14:39:47+01:00', $entry->getUpdatedOn()->format(\DateTime::ATOM));
-    $this->assertEquals('My Entry subtitle', $entry->getSubtitle());
-    $this->assertEquals('My Entry Test', $entry->getTitle());
-    $items = $entry->getItems();
-    /* @var $items Doctrine\Common\Collections\ArrayCollection */
-    $this->assertTrue($items instanceof ArrayCollection);
-    $this->assertEquals(2, $items->count());
-    foreach ($items as $item)
-    {
-      $this->assertTrue($item instanceof Item);
-      $record = $item->getRecord();
-      $this->assertTrue($record instanceof Record);
-      $thumbnail = $record->getThumbnail();
-      $this->assertTrue($thumbnail instanceof Subdef);
-      $permalink = $thumbnail->getPermalink();
-      $this->assertTrue($permalink instanceof Permalink);
+        return json_decode($json);
     }
-  }
+
+    public function testHydrate()
+    {
+        
+        $client = $this->getMock(
+                'PhraseanetSDK\\Client'
+                , array()
+                , array()
+                , ''
+                , false
+        );
+
+        $em = new Manager($client);
+        
+        $feed = new Feed($em);
+        $feed = Hydrator::hydrate($feed, $this->getOneFeed(), $em);
+
+        $this->assertEquals(3, $feed->getId());
+        $this->assertEquals('hellow world', $feed->getTitle());
+        $this->assertEquals('good bye', $feed->getIcon());
+        $this->assertEquals('what\'s up', $feed->getSubTitle());
+        $this->assertEquals(4, $feed->getTotalEntries());
+        $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getCreatedOn()->format(\DateTime::ATOM));
+        $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getUpdatedOn()->format(\DateTime::ATOM));
+
+        $entry = new Entry($em);
+        
+        $entry = Hydrator::hydrate($entry, $this->getOneFeedEntry(), $em);
+        
+        /* @var $entry \PhraseanetSDK\Entity\Entry */
+        $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorEmail());
+        $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorName());
+        $this->assertEquals('2011-11-04T14:39:47+01:00', $entry->getCreatedOn()->format(\DateTime::ATOM));
+        $this->assertEquals('2011-11-04T14:39:47+01:00', $entry->getUpdatedOn()->format(\DateTime::ATOM));
+        $this->assertEquals('My Entry subtitle', $entry->getSubtitle());
+        $this->assertEquals('My Entry Test', $entry->getTitle());
+        $items = $entry->getItems();
+        /* @var $items Doctrine\Common\Collections\ArrayCollection */
+        $this->assertTrue($items instanceof ArrayCollection);
+        $this->assertEquals(2, $items->count());
+        foreach ($items as $item)
+        {
+            $this->assertTrue($item instanceof Item);
+            $record = $item->getRecord();
+            $this->assertTrue($record instanceof Record);
+            $thumbnail = $record->getThumbnail();
+            $this->assertTrue($thumbnail instanceof Subdef);
+            $permalink = $thumbnail->getPermalink();
+            $this->assertTrue($permalink instanceof Permalink);
+        }
+    }
 
 }
 

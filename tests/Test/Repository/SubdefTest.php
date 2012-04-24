@@ -36,7 +36,7 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         
         $subdefRepository = new Subdef(new Manager($client));
 
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record');
+        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
         
         $subdef = $subdefRepository->findByName($record, $name);
 
@@ -68,7 +68,7 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         
         $subdefRepository = new Subdef(new Manager($client));
 
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record');
+        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
         
         $subdefRepository->findByName($record, 'unknowName');
     }
@@ -95,7 +95,7 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         
         $subdefRepository = new Subdef(new Manager($client));
 
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record');
+        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
         
         $subdefs = $subdefRepository->findAll($record);
 
@@ -128,7 +128,7 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         
         $subdefRepository = new Subdef(new Manager($client));
 
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record');
+        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
         
         $subdefRepository->findAll($record);
 

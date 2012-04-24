@@ -2,104 +2,104 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Entry
+class Entry extends EntityAbstract implements Entity
 {
-  protected $id;
-  protected $authorEmail;
-  protected $authorName;
-  protected $title;
-  protected $subtitle;
-  protected $createdOn;
-  protected $updatedOn;
-  protected $items;
-  
-  public function getId()
-  {
-    return $this->id;
-  }
 
-  public function setId($id)
-  {
-    $this->id = $id;
-  }
+    protected $id;
+    protected $authorEmail;
+    protected $authorName;
+    protected $title;
+    protected $subtitle;
+    protected $createdOn;
+    protected $updatedOn;
+    protected $items;
 
-  public function getAuthorEmail()
-  {
-    return $this->authorEmail;
-  }
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  public function setAuthorEmail($authorEmail)
-  {
-    $this->authorEmail = $authorEmail;
-  }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-  public function getAuthorName()
-  {
-    return $this->authorName;
-  }
+    public function getAuthorEmail()
+    {
+        return $this->authorEmail;
+    }
 
-  public function setAuthorName($authorName)
-  {
-    $this->authorName = $authorName;
-  }
+    public function setAuthorEmail($authorEmail)
+    {
+        $this->authorEmail = $authorEmail;
+    }
 
-  public function getTitle()
-  {
-    return $this->title;
-  }
+    public function getAuthorName()
+    {
+        return $this->authorName;
+    }
 
-  public function setTitle($title)
-  {
-    $this->title = $title;
-  }
+    public function setAuthorName($authorName)
+    {
+        $this->authorName = $authorName;
+    }
 
-  public function getSubtitle()
-  {
-    return $this->subtitle;
-  }
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-  public function setSubtitle($subtitle)
-  {
-    $this->subtitle = $subtitle;
-  }
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 
-  public function getCreatedOn()
-  {
-    return $this->createdOn;
-  }
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
 
-  public function setCreatedOn($createdOn)
-  {
-    $this->createdOn = \DateTime::createFromFormat(
-                    \DateTime::ATOM
-                    , $createdOn
-                    , new \DateTimeZone(date_default_timezone_get())
-    );
-  }
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+    }
 
-  public function getUpdatedOn()
-  {
-    return $this->updatedOn;
-  }
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
 
-  public function setUpdatedOn($updatedOn)
-  {
-    $this->updatedOn = \DateTime::createFromFormat(
-                    \DateTime::ATOM
-                    , $updatedOn
-                    , new \DateTimeZone(date_default_timezone_get())
-    );
-  }
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = \DateTime::createFromFormat(
+                        \DateTime::ATOM
+                        , $createdOn
+                        , new \DateTimeZone(date_default_timezone_get())
+        );
+    }
 
-  public function getItems()
-  {
-    return $this->items;
-  }
+    public function getUpdatedOn()
+    {
+        return $this->updatedOn;
+    }
 
-  public function setItems($items)
-  {
-    $this->items = $items;
-  }
+    public function setUpdatedOn($updatedOn)
+    {
+        $this->updatedOn = \DateTime::createFromFormat(
+                        \DateTime::ATOM
+                        , $updatedOn
+                        , new \DateTimeZone(date_default_timezone_get())
+        );
+    }
 
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    public function setItems($items)
+    {
+        $this->items = $items;
+    }
 
 }

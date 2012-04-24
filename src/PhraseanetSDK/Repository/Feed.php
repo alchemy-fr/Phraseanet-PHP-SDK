@@ -5,7 +5,6 @@ namespace PhraseanetSDK\Repository;
 use PhraseanetSDK\Exception\ApiResponseException;
 use PhraseanetSDK\Tools\Entity\Factory;
 use PhraseanetSDK\Tools\Entity\Hydrator;
-use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Feed extends RepositoryAbstract
@@ -26,19 +25,13 @@ class Feed extends RepositoryAbstract
         {
             if ($feedDatas = $response->getResult()->feed)
             {
-                $feed = Hydrator::hydrate(
-                                Factory::factory('feed')
-                                , $feedDatas
-                );
+                $feed = $this->em->hydrateEntity($this->em->getEntity('feed'), $feedDatas);
 
                 $entriesCollection = new ArrayCollection();
 
                 foreach ($response->getResult()->entries->entries as $entryId => $entryDatas)
                 {
-                    $entry = Hydrator::hydrate(
-                                    Factory::factory('entry')
-                                    , $entryDatas
-                    );
+                    $entry = $this->em->hydrateEntity($this->em->getEntity('entry'), $entryDatas);
 
                     $entry->setId($entryId);
 
@@ -67,7 +60,7 @@ class Feed extends RepositoryAbstract
         {
             foreach ($response->getResult()->feeds as $feedDatas)
             {
-                $feed = Hydrator::hydrate($this->em->getEntity('feed'), $feedDatas);
+                $feed = $this->em->hydrateEntity($this->em->getEntity('feed'), $feedDatas);
 
                 $feedCollection->add($feed);
             }

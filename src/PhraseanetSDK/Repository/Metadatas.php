@@ -6,7 +6,6 @@ use PhraseanetSDK\Exception\ApiResponseException;
 use PhraseanetSDK\Entity;
 use PhraseanetSDK\Tools\Entity\Factory;
 use PhraseanetSDK\Tools\Entity\Hydrator;
-use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Metadatas extends RepositoryAbstract
@@ -24,7 +23,7 @@ class Metadatas extends RepositoryAbstract
         {
             foreach ($response->getResult()->metadatas as $metaDatas)
             {
-                $meta = Hydrator::hydrate($this->em->getEntity('metadatas'), $metaDatas);
+                $meta = $this->em->hydrateEntity($this->em->getEntity('metadatas'), $metaDatas);
 
                 $metaCollection->add($meta);
             }

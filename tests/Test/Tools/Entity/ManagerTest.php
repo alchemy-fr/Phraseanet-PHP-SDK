@@ -3,7 +3,7 @@
 namespace Test\Tools\Entity;
 
 use PhraseanetSDK\Tools\Entity\Manager;
-use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
+use PhraseanetSDK\Repository\RepositoryAbstract;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,7 +49,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_object($entity));
     }
-    
+
     /**
      * @covers PhraseanetSDK\Tools\Entity\Manager::__construct
      * @covers PhraseanetSDK\Tools\Entity\Manager::getClient

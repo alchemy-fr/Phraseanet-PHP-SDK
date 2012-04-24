@@ -1,6 +1,6 @@
 <?php
 
-namespace PhraseanetSDK\Tools\Repository;
+namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Tools\Entity\Manager;
 

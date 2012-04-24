@@ -6,7 +6,6 @@ use PhraseanetSDK\Exception\ApiResponseException;
 use PhraseanetSDK\Entity;
 use PhraseanetSDK\Tools\Entity\Factory;
 use PhraseanetSDK\Tools\Entity\Hydrator;
-use PhraseanetSDK\Tools\Repository\RepositoryAbstract;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Subdef extends RepositoryAbstract
@@ -24,7 +23,7 @@ class Subdef extends RepositoryAbstract
         {
             foreach ($response->getResult()->embed as $name => $subdefDatas)
             {
-                $subdef = Hydrator::hydrate($this->em->getEntity('subdef'), $subdefDatas);
+                $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
 
                 $subdef->setName($name);
 
