@@ -10,7 +10,7 @@ class Factory
 
     /**
      * Map keys from API to a specific entity type
-     * @var array 
+     * @var array
      */
     protected static $mapKeyToObjectType = array(
         'entries' => 'entry',
@@ -23,13 +23,13 @@ class Factory
 
     /**
      * Construct a new entity object
-     * 
+     *
      * @param string $type the type of the entity
      * @param string $manager the entity manager
      * @return \PhraseanetSDK\Tools\Entity\*
      * @throws Exception\InvalidArgumentException when types is unknown
      */
-    public static function factory($type, Manager $manager)
+    public static function build($type, Manager $manager)
     {
         if (isset(self::$mapKeyToObjectType[$type]))
         {
@@ -40,7 +40,7 @@ class Factory
 
         $classname = ucfirst($type);
         $objectName = sprintf('%s\\%s', $namespace, $classname);
-        
+
         if ( ! class_exists($objectName))
         {
             throw new Exception\InvalidArgumentException(

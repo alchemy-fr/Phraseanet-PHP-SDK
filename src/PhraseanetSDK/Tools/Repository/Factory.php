@@ -9,13 +9,13 @@ class Factory
 {
     /**
      * Construct a new entity object
-     * 
+     *
      * @param string $type the type of the repository
      * @param PhraseanetSDK\Tools\Entity\Manager $em the entity manager
      * @return \PhraseanetSDK\Tools\Entity\*
      * @throws Exception\InvalidArgumentException when types is unknown
      */
-    public static function factory($type, Manager $em)
+    public static function build($type, Manager $em)
     {
         $namespace = '\\PhraseanetSDK\\Repository';
 

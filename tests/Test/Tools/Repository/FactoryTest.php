@@ -20,9 +20,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
                 , ''
                 , false
         );
-        
-        $repo = RepoFactory::factory($type, $em);
-        
+
+        $repo = RepoFactory::build($type, $em);
+
         $this->assertTrue($repo instanceof RepositoryAbstract);
     }
 
@@ -38,8 +38,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
                 , ''
                 , false
         );
-         
-        RepoFactory::factory('unknow_class_type', $em);
+
+        RepoFactory::build('unknow_class_type', $em);
     }
 
     public function classProvider()

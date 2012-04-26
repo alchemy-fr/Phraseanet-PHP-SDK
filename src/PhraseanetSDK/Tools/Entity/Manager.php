@@ -13,27 +13,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Manager
 {
     private $client;
-    
+
     public function __construct(Client $client)
     {
         $this->client = $client;
     }
-    
+
     public function getRepository($type)
     {
-        return RepoFactory::factory($type, $this);
+        return RepoFactory::build($type, $this);
     }
-    
+
     public function getEntity($type)
     {
-        return EntityFactory::factory($type, $this);
+        return EntityFactory::build($type, $this);
     }
-    
+
     public function HydrateEntity(Entity $entity, $datas)
     {
         return Hydrator::hydrate($entity, $datas, $this);
     }
-    
+
     public function getClient()
     {
         return $this->client;

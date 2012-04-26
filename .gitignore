@@ -1,5 +1,5 @@
 /composer.phar
 /composer.lock
-/nbProject
+/nbproject/
 /vendor
 .DS_Store

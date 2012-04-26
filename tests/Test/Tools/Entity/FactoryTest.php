@@ -10,7 +10,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider classProvider
      */
-    public function testFactory($type)
+    public function testBuild($type)
     {
         $em = $this->getMock(
                 'PhraseanetSDK\\Tools\\Entity\\Manager'
@@ -20,13 +20,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
                 , false
         );
 
-        $this->assertTrue(is_object(EntityFactory::factory($type, $em)));
+        $this->assertTrue(is_object(EntityFactory::build($type, $em)));
     }
 
     /**
      * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
-    public function testExceptionFactory()
+    public function testExceptionBuild()
     {
         $em = $this->getMock(
                 'PhraseanetSDK\\Tools\\Entity\\Manager'
@@ -36,7 +36,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
                 , false
         );
 
-        EntityFactory::factory('unknow_class_type', $em);
+        EntityFactory::build('unknow_class_type', $em);
     }
 
     public function classProvider()
