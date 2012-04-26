@@ -6,7 +6,6 @@ use PhraseanetSDK\Tools\Entity\Manager;
 
 abstract class EntityAbstract
 {
-
     protected $em;
 
     public final function __construct(Manager $em)

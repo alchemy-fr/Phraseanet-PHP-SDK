@@ -6,7 +6,6 @@ use PhraseanetSDK\Tools\Entity\Manager;
 
 abstract class RepositoryAbstract
 {
-
     protected $em;
 
     public function __construct(Manager $em)
@@ -21,6 +20,5 @@ abstract class RepositoryAbstract
     {
         return $this->em->getClient();
     }
-    
 }
 

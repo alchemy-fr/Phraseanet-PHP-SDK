@@ -19,8 +19,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testInvalidUrl()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         new Client('badUrl', '123456', '654321', $clientHttp);
@@ -32,8 +32,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -45,8 +45,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testGetAccessToken()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -59,8 +59,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testGetHttpClient()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -73,8 +73,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSetAccessToken()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -89,14 +89,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSetHttpClient()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
         $expected = new Guzzle\Http\Client(
-                        'http://my.domain2.tld/api2/v{{version}}',
-                        array('version' => 2)
+                'http://my.domain2.tld/api2/v{{version}}',
+                array('version' => 2)
         );
 
         $client->setHttpClient($expected);
@@ -111,8 +111,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSetGrantTypeException()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -127,8 +127,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testGetCurrentUrl()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -136,11 +136,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $_SERVER['HTTPS'] = 'on';
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         unset($_SERVER['HTTPS']);
-        
+
         $_SERVER['HTTP_SSL_HTTPS'] = 'on';
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         unset($_SERVER['HTTP_SSL_HTTPS']);
-        
+
         $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         unset($_SERVER['HTTP_X_FORWARDED_PROTO']);
@@ -154,8 +154,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testgetAuthorizationUrlException()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -172,10 +172,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSetGrantTypeAndGetAuthorizationUrl()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
-        
+
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
 
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
@@ -193,15 +193,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('access_token')
-                )
+                200
+                , null
+                , $this->getSampleResponse('access_token')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -224,15 +224,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('access_token')
-                )
+                200
+                , null
+                , $this->getSampleResponse('access_token')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -250,8 +250,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testLogout()
     {
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
@@ -268,15 +268,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('200')
-                )
+                200
+                , null
+                , $this->getSampleResponse('200')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -300,15 +300,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('200')
-                )
+                200
+                , null
+                , $this->getSampleResponse('200')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -335,8 +335,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin->addResponse(new Guzzle\Http\Message\Response(200));
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -359,8 +359,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin->addResponse(new Guzzle\Http\Message\Response($httpCode));
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -378,10 +378,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        401
-                        , null
-                        , $this->getSampleResponse('401')
-                )
+                401
+                , null
+                , $this->getSampleResponse('401')
+            )
         );
 
         //no domain specified should raise an curlException
@@ -424,7 +424,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     private function getSampleResponse($filename)
     {
         $filename = __DIR__ . '/../ressources/response_samples/' . $filename . '.json';
+
         return file_get_contents($filename);
     }
-
 }

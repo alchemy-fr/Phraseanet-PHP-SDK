@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Permalink extends EntityAbstract implements Entity
 {
-
     protected $id;
     protected $isActivated;
     protected $label;
@@ -51,9 +50,9 @@ class Permalink extends EntityAbstract implements Entity
     public function setLastModified($lastModified)
     {
         $this->lastModified = \DateTime::createFromFormat(
-                        \DateTime::ATOM
-                        , $lastModified
-                        , new \DateTimeZone(date_default_timezone_get())
+                \DateTime::ATOM
+                , $lastModified
+                , new \DateTimeZone(date_default_timezone_get())
         );
     }
 
@@ -65,9 +64,9 @@ class Permalink extends EntityAbstract implements Entity
     public function setCreatedOn($createdOn)
     {
         $this->createdOn = \DateTime::createFromFormat(
-                        \DateTime::ATOM
-                        , $createdOn
-                        , new \DateTimeZone(date_default_timezone_get())
+                \DateTime::ATOM
+                , $createdOn
+                , new \DateTimeZone(date_default_timezone_get())
         );
     }
 
@@ -90,5 +89,4 @@ class Permalink extends EntityAbstract implements Entity
     {
         $this->url = $url;
     }
-
 }

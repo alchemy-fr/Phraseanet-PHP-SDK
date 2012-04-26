@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Item extends EntityAbstract implements Entity
 {
-
     protected $itemId;
     protected $record;
 
@@ -27,5 +26,4 @@ class Item extends EntityAbstract implements Entity
     {
         $this->record = $record;
     }
-
 }

@@ -7,6 +7,7 @@ use PhraseanetSDK\Tools\Entity\Manager;
 
 class Factory
 {
+
     /**
      * Construct a new entity object
      *
@@ -22,15 +23,13 @@ class Factory
         $classname = ucfirst($type);
         $objectName = sprintf('%s\\%s', $namespace, $classname);
 
-        if ( ! class_exists($objectName))
-        {
+        if ( ! class_exists($objectName)) {
             throw new Exception\InvalidArgumentException(
-                    sprintf('Class %s does not exists', $objectName)
+                sprintf('Class %s does not exists', $objectName)
             );
         }
 
         return new $objectName($em);
     }
-
 }
 

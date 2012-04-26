@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Subdef extends EntityAbstract implements Entity
 {
-
     protected $name;
     protected $height;
     protected $width;
@@ -82,5 +81,4 @@ class Subdef extends EntityAbstract implements Entity
     {
         $this->permalink = $permalink;
     }
-
 }

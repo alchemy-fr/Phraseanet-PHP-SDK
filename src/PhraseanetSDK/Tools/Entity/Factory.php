@@ -7,18 +7,17 @@ use PhraseanetSDK\Tools\Entity\Manager;
 
 class Factory
 {
-
     /**
      * Map keys from API to a specific entity type
      * @var array
      */
     protected static $mapKeyToObjectType = array(
-        'entries' => 'entry',
+        'entries'                => 'entry',
         'technical_informations' => 'technical',
-        'thumbnail' => 'subdef',
-        'items' => 'item',
-        'record' => 'record',
-        'permalink' => 'permalink'
+        'thumbnail'              => 'subdef',
+        'items'                  => 'item',
+        'record'                 => 'record',
+        'permalink'              => 'permalink'
     );
 
     /**
@@ -31,8 +30,7 @@ class Factory
      */
     public static function build($type, Manager $manager)
     {
-        if (isset(self::$mapKeyToObjectType[$type]))
-        {
+        if (isset(self::$mapKeyToObjectType[$type])) {
             $type = self::$mapKeyToObjectType[$type];
         }
 
@@ -41,15 +39,13 @@ class Factory
         $classname = ucfirst($type);
         $objectName = sprintf('%s\\%s', $namespace, $classname);
 
-        if ( ! class_exists($objectName))
-        {
+        if ( ! class_exists($objectName)) {
             throw new Exception\InvalidArgumentException(
-                    sprintf('Class %s does not exists', $objectName)
+                sprintf('Class %s does not exists', $objectName)
             );
         }
 
         return new $objectName($manager);
     }
-
 }
 

@@ -12,9 +12,9 @@ class Hydrator
 
     /**
      * Transform a string to CamelStyle pr pascalCase
-     * 
+     *
      * @param string $string the string to transform
-     * @return string 
+     * @return string
      */
     protected static function camelize($string)
     {
@@ -25,35 +25,28 @@ class Hydrator
 
     /**
      * Hydrate an entity object from  a source
-     * 
+     *
      * @param type $entity is the entity we want to populate
      * @param \stdClass $object is the source of datas
      * @return \PhraseanetSDK\Tools\Entity\*
      */
     public static function hydrate(Entity $entity, \stdClass $object, Manager $manager)
     {
-        foreach (get_object_vars($object) as $propertyName => $propertyValue)
-        {
+        foreach (get_object_vars($object) as $propertyName => $propertyValue) {
             $methodName = self::camelize(sprintf('set%s', ucfirst($propertyName)));
 
-            if (method_exists(get_class($entity), $methodName))
-            {
-                if (is_scalar($propertyValue))
-                {
+            if (method_exists(get_class($entity), $methodName)) {
+                if (is_scalar($propertyValue)) {
                     $entity->$methodName($propertyValue);
-                }
-                elseif (is_array($propertyValue))
-                {
+                } elseif (is_array($propertyValue)) {
                     $entityCollection = new ArrayCollection();
 
-                    foreach ($propertyValue as $object)
-                    {
-                        if (is_object($object))
-                        {
+                    foreach ($propertyValue as $object) {
+                        if (is_object($object)) {
                             $subEntity = self::hydrate(
-                                            $manager->getEntity($propertyName)
-                                            , $object
-                                            , $manager
+                                    $manager->getEntity($propertyName)
+                                    , $object
+                                    , $manager
                             );
 
                             $entityCollection->add($subEntity);
@@ -61,13 +54,11 @@ class Hydrator
                     }
 
                     $entity->$methodName($entityCollection);
-                }
-                elseif (is_object($propertyValue))
-                {
+                } elseif (is_object($propertyValue)) {
                     $subEntity = self::hydrate(
-                                    $manager->getEntity($propertyName)
-                                    , $propertyValue
-                                    , $manager
+                            $manager->getEntity($propertyName)
+                            , $propertyValue
+                            , $manager
                     );
 
                     $entity->$methodName($subEntity);
@@ -77,6 +68,5 @@ class Hydrator
 
         return $entity;
     }
-
 }
 

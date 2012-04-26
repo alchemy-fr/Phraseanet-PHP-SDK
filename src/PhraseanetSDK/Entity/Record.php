@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Record extends EntityAbstract implements Entity
 {
-
     protected $recordId;
     protected $databoxId;
     protected $title;
@@ -160,5 +159,4 @@ class Record extends EntityAbstract implements Entity
     {
         return $this->em->getRepository('metadatas')->findAll($this);
     }
-
 }

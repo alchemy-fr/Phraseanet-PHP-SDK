@@ -11,6 +11,7 @@ use PhraseanetSDK\Tools\Entity\Manager;
 
 class SubdefTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @dataProvider subdefNameProvider
      */
@@ -19,30 +20,30 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('repository/subdef/findAll')
-                )
+                200
+                , null
+                , $this->getSampleResponse('repository/subdef/findAll')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
-        
+
         $subdefRepository = new Subdef(new Manager($client));
 
         $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        
+
         $subdef = $subdefRepository->findByName($record, $name);
 
         $this->assertTrue($subdef instanceof \PhraseanetSDK\Entity\Subdef);
     }
-    
+
     /**
      * @expectedException PhraseanetSDK\Exception\ApiResponseException
      */
@@ -51,58 +52,58 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('repository/subdef/findAll')
-                )
+                200
+                , null
+                , $this->getSampleResponse('repository/subdef/findAll')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
-        
+
         $subdefRepository = new Subdef(new Manager($client));
 
         $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        
+
         $subdefRepository->findByName($record, 'unknowName');
     }
-    
+
     public function testFindAll()
     {
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('repository/subdef/findAll')
-                )
+                200
+                , null
+                , $this->getSampleResponse('repository/subdef/findAll')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
-        
+
         $subdefRepository = new Subdef(new Manager($client));
 
         $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        
+
         $subdefs = $subdefRepository->findAll($record);
 
         $this->assertTrue($subdefs instanceof ArrayCollection);
         $this->assertEquals(5, $subdefs->count());
     }
-    
+
     /**
      * @expectedException PhraseanetSDK\Exception\ApiResponseException
      */
@@ -111,30 +112,29 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('401')
-                )
+                200
+                , null
+                , $this->getSampleResponse('401')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
 
         $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
-        
+
         $subdefRepository = new Subdef(new Manager($client));
 
         $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        
-        $subdefRepository->findAll($record);
 
+        $subdefRepository->findAll($record);
     }
-    
-     public function subdefNameProvider()
+
+    public function subdefNameProvider()
     {
         return array(
             array('preview'),
@@ -144,10 +144,11 @@ class SubdefTest extends \PHPUnit_Framework_TestCase
             array('thumbnailgif')
         );
     }
-    
+
     private function getSampleResponse($filename)
     {
         $filename = __DIR__ . '/../../ressources/response_samples/' . $filename . '.json';
+
         return file_get_contents($filename);
     }
 }

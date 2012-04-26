@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Technical extends EntityAbstract implements Entity
 {
-
     protected $bits;
     protected $channels;
     protected $orientation;
@@ -38,5 +37,4 @@ class Technical extends EntityAbstract implements Entity
     {
         $this->orientation = $orientation;
     }
-
 }

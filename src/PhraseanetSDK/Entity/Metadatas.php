@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Metadatas extends EntityAbstract implements Entity
 {
-
     protected $metaId;
     protected $metaStructureId;
     protected $name;
@@ -49,5 +48,4 @@ class Metadatas extends EntityAbstract implements Entity
     {
         $this->value = $value;
     }
-
 }

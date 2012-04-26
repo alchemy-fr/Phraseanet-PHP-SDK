@@ -15,11 +15,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetRepository($type)
     {
         $client = $this->getMock(
-                '\\\PhraseanetSDK\\Client'
-                , array()
-                , array()
-                , ''
-                , false
+            '\\\PhraseanetSDK\\Client'
+            , array()
+            , array()
+            , ''
+            , false
         );
 
         $em = new Manager($client);
@@ -36,11 +36,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetEntity($type)
     {
         $client = $this->getMock(
-                '\\\PhraseanetSDK\\Client'
-                , array()
-                , array()
-                , ''
-                , false
+            '\\\PhraseanetSDK\\Client'
+            , array()
+            , array()
+            , ''
+            , false
         );
 
         $em = new Manager($client);
@@ -57,11 +57,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetClient()
     {
         $client = $this->getMock(
-                '\\\PhraseanetSDK\\Client'
-                , array()
-                , array()
-                , ''
-                , false
+            '\\\PhraseanetSDK\\Client'
+            , array()
+            , array()
+            , ''
+            , false
         );
 
         $em = new Manager($client);
@@ -75,6 +75,5 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             array('feed')
         );
     }
-
 }
 

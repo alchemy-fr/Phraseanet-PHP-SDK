@@ -17,15 +17,15 @@ class MetadatasTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('repository/metadatas/findAll')
-                )
+                200
+                , null
+                , $this->getSampleResponse('repository/metadatas/findAll')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -50,15 +50,15 @@ class MetadatasTest extends \PHPUnit_Framework_TestCase
         $plugin = new Guzzle\Http\Plugin\MockPlugin();
 
         $plugin->addResponse(new Guzzle\Http\Message\Response(
-                        200
-                        , null
-                        , $this->getSampleResponse('401')
-                )
+                200
+                , null
+                , $this->getSampleResponse('401')
+            )
         );
 
         $clientHttp = new Guzzle\Http\Client(
-                        'http://my.domain.tld/api/v{{version}}',
-                        array('version' => 1)
+                'http://my.domain.tld/api/v{{version}}',
+                array('version' => 1)
         );
 
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -75,7 +75,7 @@ class MetadatasTest extends \PHPUnit_Framework_TestCase
     private function getSampleResponse($filename)
     {
         $filename = __DIR__ . '/../../ressources/response_samples/' . $filename . '.json';
+
         return file_get_contents($filename);
     }
-
 }

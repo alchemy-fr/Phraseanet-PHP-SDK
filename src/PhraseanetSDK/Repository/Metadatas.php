@@ -19,23 +19,17 @@ class Metadatas extends RepositoryAbstract
 
         $metaCollection = new ArrayCollection();
 
-        if ($response->isOk())
-        {
-            foreach ($response->getResult()->metadatas as $metaDatas)
-            {
+        if ($response->isOk()) {
+            foreach ($response->getResult()->metadatas as $metaDatas) {
                 $meta = $this->em->hydrateEntity($this->em->getEntity('metadatas'), $metaDatas);
 
                 $metaCollection->add($meta);
             }
 
             return $metaCollection;
-        }
-        else
-        {
+        } else {
             throw new ApiResponseException(
-                    $response->getErrorMessage(), $response->getHttpStatusCode());
+                $response->getErrorMessage(), $response->getHttpStatusCode());
         }
     }
-
-
 }

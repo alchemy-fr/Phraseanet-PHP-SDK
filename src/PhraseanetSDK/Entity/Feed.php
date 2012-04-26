@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Entity;
 
 class Feed extends EntityAbstract implements Entity
 {
-
     protected $id;
     protected $title;
     protected $icon;
@@ -72,9 +71,9 @@ class Feed extends EntityAbstract implements Entity
     public function setCreatedOn($createdOn)
     {
         $this->createdOn = \DateTime::createFromFormat(
-                        \DateTime::ATOM
-                        , $createdOn
-                        , new \DateTimeZone(date_default_timezone_get())
+                \DateTime::ATOM
+                , $createdOn
+                , new \DateTimeZone(date_default_timezone_get())
         );
     }
 
@@ -86,9 +85,9 @@ class Feed extends EntityAbstract implements Entity
     public function setUpdatedOn($updatedOn)
     {
         $this->updatedOn = \DateTime::createFromFormat(
-                        \DateTime::ATOM
-                        , $updatedOn
-                        , new \DateTimeZone(date_default_timezone_get())
+                \DateTime::ATOM
+                , $updatedOn
+                , new \DateTimeZone(date_default_timezone_get())
         );
     }
 
@@ -101,6 +100,5 @@ class Feed extends EntityAbstract implements Entity
     {
         $this->entries = $entries;
     }
-
 }
 

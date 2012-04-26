@@ -5,12 +5,11 @@ namespace PhraseanetSDK;
 use PhraseanetSDK\Exception;
 
 /**
- * 
+ *
  * Handle Response from a Phraseanet API call
  */
 class Response
 {
-
     /**
      *
      * @var stdClass
@@ -25,17 +24,15 @@ class Response
 
     /**
      *
-     * @param stdClass $response 
+     * @param stdClass $response
      */
     public function __construct(\stdClass $response = null)
     {
-        if (null === $response)
-        {
+        if (null === $response) {
             throw new Exception\ApiResponseException('Response is empty');
         }
 
-        if ( ! isset($response->meta) || ! isset($response->response))
-        {
+        if ( ! isset($response->meta) || ! isset($response->response)) {
             throw new Exception\ApiResponseException('Response is malformed');
         }
 
@@ -45,7 +42,7 @@ class Response
 
     /**
      * Return the result of the response
-     * @return stdClass 
+     * @return stdClass
      */
     public function getResult()
     {
@@ -54,7 +51,7 @@ class Response
 
     /**
      * Return the HTTP code
-     * @return int 
+     * @return int
      */
     public function getHttpStatusCode()
     {
@@ -63,7 +60,7 @@ class Response
 
     /**
      * Check id the Response is a success
-     * @return int 
+     * @return int
      */
     public function isOk()
     {
@@ -72,7 +69,7 @@ class Response
 
     /**
      * Get error message if present
-     * @return mixed 
+     * @return mixed
      * Return the Error message if present
      * Return null
      */
@@ -83,7 +80,7 @@ class Response
 
     /**
      * Get error detail if present
-     * @return mixed 
+     * @return mixed
      * Return the Error details if present
      * Return null
      */
@@ -93,8 +90,8 @@ class Response
     }
 
     /**
-     * Get Response time 
-     * @return DateTime 
+     * Get Response time
+     * @return DateTime
      */
     public function getResponseTime()
     {
@@ -108,22 +105,24 @@ class Response
     public function getUri()
     {
         $request = explode(' ', $this->meta->request);
+
         return $request[1];
     }
 
     /**
      * Get Requested method
-     * @return string 
+     * @return string
      */
     public function getMethod()
     {
         $request = explode(' ', $this->meta->request);
+
         return $request[0];
     }
 
     /**
      * Get Response charset
-     * @return string 
+     * @return string
      */
     public function getCharset()
     {
@@ -132,11 +131,10 @@ class Response
 
     /**
      * get API version
-     * @return string 
+     * @return string
      */
     public function getApiVersion()
     {
         return $this->meta->api_version;
     }
-
 }

@@ -16,21 +16,18 @@ class Feed extends RepositoryAbstract
 
         $response = $this->getClient()->call($path, array(
             'offset_start' => $offset,
-            'per_page' => $perPage
-                ), 'GET');
+            'per_page'     => $perPage
+            ), 'GET');
 
         $feed = null;
 
-        if ($response->isOk())
-        {
-            if ($feedDatas = $response->getResult()->feed)
-            {
+        if ($response->isOk()) {
+            if ($feedDatas = $response->getResult()->feed) {
                 $feed = $this->em->hydrateEntity($this->em->getEntity('feed'), $feedDatas);
 
                 $entriesCollection = new ArrayCollection();
 
-                foreach ($response->getResult()->entries->entries as $entryId => $entryDatas)
-                {
+                foreach ($response->getResult()->entries->entries as $entryId => $entryDatas) {
                     $entry = $this->em->hydrateEntity($this->em->getEntity('entry'), $entryDatas);
 
                     $entry->setId($entryId);
@@ -42,11 +39,9 @@ class Feed extends RepositoryAbstract
             }
 
             return $feed;
-        }
-        else
-        {
+        } else {
             throw new ApiResponseException(
-                    $response->getErrorMessage(), $response->getHttpStatusCode());
+                $response->getErrorMessage(), $response->getHttpStatusCode());
         }
     }
 
@@ -56,22 +51,17 @@ class Feed extends RepositoryAbstract
 
         $feedCollection = new ArrayCollection();
 
-        if ($response->isOk())
-        {
-            foreach ($response->getResult()->feeds as $feedDatas)
-            {
+        if ($response->isOk()) {
+            foreach ($response->getResult()->feeds as $feedDatas) {
                 $feed = $this->em->hydrateEntity($this->em->getEntity('feed'), $feedDatas);
 
                 $feedCollection->add($feed);
             }
 
             return $feedCollection;
-        }
-        else
-        {
+        } else {
             throw new ApiResponseException(
-                    $response->getErrorMessage(), $response->getHttpStatusCode());
+                $response->getErrorMessage(), $response->getHttpStatusCode());
         }
     }
-
 }

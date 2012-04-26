@@ -19,10 +19,8 @@ class Subdef extends RepositoryAbstract
 
         $subdefCollection = new ArrayCollection();
 
-        if ($response->isOk())
-        {
-            foreach ($response->getResult()->embed as $name => $subdefDatas)
-            {
+        if ($response->isOk()) {
+            foreach ($response->getResult()->embed as $name => $subdefDatas) {
                 $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
 
                 $subdef->setName($name);
@@ -31,11 +29,9 @@ class Subdef extends RepositoryAbstract
             }
 
             return $subdefCollection;
-        }
-        else
-        {
+        } else {
             throw new ApiResponseException(
-                    $response->getErrorMessage(), $response->getHttpStatusCode());
+                $response->getErrorMessage(), $response->getHttpStatusCode());
         }
     }
 
@@ -43,16 +39,13 @@ class Subdef extends RepositoryAbstract
     {
         $subdefs = $this->findAll($record);
 
-        foreach ($subdefs as $subdef)
-        {
-            if ($subdef->getName() === $name)
-            {
+        foreach ($subdefs as $subdef) {
+            if ($subdef->getName() === $name) {
                 return $subdef;
             }
         }
-        
-        throw new ApiResponseException(
-                    sprintf('%s subdef name not found', $name), 404);
-    }
 
+        throw new ApiResponseException(
+            sprintf('%s subdef name not found', $name), 404);
+    }
 }

@@ -13,11 +13,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testBuild($type)
     {
         $em = $this->getMock(
-                'PhraseanetSDK\\Tools\\Entity\\Manager'
-                , array()
-                , array()
-                , ''
-                , false
+            'PhraseanetSDK\\Tools\\Entity\\Manager'
+            , array()
+            , array()
+            , ''
+            , false
         );
 
         $this->assertTrue(is_object(EntityFactory::build($type, $em)));
@@ -29,11 +29,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testExceptionBuild()
     {
         $em = $this->getMock(
-                'PhraseanetSDK\\Tools\\Entity\\Manager'
-                , array()
-                , array()
-                , ''
-                , false
+            'PhraseanetSDK\\Tools\\Entity\\Manager'
+            , array()
+            , array()
+            , ''
+            , false
         );
 
         EntityFactory::build('unknow_class_type', $em);
@@ -56,6 +56,5 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             array('items')
         );
     }
-
 }
 

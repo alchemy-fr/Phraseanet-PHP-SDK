@@ -122,17 +122,17 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
 
     public function testHydrate()
     {
-        
+
         $client = $this->getMock(
-                'PhraseanetSDK\\Client'
-                , array()
-                , array()
-                , ''
-                , false
+            'PhraseanetSDK\\Client'
+            , array()
+            , array()
+            , ''
+            , false
         );
 
         $em = new Manager($client);
-        
+
         $feed = new Feed($em);
         $feed = Hydrator::hydrate($feed, $this->getOneFeed(), $em);
 
@@ -145,9 +145,9 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getUpdatedOn()->format(\DateTime::ATOM));
 
         $entry = new Entry($em);
-        
+
         $entry = Hydrator::hydrate($entry, $this->getOneFeedEntry(), $em);
-        
+
         /* @var $entry \PhraseanetSDK\Entity\Entry */
         $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorEmail());
         $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorName());
@@ -159,8 +159,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         /* @var $items Doctrine\Common\Collections\ArrayCollection */
         $this->assertTrue($items instanceof ArrayCollection);
         $this->assertEquals(2, $items->count());
-        foreach ($items as $item)
-        {
+        foreach ($items as $item) {
             $this->assertTrue($item instanceof Item);
             $record = $item->getRecord();
             $this->assertTrue($record instanceof Record);
@@ -170,6 +169,5 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($permalink instanceof Permalink);
         }
     }
-
 }
 
