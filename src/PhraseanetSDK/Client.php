@@ -28,7 +28,6 @@ class Client extends ClientAbstract
      */
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
-
     /**
      * The API endpoint URL
      */
@@ -319,21 +318,22 @@ class Client extends ClientAbstract
         try {
             switch (strtoupper($http_method)) {
                 case 'POST' :
-
+                    
+                    $start = microtime(true);
                     $request = $this->httpClient->post(array($path, $queryDatas));
-
                     $request->setHeader('Accept', 'application/json');
-
                     $response = $request->send();
+                    $stop = microtime(true);
+                    $this->logger->addInfo(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
 
                     break;
                 case 'GET' :
-
+                    $start = microtime(true);
                     $request = $this->httpClient->get(array($path, $queryDatas));
-
                     $request->setHeader('Accept', 'application/json');
-
                     $response = $request->send();
+                    $stop = microtime(true);
+                    $this->logger->addInfo(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
 
                     break;
                 default :
