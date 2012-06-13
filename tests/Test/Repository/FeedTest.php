@@ -2,6 +2,8 @@
 
 namespace Test\Repository;
 
+require_once 'Repository.php';
+
 use Guzzle;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Client;
@@ -9,7 +11,7 @@ use PhraseanetSDK\Response;
 use PhraseanetSDK\Repository\Feed;
 use PhraseanetSDK\Tools\Entity\Manager;
 
-class FeedTest extends \PHPUnit_Framework_TestCase
+class FeedTest extends Repository
 {
 
     /**
@@ -18,26 +20,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindById($idFeed)
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $this->getSampleResponse('repository/feed/findById')
-            )
-        );
-
-        $clientHttp = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
-                array('version' => 1)
-        );
-
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
+        $client = $this->getClient($this->getSampleResponse('repository/feed/findById'));
 
         $feedRepository = new Feed(new Manager($client));
-
         $feed = $feedRepository->findById($idFeed);
 
         $this->assertTrue($feed instanceof \PhraseanetSDK\Entity\Feed);
@@ -49,51 +34,17 @@ class FeedTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindByIdException()
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $this->getSampleResponse('401')
-            )
-        );
-
-        $clientHttp = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
-                array('version' => 1)
-        );
-
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
+        $client = $this->getClient($this->getSampleResponse('401'));
 
         $feedRepository = new Feed(new Manager($client));
-
         $feedRepository->findById(44);
     }
 
     public function testFindAll()
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $this->getSampleResponse('repository/feed/findAll')
-            )
-        );
-
-        $clientHttp = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
-                array('version' => 1)
-        );
-
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
+        $client = $this->getClient($this->getSampleResponse('repository/feed/findAll'));
 
         $feedRepository = new Feed(new Manager($client));
-
         $feeds = $feedRepository->findAll();
 
         $this->assertTrue($feeds instanceof ArrayCollection);
@@ -105,26 +56,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindAllException()
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $this->getSampleResponse('401')
-            )
-        );
-
-        $clientHttp = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
-                array('version' => 1)
-        );
-
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
+        $client = $this->getClient($this->getSampleResponse('401'));
 
         $feedRepository = new Feed(new Manager($client));
-
         $feedRepository->findAll();
     }
 

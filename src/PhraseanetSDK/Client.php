@@ -1,47 +1,17 @@
 <?php
 
-/**
- * Phraseanet Client Librarie
- * Copyright (C) 2004 Alchemy
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * PhaseanetClientApi - Provide easy easy access to Phraseanet API
- *
- * @author https://github.com/alchemy-fr
- * @copyright (c) 2004 Alchemy
- * @licence Licensed under GPL license.
- * @see http://phraseanet.com/license
- * @see http://developer.phraseanet.com
- * @version 1.0
- * @link https://github.com/alchemy-fr/PhraseanetApiClient
- *
- */
-
 namespace PhraseanetSDK;
 
-use Guzzle;
-use Alchemy;
-use Guzzle\Common\Event;
+use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Curl\CurlException;
+use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Common\Event;
+use Monolog\Logger;
 use PhraseanetSDK\Exception;
 
 /**
- * !! Phraseanet API client needs the curl library to run !!
- * @link http://www.php.net/manual/fr/book.curl.php
- *
- * PhraseanetApi use a dedicated object to handle HTTP REQUEST.
- * This allow you to fully configure on how your http request will be executed using curl options
- * Or resolve some problematics like (proxies, SSL certificate, cookies etc ..)
+ * 
+ * Phraseanet Client, perform the HTTP requests against Phraseanet API
  *
  */
 class Client extends ClientAbstract
@@ -58,28 +28,26 @@ class Client extends ClientAbstract
      */
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
-    public
-        /**
-         * Activate debug output
-         */
-        $debug = false,
-        /**
-         * The API endpoint URL
-         */
-        $apiEndpointUrl = '',
-        /**
-         * The OAuth authorization server endpoint URL
-         */
-        $oauthAuthorizeEndpointUrl = '',
-        /**
-         * The OAuth token server endpoint URL
-         */
-        $oauthTokenEndpointUrl = '';
+
+    /**
+     * The API endpoint URL
+     */
+    protected $apiEndpointUrl = '';
+
+    /**
+     * The OAuth authorization server endpoint URL
+     */
+    protected $oauthAuthorizeEndpointUrl = '';
+
+    /**
+     * The OAuth token server endpoint URL
+     */
+    protected $oauthTokenEndpointUrl = '';
 
     /**
      * A Guzzle Client which handleHTTP requests to the Phraseanet API
      * @see http://guzzlephp.org for more informations
-     * @var Guzzle\Http\Client
+     * @var GuzzleClient
      */
     protected $httpClient;
 
@@ -119,7 +87,7 @@ class Client extends ClientAbstract
      * @param string $apiSecret
      * @param CurlWrapper $curl
      */
-    public function __construct($instanceUrl, $apiKey, $apiSecret, Guzzle\Http\Client $clientHttp)
+    public function __construct($instanceUrl, $apiKey, $apiSecret, GuzzleClient $clientHttp, Logger $logger)
     {
         if ( ! $this->isValidUrl($instanceUrl)) {
             throw new Exception\InvalidArgumentException(
@@ -130,6 +98,7 @@ class Client extends ClientAbstract
         $url = rtrim($instanceUrl, '/');
 
         $this->httpClient = $clientHttp;
+        $this->logger = $logger;
 
         $this->apiEndpointUrl = $this->httpClient->getBaseUrl();
 
@@ -161,8 +130,9 @@ class Client extends ClientAbstract
     }
 
     /**
-     * Return the Guzzle client which handle HTTP requests to the Phraseanet API
-     * @return Guzzle\Http\Client
+     * Return the HTTP client
+     * 
+     * @return GuzzleClient
      */
     public function getHttpClient()
     {
@@ -170,11 +140,12 @@ class Client extends ClientAbstract
     }
 
     /**
+     * Set the HTTP Client
      *
-     * @param type $curl
-     * @return PhaseanetClientApi
+     * @param GuzzleClient $client
+     * @return Client
      */
-    public function setHttpClient(Guzzle\Http\Client $client)
+    public function setHttpClient(GuzzleClient $client)
     {
         $this->httpClient = $client;
 
@@ -184,17 +155,17 @@ class Client extends ClientAbstract
     /**
      * Change the default grant type.
      *
-     * !! Only PhaseanetClientApi::GRANT_TYPE_AUTHORIZATION is currently supported !!
+     * !! Only Client::GRANT_TYPE_AUTHORIZATION is currently supported !!
      *
      * @param string type the API grant type
      * @param $info array info associated to the chosen grant type
      * Info Keys:
-     * - redirect_uri: if $type is PhaseanetClientApi::GRANT_TYPE_AUTHORIZATION, this key can be provided. If omited,
+     * - redirect_uri: if $type is Client::GRANT_TYPE_AUTHORIZATION, this key can be provided. If omited,
      *                 the current URL will be used. Make sure this value have to stay the same before
      *                 the user is redirect to the authorization page and after the authorization page
      *                 redirected to this provided URI (the token server will change this).
      *
-     * @return PhaseanetClientApi
+     * @return Client
      * @throws InvalidArgumentException if bad grant type provided
      */
     public function setGrantType($type, Array $info = null)
@@ -286,7 +257,7 @@ class Client extends ClientAbstract
                     throw new Exception\AuthenticationException($_GET['error']);
                 }
             }
-        } catch (Guzzle\Http\Curl\CurlException $e) {
+        } catch (CurlException $e) {
             throw new Exception\TransportException(
                 $e->getMessage()
                 , $e->getCode()
@@ -373,13 +344,13 @@ class Client extends ClientAbstract
                     );
                     break;
             }
-        } catch (Guzzle\Http\Exception\BadResponseException $e) {
+        } catch (BadResponseException $e) {
             throw new Exception\BadResponseException(
                 $e->getMessage()
                 , $e->getCode()
                 , $e
             );
-        } catch (Guzzle\Http\Curl\CurlException $e) {
+        } catch (CurlException $e) {
             throw new Exception\TransportException(
                 $e->getMessage()
                 , $e->getCode()

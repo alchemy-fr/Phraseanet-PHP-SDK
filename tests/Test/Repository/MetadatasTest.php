@@ -2,6 +2,8 @@
 
 namespace Test\Repository;
 
+require_once 'Repository.php';
+
 use Guzzle;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Client;
@@ -9,33 +11,15 @@ use PhraseanetSDK\Response;
 use PhraseanetSDK\Repository\Metadatas;
 use PhraseanetSDK\Tools\Entity\Manager;
 
-class MetadatasTest extends \PHPUnit_Framework_TestCase
+class MetadatasTest extends Repository
 {
 
     public function testFindAll()
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $this->getSampleResponse('repository/metadatas/findAll')
-            )
-        );
-
-        $clientHttp = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
-                array('version' => 1)
-        );
-
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
+        $client = $this->getClient($this->getSampleResponse('repository/metadatas/findAll'));
 
         $metaRepository = new Metadatas(new Manager($client));
-
         $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-
         $metas = $metaRepository->findAll($record);
 
         $this->assertTrue($metas instanceof ArrayCollection);
@@ -47,28 +31,10 @@ class MetadatasTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindAllExcpetion()
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $this->getSampleResponse('401')
-            )
-        );
-
-        $clientHttp = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
-                array('version' => 1)
-        );
-
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp);
+        $client = $this->getClient($this->getSampleResponse('401'));
 
         $metaRepository = new Metadatas(new Manager($client));
-
         $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-
         $metaRepository->findAll($record);
     }
 
