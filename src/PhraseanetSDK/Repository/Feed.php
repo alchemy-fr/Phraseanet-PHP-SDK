@@ -27,7 +27,7 @@ class Feed extends RepositoryAbstract
 
                 $entriesCollection = new ArrayCollection();
 
-                foreach ($response->getResult()->entries->entries as $entryId => $entryDatas) {
+                foreach ($response->getResult()->entries as $entryId => $entryDatas) {
                     $entry = $this->em->hydrateEntity($this->em->getEntity('entry'), $entryDatas);
 
                     $entry->setId($entryId);
