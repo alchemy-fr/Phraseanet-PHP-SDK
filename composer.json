@@ -2,7 +2,7 @@
     "name": "phraseanet/php-sdk",
     "description": "A library to interact with Phraseanet API",
     "type": "library",
-    
+
     "keywords": ["Phraseanet"],
     "license": "MIT",
     "authors": [
@@ -20,7 +20,8 @@
         "php": ">=5.3.2",
         "doctrine/common": ">2.1",
         "guzzle/guzzle" : ">2.4",
-        "monolog/monolog" : "*"
+        "monolog/monolog" : "*",
+        "symfony/http-foundation": "*"
     },
     "autoload": {
         "psr-0": {
