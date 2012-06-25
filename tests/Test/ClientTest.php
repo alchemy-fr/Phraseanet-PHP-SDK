@@ -5,6 +5,7 @@ namespace Test;
 use Guzzle;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,22 +21,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhraseanetSDK\Client::__construct
-     * @covers PhraseanetSDK\Client::isValidUrl
-     * @covers PhraseanetSDK\Exception\InvalidArgumentException
-     * @covers PhraseanetSDK\Exception\Exception
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
-     */
-    public function testInvalidUrl()
-    {
-        new Client('badUrl', '123456', '654321', $this->getGuzzleClient(), $this->logger);
-    }
-
-    /**
-     * @covers PhraseanetSDK\Client::__construct
      */
     public function testConstructor()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
     }
 
     /**
@@ -43,7 +32,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAccessToken()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $this->assertNull($client->getAccessToken());
     }
 
@@ -54,7 +43,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $clientHttp = $this->getGuzzleClient();
 
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $clientHttp, $this->logger);
+        $client = new Client('123456', '654321', $clientHttp, $this->logger);
         $this->assertEquals($clientHttp, $client->getHttpClient());
     }
 
@@ -63,7 +52,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAccessToken()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $expected = '123456789';
         $client->setAccessToken($expected);
         $this->assertEquals($expected, $client->getAccessToken());
@@ -74,9 +63,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetHttpClient()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $expected = new Guzzle\Http\Client(
-                'http://my.domain2.tld/api2/v{{version}}',
+                'http://my.domain2.tld/',
                 array('version' => 2)
         );
 
@@ -91,7 +80,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGrantTypeException()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $client->setGrantType('badGrantType');
     }
 
@@ -100,7 +89,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCurrentUrl()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
 
         $_SERVER['HTTPS'] = 'on';
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
@@ -122,7 +111,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testgetAuthorizationUrlException()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $client->getAuthorizationUrl();
     }
 
@@ -133,9 +122,23 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGrantTypeAndGetAuthorizationUrl()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
 
-        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
+        $host = 'dev.phrasea.net';
+        $query = '/test.php';
+        $params = array('key'=>'value');
+
+        $request = new Request($params, array(), array(), array(), array(), array('SERVER_PORT'   => 80, 'HTTP_HOST'   => $host, 'REQUEST_URI' => $query, 'QUERY_STRING'=>'key=value'));
+
+        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, null, $request);
+
+        $this->assertEquals(Client::GRANT_TYPE_AUTHORIZATION, $client->getGrantType());
+
+        $grantInfos = $client->getGrantInformations();
+
+        $this->assertArrayHasKey('redirect_uri', $grantInfos);
+        $this->assertRegExp('/' . str_replace(array('.'), array('\.'), $host) . '\w*' . str_replace(array('.', '?', '/'), array('\.', '\?', '\\/'), $query) . '/', $grantInfos['redirect_uri']);
+
         $url = $client->getAuthorizationUrl(array('admin', 'superadmin'));
 
         $this->assertEquals('http://my.domain.tld/api/oauthv2/authorize?response_type=code&client_id=123456&redirect_uri=http%3A%2F%2Fdev.phrasea.net%2Ftest.php%3Fkey%3Dvalue&scope=admin+superadmin', $url);
@@ -146,12 +149,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveAccessToken()
     {
-        $_GET['code'] = '123456789';
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
-        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
-        $client->retrieveAccessToken();
+        $request = new Request(array('code'=> '123456789'));
+
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
+        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, array(), $request);
+        $client->retrieveAccessToken($request);
         $this->assertEquals('987654321123456789', $client->getAccessToken());
-        unset($_GET['code']);
     }
 
     /**
@@ -161,11 +164,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveAccessTokenError()
     {
-        $_GET['error'] = 'invalid_uri';
+        $request = new Request(array('error'=> 'invalid_uri'));
 
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
-        $client->retrieveAccessToken();
+        $client->retrieveAccessToken($request);
     }
 
     /**
@@ -173,7 +176,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testLogout()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClient(), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $client->setAccessToken('hello');
         $client->logout();
         $this->assertNull($client->getAccessToken());
@@ -184,7 +187,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testPOSTCall200()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('200')), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('200')), $this->logger);
         $client->setAccessToken("123456789");
         $response = $client->call('/path/to/ressource');
 
@@ -197,7 +200,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGETCall200()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('200')), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('200')), $this->logger);
         $response = $client->call('/path/to/ressource', array('key' => 'value'), 'GET');
 
         $this->assertTrue($response instanceof Response);
@@ -212,7 +215,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRequestException($method)
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('200')), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('200')), $this->logger);
         $client->call('/path/to/ressource', array(), $method);
     }
 
@@ -230,12 +233,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $plugin->addResponse(new Guzzle\Http\Message\Response($httpCode));
 
         $httpClient = new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
+                'http://my.domain.tld',
                 array('version' => 1)
         );
         $httpClient->getEventDispatcher()->addSubscriber($plugin);
 
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $httpClient, $this->logger);
+        $client = new Client('123456', '654321', $httpClient, $this->logger);
         $client->call('/path/to/ressource');
     }
 
@@ -244,7 +247,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testForceNoException()
     {
-        $client = new Client('http://my.domain.tld/', '123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('401')), $this->logger);
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('401')), $this->logger);
         $response = $client->call('/path/to/ressource', array(), 'GET', false);
 
         $this->assertTrue($response instanceof Response);
@@ -285,7 +288,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     private function getGuzzleClient()
     {
         return new Guzzle\Http\Client(
-                'http://my.domain.tld/api/v{{version}}',
+                'http://my.domain.tld/',
                 array('version' => 1)
         );
     }

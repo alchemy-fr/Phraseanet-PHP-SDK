@@ -31,6 +31,6 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $logger = new Logger('tests');
         $logger->pushHandler(new NullHandler());
 
-        return new Client('http://my.domain.tld/', '123456', '654321', $clientHttp, $logger);
+        return new Client('123456', '654321', $clientHttp, $logger);
     }
 }

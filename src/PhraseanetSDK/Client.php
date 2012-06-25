@@ -2,15 +2,24 @@
 
 namespace PhraseanetSDK;
 
+use Doctrine\Common\Cache\Cache;
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Curl\CurlException;
-use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Http\Exception\BadResponseException as GuzzleBadresponse;
 use Guzzle\Common\Event;
+use Guzzle\Common\Cache\DoctrineCacheAdapter;
 use Monolog\Logger;
-use PhraseanetSDK\Exception;
+use PhraseanetSDK\Exception\ApiResponseException;
+use PhraseanetSDK\Exception\AuthenticationException;
+use PhraseanetSDK\Exception\BadRequestException;
+use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TransportException;
+use PhraseanetSDK\Exception\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * 
+ *
  * Phraseanet Client, perform the HTTP requests against Phraseanet API
  *
  */
@@ -29,11 +38,6 @@ class Client extends ClientAbstract
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
     /**
-     * The API endpoint URL
-     */
-    protected $apiEndpointUrl = '';
-
-    /**
      * The OAuth authorization server endpoint URL
      */
     protected $oauthAuthorizeEndpointUrl = '';
@@ -45,34 +49,43 @@ class Client extends ClientAbstract
 
     /**
      * A Guzzle Client which handleHTTP requests to the Phraseanet API
+     *
      * @see http://guzzlephp.org for more informations
      * @var GuzzleClient
      */
     protected $httpClient;
 
     /**
-     * Api credentials
-     * Info Keys :
-     *   key: the api client key access
-     *   secret: the api scret key access
-     * @var array
+     * Api Key
+     *
+     * @var string
      */
-    protected $apiAccess;
+    protected $apiKey;
 
     /**
-     * Choosen grant type
+     * Api Secret
+     *
+     * @var string
+     */
+    protected $apiSecret;
+
+    /**
+     * Grant type
+     *
      * @var string
      */
     protected $grantType;
 
     /**
-     * Associated infos to the choosen grant type
+     * Infos associated to the grant type
+     *
      * @var array
      */
     protected $grantInfo;
 
     /**
      * Api access token
+     *
      * @var string
      */
     protected $accessToken;
@@ -81,33 +94,23 @@ class Client extends ClientAbstract
      * To create an API key/secret pair, go to your account adminstation panel
      * in your phraseanet application.
      *
-     * @param string $instanceUrl
      * @param string $apiKey
      * @param string $apiSecret
      * @param CurlWrapper $curl
      */
-    public function __construct($instanceUrl, $apiKey, $apiSecret, GuzzleClient $clientHttp, Logger $logger)
+    public function __construct($apiKey, $apiSecret, GuzzleClient $clientHttp, Logger $logger)
     {
-        if ( ! $this->isValidUrl($instanceUrl)) {
-            throw new Exception\InvalidArgumentException(
-                sprintf('%s is not a valid url', $instanceUrl)
-            );
-        }
-
-        $url = rtrim($instanceUrl, '/');
-
         $this->httpClient = $clientHttp;
         $this->logger = $logger;
 
-        $this->apiEndpointUrl = $this->httpClient->getBaseUrl();
+        $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
+        $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
 
-        $this->oauthAuthorizeEndpointUrl = sprintf('%s%s', $url, self::AUTH_ENDPOINT);
-        $this->oauthTokenEndpointUrl = sprintf('%s%s', $url, self::TOKEN_ENDPOINT);
+        $this->oauthAuthorizeEndpointUrl = sprintf('%s%s', $baseUrl, self::AUTH_ENDPOINT);
+        $this->oauthTokenEndpointUrl = sprintf('%s%s', $baseUrl, self::TOKEN_ENDPOINT);
 
-        $this->url = $url;
-
-        $this->apiAccess['key'] = $apiKey;
-        $this->apiAccess['secret'] = $apiSecret;
+        $this->apiKey = $apiKey;
+        $this->apiSecret = $apiSecret;
     }
 
     /**
@@ -130,7 +133,7 @@ class Client extends ClientAbstract
 
     /**
      * Return the HTTP client
-     * 
+     *
      * @return GuzzleClient
      */
     public function getHttpClient()
@@ -156,23 +159,26 @@ class Client extends ClientAbstract
      *
      * !! Only Client::GRANT_TYPE_AUTHORIZATION is currently supported !!
      *
-     * @param string type the API grant type
-     * @param $info array info associated to the chosen grant type
      * Info Keys:
      * - redirect_uri: if $type is Client::GRANT_TYPE_AUTHORIZATION, this key can be provided. If omited,
      *                 the current URL will be used. Make sure this value have to stay the same before
      *                 the user is redirect to the authorization page and after the authorization page
      *                 redirected to this provided URI (the token server will change this).
      *
+     * @param string $type the API grant type
+     * @param array $info info associated to the choosen grant type
+     * @param Request $request The request associated with this authorization
+     *
      * @return Client
      * @throws InvalidArgumentException if bad grant type provided
      */
-    public function setGrantType($type, Array $info = null)
+    public function setGrantType($type, Array $info = null, Request $request = null)
     {
         switch ($type) {
             case self::GRANT_TYPE_AUTHORIZATION:
-                if ( ! isset($info['redirect_uri'])) {
-                    $info['redirect_uri'] = $this->getCurrentUrl();
+
+                if ( ! isset($info['redirect_uri']) && $request) {
+                    $info['redirect_uri'] = $this->getUrlWithoutOauth2Parameters($request);
                 }
 
                 if ( ! isset($info['scope'])) {
@@ -180,7 +186,7 @@ class Client extends ClientAbstract
                 }
                 break;
             default:
-                throw new Exception\InvalidArgumentException(sprintf(
+                throw new InvalidArgumentException(sprintf(
                         'Only %s grant type is currently supported'
                         , self::GRANT_TYPE_AUTHORIZATION
                     )
@@ -190,6 +196,16 @@ class Client extends ClientAbstract
         $this->grantInfo = $info;
 
         return $this;
+    }
+
+    public function getGrantType()
+    {
+        return $this->grantType;
+    }
+
+    public function getGrantInformations()
+    {
+        return $this->grantInfo;
     }
 
     /**
@@ -202,12 +218,12 @@ class Client extends ClientAbstract
     public function getAuthorizationUrl(Array $scope = array())
     {
         if ($this->grantType !== self::GRANT_TYPE_AUTHORIZATION) {
-            throw new Exception\RuntimeException('This method can only be used with TOKEN grant type.');
+            throw new RuntimeException('This method can only be used with TOKEN grant type.');
         }
 
         $oauthParams = array(
             'response_type' => 'code'
-            , 'client_id'     => $this->apiAccess['key']
+            , 'client_id'     => $this->apiKey
             , 'redirect_uri'  => $this->grantInfo['redirect_uri']
             , 'scope'         => implode(' ', $scope)
         );
@@ -220,44 +236,51 @@ class Client extends ClientAbstract
     /**
      *
      * Retrieve your access Token from your callback endpoint
-     * Use $_GET globale variable
      *
      * @return void
      *
-     * @throws Exception\AuthenticationException if error occurs during authentication
-     * @throws Exception\TransportException if problem occurs with transport layer
+     * @throws AuthenticationException if error occurs during authentication
+     * @throws TransportException if problem occurs with transport layer
      */
-    public function retrieveAccessToken()
+    public function retrieveAccessToken(Request $request)
     {
         $token = $this->getAccessToken();
 
         try {
+            /**
+             * @todo throw an exception if something goes wrong
+             */
             if ($this->grantType === self::GRANT_TYPE_AUTHORIZATION && null === $token) {
-                if (isset($_GET['code'])) {
-                    $args = array(
-                        'grant_type'    => 'authorization_code',
-                        'client_id'     => $this->apiAccess['key'],
-                        'client_secret' => $this->apiAccess['secret'],
-                        'scope'         => $this->grantInfo['scope'],
-                        'code'          => $_GET['code'],
-                        'redirect_uri'  => $this->grantInfo['redirect_uri'],
-                    );
 
-                    $request = $this->httpClient
-                        ->post($this->oauthTokenEndpointUrl)
-                        ->addPostFields($args);
-
-                    $response = $request->send();
-
-                    $token = json_decode($response->getBody(), true);
-
-                    $this->setAccessToken($token["access_token"]);
-                } elseif (isset($_GET['error'])) {
-                    throw new Exception\AuthenticationException($_GET['error']);
+                if ($request->get('error')) {
+                    throw new AuthenticationException($request->get('error'));
                 }
+
+                if (null === $request->get('code')) {
+                    throw new AuthenticationException('Invalid authentication code');
+                }
+
+                $args = array(
+                    'grant_type'    => 'authorization_code',
+                    'client_id'     => $this->apiKey,
+                    'client_secret' => $this->apiSecret,
+                    'scope'         => $this->grantInfo['scope'],
+                    'code'          => $request->get('code'),
+                    'redirect_uri'  => $this->grantInfo['redirect_uri'],
+                );
+
+                $request = $this->httpClient
+                    ->post($this->oauthTokenEndpointUrl)
+                    ->addPostFields($args);
+
+                $response = $request->send();
+
+                $token = json_decode($response->getBody(), true);
+
+                $this->setAccessToken($token["access_token"]);
             }
         } catch (CurlException $e) {
-            throw new Exception\TransportException(
+            throw new TransportException(
                 $e->getMessage()
                 , $e->getCode()
                 , $e
@@ -318,7 +341,7 @@ class Client extends ClientAbstract
         try {
             switch (strtoupper($http_method)) {
                 case 'POST' :
-                    
+
                     $start = microtime(true);
                     $request = $this->httpClient->post(array($path, $queryDatas));
                     $request->setHeader('Accept', 'application/json');
@@ -337,21 +360,21 @@ class Client extends ClientAbstract
 
                     break;
                 default :
-                    throw new Exception\BadRequestException(sprintf(
+                    throw new BadRequestException(sprintf(
                             'Phraseanet API do not support %s method'
                             , $http_method
                         )
                     );
                     break;
             }
-        } catch (BadResponseException $e) {
-            throw new Exception\BadResponseException(
+        } catch (GuzzleBadresponse $e) {
+            throw new BadResponseException(
                 $e->getMessage()
                 , $e->getCode()
                 , $e
             );
         } catch (CurlException $e) {
-            throw new Exception\TransportException(
+            throw new TransportException(
                 $e->getMessage()
                 , $e->getCode()
                 , $e
@@ -366,46 +389,26 @@ class Client extends ClientAbstract
      *
      * @return String the current URL
      */
-    protected function getCurrentUrl()
+    protected function getUrlWithoutOauth2Parameters(Request $request)
     {
-        $secure = false;
-        if (isset($_SERVER['HTTPS'])) {
-            $secure = strtolower($_SERVER['HTTPS']) === 'on' || $_SERVER['HTTPS'] == 1;
-        } elseif (isset($_SERVER['HTTP_SSL_HTTPS'])) {
-            $secure = strtolower($_SERVER['HTTP_SSL_HTTPS']) === 'on' || $_SERVER['HTTP_SSL_HTTPS'] == 1;
-        } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-            $secure = strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https';
-        }
-        $scheme = $secure ? 'https://' : 'http://';
-        $currentUrl = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        $parts = parse_url($currentUrl);
-
-        // Remove oauth callback params
-        $query = '';
-        if (isset($parts['query'])) {
-            parse_str($parts['query'], $params);
-            foreach (array('code', 'scope', 'error', 'error_description') as $name) {
-                unset($params[$name]);
+        $toReAdd = array();
+        foreach ($request->query->all() as $key => $value) {
+            if ( ! in_array($key, array('code', 'scope', 'error', 'error_description'))) {
+                continue;
             }
-            if (count($params) > 0) {
-                $query = '?' . http_build_query($params, null, '&');
-            }
+
+            $toReAdd[$key] = $value;
+            $request->query->remove($key);
         }
-        // Use port if non default
-        $port = isset($parts['port']) && ($secure ? $parts['port'] !== 80 : $parts['port'] !== 443) ? ':' . $parts['port'] : '';
-        // rebuild
-        return $scheme . $parts['host'] . $port . $parts['path'] . $query;
+
+        $ret = $request->getUri();
+
+        foreach ($toReAdd as $key => $value) {
+            $request->query->set($key, $value);
+        }
+
+        return $ret;
     }
 
-    /**
-     * Check if an url is valid
-     * @param array $url
-     * @return boolean
-     */
-    private function isValidUrl($url)
-    {
-        return filter_var($url, FILTER_VALIDATE_URL);
-    }
 }
 
