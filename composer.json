@@ -23,6 +23,10 @@
         "monolog/monolog" : "*",
         "symfony/http-foundation": "*"
     },
+    "require-dev": {
+        "sami/sami": "*",
+        "fabpot/php-cs-fixer": "*"
+    },
     "autoload": {
         "psr-0": {
             "PhraseanetSDK": "src"
