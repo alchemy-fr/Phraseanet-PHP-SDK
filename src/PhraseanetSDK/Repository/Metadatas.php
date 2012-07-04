@@ -2,34 +2,34 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Exception\ApiResponseException;
-use PhraseanetSDK\Entity;
-use PhraseanetSDK\Tools\Entity\Factory;
-use PhraseanetSDK\Tools\Entity\Hydrator;
+use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Metadatas extends RepositoryAbstract
+class Metadatas extends AbstractRepository
 {
 
-    public function findAll(Entity\Record $record)
+    /**
+     * Find All the metadatas for the record provided in parameters
+     *
+     * @param  integer          $databoxId The databox id
+     * @param  integer          $recordId  The record id
+     * @return ArrayCollection
+     * @throws RuntimeException
+     */
+    public function findByRecord($databoxId, $recordId)
     {
-        $path = sprintf('/records/%d/%d/metadatas/', $record->getDataboxId(), $record->getRecordId());
+        $response = $this->query('GET', sprintf('/records/%d/%d/metadatas/', $databoxId, $recordId));
 
-        $response = $this->getClient()->call($path, array(), 'GET');
+        if (true !== $response->hasProperty('record_metadatas')) {
+            throw new RuntimeException('Missing "record_metadatas" property in response content');
+        }
 
         $metaCollection = new ArrayCollection();
 
-        if ($response->isOk()) {
-            foreach ($response->getResult()->metadatas as $metaDatas) {
-                $meta = $this->em->hydrateEntity($this->em->getEntity('metadatas'), $metaDatas);
-
-                $metaCollection->add($meta);
-            }
-
-            return $metaCollection;
-        } else {
-            throw new ApiResponseException(
-                $response->getErrorMessage(), $response->getHttpStatusCode());
+        foreach ($response->getProperty('record_metadatas') as $metaDatas) {
+            $metaCollection->add($this->em->hydrateEntity($this->em->getEntity('metadatas'), $metaDatas));
         }
+
+        return $metaCollection;
     }
 }

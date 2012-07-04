@@ -2,66 +2,57 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Exception\ApiResponseException;
-use PhraseanetSDK\Tools\Entity\Factory;
-use PhraseanetSDK\Tools\Entity\Hydrator;
+use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Feed extends RepositoryAbstract
+class Feed extends AbstractRepository
 {
 
-    public function findById($id, $offset = 0, $perPage = 5)
+    /**
+     * Find a feed by its identifier
+     *
+     * @param  integer                  $id The desired id
+     * @return PraseanetSDK\Entity\Feed
+     * @throws RuntimeException
+     */
+    public function findById($id)
     {
-        $path = sprintf('/feeds/%d/content/', $id, $offset, $perPage);
+        $response = $this->query('GET', sprintf('/feeds/%d/content/', $id), array(
+            'offset_start' => 0,
+            'per_page'     => 0
+            ));
 
-        $response = $this->getClient()->call($path, array(
-            'offset_start' => $offset,
-            'per_page'     => $perPage
-            ), 'GET');
-
-        $feed = null;
-
-        if ($response->isOk()) {
-            if ($feedDatas = $response->getResult()->feed) {
-                $feed = $this->em->hydrateEntity($this->em->getEntity('feed'), $feedDatas);
-
-                $entriesCollection = new ArrayCollection();
-
-                foreach ($response->getResult()->entries as $entryId => $entryDatas) {
-                    $entry = $this->em->hydrateEntity($this->em->getEntity('entry'), $entryDatas);
-
-                    $entry->setId($entryId);
-
-                    $entriesCollection->add($entry);
-                }
-
-                $feed->setEntries($entriesCollection);
-            }
-
-            return $feed;
-        } else {
-            throw new ApiResponseException(
-                $response->getErrorMessage(), $response->getHttpStatusCode());
+        if (true !== $response->hasProperty('feed')) {
+            throw new RuntimeException('Missing "feed" property in response content');
         }
+
+        return $this->em->hydrateEntity($this->em->getEntity('feed'), $response->getProperty('feed'));
     }
 
+    /**
+     * Find all feeds
+     *
+     * @return ArrayCollection
+     * @throws RuntimeException
+     */
     public function findAll()
     {
-        $response = $this->getClient()->call('/feeds/list/', array(), 'GET');
+        $response = $this->query('GET', '/feeds/list/');
+
+        if (true !== $response->hasProperty('feeds')) {
+            throw new RuntimeException('Missing "feeds" property in response content');
+        }
 
         $feedCollection = new ArrayCollection();
 
-        if ($response->isOk()) {
-            foreach ($response->getResult()->feeds as $feedDatas) {
-                $feed = $this->em->hydrateEntity($this->em->getEntity('feed'), $feedDatas);
-
-                $feedCollection->add($feed);
-            }
-
-            return $feedCollection;
-        } else {
-            throw new ApiResponseException(
-                $response->getErrorMessage(), $response->getHttpStatusCode());
+        foreach ($response->getProperty('feeds') as $feedDatas) {
+            $feedCollection->add(
+                $this->em->hydrateEntity(
+                    $this->em->getEntity('feed'), $feedDatas
+                )
+            );
         }
+
+        return $feedCollection;
     }
 }

@@ -2,42 +2,63 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Exception\ApiResponseException;
-use PhraseanetSDK\Entity;
-use PhraseanetSDK\Tools\Entity\Factory;
-use PhraseanetSDK\Tools\Entity\Hydrator;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Entity\Record as RecordEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Subdef extends RepositoryAbstract
+class Subdef extends AbstractRepository
 {
 
-    public function findAll(Entity\Record $record)
+    /**
+     * Find all subdefs that belong to the provided record
+     *
+     * @param  integer          $databoxId The databox id
+     * @param  integer          $recordId  The record id
+     * @param  integer          $devices   an array of desired devices
+     * @param  integer          $mimes     an array of desired mimetypes
+     * @return ArrayCollection
+     * @throws RuntimeException
+     */
+    public function findByRecord($databoxId, $recordId, $devices = array(), $mimes = array())
     {
-        $path = sprintf('/records/%d/%d/embed/', $record->getDataboxId(), $record->getRecordId());
+        $parameters = array();
 
-        $response = $this->getClient()->call($path, array(), 'GET');
+        if ( ! ! count($devices)) {
+            $parameters['devices'] = $devices;
+        }
+
+        if ( ! ! count($mimes)) {
+            $parameters['mimes'] = $mimes;
+        }
+
+        $response = $this->query('GET', sprintf('/records/%d/%d/embed/', $databoxId, $recordId), $parameters);
+
+        if (true !== $response->hasProperty('embed')) {
+            throw new RuntimeException('Missing "embed" property in response content');
+        }
 
         $subdefCollection = new ArrayCollection();
 
-        if ($response->isOk()) {
-            foreach ($response->getResult()->embed as $name => $subdefDatas) {
-                $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
-
-                $subdef->setName($name);
-
-                $subdefCollection->add($subdef);
-            }
-
-            return $subdefCollection;
-        } else {
-            throw new ApiResponseException(
-                $response->getErrorMessage(), $response->getHttpStatusCode());
+        foreach ($response->getProperty('embed') as $subdefDatas) {
+            $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
+            $subdefCollection->add($subdef);
         }
+
+        return $subdefCollection;
     }
 
-    public function findByName(Entity\Record $record, $name)
+    /**
+     * Find a subdefs by its name that belong to the provided record
+     *
+     * @param  RecordEntity                $record The provided record
+     * @param  string                      $name   The provided name
+     * @return PreaseanetSDL\Entity\Subdef
+     * @throws NotFoundException
+     */
+    public function findByRecordAndName($databoxId, $recordId, $name)
     {
-        $subdefs = $this->findAll($record);
+        $subdefs = $this->findByRecord($databoxId, $recordId);
 
         foreach ($subdefs as $subdef) {
             if ($subdef->getName() === $name) {
@@ -45,7 +66,6 @@ class Subdef extends RepositoryAbstract
             }
         }
 
-        throw new ApiResponseException(
-            sprintf('%s subdef name not found', $name), 404);
+        throw new NotFoundException(sprintf('%s subdef name not found', $name));
     }
 }

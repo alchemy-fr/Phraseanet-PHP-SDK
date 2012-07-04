@@ -1,0 +1,36 @@
+<?php
+
+namespace PhraseanetSDK\Repository;
+
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Entity\Record;
+use Doctrine\Common\Collections\ArrayCollection;
+
+class RecordStatus extends AbstractRepository
+{
+
+    /**
+     * Find All the status attached to the provided record
+     *
+     * @param  integer          $databoxId The record databox id
+     * @param  integer          $recordId  the record id
+     * @return ArrayCollection
+     * @throws RuntimeException
+     */
+    public function findByRecord($databoxId, $recordId)
+    {
+        $response = $this->query('GET', sprintf('/records/%d/%d/status/', $databoxId, $recordId));
+
+        $statusCollection = new ArrayCollection();
+
+        if (true !== $response->hasProperty('status')) {
+            throw new RuntimeException('Missing "status" property in response content');
+        }
+
+        foreach ($response->getProperty('status') as $statusData) {
+            $statusCollection->add($this->em->hydrateEntity($this->em->getEntity('recordStatus'), $statusData));
+        }
+
+        return $statusCollection;
+    }
+}
