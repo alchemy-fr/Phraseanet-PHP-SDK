@@ -2,13 +2,29 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Technical extends AbstractEntity implements EntityInterface
+class RecordCaption extends AbstractEntity implements EntityInterface
 {
+    protected $metaStructureId;
     protected $name;
     protected $value;
 
     /**
-     * Get the technical information name
+     * Get the related databox meta field id
+     *
+     * @return integer
+     */
+    public function getMetaStructureId()
+    {
+        return $this->metaStructureId;
+    }
+
+    public function setMetaStructureId($metaStructureId)
+    {
+        $this->metaStructureId = $metaStructureId;
+    }
+
+    /**
+     * Get the name of the caption
      *
      * @return string
      */
@@ -23,7 +39,7 @@ class Technical extends AbstractEntity implements EntityInterface
     }
 
     /**
-     * Get the technical value
+     * Get the value of the caption
      *
      * @return string
      */

@@ -2,14 +2,16 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Record extends EntityAbstract implements Entity
+use Doctrine\Common\Collections\ArrayCollection;
+
+class Record extends AbstractEntity implements EntityInterface
 {
     protected $recordId;
     protected $databoxId;
     protected $title;
     protected $mimeType;
     protected $originalName;
-    protected $lastModification;
+    protected $updatedOn;
     protected $createdOn;
     protected $collectionId;
     protected $sha256;
@@ -20,6 +22,11 @@ class Record extends EntityAbstract implements Entity
     protected $metadatas;
     protected $subdefs;
 
+    /**
+     * Get the record id
+     *
+     * @return integer
+     */
     public function getRecordId()
     {
         return $this->recordId;
@@ -30,6 +37,11 @@ class Record extends EntityAbstract implements Entity
         $this->recordId = $recordId;
     }
 
+    /**
+     * Get the databox id
+     *
+     * @return integer
+     */
     public function getDataboxId()
     {
         return $this->databoxId;
@@ -40,6 +52,11 @@ class Record extends EntityAbstract implements Entity
         $this->databoxId = $databoxId;
     }
 
+    /**
+     * Get the record title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
@@ -50,6 +67,11 @@ class Record extends EntityAbstract implements Entity
         $this->title = $title;
     }
 
+    /**
+     * Get the record mime type
+     *
+     * @return string
+     */
     public function getMimeType()
     {
         return $this->mimeType;
@@ -60,6 +82,11 @@ class Record extends EntityAbstract implements Entity
         $this->mimeType = $mimeType;
     }
 
+    /**
+     * Get the record original name
+     *
+     * @return string
+     */
     public function getOriginalName()
     {
         return $this->originalName;
@@ -70,26 +97,41 @@ class Record extends EntityAbstract implements Entity
         $this->originalName = $originalName;
     }
 
-    public function getLastModification()
+    /**
+     * Last updated date
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedOn()
     {
-        return $this->lastModification;
+        return $this->updatedOn;
     }
 
-    public function setLastModification($lastModification)
+    public function setUpdatedOn(\DateTime $updatedOn)
     {
-        $this->lastModification = $lastModification;
+        $this->updatedOn = $updatedOn;
     }
 
+    /**
+     * Creation date
+     *
+     * @return \DateTime
+     */
     public function getCreatedOn()
     {
         return $this->createdOn;
     }
 
-    public function setCreatedOn($createdOn)
+    public function setCreatedOn(\DateTime $createdOn)
     {
         $this->createdOn = $createdOn;
     }
 
+    /**
+     * Get the record collection id
+     *
+     * @return integer
+     */
     public function getCollectionId()
     {
         return $this->collectionId;
@@ -100,6 +142,11 @@ class Record extends EntityAbstract implements Entity
         $this->collectionId = $collectionId;
     }
 
+    /**
+     * Get the record SHA256 hash
+     *
+     * @return string
+     */
     public function getSha256()
     {
         return $this->sha256;
@@ -110,16 +157,27 @@ class Record extends EntityAbstract implements Entity
         $this->sha256 = $sha256;
     }
 
+    /**
+     * Return the thumbnail of the record as a PhraseanetSDK\Entity\Subdef object
+     * if the thumbnail exists null otherwise
+     *
+     * @return Subdef|null
+     */
     public function getThumbnail()
     {
         return $this->thumbnail;
     }
 
-    public function setThumbnail($thumbnail)
+    public function setThumbnail(Subdef $thumbnail)
     {
         $this->thumbnail = $thumbnail;
     }
 
+    /**
+     * Get the Record phraseaType IMAGE|VIDEO|DOCUMENT etc..
+     *
+     * @return string
+     */
     public function getPhraseaType()
     {
         return $this->phraseaType;
@@ -130,6 +188,11 @@ class Record extends EntityAbstract implements Entity
         $this->phraseaType = $phraseaType;
     }
 
+    /**
+     * Get the record UUID
+     *
+     * @return string
+     */
     public function getUuid()
     {
         return $this->uuid;
@@ -140,23 +203,73 @@ class Record extends EntityAbstract implements Entity
         $this->uuid = $uuid;
     }
 
+    /**
+     * Get a collection of Phraseanet\Entity\Technical data objects
+     *
+     * @return ArrayCollection
+     */
     public function getTechnicalInformations()
     {
         return $this->technicalInformations;
     }
 
-    public function setTechnicalInformations($technicalInformations)
+    public function setTechnicalInformations(ArrayCollection $technicalInformations)
     {
         $this->technicalInformations = $technicalInformations;
     }
 
-    public function getSubdefs()
+    /**
+     * Return a collection of PhraseanetSDK\Entity\Subdef for the record
+     *
+     * Precise a name to get the desired subdef identified by its name
+     *
+     * /!\ This method requests the API
+     *
+     * @param  string|null            $name The desired subdef name
+     * @return ArrayCollection|Subdef
+     */
+    public function getSubdefs($name = null)
     {
-        return $this->em->getRepository('subdef')->findAll($this);
+        if (null !== $name) {
+            return $this->em->getRepository('subdef')->findByRecordAndName($this->getDataboxId(), $this->getRecordId(), $name);
+        }
+
+        return $this->em->getRepository('subdef')->findByRecord($this->getDataboxId(), $this->getRecordId());
     }
 
+    /**
+     * Return the record metdatas as a collection of PhraseanetSDK\Entity\Metadatas objects
+     *
+     * /!\ This method requests the API
+     *
+     * @return ArrayCollection
+     */
     public function getMetadatas()
     {
-        return $this->em->getRepository('metadatas')->findAll($this);
+        return $this->em->getRepository('metadatas')->findByRecord($this->getDataboxId(), $this->getRecordId());
+    }
+
+    /**
+     * Get the record caption as collection of PhraseanetSDK\Entity\RecordCaption objects
+     *
+     * /!\ This method requests the API
+     *
+     * @return ArrayCollection
+     */
+    public function getCaption()
+    {
+        return $this->em->getRepository('caption')->findByRecord($this->getDataboxId(), $this->getRecordId());
+    }
+
+    /**
+     * Get the record status as collection of PhraseanetSDK\Entity\RecordStatus objects
+     *
+     * /!\ This method requests the API
+     *
+     * @return ArrayCollection
+     */
+    public function getStatus()
+    {
+        return $this->em->getRepository('recordStatus')->findByRecord($this->getDataboxId(), $this->getRecordId());
     }
 }

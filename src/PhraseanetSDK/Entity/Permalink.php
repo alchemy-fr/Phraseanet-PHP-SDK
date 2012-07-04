@@ -2,16 +2,21 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Permalink extends EntityAbstract implements Entity
+class Permalink extends AbstractEntity implements EntityInterface
 {
     protected $id;
     protected $isActivated;
     protected $label;
-    protected $lastModified;
+    protected $updatedOn;
     protected $createdOn;
     protected $pageUrl;
     protected $url;
 
+    /**
+     * Get the permalink id
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
@@ -22,7 +27,12 @@ class Permalink extends EntityAbstract implements Entity
         $this->id = $id;
     }
 
-    public function getIsActivated()
+    /**
+     * Tell whether the permalink is activated
+     *
+     * @return boolean
+     */
+    public function isActivated()
     {
         return $this->isActivated;
     }
@@ -32,6 +42,11 @@ class Permalink extends EntityAbstract implements Entity
         $this->isActivated = $isActivated;
     }
 
+    /**
+     * get the permalink label
+     *
+     * @return string
+     */
     public function getLabel()
     {
         return $this->label;
@@ -42,34 +57,41 @@ class Permalink extends EntityAbstract implements Entity
         $this->label = $label;
     }
 
-    public function getLastModified()
+    /**
+     * Last updated date
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedOn()
     {
-        return $this->lastModified;
+        return $this->updatedOn;
     }
 
-    public function setLastModified($lastModified)
+    public function setUpdatedOn(\DateTime $updatedOn)
     {
-        $this->lastModified = \DateTime::createFromFormat(
-                \DateTime::ATOM
-                , $lastModified
-                , new \DateTimeZone(date_default_timezone_get())
-        );
+        $this->updatedOn = $updatedOn;
     }
 
+    /**
+     * Creation date
+     *
+     * @return \DateTime
+     */
     public function getCreatedOn()
     {
         return $this->createdOn;
     }
 
-    public function setCreatedOn($createdOn)
+    public function setCreatedOn(\DateTime $createdOn)
     {
-        $this->createdOn = \DateTime::createFromFormat(
-                \DateTime::ATOM
-                , $createdOn
-                , new \DateTimeZone(date_default_timezone_get())
-        );
+        $this->createdOn = $createdOn;
     }
 
+    /**
+     * Get the page url
+     *
+     * @return string
+     */
     public function getPageUrl()
     {
         return $this->pageUrl;
@@ -80,6 +102,11 @@ class Permalink extends EntityAbstract implements Entity
         $this->pageUrl = $pageUrl;
     }
 
+    /**
+     * Get Url
+     *
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;

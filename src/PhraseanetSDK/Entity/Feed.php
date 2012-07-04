@@ -2,17 +2,81 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Feed extends EntityAbstract implements Entity
+use Doctrine\Common\Collections\ArrayCollection;
+
+class Feed extends AbstractEntity implements EntityInterface
 {
+    /**
+     *
+     * @var int
+     */
     protected $id;
+
+    /**
+     *
+     * @var string
+     */
     protected $title;
+
+    /**
+     *
+     * @var string
+     */
     protected $icon;
+
+    /**
+     *
+     * @var string
+     */
     protected $subTitle;
+
+    /**
+     *
+     * @var int
+     */
     protected $totalEntries;
+
+    /**
+     *
+     * @var string
+     */
     protected $createdOn;
+
+    /**
+     *
+     * @var string
+     */
     protected $updatedOn;
+
+    /**
+     *
+     * @var Doctrine\Common\ArrayCollection
+     */
     protected $entries;
 
+    /**
+     *
+     * @var boolean
+     */
+    protected $public;
+
+    /**
+     *
+     * @var boolean
+     */
+    protected $readonly;
+
+    /**
+     *
+     * @var boolean
+     */
+    protected $deletable;
+
+    /**
+     * The feed id
+     *
+     * @return type
+     */
     public function getId()
     {
         return $this->id;
@@ -23,6 +87,11 @@ class Feed extends EntityAbstract implements Entity
         $this->id = $id;
     }
 
+    /**
+     * The feed title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
@@ -33,6 +102,11 @@ class Feed extends EntityAbstract implements Entity
         $this->title = $title;
     }
 
+    /**
+     * The feed icon
+     *
+     * @return string
+     */
     public function getIcon()
     {
         return $this->icon;
@@ -43,6 +117,11 @@ class Feed extends EntityAbstract implements Entity
         $this->icon = $icon;
     }
 
+    /**
+     * The feed subtitle
+     *
+     * @return string
+     */
     public function getSubTitle()
     {
         return $this->subTitle;
@@ -53,6 +132,11 @@ class Feed extends EntityAbstract implements Entity
         $this->subTitle = $subTitle;
     }
 
+    /**
+     * Get the total entries of the feed
+     *
+     * @return type
+     */
     public function getTotalEntries()
     {
         return $this->totalEntries;
@@ -63,42 +147,98 @@ class Feed extends EntityAbstract implements Entity
         $this->totalEntries = $totalEntries;
     }
 
+    /**
+     * Creation date
+     *
+     * @return \DateTime
+     */
     public function getCreatedOn()
     {
         return $this->createdOn;
     }
 
-    public function setCreatedOn($createdOn)
+    public function setCreatedOn(\DateTime $createdOn)
     {
-        $this->createdOn = \DateTime::createFromFormat(
-                \DateTime::ATOM
-                , $createdOn
-                , new \DateTimeZone(date_default_timezone_get())
-        );
+        $this->createdOn = $createdOn;
     }
 
+    /**
+     * Last updted date
+     *
+     * @return \DateTime
+     */
     public function getUpdatedOn()
     {
         return $this->updatedOn;
     }
 
-    public function setUpdatedOn($updatedOn)
+    public function setUpdatedOn(\DateTime $updatedOn)
     {
-        $this->updatedOn = \DateTime::createFromFormat(
-                \DateTime::ATOM
-                , $updatedOn
-                , new \DateTimeZone(date_default_timezone_get())
-        );
+        $this->updatedOn = $updatedOn;
     }
 
-    public function getEntries()
+    /**
+     * Get the feed entries
+     * Return a collection of PraseanetSDL\Entity\FeedEntry object
+     *
+     * /!\ This method requests the API
+     *
+     * @param  integer         $offset  The offset
+     * @param  interger        $perPage The number of items
+     * @return ArrayCollection
+     */
+    public function getEntries($offset, $perPage)
     {
-        return $this->entries;
+        return $this->em->getRepository('entry')->findByFeed($this->getId(), $offset, $perPage);
     }
 
-    public function setEntries($entries)
+    public function setEntries(ArrayCollection $entries)
     {
         $this->entries = $entries;
     }
-}
 
+    /**
+     * Tell whether the feed is public or not
+     *
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return $this->public;
+    }
+
+    public function setPublic($public)
+    {
+        $this->public = $public;
+    }
+
+    /**
+     * Tell whether the feed is a read only feed
+     *
+     * @return boolean
+     */
+    public function isReadonly()
+    {
+        return $this->readonly;
+    }
+
+    public function setReadonly($readonly)
+    {
+        $this->readonly = $readonly;
+    }
+
+    /**
+     * Tell whether the feed is deletable
+     *
+     * @return boolean
+     */
+    public function isDeletable()
+    {
+        return $this->deletable;
+    }
+
+    public function setDeletable($deletable)
+    {
+        $this->deletable = $deletable;
+    }
+}

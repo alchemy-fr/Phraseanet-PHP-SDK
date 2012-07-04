@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Subdef extends EntityAbstract implements Entity
+class Subdef extends AbstractEntity implements EntityInterface
 {
     protected $name;
     protected $height;
@@ -12,6 +12,11 @@ class Subdef extends EntityAbstract implements Entity
     protected $mimeType;
     protected $permalink;
 
+    /**
+     * Get subdef name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
@@ -22,6 +27,11 @@ class Subdef extends EntityAbstract implements Entity
         $this->name = $name;
     }
 
+    /**
+     * Get subdef height
+     *
+     * @return integer
+     */
     public function getHeight()
     {
         return $this->height;
@@ -32,6 +42,11 @@ class Subdef extends EntityAbstract implements Entity
         $this->height = $height;
     }
 
+    /**
+     * Get subdef width
+     *
+     * @return integer
+     */
     public function getWidth()
     {
         return $this->width;
@@ -42,6 +57,11 @@ class Subdef extends EntityAbstract implements Entity
         $this->width = $width;
     }
 
+    /**
+     * Get subdef file size
+     *
+     * @return int
+     */
     public function getFileSize()
     {
         return $this->fileSize;
@@ -52,6 +72,11 @@ class Subdef extends EntityAbstract implements Entity
         $this->fileSize = $fileSize;
     }
 
+    /**
+     * Get the player type
+     *
+     * @return string
+     */
     public function getPlayerType()
     {
         return $this->playerType;
@@ -62,6 +87,11 @@ class Subdef extends EntityAbstract implements Entity
         $this->playerType = $playerType;
     }
 
+    /**
+     * Get subdef mime type
+     *
+     * @return string
+     */
     public function getMimeType()
     {
         return $this->mimeType;
@@ -72,12 +102,17 @@ class Subdef extends EntityAbstract implements Entity
         $this->mimeType = $mimetype;
     }
 
+    /**
+     * Get the permalink related to the subdef
+     *
+     * @return Permalink
+     */
     public function getPermalink()
     {
         return $this->permalink;
     }
 
-    public function setPermalink($permalink)
+    public function setPermalink(Permalink $permalink)
     {
         $this->permalink = $permalink;
     }
