@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Entity\Query | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\Query</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Query</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a>        implements
+        <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    int
+                </td>
+                <td class="last">
+                    <a href="#method_getOffsetStart">getOffsetStart</a>()
+                    <p>The offset start</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setOffsetStart">setOffsetStart</a>($offsetStart)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getPerPage">getPerPage</a>()
+                    <p>The number item to retrieve</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setPerPage">setPerPage</a>($perPage)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getAvailableResults">getAvailableResults</a>()
+                    <p>Return the available results its depens of the search engine used on the requested instance</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setAvailableResults">setAvailableResults</a>($availableResults)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getTotalResults">getTotalResults</a>()
+                    <p>Get the total result</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setTotalResults">setTotalResults</a>($totalResults)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getError">getError</a>()
+                    <p>Get errors as string</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setError">setError</a>($error)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getWarning">getWarning</a>()
+                    <p>Get warnings as string</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setWarning">setWarning</a>($warning)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="PhraseanetSDK\Entity\float">float</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getQueryTime">getQueryTime</a>()
+                    <p>Get the query time</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setQueryTime">setQueryTime</a>($queryTime)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSearchIndexes">getSearchIndexes</a>()
+                    <p>Get search indexes</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSearchIndexes">setSearchIndexes</a>($searchIndexes)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getQuery">getQuery</a>()
+                    <p>Get the query string</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setQuery">setQuery</a>($query)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getSuggestions">getSuggestions</a>()
+                    <p>Get query suggestions as a collection of PhraseanetSDK\Entity\QuerySuggestion objects</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSuggestions">setSuggestions</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $suggestions)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getResults">getResults</a>()
+                    <p>Get result as a collection of PhraseanetSDK\Entity\Record objects</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setResults">setResults</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $results)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a> at line 15</div>
+        <code>final            public            
+    <strong>__construct</strong>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a></td>
+                <td>$em</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getOffsetStart">
+        <div class="location">at line 36</div>
+        <code>            public            int
+    <strong>getOffsetStart</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The offset start</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setOffsetStart">
+        <div class="location">at line 41</div>
+        <code>            public            
+    <strong>setOffsetStart</strong>($offsetStart)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$offsetStart</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getPerPage">
+        <div class="location">at line 51</div>
+        <code>            public            integer
+    <strong>getPerPage</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The number item to retrieve</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPerPage">
+        <div class="location">at line 56</div>
+        <code>            public            
+    <strong>setPerPage</strong>($perPage)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$perPage</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAvailableResults">
+        <div class="location">at line 67</div>
+        <code>            public            integer
+    <strong>getAvailableResults</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Return the available results its depens of the search engine used on the requested instance</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAvailableResults">
+        <div class="location">at line 72</div>
+        <code>            public            
+    <strong>setAvailableResults</strong>($availableResults)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$availableResults</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getTotalResults">
+        <div class="location">at line 82</div>
+        <code>            public            integer
+    <strong>getTotalResults</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the total result</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTotalResults">
+        <div class="location">at line 87</div>
+        <code>            public            
+    <strong>setTotalResults</strong>($totalResults)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$totalResults</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getError">
+        <div class="location">at line 97</div>
+        <code>            public            string
+    <strong>getError</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get errors as string</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setError">
+        <div class="location">at line 102</div>
+        <code>            public            
+    <strong>setError</strong>($error)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$error</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getWarning">
+        <div class="location">at line 112</div>
+        <code>            public            string
+    <strong>getWarning</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get warnings as string</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setWarning">
+        <div class="location">at line 117</div>
+        <code>            public            
+    <strong>setWarning</strong>($warning)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$warning</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getQueryTime">
+        <div class="location">at line 127</div>
+        <code>            public            <abbr title="PhraseanetSDK\Entity\float">float</abbr>
+    <strong>getQueryTime</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the query time</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="PhraseanetSDK\Entity\float">float</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setQueryTime">
+        <div class="location">at line 132</div>
+        <code>            public            
+    <strong>setQueryTime</strong>($queryTime)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$queryTime</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSearchIndexes">
+        <div class="location">at line 142</div>
+        <code>            public            string
+    <strong>getSearchIndexes</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get search indexes</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSearchIndexes">
+        <div class="location">at line 147</div>
+        <code>            public            
+    <strong>setSearchIndexes</strong>($searchIndexes)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$searchIndexes</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getQuery">
+        <div class="location">at line 157</div>
+        <code>            public            string
+    <strong>getQuery</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the query string</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setQuery">
+        <div class="location">at line 162</div>
+        <code>            public            
+    <strong>setQuery</strong>($query)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$query</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSuggestions">
+        <div class="location">at line 173</div>
+        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+    <strong>getSuggestions</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get query suggestions as a collection of PhraseanetSDK\Entity\QuerySuggestion objects</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSuggestions">
+        <div class="location">at line 178</div>
+        <code>            public            
+    <strong>setSuggestions</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $suggestions)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+                <td>$suggestions</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getResults">
+        <div class="location">at line 188</div>
+        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+    <strong>getResults</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get result as a collection of PhraseanetSDK\Entity\Record objects</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setResults">
+        <div class="location">at line 193</div>
+        <code>            public            
+    <strong>setResults</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $results)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+                <td>$results</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

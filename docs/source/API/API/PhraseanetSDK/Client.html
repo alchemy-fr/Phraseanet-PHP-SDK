@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Client | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../classes.html">Classes</a></li>
+                            <li><a href="../namespaces.html">Namespaces</a></li>
+                        <li><a href="../interfaces.html">Interfaces</a></li>
+            <li><a href="../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../PhraseanetSDK.html">PhraseanetSDK</a>\Client</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Client</strong>        extends <a href="../PhraseanetSDK/AbstractClient.html"><abbr title="PhraseanetSDK\AbstractClient">AbstractClient</abbr></a></p>
+
+            <div class="description">
+            <p>Phraseanet Client, perform the HTTP requests against Phraseanet API</p>
+            <p></p>
+        </div>
+    
+            <h2>Constants</h2>
+
+            <table>
+                    <tr>
+                <td>TOKEN_ENDPOINT</td>
+                <td class="last">
+                    <p><em>Phraseanet API Endpoint</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>AUTH_ENDPOINT</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>GRANT_TYPE_AUTHORIZATION</td>
+                <td class="last">
+                    <p><em>Oauth grant type</em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_getAccessToken">getAccessToken</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setAccessToken">setAccessToken</a>($token)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>($apiKey, $apiSecret, <abbr title="Guzzle\Http\Client">Client</abbr> $clientHttp, <abbr title="Monolog\Logger">Logger</abbr> $logger = null)
+                    <p>To create an API key/secret pair, go to your account adminstation panel in your phraseanet application.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Guzzle\Http\Client">Client</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getHttpClient">getHttpClient</a>()
+                    <p>Return the HTTP client</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setHttpClient">setHttpClient</a>(<abbr title="Guzzle\Http\Client">Client</abbr> $client)
+                    <p>Set the HTTP Client</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setGrantType">setGrantType</a>(string $type, array $info = null, <abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request = null)
+                    <p>Change the default grant type.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getGrantType">getGrantType</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getGrantInformations">getGrantInformations</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getAuthorizationUrl">getAuthorizationUrl</a>(array $scope = array())
+                    <p>Build the Authorisation Url</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_retrieveAccessToken">retrieveAccessToken</a>(<abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request)
+                    <p>Retrieve your access Token from your callback endpoint</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="PhraseanetSDK\PhraseanetClientApi">PhraseanetClientApi</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_logout">logout</a>()
+                    <p>Destroy stored token</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="PhraseanetSDK\PhraseanetApiResponse">PhraseanetApiResponse</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_call">call</a>(string $path, array $args = array(), string $http_method = &#039;POST&#039;, string $throwException = true)
+                    <p>Call a remote Phraseanet API method</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_getAccessToken">
+        <div class="location">at line 117</div>
+        <code>            public            mixed
+    <strong>getAccessToken</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAccessToken">
+        <div class="location">at line 125</div>
+        <code>            public            
+    <strong>setAccessToken</strong>($token)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method___construct">
+        <div class="location">at line 99</div>
+        <code>            public            
+    <strong>__construct</strong>($apiKey, $apiSecret, <abbr title="Guzzle\Http\Client">Client</abbr> $clientHttp, <abbr title="Monolog\Logger">Logger</abbr> $logger = null)</code>
+    </h3>
+    <div class="details">
+        <p>To create an API key/secret pair, go to your account adminstation panel in your phraseanet application.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$apiKey</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$apiSecret</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Guzzle\Http\Client">Client</abbr></td>
+                <td>$clientHttp</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Monolog\Logger">Logger</abbr></td>
+                <td>$logger</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getHttpClient">
+        <div class="location">at line 137</div>
+        <code>            public            <abbr title="Guzzle\Http\Client">Client</abbr>
+    <strong>getHttpClient</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Return the HTTP client</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Guzzle\Http\Client">Client</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setHttpClient">
+        <div class="location">at line 148</div>
+        <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+    <strong>setHttpClient</strong>(<abbr title="Guzzle\Http\Client">Client</abbr> $client)</code>
+    </h3>
+    <div class="details">
+        <p>Set the HTTP Client</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Guzzle\Http\Client">Client</abbr></td>
+                <td>$client</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setGrantType">
+        <div class="location">at line 173</div>
+        <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+    <strong>setGrantType</strong>(string $type, array $info = null, <abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request = null)</code>
+    </h3>
+    <div class="details">
+        <p>Change the default grant type.</p>
+        <p>!! Only Client::GRANT_TYPE_AUTHORIZATION is currently supported !!<br />
+<br />
+ Info Keys:<br />
+ - redirect_uri: if $type is Client::GRANT_TYPE_AUTHORIZATION, this key can be provided. If omited,<br />
+                 the current URL will be used. Make sure this value have to stay the same before<br />
+                 the user is redirect to the authorization page and after the authorization page<br />
+                 redirected to this provided URI (the token server will change this).</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>the API grant type</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$info</td>
+                <td>info associated to the choosen grant type</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr></td>
+                <td>$request</td>
+                <td>The request associated with this authorization</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>if bad grant type provided</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getGrantType">
+        <div class="location">at line 202</div>
+        <code>            public            
+    <strong>getGrantType</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getGrantInformations">
+        <div class="location">at line 207</div>
+        <code>            public            
+    <strong>getGrantInformations</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAuthorizationUrl">
+        <div class="location">at line 219</div>
+        <code>            public            string
+    <strong>getAuthorizationUrl</strong>(array $scope = array())</code>
+    </h3>
+    <div class="details">
+        <p>Build the Authorisation Url</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$scope</td>
+                <td>the requested scope</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>the authorization url</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
+                <td>if bad grant type provided</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_retrieveAccessToken">
+        <div class="location">at line 246</div>
+        <code>            public            void
+    <strong>retrieveAccessToken</strong>(<abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request)</code>
+    </h3>
+    <div class="details">
+        <p>Retrieve your access Token from your callback endpoint</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr></td>
+                <td>$request</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="AuthenticationException">AuthenticationException</abbr></td>
+                <td>if error occurs during authentication</td>
+            </tr>
+                    <tr>
+                <td><abbr title="TransportException">TransportException</abbr></td>
+                <td>if problem occurs with transport layer</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_logout">
+        <div class="location">at line 299</div>
+        <code>            public            <abbr title="PhraseanetSDK\PhraseanetClientApi">PhraseanetClientApi</abbr>
+    <strong>logout</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Destroy stored token</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="PhraseanetSDK\PhraseanetClientApi">PhraseanetClientApi</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_call">
+        <div class="location">at line 320</div>
+        <code>            public            <abbr title="PhraseanetSDK\PhraseanetApiResponse">PhraseanetApiResponse</abbr>
+    <strong>call</strong>(string $path, array $args = array(), string $http_method = &#039;POST&#039;, string $throwException = true)</code>
+    </h3>
+    <div class="details">
+        <p>Call a remote Phraseanet API method</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$path</td>
+                <td>remote path</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$args</td>
+                <td>request parameters</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$http_method</td>
+                <td>http method</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$throwException</td>
+                <td>throw or not exception</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="PhraseanetSDK\PhraseanetApiResponse">PhraseanetApiResponse</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="BadRequestException">BadRequestException</abbr></td>
+                <td>if method is unsupported phraseanet API</td>
+            </tr>
+                    <tr>
+                <td><abbr title="BadResponseException">BadResponseException</abbr></td>
+                <td>if response is 4xx or 5xx</td>
+            </tr>
+                    <tr>
+                <td><abbr title="TransportException">TransportException</abbr></td>
+                <td>if problem occurs with transport layer</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

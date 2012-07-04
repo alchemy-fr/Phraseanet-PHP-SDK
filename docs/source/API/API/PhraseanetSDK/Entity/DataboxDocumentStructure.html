@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Entity\DataboxDocumentStructure | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\DataboxDocumentStructure</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>DataboxDocumentStructure</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a>        implements
+        <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    int
+                </td>
+                <td class="last">
+                    <a href="#method_getId">getId</a>()
+                    <p>The documentary field id</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setId">setId</a>($id)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getNamespace">getNamespace</a>()
+                    <p>The documentary field metadata namespace</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setNamespace">setNamespace</a>($namepsace)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSource">getSource</a>()
+                    <p>The documentary field metadatas source</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSource">setSource</a>($source)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getTagname">getTagname</a>()
+                    <p>The documentary field metadatas tagname</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setTagname">setTagname</a>($tagname)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getName">getName</a>()
+                    <p>The documentary field name</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setName">setName</a>($name)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSeparator">getSeparator</a>()
+                    <p>The mutlivalue field separator</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSeparator">setSeparator</a>($separator)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getThesaurusBranch">getThesaurusBranch</a>()
+                    <p>Get the associated thesaurus branch</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setThesaurusBranch">setThesaurusBranch</a>($thesaurus_branch)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getType">getType</a>()
+                    <p>get the type of the field values</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setType">setType</a>($type)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isIndexable">isIndexable</a>()
+                    <p>Tell whether the field is indexable</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setIndexable">setIndexable</a>($indexable)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isMultivalue">isMultivalue</a>()
+                    <p>Tell wheteher the field is ultivalued or not</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setMultivalue">setMultivalue</a>($multivalue)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isReadonly">isReadonly</a>()
+                    <p>Tell whether the field is a read only field</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setReadonly">setReadonly</a>($readonly)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isRequired">isRequired</a>()
+                    <p>Tell whether the firld is required</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setRequired">setRequired</a>($required)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a> at line 15</div>
+        <code>final            public            
+    <strong>__construct</strong>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a></td>
+                <td>$em</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getId">
+        <div class="location">at line 25</div>
+        <code>            public            int
+    <strong>getId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The documentary field id</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setId">
+        <div class="location">at line 30</div>
+        <code>            public            
+    <strong>setId</strong>($id)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$id</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getNamespace">
+        <div class="location">at line 40</div>
+        <code>            public            string
+    <strong>getNamespace</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The documentary field metadata namespace</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setNamespace">
+        <div class="location">at line 45</div>
+        <code>            public            
+    <strong>setNamespace</strong>($namepsace)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$namepsace</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSource">
+        <div class="location">at line 55</div>
+        <code>            public            string
+    <strong>getSource</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The documentary field metadatas source</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSource">
+        <div class="location">at line 60</div>
+        <code>            public            
+    <strong>setSource</strong>($source)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$source</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getTagname">
+        <div class="location">at line 70</div>
+        <code>            public            string
+    <strong>getTagname</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The documentary field metadatas tagname</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTagname">
+        <div class="location">at line 75</div>
+        <code>            public            
+    <strong>setTagname</strong>($tagname)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$tagname</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getName">
+        <div class="location">at line 85</div>
+        <code>            public            string
+    <strong>getName</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The documentary field name</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setName">
+        <div class="location">at line 90</div>
+        <code>            public            
+    <strong>setName</strong>($name)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSeparator">
+        <div class="location">at line 100</div>
+        <code>            public            string
+    <strong>getSeparator</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The mutlivalue field separator</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSeparator">
+        <div class="location">at line 105</div>
+        <code>            public            
+    <strong>setSeparator</strong>($separator)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$separator</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getThesaurusBranch">
+        <div class="location">at line 115</div>
+        <code>            public            string
+    <strong>getThesaurusBranch</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the associated thesaurus branch</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setThesaurusBranch">
+        <div class="location">at line 120</div>
+        <code>            public            
+    <strong>setThesaurusBranch</strong>($thesaurus_branch)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$thesaurus_branch</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getType">
+        <div class="location">at line 130</div>
+        <code>            public            string
+    <strong>getType</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>get the type of the field values</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setType">
+        <div class="location">at line 135</div>
+        <code>            public            
+    <strong>setType</strong>($type)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isIndexable">
+        <div class="location">at line 145</div>
+        <code>            public            boolean
+    <strong>isIndexable</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the field is indexable</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setIndexable">
+        <div class="location">at line 150</div>
+        <code>            public            
+    <strong>setIndexable</strong>($indexable)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$indexable</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isMultivalue">
+        <div class="location">at line 160</div>
+        <code>            public            boolean
+    <strong>isMultivalue</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell wheteher the field is ultivalued or not</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setMultivalue">
+        <div class="location">at line 165</div>
+        <code>            public            
+    <strong>setMultivalue</strong>($multivalue)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$multivalue</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isReadonly">
+        <div class="location">at line 175</div>
+        <code>            public            boolean
+    <strong>isReadonly</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the field is a read only field</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setReadonly">
+        <div class="location">at line 180</div>
+        <code>            public            
+    <strong>setReadonly</strong>($readonly)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$readonly</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isRequired">
+        <div class="location">at line 190</div>
+        <code>            public            boolean
+    <strong>isRequired</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the firld is required</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setRequired">
+        <div class="location">at line 195</div>
+        <code>            public            
+    <strong>setRequired</strong>($required)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$required</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

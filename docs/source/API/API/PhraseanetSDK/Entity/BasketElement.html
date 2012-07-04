@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Entity\BasketElement | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\BasketElement</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>BasketElement</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a>        implements
+        <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getBasketElementId">getBasketElementId</a>()
+                    <p>The id of the element</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setBasketElementId">setBasketElementId</a>($basketElementId)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getOrder">getOrder</a>()
+                    <p>Position of the element in the basket</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setOrder">setOrder</a>($order)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isValidationItem">isValidationItem</a>()
+                    <p>Tell whether the basket item is a validation item</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setValidationItem">setValidationItem</a>($validationItem)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../PhraseanetSDK/Entity/Record.html"><abbr title="PhraseanetSDK\Entity\Record">Record</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getRecord">getRecord</a>()
+                    <p>Get the record associated to the basket item</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setRecord">setRecord</a>(<a href="../../PhraseanetSDK/Entity/Record.html"><abbr title="PhraseanetSDK\Entity\Record">Record</abbr></a> $record)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getValidationChoices">getValidationChoices</a>()
+                    <p>Retrieve the choice of all participants that concern the basket element in a collection PhraseanetSDK\Entity\BasketValidationChoice object</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setValidationChoices">setValidationChoices</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $validationChoices)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getNote">getNote</a>()
+                    <p>Get the annotation about the validation of the current authenticated user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setNote">setNote</a>($note)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    null|boolean
+                </td>
+                <td class="last">
+                    <a href="#method_getAgreement">getAgreement</a>()
+                    <p>Get the agreement of the current authenticated user</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setAgreement">setAgreement</a>($agreement)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a> at line 15</div>
+        <code>final            public            
+    <strong>__construct</strong>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a></td>
+                <td>$em</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBasketElementId">
+        <div class="location">at line 22</div>
+        <code>            public            integer
+    <strong>getBasketElementId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The id of the element</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBasketElementId">
+        <div class="location">at line 27</div>
+        <code>            public            
+    <strong>setBasketElementId</strong>($basketElementId)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$basketElementId</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getOrder">
+        <div class="location">at line 37</div>
+        <code>            public            integer
+    <strong>getOrder</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Position of the element in the basket</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setOrder">
+        <div class="location">at line 42</div>
+        <code>            public            
+    <strong>setOrder</strong>($order)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$order</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isValidationItem">
+        <div class="location">at line 52</div>
+        <code>            public            boolean
+    <strong>isValidationItem</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the basket item is a validation item</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setValidationItem">
+        <div class="location">at line 57</div>
+        <code>            public            
+    <strong>setValidationItem</strong>($validationItem)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$validationItem</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRecord">
+        <div class="location">at line 67</div>
+        <code>            public            <a href="../../PhraseanetSDK/Entity/Record.html"><abbr title="PhraseanetSDK\Entity\Record">Record</abbr></a>
+    <strong>getRecord</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the record associated to the basket item</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../PhraseanetSDK/Entity/Record.html"><abbr title="PhraseanetSDK\Entity\Record">Record</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setRecord">
+        <div class="location">at line 76</div>
+        <code>            public            
+    <strong>setRecord</strong>(<a href="../../PhraseanetSDK/Entity/Record.html"><abbr title="PhraseanetSDK\Entity\Record">Record</abbr></a> $record)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Entity/Record.html"><abbr title="PhraseanetSDK\Entity\Record">Record</abbr></a></td>
+                <td>$record</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getValidationChoices">
+        <div class="location">at line 87</div>
+        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+    <strong>getValidationChoices</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Retrieve the choice of all participants that concern the basket element in a collection PhraseanetSDK\Entity\BasketValidationChoice object</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setValidationChoices">
+        <div class="location">at line 92</div>
+        <code>            public            
+    <strong>setValidationChoices</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $validationChoices)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+                <td>$validationChoices</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getNote">
+        <div class="location">at line 102</div>
+        <code>            public            string
+    <strong>getNote</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the annotation about the validation of the current authenticated user</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setNote">
+        <div class="location">at line 107</div>
+        <code>            public            
+    <strong>setNote</strong>($note)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$note</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAgreement">
+        <div class="location">at line 121</div>
+        <code>            public            null|boolean
+    <strong>getAgreement</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the agreement of the current authenticated user</p>
+        <p>- null : no response yet<br />
+ - true : accepted<br />
+ - false: rejected</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>null|boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAgreement">
+        <div class="location">at line 126</div>
+        <code>            public            
+    <strong>setAgreement</strong>($agreement)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$agreement</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

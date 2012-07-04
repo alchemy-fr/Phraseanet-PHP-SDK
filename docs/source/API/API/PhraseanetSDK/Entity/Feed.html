@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Entity\Feed | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\Feed</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Feed</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a>        implements
+        <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="PhraseanetSDK\Entity\type">type</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getId">getId</a>()
+                    <p>The feed id</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setId">setId</a>($id)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getTitle">getTitle</a>()
+                    <p>The feed title</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setTitle">setTitle</a>($title)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getIcon">getIcon</a>()
+                    <p>The feed icon</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setIcon">setIcon</a>($icon)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSubTitle">getSubTitle</a>()
+                    <p>The feed subtitle</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSubTitle">setSubTitle</a>($subTitle)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="PhraseanetSDK\Entity\type">type</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getTotalEntries">getTotalEntries</a>()
+                    <p>Get the total entries of the feed</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setTotalEntries">setTotalEntries</a>($totalEntries)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getCreatedOn">getCreatedOn</a>()
+                    <p>Creation date</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setCreatedOn">setCreatedOn</a>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $createdOn)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getUpdatedOn">getUpdatedOn</a>()
+                    <p>Last updted date</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setUpdatedOn">setUpdatedOn</a>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $updatedOn)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getEntries">getEntries</a>(integer $offset, <abbr title="PhraseanetSDK\Entity\interger">interger</abbr> $perPage)
+                    <p>Get the feed entries Return a collection of PraseanetSDL\Entity\FeedEntry object</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setEntries">setEntries</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $entries)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isPublic">isPublic</a>()
+                    <p>Tell whether the feed is public or not</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setPublic">setPublic</a>($public)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isReadonly">isReadonly</a>()
+                    <p>Tell whether the feed is a read only feed</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setReadonly">setReadonly</a>($readonly)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isDeletable">isDeletable</a>()
+                    <p>Tell whether the feed is deletable</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setDeletable">setDeletable</a>($deletable)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a> at line 15</div>
+        <code>final            public            
+    <strong>__construct</strong>(<a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $em)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a></td>
+                <td>$em</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getId">
+        <div class="location">at line 80</div>
+        <code>            public            <abbr title="PhraseanetSDK\Entity\type">type</abbr>
+    <strong>getId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The feed id</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="PhraseanetSDK\Entity\type">type</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setId">
+        <div class="location">at line 85</div>
+        <code>            public            
+    <strong>setId</strong>($id)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$id</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getTitle">
+        <div class="location">at line 95</div>
+        <code>            public            string
+    <strong>getTitle</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The feed title</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTitle">
+        <div class="location">at line 100</div>
+        <code>            public            
+    <strong>setTitle</strong>($title)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$title</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIcon">
+        <div class="location">at line 110</div>
+        <code>            public            string
+    <strong>getIcon</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The feed icon</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setIcon">
+        <div class="location">at line 115</div>
+        <code>            public            
+    <strong>setIcon</strong>($icon)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$icon</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSubTitle">
+        <div class="location">at line 125</div>
+        <code>            public            string
+    <strong>getSubTitle</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The feed subtitle</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSubTitle">
+        <div class="location">at line 130</div>
+        <code>            public            
+    <strong>setSubTitle</strong>($subTitle)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$subTitle</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getTotalEntries">
+        <div class="location">at line 140</div>
+        <code>            public            <abbr title="PhraseanetSDK\Entity\type">type</abbr>
+    <strong>getTotalEntries</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the total entries of the feed</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="PhraseanetSDK\Entity\type">type</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTotalEntries">
+        <div class="location">at line 145</div>
+        <code>            public            
+    <strong>setTotalEntries</strong>($totalEntries)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$totalEntries</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCreatedOn">
+        <div class="location">at line 155</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getCreatedOn</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Creation date</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCreatedOn">
+        <div class="location">at line 160</div>
+        <code>            public            
+    <strong>setCreatedOn</strong>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $createdOn)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr></td>
+                <td>$createdOn</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getUpdatedOn">
+        <div class="location">at line 170</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getUpdatedOn</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Last updted date</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setUpdatedOn">
+        <div class="location">at line 175</div>
+        <code>            public            
+    <strong>setUpdatedOn</strong>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $updatedOn)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr></td>
+                <td>$updatedOn</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getEntries">
+        <div class="location">at line 190</div>
+        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+    <strong>getEntries</strong>(integer $offset, <abbr title="PhraseanetSDK\Entity\interger">interger</abbr> $perPage)</code>
+    </h3>
+    <div class="details">
+        <p>Get the feed entries Return a collection of PraseanetSDL\Entity\FeedEntry object</p>
+        <p>/!\ This method requests the API</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$offset</td>
+                <td>The offset</td>
+            </tr>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\interger">interger</abbr></td>
+                <td>$perPage</td>
+                <td>The number of items</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setEntries">
+        <div class="location">at line 195</div>
+        <code>            public            
+    <strong>setEntries</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $entries)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+                <td>$entries</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isPublic">
+        <div class="location">at line 205</div>
+        <code>            public            boolean
+    <strong>isPublic</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the feed is public or not</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPublic">
+        <div class="location">at line 210</div>
+        <code>            public            
+    <strong>setPublic</strong>($public)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$public</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isReadonly">
+        <div class="location">at line 220</div>
+        <code>            public            boolean
+    <strong>isReadonly</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the feed is a read only feed</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setReadonly">
+        <div class="location">at line 225</div>
+        <code>            public            
+    <strong>setReadonly</strong>($readonly)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$readonly</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isDeletable">
+        <div class="location">at line 235</div>
+        <code>            public            boolean
+    <strong>isDeletable</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the feed is deletable</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setDeletable">
+        <div class="location">at line 240</div>
+        <code>            public            
+    <strong>setDeletable</strong>($deletable)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$deletable</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>
