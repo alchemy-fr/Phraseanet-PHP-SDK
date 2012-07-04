@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-class BadRequestException extends \Exception implements Exception
+class BadRequestException extends \Exception implements ExceptionInterface
 {
 
 }
