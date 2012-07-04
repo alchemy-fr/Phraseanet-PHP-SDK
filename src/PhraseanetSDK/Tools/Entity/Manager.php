@@ -2,13 +2,11 @@
 
 namespace PhraseanetSDK\Tools\Entity;
 
-use PhraseanetSDK\Exception;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Tools\Repository\Factory as RepoFactory;
 use PhraseanetSDK\Tools\Entity\Factory as EntityFactory;
 use PhraseanetSDK\Tools\Entity\Hydrator;
-use PhraseanetSDK\Entity\Entity;
-use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Entity\EntityInterface;
 
 class Manager
 {
@@ -29,7 +27,7 @@ class Manager
         return EntityFactory::build($type, $this);
     }
 
-    public function HydrateEntity(Entity $entity, $datas)
+    public function HydrateEntity(EntityInterface $entity, $datas)
     {
         return Hydrator::hydrate($entity, $datas, $this);
     }

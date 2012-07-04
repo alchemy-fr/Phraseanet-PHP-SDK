@@ -2,9 +2,8 @@
 
 namespace PhraseanetSDK\Tools\Entity;
 
-use PhraseanetSDK\Exception;
 use PhraseanetSDK\Tools\Entity\Manager;
-use PhraseanetSDK\Entity\Entity;
+use PhraseanetSDK\Entity\EntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Hydrator
@@ -13,7 +12,7 @@ class Hydrator
     /**
      * Transform a string to CamelStyle pr pascalCase
      *
-     * @param string $string the string to transform
+     * @param  string $string the string to transform
      * @return string
      */
     protected static function camelize($string)
@@ -26,42 +25,77 @@ class Hydrator
     /**
      * Hydrate an entity object from  a source
      *
-     * @param type $entity is the entity we want to populate
-     * @param \stdClass $object is the source of datas
+     * @param  type                          $entity is the entity we want to populate
+     * @param  \stdClass                     $object is the source of datas
      * @return \PhraseanetSDK\Tools\Entity\*
      */
-    public static function hydrate(Entity $entity, \stdClass $object, Manager $manager)
+    public static function hydrate(EntityInterface $entity, \stdClass $object, Manager $manager)
     {
+        $className = get_class($entity);
+        $reflectionClass = new \ReflectionClass($className);
+
         foreach (get_object_vars($object) as $propertyName => $propertyValue) {
             $methodName = self::camelize(sprintf('set%s', ucfirst($propertyName)));
+            if ($reflectionClass->hasMethod($methodName)) {
+                $reflectionMethod = new \ReflectionMethod($className, $methodName);
 
-            if (method_exists(get_class($entity), $methodName)) {
-                if (is_scalar($propertyValue)) {
-                    $entity->$methodName($propertyValue);
-                } elseif (is_array($propertyValue)) {
-                    $entityCollection = new ArrayCollection();
+                if ($reflectionMethod->getNumberOfParameters() > 0) {
+                    $parameters = $reflectionMethod->getParameters();
 
-                    foreach ($propertyValue as $object) {
-                        if (is_object($object)) {
+                    if (is_scalar($propertyValue)) {
+                        foreach ($parameters as $parameter) {
+                            /* @var $parameter \ReflectionParameter */
+                            if (null === $parameter->getClass()) {
+                                $entity->$methodName($propertyValue);
+                            } elseif ('DateTime' === $parameter->getClass()->getName()) {
+                                $date = \DateTime::createFromFormat(
+                                        \DateTime::ATOM
+                                        , $propertyValue
+                                        , new \DateTimeZone(date_default_timezone_get())
+                                );
+
+                                $entity->$methodName($date);
+                            }
+                        }
+                    } elseif (is_array($propertyValue)) {
+                        $entityCollection = new ArrayCollection();
+
+                        foreach ($propertyValue as $object) {
+                            if (is_object($object)) {
+                                $subEntity = self::hydrate(
+                                        $manager->getEntity($propertyName)
+                                        , $object
+                                        , $manager
+                                );
+
+                                $entityCollection->add($subEntity);
+                            } elseif (is_scalar($object)) {
+                                $entityCollection->add($object);
+                            }
+                        }
+
+                        foreach ($parameters as $parameter) {
+                            /* @var $parameter \ReflectionParameter */
+                            if ($parameter->getClass() && $parameter->getClass()->isInstance($entityCollection)) {
+                                $entity->$methodName($entityCollection);
+                            }
+                        }
+                    } elseif (is_object($propertyValue)) {
+                        if ( ! ctype_digit($propertyName)) {
                             $subEntity = self::hydrate(
                                     $manager->getEntity($propertyName)
-                                    , $object
+                                    , $propertyValue
                                     , $manager
                             );
 
-                            $entityCollection->add($subEntity);
+                            foreach ($parameters as $parameter) {
+                                /* @var $parameter \ReflectionParameter */
+                                if ($parameter->getClass() && $parameter->getClass()->isInstance($subEntity)) {
+                                    $entity->$methodName($subEntity);
+                                }
+                            }
                         }
                     }
-
-                    $entity->$methodName($entityCollection);
-                } elseif (is_object($propertyValue)) {
-                    $subEntity = self::hydrate(
-                            $manager->getEntity($propertyName)
-                            , $propertyValue
-                            , $manager
-                    );
-
-                    $entity->$methodName($subEntity);
                 }
             }
         }
@@ -69,4 +103,3 @@ class Hydrator
         return $entity;
     }
 }
-

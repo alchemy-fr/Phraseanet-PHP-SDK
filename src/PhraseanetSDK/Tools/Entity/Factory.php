@@ -12,19 +12,30 @@ class Factory
      * @var array
      */
     protected static $mapKeyToObjectType = array(
-        'entries'                => 'entry',
+        'entries'                => 'feedEntry',
+        'entry'                  => 'feedEntry',
         'technical_informations' => 'technical',
         'thumbnail'              => 'subdef',
-        'items'                  => 'item',
+        'items'                  => 'feedEntryItem',
+        'item'                   => 'feedEntryItem',
         'record'                 => 'record',
-        'permalink'              => 'permalink'
+        'results'                => 'record',
+        'permalink'              => 'permalink',
+        'databox_status'         => 'databoxStatus',
+        'databox_collection'     => 'databoxCollection',
+        'quarantine_session'     => 'quarantineSession',
+        'suggestions'            => 'querySuggestion',
+        'basket_elements'        => 'basketElement',
+        'validation_users'       => 'basketValidationParticipant',
+        'validation_user'        => 'basketValidationParticipant',
+        'validation_choices'     => 'basketValidationChoice',
     );
 
     /**
      * Construct a new entity object
      *
-     * @param string $type the type of the entity
-     * @param string $manager the entity manager
+     * @param  string                             $type    the type of the entity
+     * @param  string                             $manager the entity manager
      * @return \PhraseanetSDK\Tools\Entity\*
      * @throws Exception\InvalidArgumentException when types is unknown
      */
@@ -48,4 +59,3 @@ class Factory
         return new $objectName($manager);
     }
 }
-
