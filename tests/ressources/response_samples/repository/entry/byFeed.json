@@ -1,0 +1,131 @@
+{
+    "meta": {
+        "api_version": "1.2",
+        "request": "GET /api/v1/feeds/4241/content/",
+        "response_time": "2012-07-04T14:22:42+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "feed": {
+            "id": 4241,
+            "title": "hello",
+            "subtitle": "salut",
+            "total_entries": 1,
+            "icon": "/skins/icons/rss32.gif",
+            "public": false,
+            "readonly": true,
+            "deletable": false,
+            "created_on": "2012-07-03T14:25:03+02:00",
+            "updated_on": "2012-07-03T14:25:03+02:00"
+        },
+        "offset_start": 0,
+        "per_page": 5,
+        "entries": [
+        {
+            "id": 4000,
+            "author_email": "my@email.com",
+            "author_name": "me",
+            "created_on": "2012-07-03T14:25:03+02:00",
+            "updated_on": "2012-07-03T14:25:03+02:00",
+            "title": "coucou",
+            "subtitle": "hello",
+            "items": [{
+                "item_id": 18426,
+                "record": {
+                    "databox_id": 1,
+                    "record_id": 649,
+                    "mime_type": "image/x-tika-canon",
+                    "title": "test001.CR2",
+                    "original_name": "test001.CR2",
+                    "updated-on": "2012-07-02T19:46:29+02:00",
+                    "created_on": "2012-07-02T19:45:20+02:00",
+                    "collection_id": 1,
+                    "sha256": "450cf64049dcbab04f38a496464d30a0dcef60db25cf1af4ca7161b9ab753311",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2012-07-02T19:45:32+02:00",
+                            "id": 2066,
+                            "is_activated": true,
+                            "label": "test001CR2",
+                            "updated_on": "2012-07-02T19:45:33+02:00",
+                            "page_url": "http://dev.phrasea.net/permalink/v1/test001CR2/1/649/xmVdWqi9/thumbnail/view/",
+                            "url": "http://dev.phrasea.net/permalink/v1/test001CR2/1/649/xmVdWqi9/thumbnail/"
+                        },
+                        "height": 100,
+                        "width": 150,
+                        "filesize": 2535,
+                        "devices": [
+                        "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                    {
+                        "name": "Aperture",
+                        "value": 22
+                    },
+                    {
+                        "name": "CameraModel",
+                        "value": "Canon EOS-1Ds Mark III"
+                    },
+                    {
+                        "name": "ColorDepth",
+                        "value": 8
+                    },
+                    {
+                        "name": "FileSize",
+                        "value": 12719738
+                    },
+                    {
+                        "name": "FlashFired",
+                        "value": 0
+                    },
+                    {
+                        "name": "FocalLength",
+                        "value": 67
+                    },
+                    {
+                        "name": "Height",
+                        "value": 1856
+                    },
+                    {
+                        "name": "HyperfocalDistance",
+                        "value": 6.7852227790319
+                    },
+                    {
+                        "name": "ISO",
+                        "value": 100
+                    },
+                    {
+                        "name": "LightValue",
+                        "value": 15.884647521937
+                    },
+                    {
+                        "name": "MimeType",
+                        "value": "image/x-tika-canon"
+                    },
+                    {
+                        "name": "ShutterSpeed",
+                        "value": 0.008
+                    },
+                    {
+                        "name": "Width",
+                        "value": 2784
+                    }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
+                }
+            }],
+            "feed_url": "/feeds/4241/content/",
+            "url": "/feeds/entry/4000/"
+        }
+        ]
+    }
+}

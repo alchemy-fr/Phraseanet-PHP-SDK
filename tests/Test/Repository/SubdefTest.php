@@ -4,10 +4,7 @@ namespace Test\Repository;
 
 require_once 'Repository.php';
 
-use Guzzle;
-use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Client;
-use PhraseanetSDK\Response;
 use PhraseanetSDK\Repository\Subdef;
 use PhraseanetSDK\Tools\Entity\Manager;
 
@@ -17,51 +14,76 @@ class SubdefTest extends Repository
     /**
      * @dataProvider subdefNameProvider
      */
-    public function testFindByName($name)
+    public function testFindSubdefByRecordByName($name)
     {
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'));
-
         $subdefRepository = new Subdef(new Manager($client));
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        $subdef = $subdefRepository->findByName($record, $name);
-
-        $this->assertTrue($subdef instanceof \PhraseanetSDK\Entity\Subdef);
+        $subdef = $subdefRepository->findByRecordAndName(1, 1, $name);
+        $this->checkSubdef($subdef);
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\ApiResponseException
+     * @expectedException PhraseanetSDK\Exception\NotFoundException
      */
-    public function testFindByNameException()
+    public function testFindSubdefByRecordByNameException()
     {
-        $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'));
+        $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'), 200);
 
         $subdefRepository = new Subdef(new Manager($client));
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        $subdefRepository->findByName($record, 'unknowName');
+        $subdefRepository->findByRecordAndName(1, 1, 'unknowName');
     }
 
-    public function testFindAll()
+    public function testFindSubdefByRecord()
     {
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'));
-
         $subdefRepository = new Subdef(new Manager($client));
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        $subdefs = $subdefRepository->findAll($record);
+        $subdefs = $subdefRepository->findByRecord(1, 1, array('screen'), array('image/jpg'));
+        $this->assertIsCollection($subdefs);
 
-        $this->assertTrue($subdefs instanceof ArrayCollection);
-        $this->assertEquals(5, $subdefs->count());
+        foreach ($subdefs as $subdef) {
+            $this->checkSubdef($subdef);
+        }
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\ApiResponseException
+     * @expectedException PhraseanetSDK\Exception\RuntimeException
      */
-    public function testFindAllException()
+    public function testFindSubdefByRecordUnauthorizedRuntimeException()
     {
-        $client = $this->getClient($this->getSampleResponse('401'));
-
+        $client = $this->getClient($this->getSampleResponse('empty'));
         $subdefRepository = new Subdef(new Manager($client));
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
-        $subdefRepository->findAll($record);
+        $subdefRepository->findByRecord(1, 1);
+    }
+
+    /**
+     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function testFindSubdefByRecordUnauthorizedException()
+    {
+        $client = $this->getClient($this->getSampleResponse('401'), 401);
+        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository->findByRecord(1, 1);
+    }
+
+    /**
+     * @expectedException PhraseanetSDK\Exception\RuntimeException
+     */
+    public function testFindSubdefByRecordRuntimeException()
+    {
+        $client = $this->getClient($this->getSampleResponse('500'), 500);
+        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository->findByRecord(1, 1);
+    }
+
+    /**
+     * @expectedException PhraseanetSDK\Exception\RuntimeException
+     */
+    public function testQueryRuntimeException()
+    {
+        //throw curl exception
+        $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'), 200, true);
+        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository->findByRecord(1, 1);
     }
 
     public function subdefNameProvider()
@@ -70,15 +92,8 @@ class SubdefTest extends Repository
             array('preview'),
             array('thumbnail'),
             array('document'),
-            array('preview_api'),
-            array('thumbnailgif')
+            array('thumbnail_mobile'),
+            array('preview_mobile')
         );
-    }
-
-    private function getSampleResponse($filename)
-    {
-        $filename = __DIR__ . '/../../ressources/response_samples/' . $filename . '.json';
-
-        return file_get_contents($filename);
     }
 }

@@ -53,8 +53,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             array('entries'),
             array('technical_informations'),
             array('thumbnail'),
+            array('databox_status'),
+            array('databox_collection'),
+            array('databox'),
             array('items')
         );
     }
 }
-

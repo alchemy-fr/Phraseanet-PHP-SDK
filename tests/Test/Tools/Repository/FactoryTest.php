@@ -3,7 +3,7 @@
 namespace Test\Tools\Repository;
 
 use PhraseanetSDK\Tools\Repository\Factory as RepoFactory;
-use PhraseanetSDK\Repository\RepositoryAbstract;
+use PhraseanetSDK\Repository\AbstractRepository;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +23,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $repo = RepoFactory::build($type, $em);
 
-        $this->assertTrue($repo instanceof RepositoryAbstract);
+        $this->assertTrue($repo instanceof AbstractRepository);
     }
 
     /**
@@ -49,4 +49,3 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
-

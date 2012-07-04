@@ -3,8 +3,8 @@
 namespace Test\Tools\Entity;
 
 use PhraseanetSDK\Entity\Feed;
-use PhraseanetSDK\Entity\Entry;
-use PhraseanetSDK\Entity\Item;
+use PhraseanetSDK\Entity\FeedEntry;
+use PhraseanetSDK\Entity\FeedEntryItem;
 use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Subdef;
 use PhraseanetSDK\Entity\Permalink;
@@ -144,7 +144,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getCreatedOn()->format(\DateTime::ATOM));
         $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getUpdatedOn()->format(\DateTime::ATOM));
 
-        $entry = new Entry($em);
+        $entry = new FeedEntry($em);
 
         $entry = Hydrator::hydrate($entry, $this->getOneFeedEntry(), $em);
 
@@ -160,7 +160,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($items instanceof ArrayCollection);
         $this->assertEquals(2, $items->count());
         foreach ($items as $item) {
-            $this->assertTrue($item instanceof Item);
+            $this->assertTrue($item instanceof FeedEntryItem);
             $record = $item->getRecord();
             $this->assertTrue($record instanceof Record);
             $thumbnail = $record->getThumbnail();
@@ -170,4 +170,3 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
-

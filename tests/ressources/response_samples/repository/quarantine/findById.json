@@ -1,0 +1,29 @@
+{
+    "meta": {
+        "api_version": "1.2",
+        "request": "GET /api/v1/quarantine/item/214/",
+        "response_time": "2012-06-29T16:26:36+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "quarantine_item": {
+            "id": 214,
+            "quarantine_session": {
+                "id": 214,
+                "usr_id": 3
+            },
+            "base_id": 1,
+            "original_name": "Forest.jpg",
+            "sha256": "0571c9928d44b9de11ae37807a6461e77a5f8f35df464bd2c612cb0a27a14ae7",
+            "uuid": "b5e70c18-75af-4a24-be55-f6babb7d7548",
+            "forced": false,
+            "checks": ["A file with the same checksum already exists in database", "string"],
+            "created_on": "2012-06-18T15:34:58+02:00",
+            "updated_on": "2012-06-18T15:34:58+02:00"
+        }
+    }
+}

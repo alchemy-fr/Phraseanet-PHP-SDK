@@ -2,8 +2,6 @@
 
 namespace Test;
 
-use Guzzle;
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Response;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
@@ -11,17 +9,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhraseanetSDK\Response::__construct
-     * @covers PhraseanetSDK\Exception\ApiResponseException
-     * @expectedException PhraseanetSDK\Exception\ApiResponseException
-     */
-    public function testNullResponse()
-    {
-        new Response();
-    }
-
-    /**
-     * @covers PhraseanetSDK\Response::__construct
-     * @expectedException PhraseanetSDK\Exception\ApiResponseException
+     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testBadResponse()
     {
@@ -121,6 +109,15 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers PhraseanetSDK\Response::isEmpty
+     */
+    public function testIsEmpty()
+    {
+       $response = new Response(json_decode($this->getSampleResponse("empty")));
+        $this->assertTrue($response->isEmpty());
+    }
+
+    /**
      * @covers PhraseanetSDK\Response::getCharset
      */
     public function testGetCharset()
@@ -145,4 +142,3 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         return file_get_contents($filename);
     }
 }
-

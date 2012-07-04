@@ -3,7 +3,7 @@
 namespace Test\Tools\Entity;
 
 use PhraseanetSDK\Tools\Entity\Manager;
-use PhraseanetSDK\Repository\RepositoryAbstract;
+use PhraseanetSDK\Repository\AbstractRepository;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +26,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
         $repo = $em->getRepository($type);
 
-        $this->assertTrue($repo instanceof RepositoryAbstract);
+        $this->assertTrue($repo instanceof AbstractRepository);
     }
 
     /**
@@ -76,4 +76,3 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
-

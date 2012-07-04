@@ -76,32 +76,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhraseanetSDK\Client::setGrantType
      * @covers PhraseanetSDK\Exception\InvalidArgumentException
+     * @covers PhraseanetSDK\Exception\ExceptionInterface
      * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testSetGrantTypeException()
     {
         $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
         $client->setGrantType('badGrantType');
-    }
-
-    /**
-     * @covers PhraseanetSDK\Client::getCurrentUrl
-     */
-    public function testGetCurrentUrl()
-    {
-        $client = new Client('123456', '654321', $this->getGuzzleClient(), $this->logger);
-
-        $_SERVER['HTTPS'] = 'on';
-        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
-        unset($_SERVER['HTTPS']);
-
-        $_SERVER['HTTP_SSL_HTTPS'] = 'on';
-        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
-        unset($_SERVER['HTTP_SSL_HTTPS']);
-
-        $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
-        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
-        unset($_SERVER['HTTP_X_FORWARDED_PROTO']);
     }
 
     /**
@@ -117,8 +98,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhraseanetSDK\Client::getAuthorizationUrl
-     * @covers PhraseanetSDK\Client::getCurrentUrl
      * @covers PhraseanetSDK\Client::setGrantType
+     * @covers PhraseanetSDK\Client::getGrantType
+     * @covers PhraseanetSDK\Client::getGrantInformations
+     * @covers PhraseanetSDK\Client::getUrlWithoutOauth2Parameters
      */
     public function testSetGrantTypeAndGetAuthorizationUrl()
     {
@@ -126,9 +109,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $host = 'dev.phrasea.net';
         $query = '/test.php';
-        $params = array('key'=>'value');
+        $params = array('key'   => 'value', 'scope' => 'scope_test');
 
-        $request = new Request($params, array(), array(), array(), array(), array('SERVER_PORT'   => 80, 'HTTP_HOST'   => $host, 'REQUEST_URI' => $query, 'QUERY_STRING'=>'key=value'));
+        $request = new Request($params, array(), array(), array(), array(), array('SERVER_PORT'  => 80, 'HTTP_HOST'    => $host, 'REQUEST_URI'  => $query, 'QUERY_STRING' => 'key=value'));
 
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, null, $request);
 
@@ -142,6 +125,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $url = $client->getAuthorizationUrl(array('admin', 'superadmin'));
 
         $this->assertEquals('http://my.domain.tld/api/oauthv2/authorize?response_type=code&client_id=123456&redirect_uri=http%3A%2F%2Fdev.phrasea.net%2Ftest.php%3Fkey%3Dvalue&scope=admin+superadmin', $url);
+
+        $this->assertEquals(Client::GRANT_TYPE_AUTHORIZATION, $client->getGrantType());
+        $this->assertTrue(is_array($client->getGrantInformations()));
+        $this->assertArrayHasKey('scope', $client->getGrantInformations());
+        $this->assertArrayHasKey('redirect_uri', $client->getGrantInformations());
     }
 
     /**
@@ -149,7 +137,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveAccessToken()
     {
-        $request = new Request(array('code'=> '123456789'));
+        $request = new Request(array('code' => '123456789'));
 
         $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, array(), $request);
@@ -164,7 +152,21 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveAccessTokenError()
     {
-        $request = new Request(array('error'=> 'invalid_uri'));
+        $request = new Request(array('error' => 'invalid_uri'));
+
+        $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
+        $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
+        $client->retrieveAccessToken($request);
+    }
+
+    /**
+     * @covers PhraseanetSDK\Client::retrieveAccessToken
+     * @covers PhraseanetSDK\Exception\AuthenticationException
+     * @expectedException PhraseanetSDK\Exception\AuthenticationException
+     */
+    public function testRetrieveAccessTokenNoCode()
+    {
+        $request = new Request();
 
         $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
