@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK;
 
-use PhraseanetSDK\Exception;
+use PhraseanetSDK\Exception\InvalidArgumentException;
 
 /**
  *
@@ -26,14 +26,10 @@ class Response
      *
      * @param stdClass $response
      */
-    public function __construct(\stdClass $response = null)
+    public function __construct(\stdClass $response)
     {
-        if (null === $response) {
-            throw new Exception\ApiResponseException('Response is empty');
-        }
-
         if ( ! isset($response->meta) || ! isset($response->response)) {
-            throw new Exception\ApiResponseException('Response is malformed');
+            throw new InvalidArgumentException('The API json response is malformed');
         }
 
         $this->meta = $response->meta;
@@ -65,6 +61,15 @@ class Response
     public function isOk()
     {
         return floor($this->getHttpStatusCode() / 100) < 4;
+    }
+
+    /**
+     * Checker whether the response content is empty
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return ! get_object_vars($this->result) > 0;
     }
 
     /**
@@ -136,5 +141,27 @@ class Response
     public function getApiVersion()
     {
         return $this->meta->api_version;
+    }
+
+    /**
+     * Check existence of $property in response object
+     *
+     * @param  string  $property property name
+     * @return boolean
+     */
+    public function hasProperty($property)
+    {
+        return property_exists($this->result, $property);
+    }
+
+    /**
+     * Check existence of $property in response object
+     *
+     * @param  string  $property property name
+     * @return boolean
+     */
+    public function getProperty($property)
+    {
+        return $this->hasProperty($property) ? $this->result->{$property} : null;
     }
 }
