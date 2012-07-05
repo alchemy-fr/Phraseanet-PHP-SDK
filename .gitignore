@@ -1,5 +1,5 @@
 /composer.phar
-/composer.lock
 /nbproject/
 /vendor
+/docs/source/API/API/cache
 .DS_Store
