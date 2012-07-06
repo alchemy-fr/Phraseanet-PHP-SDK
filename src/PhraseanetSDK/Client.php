@@ -46,7 +46,7 @@ class Client extends AbstractClient
     protected $oauthTokenEndpointUrl = '';
 
     /**
-     * A Guzzle Client which handleHTTP requests to the Phraseanet API
+     * A Guzzle Client which handle HTTP requests to the Phraseanet API
      *
      * @see http://guzzlephp.org for more informations
      * @var GuzzleClient
@@ -94,7 +94,6 @@ class Client extends AbstractClient
      *
      * @param string      $apiKey
      * @param string      $apiSecret
-     * @param CurlWrapper $curl
      */
     public function __construct($apiKey, $apiSecret, GuzzleClient $clientHttp, Logger $logger = null)
     {
@@ -254,7 +253,7 @@ class Client extends AbstractClient
             }
 
             if (null === $request->get('code')) {
-                throw new AuthenticationException('Invalid authentication code');
+                return;
             }
 
             $args = array(
@@ -276,6 +275,9 @@ class Client extends AbstractClient
                 $token = json_decode($response->getBody(), true);
 
                 $this->setAccessToken($token["access_token"]);
+            } catch (GuzzleBadResponse $e) {
+                $response = json_decode($e->getResponse()->getBody(), true);
+                throw new AuthenticationException($response['error']);
             } catch (GuzzleException $e) {
                 $e =  new \PhraseanetSDK\Exception\RuntimeException(
                     $e->getMessage()
