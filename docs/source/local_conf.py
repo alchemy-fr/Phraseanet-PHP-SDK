@@ -1,6 +1,6 @@
 
 # project name
-project = u'Project Name'
+project = u'Phraseanet PHP SDK'
 
 # Tex info conf
 texinfo_documents = [
