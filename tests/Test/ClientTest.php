@@ -161,8 +161,6 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhraseanetSDK\Client::retrieveAccessToken
-     * @covers PhraseanetSDK\Exception\AuthenticationException
-     * @expectedException PhraseanetSDK\Exception\AuthenticationException
      */
     public function testRetrieveAccessTokenNoCode()
     {
@@ -170,7 +168,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $client = new Client('123456', '654321', $this->getGuzzleClientWithResponse($this->getSampleResponse('access_token')), $this->logger);
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
-        $client->retrieveAccessToken($request);
+        $token = $client->retrieveAccessToken($request);
+        $this->assertNull($token);
     }
 
     /**
