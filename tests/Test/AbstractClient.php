@@ -2,15 +2,15 @@
 
 namespace Test;
 
-use Guzzle;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Response;
-use \PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
 use Symfony\Component\HttpFoundation\Request;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractClient extends \PHPUnit_Framework_TestCase
 {
     protected $logger;
+    protected $clientId = '123456';
+    protected $clientSecret = '654321';
 
     public function setUp()
     {
@@ -21,56 +21,48 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return PhraseanetSDK\HttpAdapter\HttpAdapterInterface
+     */
+    abstract public function getAdapter();
+
+    /**
      * @covers PhraseanetSDK\Client::__construct
      */
-    public function testConstructor()
+    public function testGetClient()
     {
-        $this->getSDKClient($this->getGuzzleAdapter());
+        return $this->getSDKClient();
     }
 
     /**
      * @covers PhraseanetSDK\Client::getAccessToken
+     * @depends testGetClient
      */
-    public function testGetAccessToken()
+    public function testGetAccessToken($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $this->assertNull($client->getAccessToken());
     }
 
     /**
      * @covers PhraseanetSDK\Client::getHttpClient
+     * @covers PhraseanetSDK\Client::setHttpClient
+     * @depends testGetClient
      */
-    public function testGetHttpClient()
+    public function testGetHttpClient($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
-        $expected = $this->getGuzzleAdapter();
+        $expected = $this->getAdapter();
         $client->setHttpClient($expected);
         $this->assertEquals($expected, $client->getHttpClient());
     }
 
     /**
      * @covers PhraseanetSDK\Client::setAccessToken
+     * @depends testGetClient
      */
-    public function testSetAccessToken()
+    public function testSetAccessToken($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $expected = '123456789';
         $client->setAccessToken($expected);
         $this->assertEquals($expected, $client->getAccessToken());
-    }
-
-    /**
-     * @covers PhraseanetSDK\Client::setHttpClient
-     */
-    public function testSetHttpClient()
-    {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
-        $expected = new GuzzleAdapter(new Guzzle\Http\Client(
-                    'http://my.domain2.tld/',
-                    array('version' => 2)
-            ));
-        $client->setHttpClient($expected);
-        $this->assertEquals($expected, $client->getHttpClient());
     }
 
     /**
@@ -78,10 +70,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers PhraseanetSDK\Exception\InvalidArgumentException
      * @covers PhraseanetSDK\Exception\ExceptionInterface
      * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
+     * @depends testGetClient
      */
-    public function testSetGrantTypeException()
+    public function testSetGrantTypeException($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $client->setGrantType('badGrantType');
     }
 
@@ -89,10 +81,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers PhraseanetSDK\Client::getAuthorizationUrl
      * @covers PhraseanetSDK\Exception\RuntimeException
      * @expectedException PhraseanetSDK\Exception\RuntimeException
+     * @depends testGetClient
      */
-    public function testgetAuthorizationUrlException()
+    public function testgetAuthorizationUrlException($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $client->getAuthorizationUrl();
     }
 
@@ -102,16 +94,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers PhraseanetSDK\Client::getGrantType
      * @covers PhraseanetSDK\Client::getGrantInformations
      * @covers PhraseanetSDK\Client::getUrlWithoutOauth2Parameters
+     * @depends testGetClient
      */
-    public function testSetGrantTypeAndGetAuthorizationUrl()
+    public function testSetGrantTypeAndGetAuthorizationUrl($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
-
         $host = 'dev.phrasea.net';
         $query = '/test.php';
-        $params = array('key'   => 'value', 'scope' => 'scope_test');
 
-        $request = new Request($params, array(), array(), array(), array(), array('SERVER_PORT'  => 80, 'HTTP_HOST'    => $host, 'REQUEST_URI'  => $query, 'QUERY_STRING' => 'key=value'));
+        $request = new Request(array('key'   => 'value', 'scope' => 'scope_test'), array(), array(), array(), array(), array('SERVER_PORT'  => 80, 'HTTP_HOST'    => $host, 'REQUEST_URI'  => $query, 'QUERY_STRING' => 'key=value'));
 
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, null, $request);
 
@@ -139,10 +129,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request(array('code' => '123456789'));
 
-
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')));;
+        $client = $this->getSDKClient($this->getSampleResponse('access_token'));
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, array(), $request);
         $client->retrieveAccessToken($request);
+
         $this->assertEquals('987654321123456789', $client->getAccessToken());
     }
 
@@ -155,7 +145,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request(array('error' => 'invalid_uri'));
 
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')));
+        $client = $this->getSDKClient($this->getSampleResponse('access_token'));
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         $client->retrieveAccessToken($request);
     }
@@ -167,7 +157,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
 
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')));
+        $client = $this->getSDKClient($this->getSampleResponse('access_token'));
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         $token = $client->retrieveAccessToken($request);
         $this->assertNull($token);
@@ -175,10 +165,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhraseanetSDK\Client::logout
+     * @depends testGetClient
      */
-    public function testLogout()
+    public function testLogout($client)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $client->setAccessToken('hello');
         $client->logout();
         $this->assertNull($client->getAccessToken());
@@ -186,10 +176,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PhraseanetSDK\Client::call
+     * @depends testGetClient
      */
     public function testPOSTCall200()
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')));
+        $client = $this->getSDKClient($this->getSampleResponse('200'));
         $client->setAccessToken("123456789");
         $response = $client->call('/path/to/ressource');
 
@@ -202,7 +193,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGETCall200()
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')));
+        $client = $this->getSDKClient($this->getSampleResponse('200'));
         $response = $client->call('/path/to/ressource', array('key' => 'value'), 'GET');
 
         $this->assertTrue($response instanceof Response);
@@ -217,7 +208,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRequestException($method)
     {
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')));
+        $client = $this->getSDKClient();
         $client->call('/path/to/ressource', array(), $method);
     }
 
@@ -229,28 +220,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadResponseException($httpCode)
     {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-        $plugin->addResponse(new Guzzle\Http\Message\Response($httpCode));
-
-        $httpClient = new Guzzle\Http\Client(
-                'http://my.domain.tld',
-                array('version' => 1)
-        );
-        $httpClient->getEventDispatcher()->addSubscriber($plugin);
-
-        $client = new Client('123456', '654321', new GuzzleAdapter($httpClient), $this->logger);
+        $client = $this->getSDKClient('', $httpCode);
         $client->call('/path/to/ressource');
-    }
-
-    /**
-     * @covers PhraseanetSDK\Client::call
-     */
-    public function testForceNoException()
-    {
-        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('401')));
-        $response = $client->call('/path/to/ressource', array(), 'GET', false);
-
-        $this->assertTrue($response instanceof Response);
     }
 
     public function methodProvider()
@@ -285,37 +256,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         return file_get_contents($filename);
     }
 
-    private function getGuzzleClient()
+    private function getSDKClient($response = null, $code = 200)
     {
-        return new Guzzle\Http\Client(
-                'http://my.domain.tld/',
-                array('version' => 1)
-        );
-    }
-
-    private function getGuzzleAdapter()
-    {
-        return new GuzzleAdapter($this->getGuzzleClient());
-    }
-
-    private function getSDKClient(GuzzleAdapter $adapter)
-    {
-        return  new Client('123456', '654321', $adapter, $this->logger);
-    }
-
-    private function getGuzzleAdapterWithResponse($response)
-    {
-        $plugin = new Guzzle\Http\Plugin\MockPlugin();
-        $plugin->addResponse(new Guzzle\Http\Message\Response(
-                200
-                , null
-                , $response
-            )
-        );
-
-        $clientHttp = $this->getGuzzleClient();
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        return new GuzzleAdapter($clientHttp);
+        return new Client($this->clientId, $this->clientSecret, $this->getAdapter($response, $code), $this->logger);
     }
 }
