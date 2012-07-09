@@ -12,7 +12,18 @@ use PhraseanetSDK\Exception\RuntimeException;
 
 class Guzzle implements HttpAdapterInterface
 {
+    /**
+     * The guzzle client
+     *
+     * @var Guzzle\Http\ClientInterface
+     */
     private $client;
+
+    /**
+     * The oauth token
+     *
+     * @var string
+     */
     private $token;
 
     public function __construct(ClientInterface $client)
@@ -20,11 +31,22 @@ class Guzzle implements HttpAdapterInterface
         $this->client = $client;
     }
 
+    /**
+     * Get client base URL
+     *
+     * @return string
+     */
     public function getBaseUrl()
     {
         return $this->client->getBaseUrl();
     }
 
+    /**
+     * Set client base URL
+     *
+     * @param string $url
+     * @return \PhraseanetSDK\HttpAdapter\Guzzle
+     */
     public function setBaseUrl($url)
     {
         $this->client->setBaseUrl($url);
@@ -99,19 +121,23 @@ class Guzzle implements HttpAdapterInterface
         return $response->getBody();
     }
 
-    public function disabledException()
-    {
-        $this->client->getEventDispatcher()->addListener('request.error', function(Event $event) {
-                $event->stopPropagation();
-            }, -254
-        );
-    }
-
+    /**
+     * Return an URI template
+     *
+     * @param array $args
+     * @return string
+     */
     private function getTemplate(array $args)
     {
         return '{?' . (null !== $this->token ? 'oauth_token,' : '') . ( ! empty($args) ? 'data*' : '' ) . '}';
     }
 
+    /**
+     * Format query parameters
+     *
+     * @param array $args
+     * @return array
+     */
     private function formatQueryParameters($args)
     {
         $queryDatas = array('data' => $args);
