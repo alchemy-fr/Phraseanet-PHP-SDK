@@ -25,7 +25,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $this->getSDKClient($this->getGuzzleAdapter());
     }
 
     /**
@@ -33,7 +33,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAccessToken()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $this->assertNull($client->getAccessToken());
     }
 
@@ -42,7 +42,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHttpClient()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $expected = $this->getGuzzleAdapter();
         $client->setHttpClient($expected);
         $this->assertEquals($expected, $client->getHttpClient());
@@ -53,7 +53,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetAccessToken()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $expected = '123456789';
         $client->setAccessToken($expected);
         $this->assertEquals($expected, $client->getAccessToken());
@@ -64,7 +64,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetHttpClient()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $expected = new GuzzleAdapter(new Guzzle\Http\Client(
                     'http://my.domain2.tld/',
                     array('version' => 2)
@@ -81,7 +81,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGrantTypeException()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $client->setGrantType('badGrantType');
     }
 
@@ -92,7 +92,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testgetAuthorizationUrlException()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $client->getAuthorizationUrl();
     }
 
@@ -105,7 +105,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGrantTypeAndGetAuthorizationUrl()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
 
         $host = 'dev.phrasea.net';
         $query = '/test.php';
@@ -139,7 +139,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request(array('code' => '123456789'));
 
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')), $this->logger);
+
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')));;
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, array(), $request);
         $client->retrieveAccessToken($request);
         $this->assertEquals('987654321123456789', $client->getAccessToken());
@@ -154,7 +155,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request(array('error' => 'invalid_uri'));
 
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')));
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         $client->retrieveAccessToken($request);
     }
@@ -166,7 +167,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
 
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('access_token')));
         $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION);
         $token = $client->retrieveAccessToken($request);
         $this->assertNull($token);
@@ -177,7 +178,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testLogout()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapter(), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapter());
         $client->setAccessToken('hello');
         $client->logout();
         $this->assertNull($client->getAccessToken());
@@ -188,7 +189,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testPOSTCall200()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')));
         $client->setAccessToken("123456789");
         $response = $client->call('/path/to/ressource');
 
@@ -201,7 +202,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGETCall200()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')));
         $response = $client->call('/path/to/ressource', array('key' => 'value'), 'GET');
 
         $this->assertTrue($response instanceof Response);
@@ -216,7 +217,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadRequestException($method)
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('200')));
         $client->call('/path/to/ressource', array(), $method);
     }
 
@@ -246,7 +247,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testForceNoException()
     {
-        $client = new Client('123456', '654321', $this->getGuzzleAdapterWithResponse($this->getSampleResponse('401')), $this->logger);
+        $client = $this->getSDKClient($this->getGuzzleAdapterWithResponse($this->getSampleResponse('401')));
         $response = $client->call('/path/to/ressource', array(), 'GET', false);
 
         $this->assertTrue($response instanceof Response);
@@ -295,6 +296,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     private function getGuzzleAdapter()
     {
         return new GuzzleAdapter($this->getGuzzleClient());
+    }
+
+    private function getSDKClient(GuzzleAdapter $adapter)
+    {
+        return  new Client('123456', '654321', $adapter, $this->logger);
     }
 
     private function getGuzzleAdapterWithResponse($response)
