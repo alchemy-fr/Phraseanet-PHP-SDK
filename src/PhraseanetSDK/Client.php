@@ -2,11 +2,7 @@
 
 namespace PhraseanetSDK;
 
-use Guzzle\Common\Event;
-use Guzzle\Common\GuzzleException;
 use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Http\Exception\CurlException;
-use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Monolog\Logger;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadRequestException;
@@ -46,10 +42,7 @@ class Client extends AbstractClient
     protected $oauthTokenEndpointUrl = '';
 
     /**
-     * A Guzzle Client which handle HTTP requests to the Phraseanet API
-     *
-     * @see http://guzzlephp.org for more informations
-     * @var GuzzleClient
+     * @var HttpAdapter\HttpAdapterInterface
      */
     protected $httpClient;
 
@@ -95,7 +88,7 @@ class Client extends AbstractClient
      * @param string      $apiKey
      * @param string      $apiSecret
      */
-    public function __construct($apiKey, $apiSecret, GuzzleClient $clientHttp, Logger $logger = null)
+    public function __construct($apiKey, $apiSecret, HttpAdapter\HttpAdapterInterface $clientHttp, Logger $logger = null)
     {
         $this->httpClient = $clientHttp;
         $this->logger = $logger;
@@ -139,12 +132,12 @@ class Client extends AbstractClient
     }
 
     /**
-     * Set the HTTP Client
+     * Set the HTTP Client Adapter
      *
-     * @param  GuzzleClient $client
+     * @param  HttpAdapter\HttpAdapterInterface $client
      * @return Client
      */
-    public function setHttpClient(GuzzleClient $client)
+    public function setHttpClient(HttpAdapter\HttpAdapterInterface $client)
     {
         $this->httpClient = $client;
 
@@ -171,7 +164,7 @@ class Client extends AbstractClient
      */
     public function setGrantType($type, Array $info = null, Request $request = null)
     {
-        $defaultInfos = array('redirect_uri' => '', 'scope' => '');
+        $defaultInfos = array('redirect_uri' => '', 'scope'        => '');
 
         switch ($type) {
             case self::GRANT_TYPE_AUTHORIZATION:
@@ -198,11 +191,21 @@ class Client extends AbstractClient
         return $this;
     }
 
+    /**
+     * Return the curreznt grant type
+     *
+     * @return string
+     */
     public function getGrantType()
     {
         return $this->grantType;
     }
 
+    /**
+     * Return grant informations as array
+     *
+     * @return array
+     */
     public function getGrantInformations()
     {
         return $this->grantInfo;
@@ -265,27 +268,14 @@ class Client extends AbstractClient
                 'redirect_uri'  => $this->grantInfo['redirect_uri'],
             );
 
-            $request = $this->httpClient
-                ->post($this->oauthTokenEndpointUrl)
-                ->addPostFields($args);
 
             try {
-                $response = $request->send();
-
-                $token = json_decode($response->getBody(), true);
-
+                $responseContent = $this->httpClient->post($this->oauthTokenEndpointUrl, $args);
+                $token = json_decode($responseContent, true);
                 $this->setAccessToken($token["access_token"]);
-            } catch (GuzzleBadResponse $e) {
+            } catch (BadResponseException $e) {
                 $response = json_decode($e->getResponse()->getBody(), true);
                 throw new AuthenticationException($response['error']);
-            } catch (GuzzleException $e) {
-                $e =  new \PhraseanetSDK\Exception\RuntimeException(
-                    $e->getMessage()
-                    , $e->getCode()
-                    , $e
-                );
-
-                throw $e;
             }
         }
 
@@ -311,86 +301,39 @@ class Client extends AbstractClient
      *
      * @param  string                $path           remote path
      * @param  array                 $args           request parameters
-     * @param  string                $http_method    http method
-     * @param  string                $throwException throw or not exception
+     * @param  string                $httpMethod    http method
      * @return PhraseanetApiResponse
      *
      * @throws BadRequestException  if method is unsupported phraseanet API
      * @throws BadResponseException if response is 4xx or 5xx
-     * @throws TransportException   if problem occurs with transport layer
+     * @throws RuntimeException     if problem occurs
      */
-    public function call($path, $args = array(), $http_method = 'POST', $throwException = true)
+    public function call($path, $args = array(), $httpMethod = 'POST')
     {
-        $queryDatas = array();
+        $responseContent = null;
 
-        if ( ! empty($args)) {
-            $queryDatas['data'] = $args;
+        switch (strtoupper($httpMethod)) {
+            case 'POST' :
+                $start = microtime(true);
+                $responseContent = $this->httpClient->post($path, $args);
+                $stop = microtime(true);
+                $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
+                break;
+            case 'GET' :
+                $start = microtime(true);
+                $responseContent = $this->httpClient->get($path, $args);
+                $stop = microtime(true);
+                $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
+                break;
+            default :
+                throw new BadRequestException(sprintf('Phraseanet API do not support %s method', $httpMethod));
         }
 
-        if ($this->getAccessToken()) {
-            $queryDatas['oauth_token'] = $this->getAccessToken();
-        }
-
-        $template = '{?' . (null !== $this->getAccessToken() ? 'oauth_token,' : '') . ( ! empty($args) ? 'data*' : '' ) . '}';
-
-        $path = sprintf('%s%s', ltrim($path, '/'), $template);
-
-        if (! $throwException) {
-            $this->httpClient->getEventDispatcher()->addListener('request.error', function(Event $event) {
-                    $event->stopPropagation();
-                }, -254
-            );
-        }
-
-        try {
-            switch (strtoupper($http_method)) {
-                case 'POST' :
-
-                    $start = microtime(true);
-                    $request = $this->httpClient->post(array($path, $queryDatas));
-                    $request->setHeader('Accept', 'application/json');
-                    $response = $request->send();
-                    $stop = microtime(true);
-                    $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
-
-                    break;
-                case 'GET' :
-                    $start = microtime(true);
-                    $request = $this->httpClient->get(array($path, $queryDatas));
-                    $request->setHeader('Accept', 'application/json');
-                    $response = $request->send();
-                    $stop = microtime(true);
-                    $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
-
-                    break;
-                default :
-                    if ($throwException) {
-                        throw new BadRequestException(sprintf(
-                                'Phraseanet API do not support %s method'
-                                , $http_method
-                            )
-                        );
-                    }
-            }
-        } catch (CurlException $e) {
-            throw new TransportException(
-                $e->getMessage()
-                , $e->getCode()
-                , $e
-            );
-        } catch (GuzzleBadResponse $e) {
-            throw new BadResponseException(
-                $e->getMessage()
-                , $e->getCode()
-                , $e
-            );
-        }
-
-        if (null === $responseContent = json_decode($response->getBody())) {
+        if (null === $json = json_decode($responseContent)) {
             throw new RuntimeException('Json response cannot be decoded or the encoded data is deeper than the recursion limit');
         }
 
-        return new Response($responseContent);
+        return new Response($json);
     }
 
     /**
@@ -401,6 +344,7 @@ class Client extends AbstractClient
     protected function getUrlWithoutOauth2Parameters(Request $request)
     {
         $toReAdd = array();
+
         foreach ($request->query->all() as $key => $value) {
             if ( ! in_array($key, array('code', 'scope', 'error', 'error_description'))) {
                 continue;

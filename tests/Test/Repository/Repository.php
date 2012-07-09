@@ -3,6 +3,7 @@
 namespace Test\Repository;
 
 use PhraseanetSDK\Client;
+use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
 use Guzzle\Http\Plugin\MockPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as GuzzleClient;
@@ -34,7 +35,7 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $logger = new Logger('tests');
         $logger->pushHandler(new NullHandler());
 
-        return new Client('123456', '654321', $clientHttp, $logger);
+        return new Client('123456', '654321', new GuzzleAdapter($clientHttp), $logger);
     }
 
     protected function getSampleResponse($filename)

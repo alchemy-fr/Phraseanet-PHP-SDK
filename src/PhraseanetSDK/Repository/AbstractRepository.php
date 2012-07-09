@@ -49,30 +49,20 @@ abstract class AbstractRepository
     {
         try {
             $response = $this->getClient()->call($path, $params, $method);
-
-            return $response;
         } catch (BadResponseException $e) {
-            $previous = $e->getPrevious();
-            if (is_subclass_of($previous, "Guzzle\Http\Exception\BadResponseException")) {
-                $httpResponse = $previous->getResponse();
-                if ($httpResponse instanceof \Guzzle\Http\Message\Response) {
-                    switch ($httpResponse->getStatusCode()) {
-                        case 404:
-                            throw new NotFoundException(sprintf('Ressource under %s could not be found', $path));
-                            break;
-                        case 401:
-                            throw new UnauthorizedException(sprintf('Access to the following ressource %s is forbidden', $path));
-                            break;
-                        default:
-                            throw new RuntimeException(sprintf('Something went wrong "%s"', $httpResponse->getReasonPhrase()));
-                    }
-                }
+            $httpStatusCode = $e->getHttpStatusCode();
+            switch ($httpStatusCode) {
+                case 404:
+                    throw new NotFoundException(sprintf('Ressource under %s could not be found', $path));
+                    break;
+                case 401:
+                    throw new UnauthorizedException(sprintf('Access to the following ressource %s is forbidden', $path));
+                    break;
+                default:
+                    throw new RuntimeException(sprintf('Something went wrong "%s"', $e->getMessage()));
             }
-            throw new RuntimeException('Something went wrong "' . $e->getMessage() . '"', null, $e);
-        } catch (\Exception $e) {
-            throw new RuntimeException('Something went wrong "' . $e->getMessage() . '"', null, $e);
         }
 
-        return null;
+         return $response;
     }
 }
