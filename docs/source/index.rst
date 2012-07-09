@@ -75,11 +75,14 @@ highly customizable.
     <?php
 
     use PhraseanetSDK\Client;
+    use PhraseanetSDK\HttpAdapter\Guzzle as HttpAdapter;
 
     $httpClient = new  Guzzle\Http\Client();
     $httpClient->setBaseUrl('http://your.instance-api.url/');
 
-    $client = new Client('Your API Key', 'Your API Secret', $httpClient);
+    $HttpAdapter = new HttpAdapter($httpClient);
+
+    $client = new Client('Your API Key', 'Your API Secret', $HttpAdapter);
 
 .. note::
     See Guzzle documention `http://guzzlephp.org/docs.html <http://guzzlephp.org/docs.html>`_
