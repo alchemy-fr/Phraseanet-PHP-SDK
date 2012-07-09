@@ -275,7 +275,8 @@ class Client extends AbstractClient
                 $this->setAccessToken($token["access_token"]);
             } catch (BadResponseException $e) {
                 $response = json_decode($e->getResponseBody(), true);
-                throw new AuthenticationException($response['error']);
+                $msg = isset($response['error']) ? $response['error'] : isset($response['msg']) ? $response['msg'] : '';
+                throw new AuthenticationException($msg);
             }
         }
 
