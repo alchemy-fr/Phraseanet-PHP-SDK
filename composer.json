@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.3.2",
         "doctrine/common": ">2.1",
-        "guzzle/guzzle" : ">2.4",
+        "guzzle/guzzle" : "2.7.2",
         "monolog/monolog" : "*",
         "symfony/http-foundation": "*"
     },
