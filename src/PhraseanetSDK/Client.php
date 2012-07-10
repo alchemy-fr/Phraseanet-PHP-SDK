@@ -313,6 +313,8 @@ class Client extends AbstractClient
     {
         $responseContent = null;
 
+        $args['oauth_token'] = $this->getAccessToken();
+
         switch (strtoupper($httpMethod)) {
             case 'POST' :
                 $start = microtime(true);

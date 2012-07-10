@@ -2,7 +2,6 @@
 
 namespace PhraseanetSDK\HttpAdapter;
 
-use Guzzle\Common\Event;
 use Guzzle\Common\GuzzleException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
@@ -140,12 +139,12 @@ class Guzzle implements HttpAdapterInterface
      */
     private function formatQueryParameters($args)
     {
-        $queryDatas = array('data' => $args);
-
         if (isset($args['oauth_token'])) {
             $this->token = $args['oauth_token'];
             unset($args['oauth_token']);
         }
+
+        $queryDatas = array('data' => $args);
 
         if ($this->token) {
             $queryDatas['oauth_token'] = $this->token;
