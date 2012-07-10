@@ -85,8 +85,8 @@ class Client extends AbstractClient
      * To create an API key/secret pair, go to your account adminstation panel
      * in your phraseanet application.
      *
-     * @param string      $apiKey
-     * @param string      $apiSecret
+     * @param string $apiKey
+     * @param string $apiSecret
      */
     public function __construct($apiKey, $apiSecret, HttpAdapter\HttpAdapterInterface $clientHttp, Logger $logger = null)
     {
@@ -268,7 +268,6 @@ class Client extends AbstractClient
                 'redirect_uri'  => $this->grantInfo['redirect_uri'],
             );
 
-
             try {
                 $responseContent = $this->httpClient->post($this->oauthTokenEndpointUrl, $args);
                 $token = json_decode($responseContent, true);
@@ -300,9 +299,9 @@ class Client extends AbstractClient
      *
      * Call a remote Phraseanet API method
      *
-     * @param  string                $path           remote path
-     * @param  array                 $args           request parameters
-     * @param  string                $httpMethod    http method
+     * @param  string                $path       remote path
+     * @param  array                 $args       request parameters
+     * @param  string                $httpMethod http method
      * @return PhraseanetApiResponse
      *
      * @throws BadRequestException  if method is unsupported phraseanet API

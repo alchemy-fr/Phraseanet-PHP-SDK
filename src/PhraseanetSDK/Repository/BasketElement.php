@@ -3,7 +3,6 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Entity\Basket;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class BasketElement extends AbstractRepository

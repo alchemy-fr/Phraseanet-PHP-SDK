@@ -3,7 +3,6 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Entity\Feed;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Entry extends AbstractRepository

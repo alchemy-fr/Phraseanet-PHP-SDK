@@ -20,7 +20,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
 
     /**
      *
-     * @param string $body
+     * @param  string                                        $body
      * @return \PhraseanetSDK\Exception\BadResponseException
      */
     public function setResponseBody($body)
@@ -53,7 +53,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
     /**
      * Set the response HTTP status code
      *
-     * @param int $httpStatusCode
+     * @param  int                                           $httpStatusCode
      * @return \PhraseanetSDK\Exception\BadResponseException
      */
     public function setHttpStatusCode($httpStatusCode)

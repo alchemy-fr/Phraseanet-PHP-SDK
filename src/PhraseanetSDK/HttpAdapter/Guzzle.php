@@ -43,7 +43,7 @@ class Guzzle implements HttpAdapterInterface
     /**
      * Set client base URL
      *
-     * @param string $url
+     * @param  string                            $url
      * @return \PhraseanetSDK\HttpAdapter\Guzzle
      */
     public function setBaseUrl($url)
@@ -56,9 +56,9 @@ class Guzzle implements HttpAdapterInterface
     /**
      * GET request
      *
-     * @param string $path The path to query
-     * @param array $args An array of query parameters
-     * @return string The response body
+     * @param  string               $path The path to query
+     * @param  array                $args An array of query parameters
+     * @return string               The response body
      * @throws BadResponseException
      * @throws RuntimeException
      */
@@ -89,9 +89,9 @@ class Guzzle implements HttpAdapterInterface
     /**
      * Post request
      *
-     * @param string $path The path to query
-     * @param array $args An array of query parameters
-     * @return string The response body
+     * @param  string               $path The path to query
+     * @param  array                $args An array of query parameters
+     * @return string               The response body
      * @throws BadResponseException
      * @throws RuntimeException
      */
@@ -123,7 +123,7 @@ class Guzzle implements HttpAdapterInterface
     /**
      * Return an URI template
      *
-     * @param array $args
+     * @param  array  $args
      * @return string
      */
     private function getTemplate(array $args)
@@ -134,7 +134,7 @@ class Guzzle implements HttpAdapterInterface
     /**
      * Format query parameters
      *
-     * @param array $args
+     * @param  array $args
      * @return array
      */
     private function formatQueryParameters($args)
@@ -153,4 +153,3 @@ class Guzzle implements HttpAdapterInterface
         return $queryDatas;
     }
 }
-

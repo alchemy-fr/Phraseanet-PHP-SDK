@@ -3,7 +3,6 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Entity\Databox;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class DataboxStatus extends AbstractRepository

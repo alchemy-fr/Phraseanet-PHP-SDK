@@ -4,7 +4,6 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\NotFoundException;
-use PhraseanetSDK\Entity\Record as RecordEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Subdef extends AbstractRepository

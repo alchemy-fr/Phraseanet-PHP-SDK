@@ -3,7 +3,6 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Entity\Record;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class RecordStatus extends AbstractRepository
