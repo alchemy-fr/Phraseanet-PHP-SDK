@@ -20,8 +20,8 @@
         "php": ">=5.3.2",
         "doctrine/common": ">2.1",
         "guzzle/guzzle" : "2.7.2",
-        "monolog/monolog" : "*",
-        "symfony/http-foundation": "*"
+        "monolog/monolog" : "1.1.*",
+        "symfony/http-foundation": "2.*"
     },
     "require-dev": {
         "sami/sami": "*",

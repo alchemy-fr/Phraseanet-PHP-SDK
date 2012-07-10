@@ -1,12 +1,6 @@
 {
-    "hash": "9a70c22005888c6e5c2a3f3a38f3f6b1",
+    "hash": "daed90daae7427278330ec30eec18d31",
     "packages": [
-        {
-            "package": "doctrine/common",
-            "version": "dev-master",
-            "alias-pretty-version": "2.3.x-dev",
-            "alias-version": "2.3.9999999.9999999-dev"
-        },
         {
             "package": "doctrine/common",
             "version": "dev-master",
@@ -15,21 +9,11 @@
         },
         {
             "package": "guzzle/guzzle",
-            "version": "dev-master",
-            "source-reference": "c8b3c4c3d07c3469dd7bfc758e1e631a723e3bb7",
-            "commit-date": "1341812348"
+            "version": "v2.7.2"
         },
         {
             "package": "monolog/monolog",
-            "version": "dev-master",
-            "source-reference": "6cbdc0410c08fb03d7eee6b69126661fcbb89c41",
-            "commit-date": "1340715384"
-        },
-        {
-            "package": "symfony/event-dispatcher",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "version": "1.1.0"
         },
         {
             "package": "symfony/event-dispatcher",
