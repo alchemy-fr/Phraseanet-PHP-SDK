@@ -14,5 +14,5 @@ interface HttpAdapterInterface
 
     public function post($path, array $args = array());
 
-    public function setLogger(Logger $logger);
+    public function setLogger(Logger $logger = null);
 }

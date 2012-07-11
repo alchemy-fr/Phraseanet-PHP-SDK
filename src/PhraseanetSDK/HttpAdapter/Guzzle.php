@@ -67,7 +67,7 @@ class Guzzle implements HttpAdapterInterface
      *
      * @param \Monolog\Logger $logger
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger = null)
     {
         $this->logger = $logger;
     }
