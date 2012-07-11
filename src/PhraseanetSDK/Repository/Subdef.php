@@ -40,8 +40,11 @@ class Subdef extends AbstractRepository
         $subdefCollection = new ArrayCollection();
 
         foreach ($response->getProperty('embed') as $subdefDatas) {
-            $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
-            $subdefCollection->add($subdef);
+            // subdefDatas can be null
+            if($subdefDatas !== null) {
+                $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
+                $subdefCollection->add($subdef);
+            }
         }
 
         return $subdefCollection;
