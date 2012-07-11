@@ -2,6 +2,8 @@
 
 namespace PhraseanetSDK\HttpAdapter;
 
+use Monolog\Logger;
+
 interface HttpAdapterInterface
 {
     public function getBaseUrl();
@@ -11,4 +13,6 @@ interface HttpAdapterInterface
     public function get($path, array $args = array());
 
     public function post($path, array $args = array());
+
+    public function setLogger(Logger $logger);
 }

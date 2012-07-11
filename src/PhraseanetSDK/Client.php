@@ -94,7 +94,9 @@ class Client extends AbstractClient
         $this->logger = $logger;
 
         $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
+        
         $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
+        $this->httpClient->setLogger($logger);
 
         $this->oauthAuthorizeEndpointUrl = sprintf('%s%s', $baseUrl, self::AUTH_ENDPOINT);
         $this->oauthTokenEndpointUrl = sprintf('%s%s', $baseUrl, self::TOKEN_ENDPOINT);

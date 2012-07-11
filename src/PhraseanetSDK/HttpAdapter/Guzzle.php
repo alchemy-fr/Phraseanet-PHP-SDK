@@ -6,6 +6,7 @@ use Guzzle\Common\GuzzleException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Guzzle\Http\Exception\CurlException;
+use Monolog\Logger;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\RuntimeException;
 
@@ -24,6 +25,14 @@ class Guzzle implements HttpAdapterInterface
      * @var string
      */
     private $token;
+
+
+    /**
+     * A monolog logger
+     *
+     * @var \Monolog\Logger
+     */
+    private $logger;
 
     public function __construct(ClientInterface $client)
     {
@@ -54,6 +63,16 @@ class Guzzle implements HttpAdapterInterface
     }
 
     /**
+     * A logger
+     *
+     * @param \Monolog\Logger $logger
+     */
+    public function setLogger(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
      * GET request
      *
      * @param  string               $path The path to query
@@ -71,7 +90,9 @@ class Guzzle implements HttpAdapterInterface
         try {
             $request = $this->client->get(array($path, $queryDatas));
             $request->setHeader('Accept', 'application/json');
+            $this->log($request->getRawHeaders());
             $response = $request->send();
+            $this->log($response->getRawHeaders());
         } catch (CurlException $e) {
             throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
         } catch (GuzzleBadResponse $e) {
@@ -104,7 +125,9 @@ class Guzzle implements HttpAdapterInterface
         try {
             $request = $this->client->post(array($path, $queryDatas));
             $request->setHeader('Accept', 'application/json');
+            $this->log($request->getRawHeaders());
             $response = $request->send();
+            $this->log($response->getRawHeaders());
         } catch (CurlException $e) {
             throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
         } catch (GuzzleBadResponse $e) {
@@ -151,5 +174,17 @@ class Guzzle implements HttpAdapterInterface
         }
 
         return $queryDatas;
+    }
+
+    /**
+     * Log a message
+     *
+     * @param string $message
+     */
+    private function log($message)
+    {
+        if (null !== $this->logger) {
+            $this->logger->addInfo($message);
+        }
     }
 }
