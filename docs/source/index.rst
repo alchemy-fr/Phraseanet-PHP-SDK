@@ -66,7 +66,12 @@ authentication flow as well.
 **Get a Phraseanet client**
 
 To ease the use of the configuration and the flexibility of the
-Phraseanet Client, it relies on a Guzzle Http Client object
+Phraseanet Client, The SDK let you free to choose your HTTP client.
+
+For that you need to embed your choosen HTTP client into an object wich
+implements The PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
+
+For the following example we will use Guzzle Http Client library
 `http://guzzlephp.org/index.html <http://guzzlephp.org/index.html>`_ which is
 highly customizable.
 
@@ -78,7 +83,6 @@ highly customizable.
     use PhraseanetSDK\HttpAdapter\Guzzle as HttpAdapter;
 
     $httpClient = new  Guzzle\Http\Client();
-    $httpClient->setBaseUrl('http://your.instance-api.url/');
 
     $HttpAdapter = new HttpAdapter($httpClient);
 
