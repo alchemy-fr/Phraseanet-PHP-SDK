@@ -59,8 +59,8 @@ class Record extends AbstractRepository
     /**
      * Search for records
      *
-     * @param  array                      $parameters Query parameters
-     * @return PhraseanetSDK\Entity\Query object
+     * @param  array                       $parameters Query parameters
+     * @return \PhraseanetSDK\Entity\Query object
      * @throws RuntimeException
      */
     public function search(array $parameters = array())

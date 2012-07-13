@@ -14,7 +14,7 @@ abstract class AbstractClient
 {
 
     /**
-     * Retieve a stored token
+     * Retrieve a stored token
      * @return mixed
      */
     abstract public function getAccessToken();

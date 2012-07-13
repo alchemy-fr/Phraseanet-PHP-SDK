@@ -2,7 +2,6 @@
 
 namespace PhraseanetSDK;
 
-use Guzzle\Http\Client as GuzzleClient;
 use Monolog\Logger;
 use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\Exception\AuthenticationException;
@@ -43,7 +42,7 @@ class Client extends AbstractClient
     protected $oauthTokenEndpointUrl = '';
 
     /**
-     * @var HttpAdapter\HttpAdapterInterface
+     * @var HttpAdapterInterface
      */
     protected $httpClient;
 
@@ -129,7 +128,7 @@ class Client extends AbstractClient
     /**
      * Return the HTTP client
      *
-     * @return GuzzleClient
+     * @return HttpAdapterInterface
      */
     public function getHttpClient()
     {
@@ -245,8 +244,6 @@ class Client extends AbstractClient
      *
      * Retrieve your access Token from your callback endpoint
      *
-     * @return void
-     *
      * @throws AuthenticationException if error occurs during authentication
      * @throws TransportException      if problem occurs with transport layer
      */
@@ -291,7 +288,7 @@ class Client extends AbstractClient
      *
      * Destroy stored token
      *
-     * @return PhraseanetClientApi
+     * @return Client
      */
     public function logout()
     {
@@ -304,10 +301,10 @@ class Client extends AbstractClient
      *
      * Call a remote Phraseanet API method
      *
-     * @param  string                $path       remote path
-     * @param  array                 $args       request parameters
-     * @param  string                $httpMethod http method
-     * @return PhraseanetApiResponse
+     * @param  string   $path       remote path
+     * @param  array    $args       request parameters
+     * @param  string   $httpMethod http method
+     * @return Response
      *
      * @throws BadRequestException  if method is unsupported phraseanet API
      * @throws BadResponseException if response is 4xx or 5xx

@@ -24,7 +24,7 @@ class Response
 
     /**
      *
-     * @param stdClass $response
+     * @param \stdClass $response
      */
     public function __construct(\stdClass $response)
     {
@@ -96,7 +96,7 @@ class Response
 
     /**
      * Get Response time
-     * @return DateTime
+     * @return \DateTime
      */
     public function getResponseTime()
     {

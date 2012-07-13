@@ -11,10 +11,10 @@ class Factory
     /**
      * Construct a new entity object
      *
-     * @param  string                             $type the type of the repository
-     * @param  PhraseanetSDK\EntityManager        $em   the entity manager
-     * @return \PhraseanetSDK\Tools\Entity\*
-     * @throws Exception\InvalidArgumentException when types is unknown
+     * @param  string                                $type the type of the repository
+     * @param  PhraseanetSDK\EntityManager           $em   the entity manager
+     * @return \PhraseanetSDK\Entity\EntityInterface
+     * @throws Exception\InvalidArgumentException    when types is unknown
      */
     public static function build($type, EntityManager $em)
     {

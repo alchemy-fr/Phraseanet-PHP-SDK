@@ -2,7 +2,6 @@
 
 namespace PhraseanetSDK;
 
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Factory as RepoFactory;
 use PhraseanetSDK\Entity\Factory as EntityFactory;
 use PhraseanetSDK\Entity\EntityHydrator;
@@ -13,11 +12,21 @@ class EntityManager
     private $client;
     private $repositories;
 
+    /**
+     *
+     * @param Client $client
+     */
     public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
+    /**
+     * Get a repository by its name
+     *
+     * @param  string                                        $name
+     * @return \PhraseanetSDK\Repository\RepositoryInterface
+     */
     public function getRepository($name)
     {
         if (isset($this->repositories[$name])) {
@@ -29,16 +38,35 @@ class EntityManager
         return $this->repositories[$name];
     }
 
-    public function getEntity($type)
+    /**
+     * Return a new entity by its name
+     *
+     * @param  string          $name The name of the entity
+     * @return EntityInterface
+     */
+    public function getEntity($name)
     {
-        return EntityFactory::build($type, $this);
+        return EntityFactory::build($name, $this);
     }
 
-    public function HydrateEntity(EntityInterface $entity, $datas)
+    /**
+     * Hydrates an entity with datas
+     *
+     * @param EntityInterface $entity
+     * @param \stdClass       $datas
+     *
+     * @return EntityInterface
+     */
+    public function HydrateEntity(EntityInterface $entity, \stdClass $datas)
     {
         return EntityHydrator::hydrate($entity, $datas, $this);
     }
 
+    /**
+     * Return the client attached to this entity manager
+     *
+     * @return Client
+     */
     public function getClient()
     {
         return $this->client;

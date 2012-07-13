@@ -11,8 +11,8 @@ class Entry extends AbstractRepository
     /**
      * Retrieve the entry identified by its id
      *
-     * @param  integer                   $id The entry id
-     * @return PhraseanetSDK\Entity\Feed
+     * @param  integer                    $id The entry id
+     * @return \PhraseanetSDK\Entity\Feed
      * @throws RuntimeException
      */
     public function findById($id)

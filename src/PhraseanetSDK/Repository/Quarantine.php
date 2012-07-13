@@ -40,8 +40,8 @@ class Quarantine extends AbstractRepository
     /**
      * Find a quarantine item by its identifier
      *
-     * @param  integer                         $id The desired id
-     * @return PhraseanetSDK\Entity\Quarantine
+     * @param  integer                          $id The desired id
+     * @return \PhraseanetSDK\Entity\Quarantine
      * @throws RuntimeException
      */
     public function findById($id)

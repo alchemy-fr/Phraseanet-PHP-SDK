@@ -11,8 +11,8 @@ class Feed extends AbstractRepository
     /**
      * Find a feed by its identifier
      *
-     * @param  integer                  $id The desired id
-     * @return PraseanetSDK\Entity\Feed
+     * @param  integer                    $id The desired id
+     * @return \PhraseanetSDK\Entity\Feed
      * @throws RuntimeException
      */
     public function findById($id)

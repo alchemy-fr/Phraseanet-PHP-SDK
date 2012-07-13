@@ -8,7 +8,7 @@ use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Exception\RuntimeException;
 
-abstract class AbstractRepository
+abstract class AbstractRepository implements RepositoryInterface
 {
     /**
      *
