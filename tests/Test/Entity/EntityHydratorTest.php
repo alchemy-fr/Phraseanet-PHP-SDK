@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Tools\Entity;
+namespace Test\Entity;
 
 use PhraseanetSDK\Entity\Feed;
 use PhraseanetSDK\Entity\FeedEntry;
@@ -8,11 +8,11 @@ use PhraseanetSDK\Entity\FeedEntryItem;
 use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Subdef;
 use PhraseanetSDK\Entity\Permalink;
-use PhraseanetSDK\Tools\Entity\Hydrator;
+use PhraseanetSDK\Entity\EntityHydrator;
 use PhraseanetSDK\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class HydratorTest extends \PHPUnit_Framework_TestCase
+class EntityHydratorTest extends \PHPUnit_Framework_TestCase
 {
 
     private function getOneFeed()
@@ -134,7 +134,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         $em = new EntityManager($client);
 
         $feed = new Feed($em);
-        $feed = Hydrator::hydrate($feed, $this->getOneFeed(), $em);
+        $feed = EntityHydrator::hydrate($feed, $this->getOneFeed(), $em);
 
         $this->assertEquals(3, $feed->getId());
         $this->assertEquals('hellow world', $feed->getTitle());
@@ -146,7 +146,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
 
         $entry = new FeedEntry($em);
 
-        $entry = Hydrator::hydrate($entry, $this->getOneFeedEntry(), $em);
+        $entry = EntityHydrator::hydrate($entry, $this->getOneFeedEntry(), $em);
 
         /* @var $entry \PhraseanetSDK\Entity\Entry */
         $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorEmail());

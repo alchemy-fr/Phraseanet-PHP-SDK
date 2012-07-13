@@ -1,12 +1,12 @@
 <?php
 
-namespace PhraseanetSDK\Tools\Entity;
+namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\EntityManager;
 use PhraseanetSDK\Entity\EntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Hydrator
+class EntityHydrator
 {
 
     /**

@@ -5,7 +5,7 @@ namespace PhraseanetSDK;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Factory as RepoFactory;
 use PhraseanetSDK\Entity\Factory as EntityFactory;
-use PhraseanetSDK\Tools\Entity\Hydrator;
+use PhraseanetSDK\Entity\EntityHydrator;
 use PhraseanetSDK\Entity\EntityInterface;
 
 class EntityManager
@@ -36,7 +36,7 @@ class EntityManager
 
     public function HydrateEntity(EntityInterface $entity, $datas)
     {
-        return Hydrator::hydrate($entity, $datas, $this);
+        return EntityHydrator::hydrate($entity, $datas, $this);
     }
 
     public function getClient()
