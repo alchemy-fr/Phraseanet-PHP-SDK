@@ -4,9 +4,8 @@ Documentation
 Introduction
 ------------
 
-Phraseanet PHP SDK is an object oriented PHP wrapper that allows you to access
-the Phraseanet API from your PHP application/website.
-
+Phraseanet PHP SDK is an object oriented PHP library that gives you access to
+the your Phraseanet ressources from your PHP application/website.
 
 Design
 ------
@@ -14,8 +13,8 @@ Design
 This library has been strongly inspired by Doctrine ORM design and sits on top
 of `Phraseanet API<https://docs.phraseanet.com/Devel>`.
 
-The aim is to let you design your application as if you were connected to a
-database.
+The aim is to let you build your application/mashup as if you were connected to
+a database.
 
 This library provide a set of entities mapped to the logical structure of the
 API and a set of related repositories to fetch this entities in various ways.
