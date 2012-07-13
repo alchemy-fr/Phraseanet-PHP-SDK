@@ -6,7 +6,7 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Quarantine;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class QuarantineTest extends Repository
 {
@@ -14,7 +14,7 @@ class QuarantineTest extends Repository
     public function testFindByOffset()
     {
         $client = $this->getClient($this->getSampleResponse('repository/quarantine/findAll'));
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $items = $quarantineRepository->findByOffset(0, 10);
 
         $this->assertIsCollection($items);
@@ -27,7 +27,7 @@ class QuarantineTest extends Repository
     public function testFindById()
     {
         $client = $this->getClient($this->getSampleResponse('repository/quarantine/findById'));
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $item = $quarantineRepository->findById(1);
 
         $this->checkQuarantine($item);
@@ -39,7 +39,7 @@ class QuarantineTest extends Repository
     public function testFindByIdRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findById(1);
     }
 
@@ -49,7 +49,7 @@ class QuarantineTest extends Repository
     public function testFindByOffsetByNameException()
     {
         $client = $this->getClient($this->getSampleResponse('repository/quarantine/findAll'), 404);
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 
@@ -59,7 +59,7 @@ class QuarantineTest extends Repository
     public function testFindByOffsetdException()
     {
         $client = $this->getClient($this->getSampleResponse('401'), 401);
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 
@@ -69,7 +69,7 @@ class QuarantineTest extends Repository
     public function testFindByOffsetdQueryRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('bad'), 200);
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 
@@ -79,7 +79,7 @@ class QuarantineTest extends Repository
     public function testFindByOffsetdRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'), 200);
-        $quarantineRepository = new Quarantine(new Manager($client));
+        $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 }

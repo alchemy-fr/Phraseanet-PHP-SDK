@@ -6,7 +6,7 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\DataboxStatus;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class DataboxStatusTest extends Repository
 {
@@ -14,7 +14,7 @@ class DataboxStatusTest extends Repository
     public function testFindByDatabox()
     {
         $client = $this->getClient($this->getSampleResponse('repository/databoxStatus/findAll'));
-        $databoxStatusRepository = new DataboxStatus(new Manager($client));
+        $databoxStatusRepository = new DataboxStatus(new EntityManager($client));
         $databoxStatus = $databoxStatusRepository->findByDatabox(1);
 
         foreach ($databoxStatus as $status) {
@@ -28,7 +28,7 @@ class DataboxStatusTest extends Repository
     public function testFindByDataboxException()
     {
         $client = $this->getClient($this->getSampleResponse('401'), 401);
-        $databoxStatusRepository = new DataboxStatus(new Manager($client));
+        $databoxStatusRepository = new DataboxStatus(new EntityManager($client));
         $databoxStatusRepository->findByDatabox(1);
     }
 
@@ -38,7 +38,7 @@ class DataboxStatusTest extends Repository
     public function testFindByDataboxRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $databoxStatusRepository = new DataboxStatus(new Manager($client));
+        $databoxStatusRepository = new DataboxStatus(new EntityManager($client));
         $databoxStatusRepository->findByDatabox(1);
     }
 }

@@ -6,7 +6,7 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Record;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class RecordTest extends Repository
 {
@@ -14,7 +14,7 @@ class RecordTest extends Repository
     public function testFindById()
     {
         $client = $this->getClient($this->getSampleResponse('repository/record/idByDatabox'));
-        $recordRepo = new Record(new Manager($client));
+        $recordRepo = new Record(new EntityManager($client));
         $record = $recordRepo->findById(1, 1);
         $this->checkRecord($record);
     }
@@ -25,14 +25,14 @@ class RecordTest extends Repository
     public function testFindIdByDataboxException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $recordRepo = new Record(new Manager($client));
+        $recordRepo = new Record(new EntityManager($client));
         $recordRepo->findById(1, 1);
     }
 
     public function testFind()
     {
         $client = $this->getClient($this->getSampleResponse('repository/query/search'));
-        $recordRepo = new Record(new Manager($client));
+        $recordRepo = new Record(new EntityManager($client));
         $records = $recordRepo->find(1, 10);
         $this->assertIsCollection($records);
         foreach ($records as $record) {
@@ -46,14 +46,14 @@ class RecordTest extends Repository
     public function testFindException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $recordRepo = new Record(new Manager($client));
+        $recordRepo = new Record(new EntityManager($client));
         $recordRepo->find(1, 10);
     }
 
     public function testSearch()
     {
         $client = $this->getClient($this->getSampleResponse('repository/query/search'));
-        $recordRepo = new Record(new Manager($client));
+        $recordRepo = new Record(new EntityManager($client));
         $query = $recordRepo->search();
         $this->checkQueryObject($query);
     }
@@ -64,7 +64,7 @@ class RecordTest extends Repository
     public function testSearchException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $recordRepo = new Record(new Manager($client));
+        $recordRepo = new Record(new EntityManager($client));
         $recordRepo->search();
     }
 }

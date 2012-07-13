@@ -6,7 +6,7 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\BasketElement;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class BasketElementTest extends Repository
 {
@@ -15,7 +15,7 @@ class BasketElementTest extends Repository
     {
         $client = $this->getClient($this->getSampleResponse('repository/basketElement/byBasket'));
 
-        $basketElementRepository = new BasketElement(new Manager($client));
+        $basketElementRepository = new BasketElement(new EntityManager($client));
         $basketElements = $basketElementRepository->findByBasket(1);
         $this->assertIsCollection($basketElements);
 
@@ -30,7 +30,7 @@ class BasketElementTest extends Repository
     public function testFindByBasketRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $basketElementRepository = new BasketElement(new Manager($client));
+        $basketElementRepository = new BasketElement(new EntityManager($client));
         $basketElementRepository->findByBasket(1);
     }
 }

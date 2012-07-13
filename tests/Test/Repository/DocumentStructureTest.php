@@ -6,14 +6,14 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\DataboxDocumentStructure;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class DocumentStructureTest extends Repository
 {
     public function testFindByDatabox()
     {
         $client = $this->getClient($this->getSampleResponse('repository/documentStructure/findAll'));
-        $databoxMetadatasRepository = new DataboxDocumentStructure(new Manager($client));
+        $databoxMetadatasRepository = new DataboxDocumentStructure(new EntityManager($client));
         $databoxMetadatas = $databoxMetadatasRepository->findByDatabox(1);
 
         $this->assertEquals(27, $databoxMetadatas->count());
@@ -29,7 +29,7 @@ class DocumentStructureTest extends Repository
     public function testFindByDataboxException()
     {
         $client = $this->getClient($this->getSampleResponse('401'), 401);
-        $collectionRepository = new DataboxDocumentStructure(new Manager($client));
+        $collectionRepository = new DataboxDocumentStructure(new EntityManager($client));
         $collectionRepository->findByDatabox(1);
     }
 
@@ -39,7 +39,7 @@ class DocumentStructureTest extends Repository
     public function testFindByDataboxRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $collectionRepository = new DataboxDocumentStructure(new Manager($client));
+        $collectionRepository = new DataboxDocumentStructure(new EntityManager($client));
         $collectionRepository->findByDatabox(1);
     }
 

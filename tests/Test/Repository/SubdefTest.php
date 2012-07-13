@@ -6,7 +6,7 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Subdef;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class SubdefTest extends Repository
 {
@@ -17,7 +17,7 @@ class SubdefTest extends Repository
     public function testFindSubdefByRecordByName($name)
     {
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'));
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdef = $subdefRepository->findByRecordAndName(1, 1, $name);
         $this->checkSubdef($subdef);
     }
@@ -29,14 +29,14 @@ class SubdefTest extends Repository
     {
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'), 200);
 
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecordAndName(1, 1, 'unknowName');
     }
 
     public function testFindSubdefByRecord()
     {
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'));
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdefs = $subdefRepository->findByRecord(1, 1, array('screen'), array('image/jpg'));
         $this->assertIsCollection($subdefs);
 
@@ -51,7 +51,7 @@ class SubdefTest extends Repository
     public function testFindSubdefByRecordUnauthorizedRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
@@ -61,7 +61,7 @@ class SubdefTest extends Repository
     public function testFindSubdefByRecordUnauthorizedException()
     {
         $client = $this->getClient($this->getSampleResponse('401'), 401);
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
@@ -71,7 +71,7 @@ class SubdefTest extends Repository
     public function testFindSubdefByRecordRuntimeException()
     {
         $client = $this->getClient($this->getSampleResponse('500'), 500);
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
@@ -82,7 +82,7 @@ class SubdefTest extends Repository
     {
         //throw curl exception
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'), 200, true);
-        $subdefRepository = new Subdef(new Manager($client));
+        $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 

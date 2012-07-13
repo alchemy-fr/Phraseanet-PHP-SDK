@@ -6,7 +6,7 @@ require_once 'Repository.php';
 
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Caption;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class CaptionTest extends Repository
 {
@@ -14,7 +14,7 @@ class CaptionTest extends Repository
     public function testfindCaptionByRecord()
     {
         $client = $this->getClient($this->getSampleResponse('repository/recordCaption/byRecord'));
-        $metaRepository = new Caption(new Manager($client));
+        $metaRepository = new Caption(new EntityManager($client));
         $metas = $metaRepository->findByRecord(1, 1);
         $this->assertIsCollection($metas);
         foreach ($metas as $meta) {
@@ -29,7 +29,7 @@ class CaptionTest extends Repository
     {
         $client = $this->getClient($this->getSampleResponse('401'), 401);
 
-        $metaRepository = new Caption(new Manager($client));
+        $metaRepository = new Caption(new EntityManager($client));
         $metaRepository->findByRecord(1, 1);
     }
 
@@ -40,7 +40,7 @@ class CaptionTest extends Repository
     {
         $client = $this->getClient($this->getSampleResponse('empty'));
 
-        $metaRepository = new Caption(new Manager($client));
+        $metaRepository = new Caption(new EntityManager($client));
         $metaRepository->findByRecord(1, 1);
     }
 }
