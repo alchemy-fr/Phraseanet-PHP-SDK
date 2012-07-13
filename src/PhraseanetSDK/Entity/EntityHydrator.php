@@ -27,6 +27,7 @@ class EntityHydrator
      *
      * @param  type                          $entity is the entity we want to populate
      * @param  \stdClass                     $object is the source of datas
+     * @param  EntityManager                 $em     The entity manager
      * @return \PhraseanetSDK\Tools\Entity\*
      */
     public static function hydrate(EntityInterface $entity, \stdClass $object, EntityManager $em)

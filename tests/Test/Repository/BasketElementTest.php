@@ -4,7 +4,6 @@ namespace Test\Repository;
 
 require_once 'Repository.php';
 
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\BasketElement;
 use PhraseanetSDK\EntityManager;
 

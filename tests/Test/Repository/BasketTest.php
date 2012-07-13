@@ -5,7 +5,6 @@ namespace Test\Repository;
 require_once 'Repository.php';
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Basket;
 use PhraseanetSDK\EntityManager;
 

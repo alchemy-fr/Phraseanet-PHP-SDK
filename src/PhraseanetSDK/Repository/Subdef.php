@@ -53,8 +53,9 @@ class Subdef extends AbstractRepository
     /**
      * Find a subdefs by its name that belong to the provided record
      *
-     * @param  RecordEntity                $record The provided record
-     * @param  string                      $name   The provided name
+     * @param  integer                     $databoxId The record databoxId
+     * @param  integer                     $recordId  The recordId
+     * @param  string                      $name      The name of the subdef
      * @return PreaseanetSDL\Entity\Subdef
      * @throws NotFoundException
      */

@@ -4,6 +4,7 @@ namespace PhraseanetSDK;
 
 use Guzzle\Http\Client as GuzzleClient;
 use Monolog\Logger;
+use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadRequestException;
 use PhraseanetSDK\Exception\BadResponseException;
@@ -85,10 +86,12 @@ class Client extends AbstractClient
      * To create an API key/secret pair, go to your account adminstation panel
      * in your phraseanet application.
      *
-     * @param string $apiKey
-     * @param string $apiSecret
+     * @param string               $apiKey     Your API key
+     * @param string               $apiSecret  Your API secret
+     * @param HttpAdapterInterface $clientHttp An HTTP Client
+     * @param Logger               $logger     A logger
      */
-    public function __construct($apiKey, $apiSecret, HttpAdapter\HttpAdapterInterface $clientHttp, Logger $logger = null)
+    public function __construct($apiKey, $apiSecret, HttpAdapterInterface $clientHttp, Logger $logger = null)
     {
         $this->httpClient = $clientHttp;
         $this->logger = $logger;
