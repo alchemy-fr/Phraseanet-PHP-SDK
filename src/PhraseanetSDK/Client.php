@@ -94,7 +94,7 @@ class Client extends AbstractClient
         $this->logger = $logger;
 
         $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
-        
+
         $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
         $this->httpClient->setLogger($logger);
 

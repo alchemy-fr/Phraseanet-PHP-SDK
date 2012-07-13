@@ -41,7 +41,7 @@ class Subdef extends AbstractRepository
 
         foreach ($response->getProperty('embed') as $subdefDatas) {
             // subdefDatas can be null
-            if($subdefDatas !== null) {
+            if ($subdefDatas !== null) {
                 $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
                 $subdefCollection->add($subdef);
             }

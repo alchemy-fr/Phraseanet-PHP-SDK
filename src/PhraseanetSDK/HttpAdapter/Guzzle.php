@@ -27,7 +27,6 @@ class Guzzle implements HttpAdapterInterface
      */
     private $token;
 
-
     /**
      * A monolog logger
      *

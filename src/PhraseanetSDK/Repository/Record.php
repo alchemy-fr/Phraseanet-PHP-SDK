@@ -11,8 +11,8 @@ class Record extends AbstractRepository
     /**
      * Find the record by its id that belongs to the provided databox
      *
-     * @param  integer                     $databoxId The record databox id
-     * @param  integer                     $recordId  The record id
+     * @param  integer                      $databoxId The record databox id
+     * @param  integer                      $recordId  The record id
      * @return \PhraseanetSDK\Entity\Record
      * @throws RuntimeException
      */
