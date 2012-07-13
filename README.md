@@ -37,6 +37,7 @@ echo $query->getTotalResults() . " items found in " . $query->getQueryTime() . "
 foreach($query->getResults() as $record) {
     echo "Sub definition " . $subdef->getName() . " has URL " . $subdef->getPermalink()->getUrl() . "\n";
 }
+```
 
 #License
 
