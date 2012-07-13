@@ -3,6 +3,7 @@
 namespace PhraseanetSDK\HttpAdapter;
 
 use Guzzle\Common\GuzzleException;
+use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Guzzle\Http\Exception\CurlException;
@@ -141,6 +142,16 @@ class Guzzle implements HttpAdapterInterface
         }
 
         return $response->getBody();
+    }
+
+    /**
+     * Factory for the Guzzle HttpAdapter
+     *
+     * @return Guzzle
+     */
+    public static function create()
+    {
+        return new static(new Client());
     }
 
     /**
