@@ -3,23 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\Tools\Entity\Factory | Phraseanet PHP SDK API</title>
-                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+        <title>PhraseanetSDK\Repository\Factory | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
             <div class="header">
         <ul>
-            <li><a href="../../../classes.html">Classes</a></li>
-                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                        <li><a href="../../../interfaces.html">Interfaces</a></li>
-            <li><a href="../../../doc-index.html">Index</a></li>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
             
         </ul>
 
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../../PhraseanetSDK/Tools/Entity.html">PhraseanetSDK\Tools\Entity</a>\Factory</h1>
+    <h1><a href="../../PhraseanetSDK/Repository.html">PhraseanetSDK\Repository</a>\Factory</h1>
     </div>
         <div class="content">
                 <p>class    <strong>Factory</strong></p>
@@ -32,10 +32,10 @@
             <table>
                     <tr>
                 <td class="type">
-                    static&nbsp;<abbr title="PhraseanetSDK\Tools\Entity\*">*</abbr>
+                    static&nbsp;<a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_build">build</a>(string $type, <a href="../../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $manager)
+                    <a href="#method_build">build</a>(string $type, <a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)
                     <p>Construct a new entity object</p>
                 </td>
                 <td></td>
@@ -46,9 +46,9 @@
         <h2>Details</h2>
 
                         <h3 id="method_build">
-        <div class="location">at line 42</div>
-        <code>        static    public            <abbr title="PhraseanetSDK\Tools\Entity\*">*</abbr>
-    <strong>build</strong>(string $type, <a href="../../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a> $manager)</code>
+        <div class="location">at line 19</div>
+        <code>        static    public            <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a>
+    <strong>build</strong>(string $type, <a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)</code>
     </h3>
     <div class="details">
         <p>Construct a new entity object</p>
@@ -60,11 +60,11 @@
                     <tr>
                 <td>string</td>
                 <td>$type</td>
-                <td>the type of the entity</td>
+                <td>the type of the repository</td>
             </tr>
                     <tr>
-                <td><a href="../../../PhraseanetSDK/Tools/Entity/Manager.html"><abbr title="PhraseanetSDK\Tools\Entity\Manager">Manager</abbr></a></td>
-                <td>$manager</td>
+                <td><a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a></td>
+                <td>$em</td>
                 <td>the entity manager</td>
             </tr>
             </table>
@@ -74,7 +74,7 @@
 
                     <table>
         <tr>
-            <td><abbr title="PhraseanetSDK\Tools\Entity\*">*</abbr></td>
+            <td><a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></td>
             <td></td>
         </tr>
     </table>
