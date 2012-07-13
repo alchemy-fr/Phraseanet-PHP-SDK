@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\UnauthorizedException;
@@ -18,9 +18,9 @@ abstract class AbstractRepository
 
     /**
      *
-     * @param Manager $em
+     * @param EntityManager $em
      */
-    public function __construct(Manager $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }

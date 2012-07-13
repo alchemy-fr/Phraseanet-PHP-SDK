@@ -12,8 +12,8 @@ class Record extends AbstractRepository
      * Find the record by its id that belongs to the provided databox
      *
      * @param  integer                     $databoxId The record databox id
-     * @param  integer                     $id        The record id
-     * @return PhraseanetSDK\Entity\Record
+     * @param  integer                     $recordId  The record id
+     * @return \PhraseanetSDK\Entity\Record
      * @throws RuntimeException
      */
     public function findById($databoxId, $recordId)

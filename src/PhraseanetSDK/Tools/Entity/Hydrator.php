@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Tools\Entity;
 
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 use PhraseanetSDK\Entity\EntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -29,7 +29,7 @@ class Hydrator
      * @param  \stdClass                     $object is the source of datas
      * @return \PhraseanetSDK\Tools\Entity\*
      */
-    public static function hydrate(EntityInterface $entity, \stdClass $object, Manager $manager)
+    public static function hydrate(EntityInterface $entity, \stdClass $object, EntityManager $em)
     {
         $className = get_class($entity);
         $reflectionClass = new \ReflectionClass($className);
@@ -63,9 +63,9 @@ class Hydrator
                         foreach ($propertyValue as $object) {
                             if (is_object($object)) {
                                 $subEntity = self::hydrate(
-                                        $manager->getEntity($propertyName)
+                                        $em->getEntity($propertyName)
                                         , $object
-                                        , $manager
+                                        , $em
                                 );
 
                                 $entityCollection->add($subEntity);
@@ -83,9 +83,9 @@ class Hydrator
                     } elseif (is_object($propertyValue)) {
                         if ( ! ctype_digit($propertyName)) {
                             $subEntity = self::hydrate(
-                                    $manager->getEntity($propertyName)
+                                    $em->getEntity($propertyName)
                                     , $propertyValue
-                                    , $manager
+                                    , $em
                             );
 
                             foreach ($parameters as $parameter) {

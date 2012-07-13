@@ -1,15 +1,14 @@
 <?php
 
-namespace Test\Tools\Entity;
+namespace PhraseanetSDK;
 
-use PhraseanetSDK\Tools\Entity\Manager;
 use PhraseanetSDK\Repository\AbstractRepository;
 
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class EntityManagerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers PhraseanetSDK\Tools\Entity\Manager::getRepository
+     * @covers PhraseanetSDK\EntityManager::getRepository
      * @dataProvider classprovider
      */
     public function testGetRepository($type)
@@ -22,7 +21,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             , false
         );
 
-        $em = new Manager($client);
+        $em = new EntityManager($client);
 
         $repo = $em->getRepository($type);
 
@@ -30,7 +29,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Tools\Entity\Manager::getEntity
+     * @covers PhraseanetSDK\EntityManager::getEntity
      * @dataProvider classprovider
      */
     public function testGetEntity($type)
@@ -43,7 +42,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             , false
         );
 
-        $em = new Manager($client);
+        $em = new EntityManager($client);
 
         $entity = $em->getEntity($type);
 
@@ -51,8 +50,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Tools\Entity\Manager::__construct
-     * @covers PhraseanetSDK\Tools\Entity\Manager::getClient
+     * @covers PhraseanetSDK\EntityManager::__construct
+     * @covers PhraseanetSDK\EntityManager::getClient
      */
     public function testGetClient()
     {
@@ -64,7 +63,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             , false
         );
 
-        $em = new Manager($client);
+        $em = new EntityManager($client);
 
         $this->assertEquals($client, $em->getClient());
     }

@@ -9,7 +9,7 @@ use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Subdef;
 use PhraseanetSDK\Entity\Permalink;
 use PhraseanetSDK\Tools\Entity\Hydrator;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class HydratorTest extends \PHPUnit_Framework_TestCase
@@ -131,7 +131,7 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
             , false
         );
 
-        $em = new Manager($client);
+        $em = new EntityManager($client);
 
         $feed = new Feed($em);
         $feed = Hydrator::hydrate($feed, $this->getOneFeed(), $em);

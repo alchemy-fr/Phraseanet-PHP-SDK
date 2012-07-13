@@ -3,7 +3,7 @@
 namespace PhraseanetSDK\Tools\Entity;
 
 use PhraseanetSDK\Exception;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class Factory
 {
@@ -35,11 +35,11 @@ class Factory
      * Construct a new entity object
      *
      * @param  string                             $type    the type of the entity
-     * @param  string                             $manager the entity manager
+     * @param  string                             $em the entity manager
      * @return \PhraseanetSDK\Tools\Entity\*
      * @throws Exception\InvalidArgumentException when types is unknown
      */
-    public static function build($type, Manager $manager)
+    public static function build($type, EntityManager $em)
     {
         if (isset(self::$mapKeyToObjectType[$type])) {
             $type = self::$mapKeyToObjectType[$type];
@@ -56,6 +56,6 @@ class Factory
             );
         }
 
-        return new $objectName($manager);
+        return new $objectName($em);
     }
 }

@@ -2,17 +2,17 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 abstract class AbstractEntity
 {
     /**
      *
-     * @var PhraseanetSDK\Tools\Entity\Manager
+     * @var EntityManager
      */
     protected $em;
 
-    final public function __construct(Manager $em)
+    final public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }

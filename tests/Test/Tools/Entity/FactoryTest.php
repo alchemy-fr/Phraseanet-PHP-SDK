@@ -13,7 +13,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testBuild($type)
     {
         $em = $this->getMock(
-            'PhraseanetSDK\\Tools\\Entity\\Manager'
+            'PhraseanetSDK\\EntityManager'
             , array()
             , array()
             , ''
@@ -29,7 +29,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testExceptionBuild()
     {
         $em = $this->getMock(
-            'PhraseanetSDK\\Tools\\Entity\\Manager'
+            'PhraseanetSDK\\EntityManager'
             , array()
             , array()
             , ''
