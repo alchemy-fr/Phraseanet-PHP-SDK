@@ -1,104 +1,28 @@
 Recipes
 =======
 
-Starter KIT
------------
+Retrieve the last twenty Feed entries
+-------------------------------------
 
-As an example you can find a Phraseanet starter kit which provide a set of use and examples
-for the SDK.
-
-`composer <http://getcomposer.org/>`_
-
-Extends client
---------------
-
-In most of case you should probably extends the client to handle how access token
-is stored on client side.
-
-It's up to you to implement your favorite method (session, database, file etc ..)
-
-Define getAccessToken in the way you want retrieve a previous stored token.
-
-Define setAccessToken in the way you want store your access stoken.
-
-Let's stock our token in session.
+This code retrieves the 20 latest feed entries and print some informations
+about it.
 
 .. code-block:: php
 
     <?php
+    use PhraseanetSDK\EntityManager;
+    use PhraseanetSDK\Client;
+    use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
 
-    //MyClient.php
+    $HttpAdapter = GuzzleAdapter::create();
+    $HttpAdapter->setBaseUrl('http://url-to-phraseanet.net/');
 
-    class MyClient extends PhraseanetSDK\Client
-    {
-        protected $session;
+    $client = new Client($apikey, $apiSecret, $HttpAdapter);
+    $client->setAccessToken($developerToken);
 
-        private function initSession()
-        {
-            if ( ! session_id()) {
-                session_start();
-            }
+    $em = new EntityManager($client);
 
-            $sessionKey = sprintf('oauth_', $this->apiKey);
-
-            $this->session = &$_SESSION[$sessionKey];
-        }
-
-        public function getAccessToken()
-        {
-            $this->initSession();
-
-            $this->accessToken = $this->session['token'];
-
-            return parent::getAccessToken();
-        }
-
-        public function setAccessToken($token)
-        {
-            $this->initSession();
-
-            $this->session['token'] = $token;
-
-            return parent::setAccessToken($token);
-        }
-    }
-
-Usage
-
-.. code-block:: php
-
-    <?php
-
-    //index.php
-
-    require_once __DIR__ . '/Myclient.php';
-
-    $httpClient = new  Guzzle\Http\Client();
-    $httpClient->setBaseUrl('http://your.instance-api.url/');
-
-    $myClient = new MyClient('Your API Key', 'Your API Secret', $httpClient);
-
-    if(null !== $myClient->getAccessToken()) {
-        //user is still authenticated
-    } else {
-        //force user to authenticate by providing the clicking authorization url
-        echo $myClient->getAuthorizationUrl();
-    }
-
-
-Retrieve the last twenty RSS Feed entries
------------------------------------------
-
-.. code-block:: php
-
-    <?php
-    use PhraseanetSDK\Tools\Entity\Manager;
-
-    $em = new Manager($myClient);
-
-    $entryRepository = $em->getRepository('Entry');
-
-    $entries = $entryRepository->findInAggregatedFeed(0, 20);
+    $entries = $em->getRepository('Entry')->findInAggregatedFeed(0, 20);
 
     foreach($entries as $entry) {
         $output = "======================\n";
@@ -108,16 +32,28 @@ Retrieve the last twenty RSS Feed entries
         $output .= $entry->getCreatedOn()->format('d/m/Y H:i:s') . "\n";
     }
 
-Search for records using phraseanet search engine trought API
--------------------------------------------------------------
+
+Search for records
+------------------
+
+The following code search for records
 
 .. code-block:: php
 
     <?php
+    use PhraseanetSDK\EntityManager;
+    use PhraseanetSDK\Client;
+    use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
 
-    use PhraseanetSDK\Tools\Entity\Manager;
+    $HttpAdapter = GuzzleAdapter::create();
+    $HttpAdapter->setBaseUrl('http://url-to-phraseanet.net/');
 
-    $em = new Manager($myClient);
+    $client = new Client($apikey, $apiSecret, $HttpAdapter);
+    $client->setAccessToken($token);
+    $_SESSION['token_phrasea'] = $token;
+
+
+    $em = new EntityManager($client);
 
     $recordRepository = $em->getRepository('Record');
 
@@ -148,10 +84,9 @@ Retrieve all validation basket
 .. code-block:: php
 
     <?php
+    use PhraseanetSDK\EntityManager;
 
-    use PhraseanetSDK\Tools\Entity\Manager;
-
-    $em = new Manager($myClient);
+    $em = new EntityManager($myClient);
 
     $basketRepository = $em->getRepository('Basket');
 
@@ -168,3 +103,124 @@ Retrieve all validation basket
 .. note::
     ArrayCollection object provides many useful function take a look
     `Doctrine\\Common\\Collections\\ArrayCollection <http://apigen.juzna.cz/doc/doctrine/common/class-Doctrine.Common.Collections.ArrayCollection.html>`_
+
+oAuth2 Authentication Flow
+--------------------------
+
+**How to get a token from the API ?**
+
+Phraseanet API only supports 'Token Grant Type'.
+
+With this grant type you redirect the user to an authorization page on
+Phraseanet, and your script is called back once the end-user authorized your API
+key to access the Phraseanet service on its behalf.
+
+**Authorization page**
+
+.. code-block:: php
+
+    <?php
+
+    $client->setGrantType(Client::GRANT_TYPE_AUTHORIZATION, array('redirect_uri' => 'YOUR_REDIRECT_URI'));
+
+    // output the authentication url to the end user
+    echo $client->getAuthorizationUrl();
+
+.. note::
+    In case your authorization page is the same that your callback page
+
+**Callback page**
+
+.. code-block:: php
+
+    <?php
+    use Symfony\Component\HttpFoundation\Request;
+    use PhraseanetSDK\Exception\AuthenticationException;
+    use PhraseanetSDK\Exception\RuntimeException;
+
+    $request = Request::createFromGlobals();
+
+    // retrieve the access token from current request
+    try {
+        $client->retrieveAccessToken($request);
+    } catch (AuthenticationException $e) {
+        // Something went wrong during the authentication flow
+    } catch (RuntimeException $e) {
+        // Something went wrong for obscur reasons during the retrieval of the token
+    }
+
+.. note::
+    ACCESS_TOKEN does not expire.
+    So once you have an ACCESS_TOKEN associated to your current user,
+    you can manage user's token with your own storage system on top of the
+    library or you can just extends the PhraseanetSDK\Client object an override
+    the *getAccessToken* and *setAccessToken* method. See the next example to
+    store token.
+
+Store clients token in session
+------------------------------
+
+In some case you would probably store clients token in the session or database.
+SDK provide a StoreInterface for that :
+Let's store our token in ``session``.
+
+.. code-block:: php
+
+    <?php
+
+    namespace Acme\Application\Phrasea
+
+    use PhraseanetSDK\Authentication\StoreInterface;
+
+    class SessionStore implements StoreInterface
+    {
+        protected $token;
+
+        public function __construct()
+        {
+            $this->initSession();
+        }
+
+        public function saveToken($token)
+        {
+            $this->token = $token;
+        }
+
+        public function getToken()
+        {
+            return $this->token;
+        }
+
+        private function initSession()
+        {
+            if ( ! session_id()) {
+                session_start();
+            }
+
+            $this->token = &$_SESSION['phrasea_oauth_token'];
+        }
+    }
+
+Usage
+
+.. code-block:: php
+
+    <?php
+
+    use Acme\Application\Phrasea\SessionStore;
+    use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
+    use PhraseanetSDK\Client;
+
+    $HttpAdapter = GuzzleAdapter::create();
+    $HttpAdapter->setBaseUrl('http://url-to-phraseanet.net/');
+
+    $client = new Client('Your API Key', 'Your API Secret', $HttpAdapter);
+    $client->setTokenStore(new SessionStore());
+
+    if(null !== $client->getAccessToken()) {
+        //user is still authenticated
+    } else {
+        //force user to authenticate by providing the clicking authorization url
+        echo $client->getAuthorizationUrl();
+    }
+
