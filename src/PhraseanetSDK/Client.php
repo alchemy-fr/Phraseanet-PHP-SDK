@@ -3,6 +3,8 @@
 namespace PhraseanetSDK;
 
 use Monolog\Logger;
+use PhraseanetSDK\Authentication\StoreInterface;
+use PhraseanetSDK\Authentication\DefaultStore;
 use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadRequestException;
@@ -75,11 +77,10 @@ class Client extends AbstractClient
     protected $grantInfo;
 
     /**
-     * Api access token
      *
-     * @var string
+     * @var StoreInterface
      */
-    protected $accessToken;
+    protected $tokenStore;
 
     /**
      * To create an API key/secret pair, go to your account adminstation panel
@@ -105,22 +106,41 @@ class Client extends AbstractClient
 
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
+        $this->tokenStore = new DefaultStore();
     }
 
     /**
-     * @Override this method to run the client
+     * Set the token store
+     *
+     * @param StoreInterface $store
+     * @return Client
      */
-    public function getAccessToken()
+    final public function setTokenStore(StoreInterface $store)
     {
-        return $this->accessToken;
+        $this->tokenStore = $store;
+
+        return $this;
     }
 
     /**
-     * @Override this method to run the client
+     * Get the access token
+     *
+     * @return string
      */
-    public function setAccessToken($token)
+    final public function getAccessToken()
     {
-        $this->accessToken = $token;
+        return $this->tokenStore->getToken();
+    }
+
+    /**
+     * Set the access token
+     *
+     * @param string $token
+     * @return Client
+     */
+    final public function setAccessToken($token)
+    {
+        $this->tokenStore->saveToken($token);
 
         return $this;
     }
