@@ -11,15 +11,22 @@ use PhraseanetSDK\Entity\EntityInterface;
 class Manager
 {
     private $client;
+    private $repositories;
 
     public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
-    public function getRepository($type)
+    public function getRepository($name)
     {
-        return RepoFactory::build($type, $this);
+        if(isset($this->repositories[$name])) {
+            return $this->repositories[$name];
+        }
+
+        $this->repositories[$name] = RepoFactory::build($name, $this);
+
+        return $this->repositories[$name];
     }
 
     public function getEntity($type)
