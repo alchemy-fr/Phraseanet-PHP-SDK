@@ -3,8 +3,8 @@
 namespace PhraseanetSDK;
 
 use PhraseanetSDK\Client;
-use PhraseanetSDK\Tools\Repository\Factory as RepoFactory;
-use PhraseanetSDK\Tools\Entity\Factory as EntityFactory;
+use PhraseanetSDK\Repository\Factory as RepoFactory;
+use PhraseanetSDK\Entity\Factory as EntityFactory;
 use PhraseanetSDK\Tools\Entity\Hydrator;
 use PhraseanetSDK\Entity\EntityInterface;
 

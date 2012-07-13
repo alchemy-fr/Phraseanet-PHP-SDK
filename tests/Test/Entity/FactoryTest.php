@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Tools\Entity;
+namespace Test\Entity;
 
-use PhraseanetSDK\Tools\Entity\Factory as EntityFactory;
+use PhraseanetSDK\Entity\Factory as EntityFactory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {

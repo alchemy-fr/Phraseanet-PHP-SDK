@@ -1,6 +1,6 @@
 <?php
 
-namespace PhraseanetSDK\Tools\Entity;
+namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Exception;
 use PhraseanetSDK\EntityManager;

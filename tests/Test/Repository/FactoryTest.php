@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Tools\Repository;
+namespace Test\Repository;
 
-use PhraseanetSDK\Tools\Repository\Factory as RepoFactory;
+use PhraseanetSDK\Repository\Factory as RepoFactory;
 use PhraseanetSDK\Repository\AbstractRepository;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
