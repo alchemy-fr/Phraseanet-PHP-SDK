@@ -6,9 +6,15 @@ Phraseanet API PHP-SDK
 The Phraseanet PHP SDK is an OO library to interact with
 [Phraseanet API](https://docs.phraseanet.com/Devel).
 
-see [Phraseanet SDK Silex Provider](https://github.com/alchemy-fr/Phraseanet-PHP-SDK-Silex-Provider)
+#Documentation
 
-#Example
+Read the documentation at http://phraseanet-php-sdk.readthedocs.org/
+
+#Silex Provider
+
+A [Silex](http://silex.sensiolabs.org/) provider is available at [Phraseanet SDK Silex Provider](https://github.com/alchemy-fr/Phraseanet-PHP-SDK-Silex-Provider)
+
+#Use Example
 
 ```php
 <?php
