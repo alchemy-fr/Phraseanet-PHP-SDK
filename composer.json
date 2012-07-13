@@ -2,7 +2,7 @@
     "name": "phraseanet/php-sdk",
     "description": "A library to interact with Phraseanet API",
     "type": "library",
-
+    "version": "0.1.0",
     "keywords": ["Phraseanet"],
     "license": "MIT",
     "authors": [
