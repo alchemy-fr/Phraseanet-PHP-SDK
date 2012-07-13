@@ -60,7 +60,7 @@ class Subdef extends AbstractEntity implements EntityInterface
     /**
      * Get subdef file size
      *
-     * @return int
+     * @return integer
      */
     public function getFileSize()
     {

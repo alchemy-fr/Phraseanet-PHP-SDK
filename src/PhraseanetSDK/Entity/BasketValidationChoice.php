@@ -31,7 +31,7 @@ class BasketValidationChoice extends AbstractEntity implements EntityInterface
      * - true : accepted
      * - false: rejected
      *
-     * @return boolean|null
+     * @return Boolean|null
      */
     public function getAgreement()
     {

@@ -57,7 +57,7 @@ class DataboxCollection extends AbstractEntity implements EntityInterface
     /**
      * The total record in the collection
      *
-     * @return int
+     * @return integer
      */
     public function getRecordAmount()
     {

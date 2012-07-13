@@ -20,7 +20,7 @@ class DataboxDocumentStructure extends AbstractEntity implements EntityInterface
     /**
      * The documentary field id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -140,7 +140,7 @@ class DataboxDocumentStructure extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the field is indexable
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isIndexable()
     {
@@ -155,7 +155,7 @@ class DataboxDocumentStructure extends AbstractEntity implements EntityInterface
     /**
      * Tell wheteher the field is ultivalued or not
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isMultivalue()
     {
@@ -170,7 +170,7 @@ class DataboxDocumentStructure extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the field is a read only field
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isReadonly()
     {
@@ -185,7 +185,7 @@ class DataboxDocumentStructure extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the firld is required
      *
-     *  @return boolean
+     *  @return Boolean
      */
     public function isRequired()
     {

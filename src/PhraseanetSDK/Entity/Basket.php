@@ -85,7 +85,7 @@ class Basket extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the basket has been read or not
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isUnread()
     {
@@ -130,7 +130,7 @@ class Basket extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the basket is a validation basket
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isValidationBasket()
     {
@@ -192,7 +192,7 @@ class Basket extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the validation is confirmed
      *
-     * @return boolean|null
+     * @return Boolean|null
      */
     public function isValidationConfirmed()
     {
@@ -207,7 +207,7 @@ class Basket extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the current authenticated user initiates the validation process
      *
-     * @return boolean|null
+     * @return Boolean|null
      */
     public function isValidationInitiator()
     {

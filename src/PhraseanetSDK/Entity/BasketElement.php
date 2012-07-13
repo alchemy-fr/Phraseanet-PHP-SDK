@@ -47,7 +47,7 @@ class BasketElement extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the basket item is a validation item
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isValidationItem()
     {

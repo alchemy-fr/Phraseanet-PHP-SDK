@@ -47,7 +47,7 @@ class Response
 
     /**
      * Return the HTTP code
-     * @return int
+     * @return integer
      */
     public function getHttpStatusCode()
     {
@@ -56,7 +56,7 @@ class Response
 
     /**
      * Check id the Response is a success
-     * @return int
+     * @return integer
      */
     public function isOk()
     {
@@ -65,7 +65,7 @@ class Response
 
     /**
      * Checker whether the response content is empty
-     * @return boolean
+     * @return Boolean
      */
     public function isEmpty()
     {
@@ -147,7 +147,7 @@ class Response
      * Check existence of $property in response object
      *
      * @param  string  $property property name
-     * @return boolean
+     * @return Boolean
      */
     public function hasProperty($property)
     {
@@ -158,7 +158,7 @@ class Response
      * Check existence of $property in response object
      *
      * @param  string  $property property name
-     * @return boolean
+     * @return Boolean
      */
     public function getProperty($property)
     {

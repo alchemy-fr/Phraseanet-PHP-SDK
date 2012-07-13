@@ -31,7 +31,7 @@ class Query extends AbstractEntity implements EntityInterface
     /**
      * The offset start
      *
-     * @return int
+     * @return integer
      */
     public function getOffsetStart()
     {

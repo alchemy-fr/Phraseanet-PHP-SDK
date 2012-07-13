@@ -90,7 +90,7 @@ class DataboxStatus extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the status is searchable
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isSearchable()
     {
@@ -105,7 +105,7 @@ class DataboxStatus extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the status is printable
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isPrintable()
     {

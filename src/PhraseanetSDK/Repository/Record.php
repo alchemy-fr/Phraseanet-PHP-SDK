@@ -32,8 +32,8 @@ class Record extends AbstractRepository
     /**
      * Find records
      *
-     * @param  int              $offsetStart The offset
-     * @param  int              $perPage     The number of item per page
+     * @param  integer          $offsetStart The offset
+     * @param  integer          $perPage     The number of item per page
      * @return ArrayCollection
      * @throws RuntimeException
      */

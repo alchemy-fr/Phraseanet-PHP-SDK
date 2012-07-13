@@ -11,7 +11,7 @@ class BasketElement extends AbstractRepository
     /**
      * Find all basket elements in the provided basket id
      *
-     * @param  int              $basketId The provided basket id
+     * @param  integer          $basketId The provided basket id
      * @return ArrayCollection
      * @throws RuntimeException
      */

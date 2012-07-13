@@ -43,7 +43,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
     /**
      * The response HTTP status code
      *
-     * @return int
+     * @return integer
      */
     public function getHttpStatusCode()
     {
@@ -53,7 +53,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
     /**
      * Set the response HTTP status code
      *
-     * @param  int                                           $httpStatusCode
+     * @param  integer                                       $httpStatusCode
      * @return \PhraseanetSDK\Exception\BadResponseException
      */
     public function setHttpStatusCode($httpStatusCode)

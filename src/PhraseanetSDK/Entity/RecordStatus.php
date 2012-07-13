@@ -10,7 +10,7 @@ class RecordStatus extends AbstractEntity implements EntityInterface
     /**
      * Get the status bit
      *
-     * @return intger
+     * @return integer
      */
     public function getBit()
     {
@@ -25,7 +25,7 @@ class RecordStatus extends AbstractEntity implements EntityInterface
     /**
      * Get the status state
      *
-     * @return boolean
+     * @return Boolean
      */
     public function getState()
     {

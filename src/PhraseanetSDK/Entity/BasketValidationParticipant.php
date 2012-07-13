@@ -13,7 +13,7 @@ class BasketValidationParticipant extends AbstractEntity implements EntityInterf
     /**
      * Get the user id
      *
-     * @return int
+     * @return integer
      */
     public function getUsrId()
     {
@@ -43,7 +43,7 @@ class BasketValidationParticipant extends AbstractEntity implements EntityInterf
     /**
      * Tell whether the participant is confirmed
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isConfirmed()
     {
@@ -58,7 +58,7 @@ class BasketValidationParticipant extends AbstractEntity implements EntityInterf
     /**
      * Tell whether the particpant can agree
      *
-     * @return boolean
+     * @return Boolean
      */
     public function canAgree()
     {
@@ -73,7 +73,7 @@ class BasketValidationParticipant extends AbstractEntity implements EntityInterf
     /**
      * Tell whether the participant can see the other particpants
      *
-     * @return boolean
+     * @return Boolean
      */
     public function canSeeOthers()
     {

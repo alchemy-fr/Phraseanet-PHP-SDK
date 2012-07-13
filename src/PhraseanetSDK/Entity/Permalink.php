@@ -15,7 +15,7 @@ class Permalink extends AbstractEntity implements EntityInterface
     /**
      * Get the permalink id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -30,7 +30,7 @@ class Permalink extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the permalink is activated
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isActivated()
     {

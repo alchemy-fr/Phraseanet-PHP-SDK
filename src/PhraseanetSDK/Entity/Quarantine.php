@@ -110,7 +110,7 @@ class Quarantine extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the item has been forced to the quarantine
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isForced()
     {

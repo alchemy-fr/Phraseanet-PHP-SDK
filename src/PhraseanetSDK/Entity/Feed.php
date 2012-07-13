@@ -56,19 +56,19 @@ class Feed extends AbstractEntity implements EntityInterface
 
     /**
      *
-     * @var boolean
+     * @var Boolean
      */
     protected $public;
 
     /**
      *
-     * @var boolean
+     * @var Boolean
      */
     protected $readonly;
 
     /**
      *
-     * @var boolean
+     * @var Boolean
      */
     protected $deletable;
 
@@ -200,7 +200,7 @@ class Feed extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the feed is public or not
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isPublic()
     {
@@ -215,7 +215,7 @@ class Feed extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the feed is a read only feed
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isReadonly()
     {
@@ -230,7 +230,7 @@ class Feed extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the feed is deletable
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isDeletable()
     {

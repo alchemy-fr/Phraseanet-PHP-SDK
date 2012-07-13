@@ -26,7 +26,7 @@ class QuerySuggestion extends AbstractEntity implements EntityInterface
     /**
      * Tell whether the suggestion is current
      *
-     * @return boolean
+     * @return Boolean
      */
     public function isCurrent()
     {
