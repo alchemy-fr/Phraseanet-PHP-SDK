@@ -445,6 +445,8 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         /* @var $entry \PhraseanetSDK\Entity\FeedEntry */
         $this->assertNotNull($entry->getId());
         $this->assertInternalType('integer', $entry->getId());
+        $this->assertNotNull($entry->getFeedId());
+        $this->assertInternalType('integer', $entry->getFeedId());
         $this->assertNotNull($entry->getAuthorEmail());
         $this->assertInternalType('string', $entry->getAuthorEmail());
         $this->assertNotNull($entry->getAuthorName());

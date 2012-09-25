@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class FeedEntry extends AbstractEntity implements EntityInterface
 {
     protected $id;
+    protected $feedId;
     protected $authorEmail;
     protected $authorName;
     protected $title;
@@ -135,4 +136,20 @@ class FeedEntry extends AbstractEntity implements EntityInterface
     {
         $this->items = $items;
     }
+
+    /**
+     * Recover the entrie's feed id
+     * @return integer
+     */
+    public function getFeedId()
+    {
+        return $this->feedId;
+    }
+
+    public function setFeedId($feedId)
+    {
+        $this->feedId = $feedId;
+    }
+
+
 }

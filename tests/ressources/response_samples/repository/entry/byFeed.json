@@ -123,6 +123,7 @@
                     "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
                 }
             }],
+            "feed_id" : 4,
             "feed_url": "/feeds/4241/content/",
             "url": "/feeds/entry/4000/"
         }

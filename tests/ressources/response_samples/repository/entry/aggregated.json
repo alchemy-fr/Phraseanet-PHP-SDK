@@ -112,6 +112,7 @@
                     "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
                 }
             }],
+            "feed_id" : 4,
             "feed_url": "/feeds/4241/content/",
             "url": "/feeds/entry/4000/"
         },
@@ -213,6 +214,7 @@
                     "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
                 }
             }],
+            "feed_id" : 4,
             "feed_url": "/feeds/4163/content/",
             "url": "/feeds/entry/3920/"
         },
@@ -314,6 +316,7 @@
                     "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
                 }
             }],
+            "feed_id" : 4,
             "feed_url": "/feeds/4158/content/",
             "url": "/feeds/entry/3916/"
         },
@@ -415,6 +418,7 @@
                     "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
                 }
             }],
+            "feed_id" : 4,
             "feed_url": "/feeds/4052/content/",
             "url": "/feeds/entry/3804/"
         },
@@ -516,6 +520,7 @@
                     "uuid": "7b8ef0e3-dc8f-4b66-9e2f-bd049d175124"
                 }
             }],
+            "feed_id" : 4,
             "feed_url": "/feeds/4047/content/",
             "url": "/feeds/entry/3800/"
         }
