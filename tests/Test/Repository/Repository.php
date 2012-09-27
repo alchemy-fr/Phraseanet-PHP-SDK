@@ -357,6 +357,15 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('boolean', $feed->isDeletable());
     }
 
+    protected function checkCgus($cgus) {
+        $this->assertTrue($cgus instanceof \PhraseanetSDK\Entity\Cgus);
+        /* @var $metadatas \PhraseanetSDK\Entity\Metadatas */
+        $this->assertNotNull($cgus->getLocale());
+        $this->assertInternalType('string', $cgus->getLocale());
+        $this->assertNotNull($cgus->getTerms());
+        $this->assertInternalType('string', $cgus->getTerms());
+    }
+
     protected function checkMetadatas($metadatas)
     {
         $this->assertTrue($metadatas instanceof \PhraseanetSDK\Entity\Metadatas);
