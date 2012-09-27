@@ -29,6 +29,7 @@ class Factory
         'validation_users'       => 'basketValidationParticipant',
         'validation_user'        => 'basketValidationParticipant',
         'validation_choices'     => 'basketValidationChoice',
+        'termsOfuse'             => 'cgus',
     );
 
     /**
