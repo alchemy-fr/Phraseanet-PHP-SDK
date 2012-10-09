@@ -28,6 +28,7 @@
         "sami/sami": "*",
         "fabpot/php-cs-fixer": "*"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "PhraseanetSDK": "src",
