@@ -45,6 +45,8 @@ foreach($query->getResults() as $record) {
 }
 ```
 
+Bim
+
 #License
 
 MIT licensed
