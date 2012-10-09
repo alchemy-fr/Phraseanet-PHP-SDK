@@ -40,7 +40,7 @@ class Record extends AbstractRepository
     public function find($offsetStart, $perPage)
     {
         $response = $this->query('POST', '/records/search/', array(
-            'query'       => 'all', 'offsetStart' => (int) $offsetStart, 'per_page'    => (int) $perPage
+            'query'       => 'all', 'offset_start' => (int) $offsetStart, 'per_page'    => (int) $perPage
             ));
 
         if (true !== $response->hasProperty('results')) {
