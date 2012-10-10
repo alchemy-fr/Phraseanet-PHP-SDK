@@ -58,7 +58,7 @@ The following code search for records
     $recordRepository = $em->getRepository('Record');
 
     $query = $recordRepository->search(array(
-        'query' => 'animals'
+        'query' => 'animals',
         'offset_start' => 0,
         'per_page' => 20,
         'bases' => array(1, 4),
