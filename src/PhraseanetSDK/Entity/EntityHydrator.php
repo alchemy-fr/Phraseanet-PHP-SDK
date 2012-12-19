@@ -8,6 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class EntityHydrator
 {
+    /**
+     * @see http://www.php.net/manual/en/language.variables.basics.php
+     */
+    CONST VALID_PHP_VARIABLE_NAMES_PATTERN = "/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/";
 
     /**
      * Transform a string to CamelStyle pr pascalCase
@@ -37,6 +41,16 @@ class EntityHydrator
         $reflectionClass = new \ReflectionClass($className);
 
         foreach (get_object_vars($object) as $propertyName => $propertyValue) {
+            
+            if(!preg_match(self::VALID_PHP_VARIABLE_NAMES_PATTERN, $propertyName)) {
+                if(!strpos('::', $propertyName)) { //property is not namespaced
+                    continue;
+                }
+                
+                $chuncks = explode('::', $propertyName);
+                $propertyName = array_pop($chuncks);
+            }
+            
             $methodName = self::camelize(sprintf('set%s', ucfirst($propertyName)));
             if ($reflectionClass->hasMethod($methodName)) {
                 $reflectionMethod = new \ReflectionMethod($className, $methodName);
