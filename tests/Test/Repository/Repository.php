@@ -254,9 +254,9 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         }
 
         $results = $query->getResults();
-        $this->assertTrue($results instanceof \PhraseanetSDK\Entity\Result);
+        $this->assertTrue($results instanceof ArrayCollection);
 
-        foreach ($results->getRecords() as $record) {
+        foreach ($results as $record) {
             $this->checkRecord($record);
         }
     }
@@ -269,8 +269,8 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $story->getDataboxId());
         $this->assertNotNull($story->getCollectionId());
         $this->assertInternalType('integer', $story->getCollectionId());
-        $this->assertNotNull($story->getRecordId());
-        $this->assertInternalType('integer', $story->getRecordId());
+        $this->assertNotNull($story->getStoryId());
+        $this->assertInternalType('integer', $story->getStoryId());
         $this->assertNotNull($story->getUuid());
         $this->assertInternalType('string', $story->getUuid());
         $this->assertNotNull($date = $story->getCreatedOn());
@@ -278,6 +278,8 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($date = $story->getUpdatedOn());
         $this->assertIsDate($date);
         
+        $this->assertNotNull($subdef = $story->getThumbnail());
+        $this->assertTrue($subdef instanceof \PhraseanetSDK\Entity\Subdef);
         $this->assertNotNull($metas = $story->getMetadatas());
         $this->assertTrue($metas instanceof ArrayCollection);
     }

@@ -6,12 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class Story extends AbstractEntity implements EntityInterface
 {
-    protected $recordId;
+    protected $storyId;
     protected $databoxId;
     protected $updatedOn;
     protected $createdOn;
     protected $collectionId;
     protected $uuid;
+    protected $thumbnail;
     
     protected $records;
     
@@ -22,14 +23,14 @@ class Story extends AbstractEntity implements EntityInterface
      *
      * @return integer
      */
-    public function getRecordId()
+    public function getStoryId()
     {
-        return $this->recordId;
+        return $this->storyId;
     }
 
-    public function setRecordId($recordId)
+    public function setStoryId($storyId)
     {
-        $this->recordId = $recordId;
+        $this->storyId = $storyId;
     }
 
     /**
@@ -47,7 +48,16 @@ class Story extends AbstractEntity implements EntityInterface
         $this->databoxId = $databoxId;
     }
 
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
 
+    public function setThumbnail(Subdef $thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
+    }
+    
     /**
      * Last updated date
      *

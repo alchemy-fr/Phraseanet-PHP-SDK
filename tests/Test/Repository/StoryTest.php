@@ -16,7 +16,7 @@ class StoryTest extends Repository
         $storyRepo = new Story(new EntityManager($client));
         $query = $storyRepo->search();
         
-        foreach ($query->getResults()->getStories() as $story) {
+        foreach ($query->getResults('stories') as $story) {
             $this->checkStory($story);
         }
     }

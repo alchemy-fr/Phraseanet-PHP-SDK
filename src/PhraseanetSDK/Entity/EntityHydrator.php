@@ -9,8 +9,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class EntityHydrator
 {
-    CONST OBJECT_SCHEMA_ENDPOINT = 'http://api.phraseanet.com/objects/';
-    CONST TYPE_JSON_SCHEMA = '@entity';
+    /**
+     * @see http://www.php.net/manual/en/language.variables.basics.php
+     */
+    CONST OBJECT_SCHEMA_ENDPOINT = 'http://api.phraseanet.com/api/objects/';
+    CONST TYPE_JSON_SCHEMA = '@entity@';
     /**
      * Transform a string to CamelStyle pr pascalCase
      *
@@ -102,7 +105,7 @@ class EntityHydrator
                         }
                     } elseif (is_object($propertyValue)) {
                         if ( ! ctype_digit($propertyName)) {
-                            
+
                             $subObjectType = self::extractObjectType($propertyValue);
                             
                             if(($hydrateEntity = $em->getEntity(null === $subObjectType ? $propertyName : $subObjectType)) instanceof StoryMetadataBag) {

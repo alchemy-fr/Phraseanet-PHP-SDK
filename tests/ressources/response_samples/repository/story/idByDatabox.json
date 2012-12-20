@@ -11,19 +11,39 @@
     },
     "response": {
         "story": {
-            "@entity" : "http://api.phraseanet.com/objects/story",
+            "@entity@" : "http://api.phraseanet.com/api/objects/story",
             "databox_id": 1,
-            "record_id": 646,
+            "story_id": 646,
             "updated-on": "2012-06-28T17:16:56+02:00",
             "created_on": "2012-06-27T18:02:39+02:00",
             "collection_id": 1,
             "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a",
             "metadatas": {
-                "@entity"   : "http://api.phraseanet.com/objects/story-metadata-bag",
+                "@entity@"   : "http://api.phraseanet.com/api/objects/story-metadata-bag",
                 "aaa"       : "aaaa",
                 "aaaa"      : "aaaa",
                 "aaa"       : "aaaa",
                 "aaaa"      : "aaaa"
+            },
+            "thumbnail": {
+                "name": "thumbnail",
+                "permalink": {
+                    "created_on": "2012-06-29T16:01:02+02:00",
+                    "id": 2056,
+                    "is_activated": true,
+                    "label": "00244566185628356178ogv",
+                    "updated_on": "2012-06-29T16:01:02+02:00",
+                    "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
+                    "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
+                },
+                "height": 113,
+                "width": 150,
+                "filesize": 2139,
+                "devices": [
+                "screen"
+                ],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
             }
         }
     }
