@@ -9,9 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class EntityHydrator
 {
-    /**
-     * @see http://www.php.net/manual/en/language.variables.basics.php
-     */
     CONST OBJECT_SCHEMA_ENDPOINT = 'http://api.phraseanet.com/objects/';
     CONST TYPE_JSON_SCHEMA = '@entity';
     /**
