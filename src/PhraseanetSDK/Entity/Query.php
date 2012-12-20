@@ -190,7 +190,7 @@ class Query extends AbstractEntity implements EntityInterface
         return $this->results;
     }
 
-    public function setResults(ArrayCollection $results)
+    public function setResults(Result $results)
     {
         $this->results = $results;
     }
