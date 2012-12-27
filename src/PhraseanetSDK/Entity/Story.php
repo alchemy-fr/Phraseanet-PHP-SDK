@@ -138,5 +138,12 @@ class Story extends AbstractEntity implements EntityInterface
         $this->metadatas = $metadatas;
     }
 
+    public function getSubdefs($name = null)
+    {
+        if (null !== $name) {
+            return $this->em->getRepository('subdef')->findByRecordAndName($this->getDataboxId(), $this->getStoryId(), $name);
+        }
 
+        return $this->em->getRepository('subdef')->findByRecord($this->getDataboxId(), $this->getStoryId());
+    }
 }
