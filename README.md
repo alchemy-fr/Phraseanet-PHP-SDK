@@ -30,7 +30,7 @@ $client->setAccessToken($token);
 
 $em = new EntityManager($client);
 
-$query = $$em->getRepository('Record')->search(array(
+$query = $em->getRepository('Record')->search(array(
     'query' => 'animals',
     'offset_start' => 0,
     'per_page' => 20,
