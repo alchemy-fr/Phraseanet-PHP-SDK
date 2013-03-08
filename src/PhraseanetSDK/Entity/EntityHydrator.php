@@ -12,7 +12,7 @@ class EntityHydrator
     /**
      * @see http://www.php.net/manual/en/language.variables.basics.php
      */
-    CONST OBJECT_SCHEMA_ENDPOINT = 'http://api.phraseanet.com/api/objects/';
+    CONST OBJECT_SCHEMA_URI = 'http://api.phraseanet.com/api/objects/';
     CONST TYPE_JSON_SCHEMA = '@entity@';
     /**
      * Transform a string to CamelStyle pr pascalCase
@@ -136,7 +136,7 @@ class EntityHydrator
     private static function extractObjectType(\stdClass $object)
     {
         if(property_exists($object, self::TYPE_JSON_SCHEMA)) {
-            $type = substr($object->{self::TYPE_JSON_SCHEMA}, - (strlen($object->{self::TYPE_JSON_SCHEMA}) - strlen(self::OBJECT_SCHEMA_ENDPOINT)));
+            $type = substr($object->{self::TYPE_JSON_SCHEMA}, - (strlen($object->{self::TYPE_JSON_SCHEMA}) - strlen(self::OBJECT_SCHEMA_URI)));
             return $type;
         }
         
