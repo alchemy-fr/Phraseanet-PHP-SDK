@@ -5,7 +5,7 @@ namespace Test\Repository;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
-use Guzzle\Http\Plugin\MockPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as GuzzleClient;
 use Monolog\Logger;

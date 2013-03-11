@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\HttpAdapter;
 
-use Guzzle\Common\GuzzleException;
+use Guzzle\Common\Exception\GuzzleException;
 use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
