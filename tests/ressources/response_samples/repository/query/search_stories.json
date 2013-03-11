@@ -1,0 +1,159 @@
+{
+    "meta": {
+        "api_version": "1.2",
+        "request": "POST /api/v1/records/search/",
+        "response_time": "2012-06-29T16:01:07+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "offset_start": 0,
+        "per_page": 10,
+        "available_results": 209,
+        "total_results": 209,
+        "error": "",
+        "warning": "",
+        "query_time": 0.001243,
+        "search_indexes": "",
+        "suggestions": [
+        {
+            "value" : "test",
+            "hits" : 34,
+            "current" : true
+        },
+        {
+            "value" : "test2",
+            "hits" : 2,
+            "current" : true
+        }
+        ],
+        "results": {
+            "records" : [{
+                "databox_id": 1,
+                "record_id": 646,
+                "mime_type": "application/pdf",
+                "title": "Pile Documents.pdf",
+                "original_name": "Pile Documents.pdf",
+                "updated-on": "2012-06-28T17:16:56+02:00",
+                "created_on": "2012-06-27T18:02:39+02:00",
+                "collection_id": 1,
+                "sha256": "e861b99a6943ecede619d90215bfc6348aa28a11e6c6ebcf5f5448868dc010e6",
+                "thumbnail": {
+                    "name": "thumbnail",
+                    "permalink": {
+                        "created_on": "2012-06-29T16:01:02+02:00",
+                        "id": 2056,
+                        "is_activated": true,
+                        "label": "00244566185628356178ogv",
+                        "updated_on": "2012-06-29T16:01:02+02:00",
+                        "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
+                        "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
+                    },
+                    "height": 113,
+                    "width": 150,
+                    "filesize": 2139,
+                    "devices": [
+                    "screen"
+                    ],
+                    "player_type": "IMAGE",
+                    "mime_type": "image/jpeg"
+                },
+                "technical_informations": [
+                {
+                    "name": "FileSize",
+                    "value": 470877
+                },
+                {
+                    "name": "MimeType",
+                    "value": "application/pdf"
+                }
+                ],
+                "phrasea_type": "document",
+                "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a"
+            }],
+            "stories" : [{
+                "@entity@" : "http://api.phraseanet.com/api/objects/story",
+                "databox_id": 1,
+                "story_id": 646,
+                "updated-on": "2012-06-28T17:16:56+02:00",
+                "created_on": "2012-06-27T18:02:39+02:00",
+                "collection_id": 1,
+                "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a",
+                "thumbnail": {
+                    "name": "thumbnail",
+                    "permalink": {
+                        "created_on": "2012-06-29T16:01:02+02:00",
+                        "id": 2056,
+                        "is_activated": true,
+                        "label": "00244566185628356178ogv",
+                        "updated_on": "2012-06-29T16:01:02+02:00",
+                        "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
+                        "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
+                    },
+                    "height": 113,
+                    "width": 150,
+                    "filesize": 2139,
+                    "devices": [
+                    "screen"
+                    ],
+                    "player_type": "IMAGE",
+                    "mime_type": "image/jpeg"
+                },
+                "metadatas": {
+                    "@entity@" : "http://api.phraseanet.com/objects/api/story-metadata-bag",
+                    "aaa"   : "aaaa",
+                    "aaaa"  : "aaaa",
+                    "aaa"   : "aaaa",
+                    "aaaa"  : "aaaa"
+                },
+                "records" : [{
+                    "databox_id": 1,
+                    "record_id": 646,
+                    "mime_type": "application/pdf",
+                    "title": "Pile Documents.pdf",
+                    "original_name": "Pile Documents.pdf",
+                    "updated-on": "2012-06-28T17:16:56+02:00",
+                    "created_on": "2012-06-27T18:02:39+02:00",
+                    "collection_id": 1,
+                    "sha256": "e861b99a6943ecede619d90215bfc6348aa28a11e6c6ebcf5f5448868dc010e6",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2012-06-29T16:01:02+02:00",
+                            "id": 2056,
+                            "is_activated": true,
+                            "label": "00244566185628356178ogv",
+                            "updated_on": "2012-06-29T16:01:02+02:00",
+                            "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
+                            "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
+                        },
+                        "height": 113,
+                        "width": 150,
+                        "filesize": 2139,
+                        "devices": [
+                        "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                    {
+                        "name": "FileSize",
+                        "value": 470877
+                    },
+                    {
+                        "name": "MimeType",
+                        "value": "application/pdf"
+                    }
+                    ],
+                    "phrasea_type": "document",
+                    "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a"
+                }]
+            }]
+        },
+        "query": "all"
+    }
+}

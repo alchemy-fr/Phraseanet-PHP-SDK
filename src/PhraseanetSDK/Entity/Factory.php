@@ -19,7 +19,8 @@ class Factory
         'items'                  => 'feedEntryItem',
         'item'                   => 'feedEntryItem',
         'record'                 => 'record',
-        'results'                => 'record',
+        'records'                => 'record',
+        'results'                => 'result',
         'permalink'              => 'permalink',
         'databox_status'         => 'databoxStatus',
         'databox_collection'     => 'databoxCollection',
@@ -30,6 +31,9 @@ class Factory
         'validation_user'        => 'basketValidationParticipant',
         'validation_choices'     => 'basketValidationChoice',
         'termsOfuse'             => 'cgus',
+        'stories'                => 'story',
+        'story'                  => 'story',
+        'story-metadata-bag'     => 'storyMetadataBag',
     );
 
     /**
