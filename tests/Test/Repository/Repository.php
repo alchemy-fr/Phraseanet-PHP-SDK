@@ -277,13 +277,13 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $this->assertIsDate($date);
         $this->assertNotNull($date = $story->getUpdatedOn());
         $this->assertIsDate($date);
-        
+
         $this->assertNotNull($subdef = $story->getThumbnail());
         $this->assertTrue($subdef instanceof \PhraseanetSDK\Entity\Subdef);
         $this->assertNotNull($metas = $story->getMetadatas());
         $this->assertTrue($metas instanceof ArrayCollection);
     }
-    
+
     protected function checkQuerySuggestions($suggestion)
     {
         $this->assertTrue($suggestion instanceof \PhraseanetSDK\Entity\QuerySuggestion);
@@ -381,7 +381,8 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('boolean', $feed->isDeletable());
     }
 
-    protected function checkCgus($cgus) {
+    protected function checkCgus($cgus)
+    {
         $this->assertTrue($cgus instanceof \PhraseanetSDK\Entity\Cgus);
         /* @var $metadatas \PhraseanetSDK\Entity\Metadatas */
         $this->assertNotNull($cgus->getLocale());

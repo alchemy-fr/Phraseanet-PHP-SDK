@@ -9,7 +9,6 @@ class Result extends AbstractEntity implements EntityInterface
     protected $records;
     protected $stories;
 
-    
     public function getRecords()
     {
         return $this->records;
@@ -29,6 +28,5 @@ class Result extends AbstractEntity implements EntityInterface
     {
         $this->stories = $stories;
     }
-
 
 }

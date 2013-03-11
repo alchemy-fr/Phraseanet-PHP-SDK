@@ -15,12 +15,12 @@ class StoryTest extends Repository
         $client = $this->getClient($this->getSampleResponse('repository/query/search_stories'));
         $storyRepo = new Story(new EntityManager($client));
         $query = $storyRepo->search();
-        
+
         foreach ($query->getResults('stories') as $story) {
             $this->checkStory($story);
         }
     }
-    
+
     public function testFind()
     {
         $client = $this->getClient($this->getSampleResponse('repository/query/search_stories'));
@@ -31,7 +31,7 @@ class StoryTest extends Repository
             $this->checkStory($story);
         }
     }
-    
+
     public function testFindById()
     {
         $client = $this->getClient($this->getSampleResponse('repository/story/idByDatabox'));

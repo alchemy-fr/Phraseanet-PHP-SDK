@@ -48,14 +48,15 @@ class Story extends AbstractRepository
         }
 
         $stories = new ArrayCollection();
-        
+
         $results = $response->getProperty('results');
-        
-        if(isset($results->stories) && is_array($results->stories)) {
+
+        if (isset($results->stories) && is_array($results->stories)) {
             foreach ($results->stories as $storyData) {
                 $stories->add($this->em->hydrateEntity($this->em->getEntity('story'), $storyData));
             }
         }
+
         return $stories;
     }
 
@@ -69,13 +70,13 @@ class Story extends AbstractRepository
     public function search(array $parameters = array())
     {
         $parameters = array_merge(array('search_type' => 1), $parameters);
-        
+
         $response = $this->query('POST', '/search/', $parameters);
 
         if ($response->isEmpty()) {
             throw new RuntimeException('Response content is empty');
         }
-        
+
         return $this->em->hydrateEntity($this->em->getEntity('query'), $response->getResult());
     }
 }

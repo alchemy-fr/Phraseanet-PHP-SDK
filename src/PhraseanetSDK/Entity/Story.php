@@ -13,9 +13,9 @@ class Story extends AbstractEntity implements EntityInterface
     protected $collectionId;
     protected $uuid;
     protected $thumbnail;
-    
+
     protected $records;
-    
+
     protected $metadatas;
 
     /**
@@ -57,7 +57,7 @@ class Story extends AbstractEntity implements EntityInterface
     {
         $this->thumbnail = $thumbnail;
     }
-    
+
     /**
      * Last updated date
      *
@@ -102,7 +102,7 @@ class Story extends AbstractEntity implements EntityInterface
     {
         $this->collectionId = $collectionId;
     }
-    
+
     /**
      * Get the record UUID
      *
@@ -117,7 +117,7 @@ class Story extends AbstractEntity implements EntityInterface
     {
         $this->uuid = $uuid;
     }
-    
+
     public function getRecords()
     {
         return $this->records;

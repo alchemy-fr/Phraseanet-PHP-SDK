@@ -151,5 +151,4 @@ class FeedEntry extends AbstractEntity implements EntityInterface
         $this->feedId = $feedId;
     }
 
-
 }

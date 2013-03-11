@@ -187,10 +187,10 @@ class Query extends AbstractEntity implements EntityInterface
      */
     public function getResults($type='record')
     {
-        if('record' === $type) {
+        if ('record' === $type) {
            return $this->results->getRecords();
-        } 
-        
+        }
+
         return $this->results->getStories();
     }
 

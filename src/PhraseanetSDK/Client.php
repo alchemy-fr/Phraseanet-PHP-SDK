@@ -112,7 +112,7 @@ class Client extends AbstractClient
     /**
      * Set the token store
      *
-     * @param StoreInterface $store
+     * @param  StoreInterface $store
      * @return Client
      */
     final public function setTokenStore(StoreInterface $store)
@@ -135,7 +135,7 @@ class Client extends AbstractClient
     /**
      * Set the access token
      *
-     * @param string $token
+     * @param  string $token
      * @return Client
      */
     final public function setAccessToken($token)
