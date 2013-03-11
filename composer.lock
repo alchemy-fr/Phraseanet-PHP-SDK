@@ -3,31 +3,30 @@
     "packages": [
         {
             "name": "doctrine/common",
-            "version": "dev-master",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common",
-                "reference": "bc6bc47132613b28a58b7293dfd7872d9e3bcff3"
+                "reference": "2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/archive/bc6bc47132613b28a58b7293dfd7872d9e3bcff3.zip",
-                "reference": "bc6bc47132613b28a58b7293dfd7872d9e3bcff3",
+                "url": "https://github.com/doctrine/common/zipball/2.3.0",
+                "reference": "2.3.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-09-19 22:55:18",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\Common\\": "lib/"
+                    "Doctrine\\Common": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -54,7 +53,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -68,7 +67,8 @@
                 "eventmanager",
                 "persistence",
                 "spl"
-            ]
+            ],
+            "time": "2012-09-19 22:55:18"
         },
         {
             "name": "guzzle/guzzle",
@@ -92,25 +92,7 @@
             "replace": {
                 "guzzle/common": "self.version",
                 "guzzle/http": "self.version",
-                "guzzle/parser": "self.version",
-                "guzzle/batch": "self.version",
-                "guzzle/cache": "self.version",
-                "guzzle/inflection": "self.version",
-                "guzzle/iterator": "self.version",
-                "guzzle/log": "self.version",
-                "guzzle/plugin": "self.version",
-                "guzzle/plugin-async": "self.version",
-                "guzzle/plugin-backoff": "self.version",
-                "guzzle/plugin-cache": "self.version",
-                "guzzle/plugin-cookie": "self.version",
-                "guzzle/plugin-curlauth": "self.version",
-                "guzzle/plugin-history": "self.version",
-                "guzzle/plugin-log": "self.version",
-                "guzzle/plugin-mock": "self.version",
-                "guzzle/plugin-oauth": "self.version",
-                "guzzle/service": "self.version",
-                "guzzle/stream": "self.version",
-                "guzzle/plugin-md5": "self.version"
+                "guzzle/parser": "self.version"
             },
             "require-dev": {
                 "doctrine/common": "*",
@@ -125,7 +107,6 @@
                 "zendframework/zend-servicemanager": "2.0.0beta4",
                 "zendframework/zend-stdlib": "2.0.0beta4"
             },
-            "time": "2012-10-15 17:25:16",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -158,7 +139,8 @@
                 "http client",
                 "rest",
                 "web service"
-            ]
+            ],
+            "time": "2012-10-15 17:25:16"
         },
         {
             "name": "monolog/monolog",
@@ -190,7 +172,6 @@
                 "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "raven/raven": "Allow sending log messages to a Sentry server"
             },
-            "time": "2013-02-13 18:06:51",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -220,7 +201,8 @@
                 "log",
                 "logging",
                 "psr-3"
-            ]
+            ],
+            "time": "2013-02-13 18:06:51"
         },
         {
             "name": "psr/log",
@@ -236,7 +218,6 @@
                 "reference": "1.0.0",
                 "shasum": ""
             },
-            "time": "2012-12-21 11:40:51",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -258,7 +239,8 @@
                 "log",
                 "psr",
                 "psr-3"
-            ]
+            ],
+            "time": "2012-12-21 11:40:51"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -279,17 +261,16 @@
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "symfony/dependency-injection": "2.2.*"
+                "symfony/dependency-injection": "2.1.*"
             },
             "suggest": {
-                "symfony/dependency-injection": "2.2.*",
-                "symfony/http-kernel": "2.2.*"
+                "symfony/dependency-injection": "2.1.*",
+                "symfony/http-kernel": "2.1.*"
             },
-            "time": "2013-02-11 11:26:14",
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
+                    "Symfony\\Component\\EventDispatcher": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -307,27 +288,27 @@
                 }
             ],
             "description": "Symfony EventDispatcher Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-02-11 11:26:14"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.2.0-RC3",
+            "version": "v2.2.0",
             "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "v2.2.0-RC3"
+                "reference": "v2.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/v2.2.0-RC3",
-                "reference": "v2.2.0-RC3",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/v2.2.0",
+                "reference": "v2.2.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-02-23 06:46:07",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -357,7 +338,8 @@
                 }
             ],
             "description": "Symfony HttpFoundation Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-02-26 09:42:13"
         }
     ],
     "packages-dev": [
@@ -378,7 +360,6 @@
             "require": {
                 "php": ">=5.2"
             },
-            "time": "2012-11-22 18:54:05",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -398,26 +379,26 @@
             "keywords": [
                 "parser",
                 "php"
-            ]
+            ],
+            "time": "2012-11-22 18:54:05"
         },
         {
             "name": "pimple/pimple",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
-                "url": "git://github.com/fabpot/Pimple.git",
-                "reference": "v1.0.1"
+                "url": "https://github.com/fabpot/Pimple.git",
+                "reference": "v1.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Pimple/archive/v1.0.1.zip",
-                "reference": "v1.0.1",
+                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/v1.0.2",
+                "reference": "v1.0.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-11-11 08:32:34",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -444,7 +425,8 @@
             "keywords": [
                 "container",
                 "dependency injection"
-            ]
+            ],
+            "time": "2013-03-08 08:21:40"
         },
         {
             "name": "sami/sami",
@@ -471,7 +453,6 @@
                 "symfony/yaml": ">=2.1,<3.0-dev",
                 "twig/twig": "1.*"
             },
-            "time": "2013-01-08 14:05:13",
             "bin": [
                 "sami.php"
             ],
@@ -495,27 +476,27 @@
             "homepage": "http://sami.sensiolabs.org",
             "keywords": [
                 "phpdoc"
-            ]
+            ],
+            "time": "2013-01-08 14:05:13"
         },
         {
             "name": "symfony/console",
-            "version": "v2.2.0-RC3",
+            "version": "v2.2.0",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "v2.2.0-RC3"
+                "reference": "v2.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.0-RC3",
-                "reference": "v2.2.0-RC3",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.0",
+                "reference": "v2.2.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-01-24 15:55:08",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -542,11 +523,12 @@
                 }
             ],
             "description": "Symfony Console Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-03-01 06:43:14"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.2.0-RC3",
+            "version": "v2.2.0",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
@@ -562,7 +544,6 @@
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-01-17 15:25:59",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -589,27 +570,27 @@
                 }
             ],
             "description": "Symfony Filesystem Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-01-17 15:25:59"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.2.0-RC3",
+            "version": "v2.2.0",
             "target-dir": "Symfony/Component/Finder",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "v2.2.0-RC3"
+                "reference": "v2.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/v2.2.0-RC3",
-                "reference": "v2.2.0-RC3",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/v2.2.0",
+                "reference": "v2.2.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-02-04 12:41:13",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -636,11 +617,12 @@
                 }
             ],
             "description": "Symfony Finder Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-02-28 14:06:36"
         },
         {
             "name": "symfony/process",
-            "version": "v2.2.0-RC3",
+            "version": "v2.2.0",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
@@ -656,7 +638,6 @@
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-02-18 21:28:10",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -683,11 +664,12 @@
                 }
             ],
             "description": "Symfony Process Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-02-18 21:28:10"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.2.0-RC3",
+            "version": "v2.2.0",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
@@ -703,7 +685,6 @@
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-01-27 16:49:19",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -730,7 +711,8 @@
                 }
             ],
             "description": "Symfony Yaml Component",
-            "homepage": "http://symfony.com"
+            "homepage": "http://symfony.com",
+            "time": "2013-01-27 16:49:19"
         },
         {
             "name": "twig/twig",
@@ -749,7 +731,6 @@
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2013-02-09 18:21:53",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -779,7 +760,8 @@
             "homepage": "http://twig.sensiolabs.org",
             "keywords": [
                 "templating"
-            ]
+            ],
+            "time": "2013-02-09 18:21:53"
         }
     ],
     "aliases": [
@@ -788,5 +770,11 @@
     "minimum-stability": "beta",
     "stability-flags": {
         "sami/sami": 20
-    }
+    },
+    "platform": {
+        "php": ">=5.3.2"
+    },
+    "platform-dev": [
+
+    ]
 }
