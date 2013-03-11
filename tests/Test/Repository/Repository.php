@@ -2,6 +2,7 @@
 
 namespace Test\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
 use Guzzle\Http\Plugin\MockPlugin;
@@ -253,13 +254,36 @@ abstract class Repository extends \PHPUnit_Framework_TestCase
         }
 
         $results = $query->getResults();
-        $this->assertIsCollection($results);
+        $this->assertTrue($results instanceof ArrayCollection);
 
         foreach ($results as $record) {
             $this->checkRecord($record);
         }
     }
 
+    protected function checkStory($story)
+    {
+        $this->assertTrue($story instanceof \PhraseanetSDK\Entity\Story);
+        /* @var $suggestion \PhraseanetSDK\Entity\QuerySuggestion */
+        $this->assertNotNull($story->getDataboxId());
+        $this->assertInternalType('integer', $story->getDataboxId());
+        $this->assertNotNull($story->getCollectionId());
+        $this->assertInternalType('integer', $story->getCollectionId());
+        $this->assertNotNull($story->getStoryId());
+        $this->assertInternalType('integer', $story->getStoryId());
+        $this->assertNotNull($story->getUuid());
+        $this->assertInternalType('string', $story->getUuid());
+        $this->assertNotNull($date = $story->getCreatedOn());
+        $this->assertIsDate($date);
+        $this->assertNotNull($date = $story->getUpdatedOn());
+        $this->assertIsDate($date);
+        
+        $this->assertNotNull($subdef = $story->getThumbnail());
+        $this->assertTrue($subdef instanceof \PhraseanetSDK\Entity\Subdef);
+        $this->assertNotNull($metas = $story->getMetadatas());
+        $this->assertTrue($metas instanceof ArrayCollection);
+    }
+    
     protected function checkQuerySuggestions($suggestion)
     {
         $this->assertTrue($suggestion instanceof \PhraseanetSDK\Entity\QuerySuggestion);
