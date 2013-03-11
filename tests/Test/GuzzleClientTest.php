@@ -3,7 +3,7 @@
 namespace Test;
 
 use Guzzle\Http\Client;
-use Guzzle\Http\Plugin\MockPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 use PhraseanetSDK\HttpAdapter\Guzzle as Adapter;
 
