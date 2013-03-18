@@ -227,14 +227,46 @@ class Record extends AbstractEntity implements EntityInterface
      *
      * @param  string|null            $name The desired subdef name
      * @return ArrayCollection|Subdef
+     *
+     * @throws NotFoundException In case the subdef name could not be found
      */
     public function getSubdefs($name = null)
     {
         if (null !== $name) {
-            return $this->em->getRepository('subdef')->findByRecordAndName($this->getDataboxId(), $this->getRecordId(), $name);
+            return $this->em->getRepository('subdef')->findByRecordAndName(
+                $this->getDataboxId(),
+                $this->getRecordId(),
+                $name
+            );
         }
 
-        return $this->em->getRepository('subdef')->findByRecord($this->getDataboxId(), $this->getRecordId());
+        return $this->em->getRepository('subdef')->findByRecord(
+            $this->getDataboxId(),
+            $this->getRecordId()
+        );
+    }
+
+    /**
+     * Return a collection of PhraseanetSDK\Entity\Subdef for the record
+     *
+     * Precise an array of devices or mime types for the desired sub definitions
+     *
+     * /!\ This method requests the API
+     *
+     * @param  array            $devices The desired devices
+     * @param  array            $mimes The desired mimes type
+     * @return ArrayCollection
+     *
+     * @throws RuntimeException in case of response not valid
+     */
+    public function getSubdefsByDevicesAndMimeTypes(array $devices, array $mimes)
+    {
+        return $this->em->getRepository('subdef')->findByRecord(
+            $this->getDataboxId(),
+            $this->getRecordId(),
+            $devices,
+            $mimes
+        );
     }
 
     /**
