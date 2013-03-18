@@ -1,10 +1,11 @@
 CHANGELOG
 ---------
 
-* 0.2.2 (03-xx-2013)
+* 0.2.2 (03-18-2013)
 
   * Add a documentation recipe to test the connection to Phraseanet
   * SDK now depends on doctrine/collections instead of doctrine/common
+  * Add Entity\Record::getSubdefsByDevicesAndMimeTypes method
 
 * 0.2.1 (03-11-2013)
 
