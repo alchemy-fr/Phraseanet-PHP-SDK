@@ -1,6 +1,11 @@
 CHANGELOG
 ---------
 
+* 0.2.2 (03-xx-2013)
+
+  * Add a documentation recipe to test the connection to Phraseanet
+  * SDK now depends on doctrine/collections instead of doctrine/common
+
 * 0.2.1 (03-11-2013)
 
   * SDK now depends on Guzzle 3.x (instead of Guzzle >= 2.7 previously)
