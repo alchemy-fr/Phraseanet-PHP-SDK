@@ -1,6 +1,40 @@
 Recipes
 =======
 
+How to check if you are connected to the API ?
+----------------------------------------------
+
+There is not a dedicated method to test if you are actually connected to the API.
+
+However if you want to test if the connection can be established you must
+perform a dummy request to the remote instance and check if the response is ok.
+
+.. code-block:: php
+
+    <?php
+    use PhraseanetSDK\EntityManager;
+    use PhraseanetSDK\Client;
+    use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
+    use PhraseanetSDK\Exception\UnauthorizedException;
+
+    $HttpAdapter = GuzzleAdapter::create();
+    $HttpAdapter->setBaseUrl('http://url-to-phraseanet.net/');
+
+    $client = new Client($apikey, $apiSecret, $HttpAdapter);
+    $client->setAccessToken($token);
+
+    $em = new EntityManager($client);
+
+    $databoxRepository = $em->getRepository('Databox');
+
+    try {
+      $databoxRepository->findAll();
+    } catch (UnauthorizedException $e) {
+          // Connection is not valid, handle it
+    } catch (\Exception $e) {
+          // Something else went wrong
+    }
+
 Retrieve the last twenty Feed entries
 -------------------------------------
 
