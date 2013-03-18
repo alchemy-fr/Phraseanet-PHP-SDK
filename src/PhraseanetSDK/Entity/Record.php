@@ -253,8 +253,8 @@ class Record extends AbstractEntity implements EntityInterface
      *
      * /!\ This method requests the API
      *
-     * @param  array            $devices The desired devices
-     * @param  array            $mimes The desired mimes type
+     * @param  array           $devices The desired devices
+     * @param  array           $mimes   The desired mimes type
      * @return ArrayCollection
      *
      * @throws RuntimeException in case of response not valid
