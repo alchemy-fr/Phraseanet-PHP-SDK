@@ -1,18 +1,18 @@
 {
-    "hash": "49d78931700e24e38cbeeca7f5845a36",
+    "hash": "e04da15c4bd231e58bef8e9debbd6f98",
     "packages": [
         {
-            "name": "doctrine/common",
-            "version": "2.3.0",
+            "name": "doctrine/collections",
+            "version": "v1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/common",
-                "reference": "2.3.0"
+                "url": "https://github.com/doctrine/collections.git",
+                "reference": "v1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/zipball/2.3.0",
-                "reference": "2.3.0",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/v1.1",
+                "reference": "v1.1",
                 "shasum": ""
             },
             "require": {
@@ -21,12 +21,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\Common": "lib/"
+                    "Doctrine\\Common\\Collections\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -55,20 +55,18 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
-            "description": "Common Library for Doctrine projects",
+            "description": "Collections Abstraction library",
             "homepage": "http://www.doctrine-project.org",
             "keywords": [
-                "annotations",
+                "array",
                 "collections",
-                "eventmanager",
-                "persistence",
-                "spl"
+                "iterator"
             ],
-            "time": "2012-09-19 22:55:18"
+            "time": "2013-03-07 12:15:54"
         },
         {
             "name": "guzzle/guzzle",
