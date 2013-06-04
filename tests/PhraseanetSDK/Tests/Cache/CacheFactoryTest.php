@@ -44,7 +44,7 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->markTestSkipped(sprintf('Unable to find class %s', $classExists));
             }
         }
-        
+
         $factory = new CacheFactory();
         $factory->create($type, $host, $port);
     }

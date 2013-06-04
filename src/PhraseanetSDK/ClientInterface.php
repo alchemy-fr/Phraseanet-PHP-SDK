@@ -42,7 +42,7 @@ interface ClientInterface
     /**
      * Set the access token
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return ClientInterface
      */

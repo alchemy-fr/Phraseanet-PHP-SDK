@@ -22,8 +22,7 @@ class RevalidationFactory implements RevalidationFactoryInterface
      */
     public function create($type)
     {
-        switch (strtolower($type))
-        {
+        switch (strtolower($type)) {
             case null:
             case 'skip':
                 return new SkipRevalidation();

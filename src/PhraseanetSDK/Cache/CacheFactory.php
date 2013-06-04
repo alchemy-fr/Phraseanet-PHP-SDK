@@ -27,7 +27,7 @@ class CacheFactory
         $host = $host ? $host : '127.0.0.1';
         $port = $port ? (int) $port : 11211;
 
-        switch(strtolower($type)) {
+        switch (strtolower($type)) {
             case 'array':
                 $cache = $this->createArray();
                 break;

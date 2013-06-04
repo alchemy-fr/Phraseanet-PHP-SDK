@@ -20,8 +20,8 @@ interface CacheFactoryInterface
     /**
      * Creates a Doctrine cache
      *
-     * @param string $type
-     * @param string|null $host
+     * @param string       $type
+     * @param string|null  $host
      * @param integer|null $port
      *
      * @return Cache
@@ -33,8 +33,8 @@ interface CacheFactoryInterface
     /**
      * Creates a GuzzleCacheAdapter
      *
-     * @param string $type
-     * @param string|null $host
+     * @param string       $type
+     * @param string|null  $host
      * @param integer|null $port
      *
      * @return DoctrineCacheAdapter

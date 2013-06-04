@@ -30,10 +30,10 @@ interface HttpAdapterInterface
     /**
      * Executes a POST request
      *
-     * @param  string               $path The path to query
-     * @param  array                $args An array of query parameters
+     * @param string $path The path to query
+     * @param array  $args An array of query parameters
      *
-     * @return string               The response body
+     * @return string The response body
      *
      * @throws BadResponseException
      * @throws RuntimeException

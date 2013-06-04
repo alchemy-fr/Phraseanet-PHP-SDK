@@ -33,4 +33,3 @@ class CanCacheStrategy implements CanCacheStrategyInterface
         return $response->isSuccessful();
     }
 }
-
