@@ -1,6 +1,6 @@
 <?php
 
-namespace Alchemy\Tests\Phrasea\SDK;
+namespace PhraseanetSDK\Tests\Cache;
 
 use PhraseanetSDK\Cache\CacheFactory;
 
