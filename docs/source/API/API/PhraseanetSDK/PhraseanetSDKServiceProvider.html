@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\AbstractClient | Phraseanet PHP SDK API</title>
+        <title>PhraseanetSDK\PhraseanetSDKServiceProvider | Phraseanet PHP SDK API</title>
                     <link rel="stylesheet" type="text/css" href="../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,15 +19,15 @@
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../PhraseanetSDK.html">PhraseanetSDK</a>\AbstractClient</h1>
+    <h1><a href="../PhraseanetSDK.html">PhraseanetSDK</a>\PhraseanetSDKServiceProvider</h1>
     </div>
         <div class="content">
-                <p>abstract class    <strong>AbstractClient</strong></p>
+                <p>class    <strong>PhraseanetSDKServiceProvider</strong>        implements
+        <abbr title="Silex\ServiceProviderInterface">ServiceProviderInterface</abbr></p>
 
             <div class="description">
-            <p>PhaseanetClient do not handle how access token is stored on client side It&#039;s up to you to implement your favorite method (session, database, file etc ..)</p>
-            <p>Define getAccessToken in the way you want retrieve a previous stored token<br />
- Define setAccessToken in the way you want store your access stoken</p>
+            <p>Phraseanet SDK Silex provider</p>
+            <p></p>
         </div>
     
     
@@ -37,11 +37,11 @@
             <table>
                     <tr>
                 <td class="type">
-                    mixed
+                    
                 </td>
                 <td class="last">
-                    <a href="#method_getAccessToken">getAccessToken</a>()
-                    <p>Retrieve a stored token</p>
+                    <a href="#method_register">register</a>(<abbr title="Silex\Application">Application</abbr> $app)
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -50,8 +50,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setAccessToken">setAccessToken</a>($token)
-                    <p>Store a fresh acces token return PhraseanetApi</p>
+                    <a href="#method_boot">boot</a>(<abbr title="Silex\Application">Application</abbr> $app)
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -60,45 +60,46 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method_getAccessToken">
-        <div class="location">at line 20</div>
-        <code>    abstract        public            mixed
-    <strong>getAccessToken</strong>()</code>
+                        <h3 id="method_register">
+        <div class="location">at line 28</div>
+        <code>            public            
+    <strong>register</strong>(<abbr title="Silex\Application">Application</abbr> $app)</code>
     </h3>
     <div class="details">
-        <p>Retrieve a stored token</p>
         <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>mixed</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setAccessToken">
-        <div class="location">at line 26</div>
-        <code>    abstract        public            
-    <strong>setAccessToken</strong>($token)</code>
-    </h3>
-    <div class="details">
-        <p>Store a fresh acces token return PhraseanetApi</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
 
                     <table>
                     <tr>
+                <td><abbr title="Silex\Application">Application</abbr></td>
+                <td>$app</td>
                 <td></td>
-                <td>$token</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_boot">
+        <div class="location">at line 78</div>
+        <code>            public            
+    <strong>boot</strong>(<abbr title="Silex\Application">Application</abbr> $app)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Silex\Application">Application</abbr></td>
+                <td>$app</td>
                 <td></td>
             </tr>
             </table>

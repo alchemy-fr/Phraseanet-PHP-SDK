@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\Entity\Query | Phraseanet PHP SDK API</title>
+        <title>PhraseanetSDK\Entity\Story | Phraseanet PHP SDK API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,10 +19,10 @@
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\Query</h1>
+    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\Story</h1>
     </div>
         <div class="content">
-                <p>class    <strong>Query</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a>        implements
+                <p>class    <strong>Story</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a>        implements
         <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></p>
 
     
@@ -46,8 +46,8 @@
                     integer
                 </td>
                 <td class="last">
-                    <a href="#method_getOffsetStart">getOffsetStart</a>()
-                    <p>The offset start</p>
+                    <a href="#method_getStoryId">getStoryId</a>()
+                    <p>Get the record id</p>
                 </td>
                 <td></td>
             </tr>
@@ -56,7 +56,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setOffsetStart">setOffsetStart</a>($offsetStart)
+                    <a href="#method_setStoryId">setStoryId</a>($storyId)
                     <p></p>
                 </td>
                 <td></td>
@@ -66,8 +66,8 @@
                     integer
                 </td>
                 <td class="last">
-                    <a href="#method_getPerPage">getPerPage</a>()
-                    <p>The number item to retrieve</p>
+                    <a href="#method_getDataboxId">getDataboxId</a>()
+                    <p>Get the databox id</p>
                 </td>
                 <td></td>
             </tr>
@@ -76,7 +76,67 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setPerPage">setPerPage</a>($perPage)
+                    <a href="#method_setDataboxId">setDataboxId</a>($databoxId)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getThumbnail">getThumbnail</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setThumbnail">setThumbnail</a>(<a href="../../PhraseanetSDK/Entity/Subdef.html"><abbr title="PhraseanetSDK\Entity\Subdef">Subdef</abbr></a> $thumbnail)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getUpdatedOn">getUpdatedOn</a>()
+                    <p>Last updated date</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setUpdatedOn">setUpdatedOn</a>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $updatedOn)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getCreatedOn">getCreatedOn</a>()
+                    <p>Creation date</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setCreatedOn">setCreatedOn</a>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $createdOn)
                     <p></p>
                 </td>
                 <td></td>
@@ -86,8 +146,8 @@
                     integer
                 </td>
                 <td class="last">
-                    <a href="#method_getAvailableResults">getAvailableResults</a>()
-                    <p>Return the available results its depens of the search engine used on the requested instance</p>
+                    <a href="#method_getCollectionId">getCollectionId</a>()
+                    <p>Get the record collection id</p>
                 </td>
                 <td></td>
             </tr>
@@ -96,27 +156,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setAvailableResults">setAvailableResults</a>($availableResults)
-                    <p></p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    integer
-                </td>
-                <td class="last">
-                    <a href="#method_getTotalResults">getTotalResults</a>()
-                    <p>Get the total result</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_setTotalResults">setTotalResults</a>($totalResults)
+                    <a href="#method_setCollectionId">setCollectionId</a>($collectionId)
                     <p></p>
                 </td>
                 <td></td>
@@ -126,8 +166,8 @@
                     string
                 </td>
                 <td class="last">
-                    <a href="#method_getError">getError</a>()
-                    <p>Get errors as string</p>
+                    <a href="#method_getUuid">getUuid</a>()
+                    <p>Get the record UUID</p>
                 </td>
                 <td></td>
             </tr>
@@ -136,127 +176,57 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setError">setError</a>($error)
+                    <a href="#method_setUuid">setUuid</a>($uuid)
                     <p></p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method_getWarning">getWarning</a>()
-                    <p>Get warnings as string</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setWarning">setWarning</a>($warning)
+                    <a href="#method_getRecords">getRecords</a>()
                     <p></p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    <abbr title="PhraseanetSDK\Entity\float">float</abbr>
-                </td>
-                <td class="last">
-                    <a href="#method_getQueryTime">getQueryTime</a>()
-                    <p>Get the query time</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setQueryTime">setQueryTime</a>($queryTime)
+                    <a href="#method_setRecords">setRecords</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $records)
                     <p></p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method_getSearchIndexes">getSearchIndexes</a>()
-                    <p>Get search indexes</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setSearchIndexes">setSearchIndexes</a>($searchIndexes)
+                    <a href="#method_getMetadatas">getMetadatas</a>()
                     <p></p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method_getQuery">getQuery</a>()
-                    <p>Get the query string</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setQuery">setQuery</a>($query)
+                    <a href="#method_setMetadatas">setMetadatas</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $metadatas)
                     <p></p>
                 </td>
                 <td></td>
             </tr>
                     <tr>
                 <td class="type">
-                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
-                </td>
-                <td class="last">
-                    <a href="#method_getSuggestions">getSuggestions</a>()
-                    <p>Get query suggestions as a collection of PhraseanetSDK\Entity\QuerySuggestion objects</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setSuggestions">setSuggestions</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $suggestions)
-                    <p></p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
-                </td>
-                <td class="last">
-                    <a href="#method_getResults">getResults</a>($type = &#039;record&#039;)
-                    <p>Get result as a collection of PhraseanetSDK\Entity\Record objects</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_setResults">setResults</a>(<a href="../../PhraseanetSDK/Entity/Result.html"><abbr title="PhraseanetSDK\Entity\Result">Result</abbr></a> $results)
+                    <a href="#method_getSubdefs">getSubdefs</a>($name = null)
                     <p></p>
                 </td>
                 <td></td>
@@ -291,13 +261,13 @@
                     </div>
     </div>
 
-                <h3 id="method_getOffsetStart">
-        <div class="location">at line 45</div>
+                <h3 id="method_getStoryId">
+        <div class="location">at line 35</div>
         <code>            public            integer
-    <strong>getOffsetStart</strong>()</code>
+    <strong>getStoryId</strong>()</code>
     </h3>
     <div class="details">
-        <p>The offset start</p>
+        <p>Get the record id</p>
         <p></p>
         <div class="tags">
             
@@ -315,10 +285,10 @@
                     </div>
     </div>
 
-                <h3 id="method_setOffsetStart">
-        <div class="location">at line 50</div>
+                <h3 id="method_setStoryId">
+        <div class="location">at line 40</div>
         <code>            public            
-    <strong>setOffsetStart</strong>($offsetStart)</code>
+    <strong>setStoryId</strong>($storyId)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -329,7 +299,7 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$offsetStart</td>
+                <td>$storyId</td>
                 <td></td>
             </tr>
             </table>
@@ -340,13 +310,13 @@
                     </div>
     </div>
 
-                <h3 id="method_getPerPage">
-        <div class="location">at line 60</div>
+                <h3 id="method_getDataboxId">
+        <div class="location">at line 50</div>
         <code>            public            integer
-    <strong>getPerPage</strong>()</code>
+    <strong>getDataboxId</strong>()</code>
     </h3>
     <div class="details">
-        <p>The number item to retrieve</p>
+        <p>Get the databox id</p>
         <p></p>
         <div class="tags">
             
@@ -364,10 +334,50 @@
                     </div>
     </div>
 
-                <h3 id="method_setPerPage">
+                <h3 id="method_setDataboxId">
+        <div class="location">at line 55</div>
+        <code>            public            
+    <strong>setDataboxId</strong>($databoxId)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$databoxId</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getThumbnail">
+        <div class="location">at line 60</div>
+        <code>            public            
+    <strong>getThumbnail</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setThumbnail">
         <div class="location">at line 65</div>
         <code>            public            
-    <strong>setPerPage</strong>($perPage)</code>
+    <strong>setThumbnail</strong>(<a href="../../PhraseanetSDK/Entity/Subdef.html"><abbr title="PhraseanetSDK\Entity\Subdef">Subdef</abbr></a> $thumbnail)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -377,8 +387,8 @@
 
                     <table>
                     <tr>
-                <td></td>
-                <td>$perPage</td>
+                <td><a href="../../PhraseanetSDK/Entity/Subdef.html"><abbr title="PhraseanetSDK\Entity\Subdef">Subdef</abbr></a></td>
+                <td>$thumbnail</td>
                 <td></td>
             </tr>
             </table>
@@ -389,13 +399,111 @@
                     </div>
     </div>
 
-                <h3 id="method_getAvailableResults">
-        <div class="location">at line 76</div>
-        <code>            public            integer
-    <strong>getAvailableResults</strong>()</code>
+                <h3 id="method_getUpdatedOn">
+        <div class="location">at line 75</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getUpdatedOn</strong>()</code>
     </h3>
     <div class="details">
-        <p>Return the available results its depens of the search engine used on the requested instance</p>
+        <p>Last updated date</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setUpdatedOn">
+        <div class="location">at line 80</div>
+        <code>            public            
+    <strong>setUpdatedOn</strong>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $updatedOn)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr></td>
+                <td>$updatedOn</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCreatedOn">
+        <div class="location">at line 90</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getCreatedOn</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Creation date</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCreatedOn">
+        <div class="location">at line 95</div>
+        <code>            public            
+    <strong>setCreatedOn</strong>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $createdOn)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr></td>
+                <td>$createdOn</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCollectionId">
+        <div class="location">at line 105</div>
+        <code>            public            integer
+    <strong>getCollectionId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the record collection id</p>
         <p></p>
         <div class="tags">
             
@@ -413,10 +521,10 @@
                     </div>
     </div>
 
-                <h3 id="method_setAvailableResults">
-        <div class="location">at line 81</div>
+                <h3 id="method_setCollectionId">
+        <div class="location">at line 110</div>
         <code>            public            
-    <strong>setAvailableResults</strong>($availableResults)</code>
+    <strong>setCollectionId</strong>($collectionId)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -427,7 +535,7 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$availableResults</td>
+                <td>$collectionId</td>
                 <td></td>
             </tr>
             </table>
@@ -438,62 +546,13 @@
                     </div>
     </div>
 
-                <h3 id="method_getTotalResults">
-        <div class="location">at line 91</div>
-        <code>            public            integer
-    <strong>getTotalResults</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the total result</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>integer</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setTotalResults">
-        <div class="location">at line 96</div>
-        <code>            public            
-    <strong>setTotalResults</strong>($totalResults)</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td></td>
-                <td>$totalResults</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_getError">
-        <div class="location">at line 106</div>
+                <h3 id="method_getUuid">
+        <div class="location">at line 120</div>
         <code>            public            string
-    <strong>getError</strong>()</code>
+    <strong>getUuid</strong>()</code>
     </h3>
     <div class="details">
-        <p>Get errors as string</p>
+        <p>Get the record UUID</p>
         <p></p>
         <div class="tags">
             
@@ -511,10 +570,10 @@
                     </div>
     </div>
 
-                <h3 id="method_setError">
-        <div class="location">at line 111</div>
+                <h3 id="method_setUuid">
+        <div class="location">at line 125</div>
         <code>            public            
-    <strong>setError</strong>($error)</code>
+    <strong>setUuid</strong>($uuid)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -525,7 +584,7 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$error</td>
+                <td>$uuid</td>
                 <td></td>
             </tr>
             </table>
@@ -536,230 +595,25 @@
                     </div>
     </div>
 
-                <h3 id="method_getWarning">
-        <div class="location">at line 121</div>
-        <code>            public            string
-    <strong>getWarning</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get warnings as string</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>string</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setWarning">
-        <div class="location">at line 126</div>
+                <h3 id="method_getRecords">
+        <div class="location">at line 130</div>
         <code>            public            
-    <strong>setWarning</strong>($warning)</code>
+    <strong>getRecords</strong>()</code>
     </h3>
     <div class="details">
         <p></p>
         <p></p>
         <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td></td>
-                <td>$warning</td>
-                <td></td>
-            </tr>
-            </table>
-
             
             
             
                     </div>
     </div>
 
-                <h3 id="method_getQueryTime">
-        <div class="location">at line 136</div>
-        <code>            public            <abbr title="PhraseanetSDK\Entity\float">float</abbr>
-    <strong>getQueryTime</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the query time</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><abbr title="PhraseanetSDK\Entity\float">float</abbr></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setQueryTime">
-        <div class="location">at line 141</div>
+                <h3 id="method_setRecords">
+        <div class="location">at line 135</div>
         <code>            public            
-    <strong>setQueryTime</strong>($queryTime)</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td></td>
-                <td>$queryTime</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_getSearchIndexes">
-        <div class="location">at line 151</div>
-        <code>            public            string
-    <strong>getSearchIndexes</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get search indexes</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>string</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setSearchIndexes">
-        <div class="location">at line 156</div>
-        <code>            public            
-    <strong>setSearchIndexes</strong>($searchIndexes)</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td></td>
-                <td>$searchIndexes</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_getQuery">
-        <div class="location">at line 166</div>
-        <code>            public            string
-    <strong>getQuery</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the query string</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>string</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setQuery">
-        <div class="location">at line 171</div>
-        <code>            public            
-    <strong>setQuery</strong>($query)</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td></td>
-                <td>$query</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_getSuggestions">
-        <div class="location">at line 182</div>
-        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
-    <strong>getSuggestions</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get query suggestions as a collection of PhraseanetSDK\Entity\QuerySuggestion objects</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setSuggestions">
-        <div class="location">at line 187</div>
-        <code>            public            
-    <strong>setSuggestions</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $suggestions)</code>
+    <strong>setRecords</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $records)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -770,7 +624,7 @@
                     <table>
                     <tr>
                 <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
-                <td>$suggestions</td>
+                <td>$records</td>
                 <td></td>
             </tr>
             </table>
@@ -781,44 +635,25 @@
                     </div>
     </div>
 
-                <h3 id="method_getResults">
-        <div class="location">at line 197</div>
-        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
-    <strong>getResults</strong>($type = &#039;record&#039;)</code>
-    </h3>
-    <div class="details">
-        <p>Get result as a collection of PhraseanetSDK\Entity\Record objects</p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td></td>
-                <td>$type</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setResults">
-        <div class="location">at line 206</div>
+                <h3 id="method_getMetadatas">
+        <div class="location">at line 140</div>
         <code>            public            
-    <strong>setResults</strong>(<a href="../../PhraseanetSDK/Entity/Result.html"><abbr title="PhraseanetSDK\Entity\Result">Result</abbr></a> $results)</code>
+    <strong>getMetadatas</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setMetadatas">
+        <div class="location">at line 145</div>
+        <code>            public            
+    <strong>setMetadatas</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $metadatas)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -828,8 +663,33 @@
 
                     <table>
                     <tr>
-                <td><a href="../../PhraseanetSDK/Entity/Result.html"><abbr title="PhraseanetSDK\Entity\Result">Result</abbr></a></td>
-                <td>$results</td>
+                <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+                <td>$metadatas</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSubdefs">
+        <div class="location">at line 150</div>
+        <code>            public            
+    <strong>getSubdefs</strong>($name = null)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$name</td>
                 <td></td>
             </tr>
             </table>

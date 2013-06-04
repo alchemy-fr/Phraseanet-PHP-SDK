@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\Repository\Factory | Phraseanet PHP SDK API</title>
+        <title>PhraseanetSDK\Cache\RevalidationFactory | Phraseanet PHP SDK API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,10 +19,11 @@
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../PhraseanetSDK/Repository.html">PhraseanetSDK\Repository</a>\Factory</h1>
+    <h1><a href="../../PhraseanetSDK/Cache.html">PhraseanetSDK\Cache</a>\RevalidationFactory</h1>
     </div>
         <div class="content">
-                <p>class    <strong>Factory</strong></p>
+                <p>class    <strong>RevalidationFactory</strong>        implements
+        <a href="../../PhraseanetSDK/Cache/RevalidationFactoryInterface.html"><abbr title="PhraseanetSDK\Cache\RevalidationFactoryInterface">RevalidationFactoryInterface</abbr></a></p>
 
     
     
@@ -32,11 +33,11 @@
             <table>
                     <tr>
                 <td class="type">
-                    static&nbsp;<a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a>
+                    <abbr title="Guzzle\Plugin\Cache\RevalidationInterface">RevalidationInterface</abbr>
                 </td>
                 <td class="last">
-                    <a href="#method_build">build</a>(string $type, <a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)
-                    <p>Construct a new entity object</p>
+                    <a href="#method_create">create</a>(string $type)
+                    <p>Creates a RevalidationInterface</p>
                 </td>
                 <td></td>
             </tr>
@@ -45,13 +46,13 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method_build">
-        <div class="location">at line 28</div>
-        <code>        static    public            <a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a>
-    <strong>build</strong>(string $type, <a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)</code>
+                        <h3 id="method_create">
+        <div class="location">at line 23</div>
+        <code>            public            <abbr title="Guzzle\Plugin\Cache\RevalidationInterface">RevalidationInterface</abbr>
+    <strong>create</strong>(string $type)</code>
     </h3>
     <div class="details">
-        <p>Construct a new entity object</p>
+        <p>Creates a RevalidationInterface</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -60,12 +61,7 @@
                     <tr>
                 <td>string</td>
                 <td>$type</td>
-                <td>the type of the repository</td>
-            </tr>
-                    <tr>
-                <td><a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a></td>
-                <td>$em</td>
-                <td>the entity manager</td>
+                <td></td>
             </tr>
             </table>
 
@@ -74,7 +70,7 @@
 
                     <table>
         <tr>
-            <td><a href="../../PhraseanetSDK/Entity/EntityInterface.html"><abbr title="PhraseanetSDK\Entity\EntityInterface">EntityInterface</abbr></a></td>
+            <td><abbr title="Guzzle\Plugin\Cache\RevalidationInterface">RevalidationInterface</abbr></td>
             <td></td>
         </tr>
     </table>
@@ -84,8 +80,8 @@
 
                     <table>
                     <tr>
-                <td><abbr title="Exception\InvalidArgumentException">InvalidArgumentException</abbr></td>
-                <td>when types is unknown</td>
+                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
+                <td></td>
             </tr>
             </table>
 
