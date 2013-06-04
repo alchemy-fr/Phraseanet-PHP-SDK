@@ -2,6 +2,8 @@
 
 namespace PhraseanetSDK\Exception;
 
+use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponseException;
+
 class BadResponseException extends \Exception implements ExceptionInterface
 {
     /**
@@ -81,5 +83,17 @@ class BadResponseException extends \Exception implements ExceptionInterface
     public function isServerError()
     {
         return substr(strval($this->httpStatusCode), 0, 1) == '5';
+    }
+
+    public static function fromGuzzleResponse(GuzzleBadResponseException $e)
+    {
+        $response = $e->getResponse();
+
+        $exception = new static($response->getReasonPhrase(), $e->getCode(), $e);
+        $exception
+            ->setResponseBody($response->getBody())
+            ->setHttpStatusCode($response->getStatusCode());
+
+        return $exception;
     }
 }

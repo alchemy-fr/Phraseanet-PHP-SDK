@@ -3,84 +3,79 @@
 namespace PhraseanetSDK;
 
 use Monolog\Logger;
+use Guzzle\Plugin\Log\LogPlugin;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Http\Client as Guzzle;
+use Guzzle\Plugin\Cache\CachePlugin;
+use PhraseanetSDK\Cache\CacheFactory;
+use PhraseanetSDK\Cache\RevalidationFactory;
 use PhraseanetSDK\Authentication\StoreInterface;
 use PhraseanetSDK\Authentication\DefaultStore;
 use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadRequestException;
 use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\HttpAdapter\Response;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\TransportException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
+use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
+use PhraseanetSDK\Cache\CanCacheStrategy;
 
 /**
- *
- * Phraseanet Client, perform the HTTP requests against Phraseanet API
- *
+ * Phraseanet SDK Client, perform the HTTP requests against Phraseanet API
  */
-class Client extends AbstractClient
+class Client implements ClientInterface
 {
-    /**
-     * Phraseanet API Endpoint
-     * @var string
-     */
-    const TOKEN_ENDPOINT = '/api/oauthv2/token';
-    const AUTH_ENDPOINT = '/api/oauthv2/authorize';
-
-    /**
-     * Oauth grant type
-     */
-    const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
-
     /**
      * The OAuth authorization server endpoint URL
      */
-    protected $oauthAuthorizeEndpointUrl = '';
+    private $oauthAuthorizeEndpointUrl = '';
 
     /**
      * The OAuth token server endpoint URL
      */
-    protected $oauthTokenEndpointUrl = '';
+    private $oauthTokenEndpointUrl = '';
 
     /**
      * @var HttpAdapterInterface
      */
-    protected $httpClient;
+    private $httpClient;
 
     /**
      * Api Key
      *
      * @var string
      */
-    protected $apiKey;
+    private $apiKey;
 
     /**
      * Api Secret
      *
      * @var string
      */
-    protected $apiSecret;
+    private $apiSecret;
 
     /**
      * Grant type
      *
      * @var string
      */
-    protected $grantType;
+    private $grantType;
 
     /**
      * Infos associated to the grant type
      *
      * @var array
      */
-    protected $grantInfo;
+    private $grantInfo;
 
     /**
      *
      * @var StoreInterface
      */
-    protected $tokenStore;
+    private $tokenStore;
 
     /**
      * To create an API key/secret pair, go to your account adminstation panel
@@ -89,17 +84,13 @@ class Client extends AbstractClient
      * @param string               $apiKey     Your API key
      * @param string               $apiSecret  Your API secret
      * @param HttpAdapterInterface $clientHttp An HTTP Client
-     * @param Logger               $logger     A logger
      */
-    public function __construct($apiKey, $apiSecret, HttpAdapterInterface $clientHttp, Logger $logger = null)
+    public function __construct($apiKey, $apiSecret, HttpAdapterInterface $clientHttp)
     {
         $this->httpClient = $clientHttp;
-        $this->logger = $logger;
 
         $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
-
         $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
-        $this->httpClient->setLogger($logger);
 
         $this->oauthAuthorizeEndpointUrl = sprintf('%s%s', $baseUrl, self::AUTH_ENDPOINT);
         $this->oauthTokenEndpointUrl = sprintf('%s%s', $baseUrl, self::TOKEN_ENDPOINT);
@@ -341,13 +332,11 @@ class Client extends AbstractClient
                 $start = microtime(true);
                 $responseContent = $this->httpClient->post($path, $args);
                 $stop = microtime(true);
-                $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
                 break;
             case 'GET' :
                 $start = microtime(true);
                 $responseContent = $this->httpClient->get($path, $args);
                 $stop = microtime(true);
-                $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
                 break;
             default :
                 throw new BadRequestException(sprintf('Phraseanet API do not support %s method', $httpMethod));
@@ -361,11 +350,96 @@ class Client extends AbstractClient
     }
 
     /**
+     * Creates a Client.
+     *
+     * @param array $config
+     *
+     * @return Client
+     *
+     * @throws InvalidArgumentException In case a parameter is missing
+     */
+    public static function create(array $config)
+    {
+        $config = array_replace_recursive(array(
+            'cache' => array(
+                'type' => 'array',
+                'host' => null,
+                'port' => null,
+            ),
+            'plugins' => array(),
+        ), $config);
+
+        if (!isset($config['key'])) {
+            throw new InvalidArgumentException('Missing oauth key');
+        }
+        if (!isset($config['secret'])) {
+            throw new InvalidArgumentException('Missing oauth secret');
+        }
+        if (!isset($config['url'])) {
+            throw new InvalidArgumentException('Missing instance url');
+        }
+
+        if (!isset($config['cache_factory'])) {
+            $config['cache_factory'] = new CacheFactory();
+        }
+        if (!isset($config['cache_revalidation_factory'])) {
+            $config['cache_revalidation_factory'] = new RevalidationFactory();
+        }
+        if (!isset($config['guzzle_can_cache'])) {
+            $config['guzzle_can_cache'] = new CanCacheStrategy();
+        }
+
+        $key = $config['key'];
+        $secret = $config['secret'];
+        $url = $config['url'];
+
+        $guzzle = new Guzzle($url);
+
+        if (isset($config['logger'])) {
+            $logger = $config['logger'];
+            $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($logger)));
+        } else {
+            $logger = new Logger('Phraseanet SDK');
+            $logger->pushHandler(new \Monolog\Handler\NullHandler());
+        }
+
+        $lifetime = isset($config['cache']['lifetime']) ? $config['cache']['lifetime'] : 360;
+        $revalidate = isset($config['cache']['revalidate']) ? $config['cache']['revalidate'] : null;
+
+        try {
+            $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter($config['cache']['type'], $host = $config['cache']['host'], $config['cache']['port']);
+            $logger->debug(sprintf('Using cache adapter %s', $config['cache']['type']));
+        } catch (RuntimeException $e) {
+            $logger->error(sprintf('Unable to create cache adapter %s', $config['cache']['type']));
+            $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter('array');
+        }
+
+        $guzzle->addSubscriber(new CachePlugin(array(
+            'adapter'      => $cacheAdapter,
+            'can_cache'    => $config['guzzle_can_cache'],
+            'default_ttl'  => $lifetime,
+            'revalidation' => $config['cache_revalidation_factory']->create($revalidate),
+        )));
+
+        foreach ($config['plugins'] as $plugin) {
+            $guzzle->addSubscriber($plugin);
+        }
+
+        $client = new Client($key, $secret, new GuzzleAdapter($guzzle), $logger);
+
+        if (isset($config['token'])) {
+            $client->setAccessToken($config['token']);
+        }
+
+        return $client;
+    }
+
+    /**
      * Returns the current URL, removing of known OAuth parameters that should not persist.
      *
      * @return String the current URL
      */
-    protected function getUrlWithoutOauth2Parameters(Request $request)
+    private function getUrlWithoutOauth2Parameters(Request $request)
     {
         $toReAdd = array();
 
@@ -385,17 +459,5 @@ class Client extends AbstractClient
         }
 
         return $ret;
-    }
-
-    /**
-     * Log a message
-     *
-     * @param string $message
-     */
-    private function log($message)
-    {
-        if (null !== $this->logger) {
-            $this->logger->addInfo($message);
-        }
     }
 }

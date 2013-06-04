@@ -2,17 +2,37 @@
 
 namespace PhraseanetSDK\HttpAdapter;
 
-use Monolog\Logger;
+use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\Exception\RuntimeException;
 
 interface HttpAdapterInterface
 {
-    public function getBaseUrl();
-
-    public function setBaseUrl($url);
-
+    /**
+     * Executes a GET request
+     *
+     * @param  string               $path The path to query
+     * @param  array                $args An array of query parameters
+     * @return string               The response body
+     * @throws BadResponseException
+     * @throws RuntimeException
+     */
     public function get($path, array $args = array());
 
+    /**
+     * Executes a POST request
+     *
+     * @param  string               $path The path to query
+     * @param  array                $args An array of query parameters
+     *
+     * @return string               The response body
+     *
+     * @throws BadResponseException
+     * @throws RuntimeException
+     */
     public function post($path, array $args = array());
 
-    public function setLogger(Logger $logger = null);
+    /**
+     * Returns the encapsulated adapter
+     */
+    public function getAdapter();
 }
