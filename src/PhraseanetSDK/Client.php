@@ -408,6 +408,7 @@ class Client implements ClientInterface
 
         try {
             $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter($config['cache']['type'], $host = $config['cache']['host'], $config['cache']['port']);
+            $logger->debug(sprintf('Using cache adapter %s', $config['cache']['type']));
         } catch (RuntimeException $e) {
             $logger->error(sprintf('Unable to create cache adapter %s', $config['cache']['type']));
             $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter('array');

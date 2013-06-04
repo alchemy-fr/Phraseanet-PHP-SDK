@@ -25,41 +25,8 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         return array(
             array('phraseanet-sdk', 'PhraseanetSDK\Client'),
             array('phraseanet-sdk.cache-factory', 'PhraseanetSDK\Cache\CacheFactory'),
-            array('phraseanet-sdk.cache-adapter', 'Guzzle\Cache\DoctrineCacheAdapter'),
-            array('phraseanet-sdk.guzzle-client', 'Guzzle\Http\ClientInterface'),
-        );
-    }
-
-    /**
-     * @dataProvider provideCacheConfigurations
-     */
-    public function testACacheProviderIsAlwaysReturned($type, $instanceOf, $errors, $infos)
-    {
-        $app = $this->getConfiguredApplication();
-        $app->register(new PhraseanetSDKServiceProvider());
-
-        $app['monolog'] = $this->getMockBuilder('Monolog\Logger')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $app['monolog']->expects($this->exactly($errors))
-            ->method('error');
-        $app['monolog']->expects($this->exactly($infos))
-            ->method('debug');
-
-        $app['phraseanet-sdk.cache_host'] = null;
-        $app['phraseanet-sdk.cache_port'] = null;
-        $app['phraseanet-sdk.cache'] = $type;
-
-        $this->assertInstanceOf($instanceOf, $app['phraseanet-sdk.cache-adapter']->getCacheObject());
-    }
-
-    public function provideCacheConfigurations()
-    {
-        return array(
-            array('array', 'Doctrine\Common\Cache\ArrayCache', 0, 1),
-            array('memcache', 'Doctrine\Common\Cache\MemcacheCache', 0, 1),
-            array('memcached', 'Doctrine\Common\Cache\MemcachedCache', 0, 1),
-            array('unknown', 'Doctrine\Common\Cache\ArrayCache', 1, 0),
+            array('phraseanet-sdk.cache-revalidation-factory', 'PhraseanetSDK\Cache\RevalidationFactory'),
+            array('phraseanet-sdk.cache-can-cache-strategy', 'PhraseanetSDK\Cache\CanCacheStrategy'),
         );
     }
 

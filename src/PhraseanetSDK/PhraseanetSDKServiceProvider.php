@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Phraseanet SDK Silex Provider.
+ * This file is part of Phraseanet SDK.
  *
  * (c) Alchemy <info@alchemy.fr>
  *
@@ -12,18 +12,12 @@
 namespace PhraseanetSDK;
 
 use PhraseanetSDK\Cache\CacheFactory;
-//use Alchemy\Phrasea\SDK\Cache\CachePlugin;
 use PhraseanetSDK\Exception\RuntimeException;
-use Guzzle\Cache\DoctrineCacheAdapter;
-use Guzzle\Http\Client as Guzzle;
-use Guzzle\Plugin\Cache\CachePlugin;
 use PhraseanetSDK\Client;
-use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
+use PhraseanetSDK\Cache\RevalidationFactory;
+use PhraseanetSDK\Cache\CanCacheStrategy;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Guzzle\Plugin\Cache\SkipRevalidation;
-use Guzzle\Plugin\Log\LogPlugin;
-use Guzzle\Log\PsrLogAdapter;
 use Monolog\Handler\NullHandler;
 
 /**
@@ -36,6 +30,12 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['phraseanet-sdk.cache-factory'] = $app->share(function (Application $app) {
             return new CacheFactory();
         });
+        $app['phraseanet-sdk.cache-revalidation-factory'] = $app->share(function (Application $app) {
+            return new RevalidationFactory();
+        });
+        $app['phraseanet-sdk.cache-can-cache-strategy'] = $app->share(function (Application $app) {
+            return new CanCacheStrategy();
+        });
 
         if (!isset($app['monolog.handler'])) {
             $app['monolog.handler'] = function () use ($app) {
@@ -43,51 +43,35 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             };
         }
 
-        $app['phraseanet-sdk.cache-adapter'] = $app->share(function (Application $app) {
-            $host = isset($app['phraseanet-sdk.cache_host']) ? $app['phraseanet-sdk.cache_host'] : null;
-            $port = isset($app['phraseanet-sdk.cache_port']) ? $app['phraseanet-sdk.cache_port'] : null;
-            $type = isset($app['phraseanet-sdk.cache']) ? $app['phraseanet-sdk.cache'] : 'array';
+        $app['phraseanet-sdk.guzzle-plugins'] = array();
 
-            try {
-                $cache = $app['phraseanet-sdk.cache-factory']->create($type, $host, $port);
-                $app['monolog']->debug(sprintf('Phraseanet SDK using cache %s %s', $type, (($host||$port) ? ' with parameters '.$host.':'.$port : '')));
-            } catch (RuntimeException $e) {
-                $app['monolog']->error(sprintf('Error while instancing cache : %s', $e->getMessage()));
-
-                $cache = $app['phraseanet-sdk.cache-factory']->create('array', null, null);
-            }
-
-            return new DoctrineCacheAdapter($cache);
-        });
-
-
-
-        $app['phraseanet-sdk.guzzle-client'] = $app->share(function (Application $app) {
-            $guzzle = new Guzzle($app['phraseanet-sdk.apiUrl']);
-
-            $lifetime = isset($app['phraseanet-sdk.cache_ttl']) ? $app['phraseanet-sdk.cache_ttl'] : 360;
-
-            // skip or never
-            $revalidate = isset($app['phraseanet-sdk.cache_revalidate']) ? $app['phraseanet-sdk.cache_revalidate'] : null;
-
-            $guzzle->addSubscriber(new CachePlugin(array(
-                'adapter'      => $app['phraseanet-sdk.cache-adapter'],
-                'default_ttl'  => $lifetime,
-                'revalidation' => new SkipRevalidation(),
-            )));
-            $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($app['monolog'])));
-
-            return $guzzle;
-        });
-
-        $app['phraseanet-sdk'] = $app->share(function() use ($app) {
-            $client = new Client($app['phraseanet-sdk.apiKey'], $app['phraseanet-sdk.apiSecret'], new GuzzleAdapter($app['phraseanet-sdk.guzzle-client']), $app['monolog']);
+        $app['phraseanet-sdk.config'] = $app->share(function (Application $app) {
+            $config = array(
+                'key'                        => $app['phraseanet-sdk.apiKey'],
+                'secret'                     => $app['phraseanet-sdk.apiSecret'],
+                'url'                        => $app['phraseanet-sdk.apiUrl'],
+                'cache_revalidation_factory' => $app['phraseanet-sdk.cache-revalidation-factory'],
+                'guzzle_can_cache'           => $app['phraseanet-sdk.cache-can-cache-strategy'],
+                'logger'                     => $app['monolog'],
+                'plugins'                    => $app['phraseanet-sdk.guzzle-plugins'],
+                'cache'                      => array(
+                    'type'       => isset($app['phraseanet-sdk.cache']) ? $app['phraseanet-sdk.cache'] : 'array',
+                    'host'       => isset($app['phraseanet-sdk.cache_host']) ? $app['phraseanet-sdk.cache_host'] : null,
+                    'port'       => isset($app['phraseanet-sdk.cache_port']) ? $app['phraseanet-sdk.cache_port'] : null,
+                    'lifetime'   => isset($app['phraseanet-sdk.cache_ttl']) ? $app['phraseanet-sdk.cache_ttl'] : 300,
+                    'revalidate' => isset($app['phraseanet-sdk.cache_revalidate']) ? $app['phraseanet-sdk.cache_revalidate'] : 'skip',
+                ),
+            );
 
             if (isset($app['phraseanet-sdk.apiDevToken'])) {
-                $client->setAccessToken($app['phraseanet-sdk.apiDevToken']);
+                $config['token'] = $app['phraseanet-sdk.apiDevToken'];
             }
 
-            return $client;
+            return $config;
+        });
+
+        $app['phraseanet-sdk'] = $app->share(function (Application $app) {
+            return Client::create($app['phraseanet-sdk.config']);
         });
     }
 

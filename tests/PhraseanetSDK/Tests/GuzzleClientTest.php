@@ -90,4 +90,40 @@ class GuzzleClientTest extends AbstractClient
         $client->call('/url/lala', array());
         $client->call('/url/lala', array());
     }
+
+    /**
+     * @dataProvider provideCacheConfigurations
+     */
+    public function testACacheProviderIsAlwaysBuilt($type, $errors, $infos)
+    {
+        $logger = $this->getMockBuilder('Monolog\Logger')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $logger->expects($this->exactly($errors))
+            ->method('error');
+        $logger->expects($this->exactly($infos))
+            ->method('debug');
+
+        Client::create(array(
+            'key' => '1234',
+            'secret' => '4321',
+            'url' => 'http://www.example.com/',
+            'cache' => array(
+                'type' => $type,
+                'host' => null,
+                'port' => null,
+            ),
+            'logger' => $logger,
+        ));
+    }
+
+    public function provideCacheConfigurations()
+    {
+        return array(
+            array('array', 0, 1),
+            array('memcache', 0, 1),
+            array('memcached', 0, 1),
+            array('unknown', 1, 0),
+        );
+    }
 }
