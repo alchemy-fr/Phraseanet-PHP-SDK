@@ -19,6 +19,8 @@ use PhraseanetSDK\Cache\CanCacheStrategy;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Monolog\Handler\NullHandler;
+use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
+use Guzzle\Plugin\History\HistoryPlugin;
 
 /**
  * Phraseanet SDK Silex provider
@@ -54,7 +56,6 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 'url'                        => $app['phraseanet-sdk.apiUrl'],
                 'cache_revalidation_factory' => $app['phraseanet-sdk.cache-revalidation-factory'],
                 'guzzle_can_cache'           => $app['phraseanet-sdk.cache-can-cache-strategy'],
-                'logger'                     => $app['monolog'],
                 'plugins'                    => $app['phraseanet-sdk.guzzle-plugins'],
                 'cache'                      => array(
                     'type'       => isset($app['phraseanet-sdk.cache']) ? $app['phraseanet-sdk.cache'] : 'array',
@@ -65,6 +66,9 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 ),
             );
 
+            if (isset($app['monolog'])) {
+                $config['logger'] = $app['monolog'];
+            }
             if (isset($app['phraseanet-sdk.apiDevToken'])) {
                 $config['token'] = $app['phraseanet-sdk.apiDevToken'];
             }
@@ -77,9 +81,8 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         });
 
         if (isset($app['profiler'])) {
-
             $app['phraseanet-sdk.history-plugin'] = $app->share(function (Application $app) {
-                return new \Guzzle\Plugin\History\HistoryPlugin();
+                return new HistoryPlugin();
             });
 
             $app['phraseanet-sdk.guzzle-plugins'] = $app->share($app->extend('phraseanet-sdk.guzzle-plugins', function ($plugins, $app) {
@@ -90,7 +93,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 
             $app['data_collectors']= array_merge($app['data_collectors'], array(
                 'phraseanet-sdk' => $app->share(function ($app) {
-                    return new Profiler\PhraseanetSDKDataCollector($app['phraseanet-sdk.history-plugin']);
+                    return new PhraseanetSDKDataCollector($app['phraseanet-sdk.history-plugin']);
                 }),
             ));
             $app['data_collector.templates'] = array_merge($app['data_collector.templates'], array(
