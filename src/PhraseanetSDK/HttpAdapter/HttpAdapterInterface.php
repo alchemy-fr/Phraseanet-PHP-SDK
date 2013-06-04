@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Phraseanet SDK.
+ *
+ * (c) Alchemy <info@alchemy.fr>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace PhraseanetSDK\HttpAdapter;
 
 use PhraseanetSDK\Exception\BadResponseException;
@@ -21,10 +30,10 @@ interface HttpAdapterInterface
     /**
      * Executes a POST request
      *
-     * @param  string               $path The path to query
-     * @param  array                $args An array of query parameters
+     * @param string $path The path to query
+     * @param array  $args An array of query parameters
      *
-     * @return string               The response body
+     * @return string The response body
      *
      * @throws BadResponseException
      * @throws RuntimeException

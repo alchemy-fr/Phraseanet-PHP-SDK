@@ -43,6 +43,16 @@
             </tr>
                     <tr>
                 <td class="type">
+                    <abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getAdapter">getAdapter</a>()
+                    <p>Returns the encapsulated adapter</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
                     string
                 </td>
                 <td class="last">
@@ -63,21 +73,11 @@
             </tr>
                     <tr>
                 <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_setLogger">setLogger</a>(<abbr title="Monolog\Logger">Logger</abbr> $logger = null)
-                    <p>A logger</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     string
                 </td>
                 <td class="last">
                     <a href="#method_get">get</a>(string $path, array $args = array())
-                    <p>GET request</p>
+                    <p>Executes a GET request</p>
                 </td>
                 <td></td>
             </tr>
@@ -87,17 +87,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_post">post</a>(string $path, array $args = array())
-                    <p>Post request</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    static&nbsp;<a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_create">create</a>()
-                    <p>Factory for the Guzzle HttpAdapter</p>
+                    <p>Executes a POST request</p>
                 </td>
                 <td></td>
             </tr>
@@ -107,7 +97,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 37</div>
+        <div class="location">at line 28</div>
         <code>            public            
     <strong>__construct</strong>(<abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr> $client)</code>
     </h3>
@@ -131,8 +121,32 @@
                     </div>
     </div>
 
+                <h3 id="method_getAdapter">
+        <div class="location">at line 38</div>
+        <code>            public            <abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr>
+    <strong>getAdapter</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Returns the encapsulated adapter</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_getBaseUrl">
-        <div class="location">at line 47</div>
+        <div class="location">at line 48</div>
         <code>            public            string
     <strong>getBaseUrl</strong>()</code>
     </h3>
@@ -156,7 +170,7 @@
     </div>
 
                 <h3 id="method_setBaseUrl">
-        <div class="location">at line 58</div>
+        <div class="location">at line 59</div>
         <code>            public            <a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a>
     <strong>setBaseUrl</strong>(string $url)</code>
     </h3>
@@ -189,38 +203,13 @@
                     </div>
     </div>
 
-                <h3 id="method_setLogger">
-        <div class="location">at line 70</div>
-        <code>            public            
-    <strong>setLogger</strong>(<abbr title="Monolog\Logger">Logger</abbr> $logger = null)</code>
-    </h3>
-    <div class="details">
-        <p>A logger</p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td><abbr title="Monolog\Logger">Logger</abbr></td>
-                <td>$logger</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
                 <h3 id="method_get">
-        <div class="location">at line 84</div>
+        <div class="location">at line 69</div>
         <code>            public            string
     <strong>get</strong>(string $path, array $args = array())</code>
     </h3>
     <div class="details">
-        <p>GET request</p>
+        <p>Executes a GET request</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -267,12 +256,12 @@
     </div>
 
                 <h3 id="method_post">
-        <div class="location">at line 119</div>
+        <div class="location">at line 77</div>
         <code>            public            string
     <strong>post</strong>(string $path, array $args = array())</code>
     </h3>
     <div class="details">
-        <p>Post request</p>
+        <p>Executes a POST request</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -314,30 +303,6 @@
             </tr>
             </table>
 
-            
-                    </div>
-    </div>
-
-                <h3 id="method_create">
-        <div class="location">at line 151</div>
-        <code>        static    public            <a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a>
-    <strong>create</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Factory for the Guzzle HttpAdapter</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
             
                     </div>
     </div>
