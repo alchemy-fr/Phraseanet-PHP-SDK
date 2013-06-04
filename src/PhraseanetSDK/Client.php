@@ -3,16 +3,24 @@
 namespace PhraseanetSDK;
 
 use Monolog\Logger;
+use Guzzle\Plugin\Log\LogPlugin;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Plugin\Cache\CachePlugin;
+use PhraseanetSDK\Cache\CacheFactory;
+use PhraseanetSDK\Cache\RevalidationFactory;
 use PhraseanetSDK\Authentication\StoreInterface;
 use PhraseanetSDK\Authentication\DefaultStore;
 use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadRequestException;
 use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\HttpAdapter\Response;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\TransportException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
+use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
+use PhraseanetSDK\Cache\CanCacheStrategy;
 
 /**
  *
@@ -97,9 +105,7 @@ class Client extends AbstractClient
         $this->logger = $logger;
 
         $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
-
         $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
-        $this->httpClient->setLogger($logger);
 
         $this->oauthAuthorizeEndpointUrl = sprintf('%s%s', $baseUrl, self::AUTH_ENDPOINT);
         $this->oauthTokenEndpointUrl = sprintf('%s%s', $baseUrl, self::TOKEN_ENDPOINT);
@@ -358,6 +364,86 @@ class Client extends AbstractClient
         }
 
         return new Response($json);
+    }
+
+    public static function create(array $configuration)
+    {
+        if (!isset($configuration['key'])) {
+            throw new InvalidArgumentException('Missing oauth key');
+        }
+        if (!isset($configuration['secret'])) {
+            throw new InvalidArgumentException('Missing oauth secret');
+        }
+        if (!isset($configuration['url'])) {
+            throw new InvalidArgumentException('Missing instance url');
+        }
+
+        if (!isset($configuration['cache_factory'])) {
+            $configuration['cache_factory'] = new CacheFactory();
+        }
+        if (!isset($configuration['cache_revalidation_factory'])) {
+            $configuration['cache_revalidation_factory'] = new RevalidationFactory();
+        }
+
+        $key = $configuration['key'];
+        $secret = $configuration['secret'];
+        $url = $configuration['url'];
+
+        if (!isset($configuration['guzzle-client'])) {
+            $configuration['guzzle-client'] = 'Guzzle\Http\Client';
+        }
+
+        if (!isset($configuration['guzzle_can_cache'])) {
+            $configuration['guzzle_can_cache'] = new CanCacheStrategy();
+        }
+
+        $guzzle = new $configuration['guzzle-client']($url);
+
+        if (isset($configuration['logger'])) {
+            $logger = $configuration['logger'];
+            $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($logger)));
+        } else {
+            $logger = new Logger('Phraseanet SDK');
+            $logger->pushHandler(new \Monolog\Handler\NullHandler());
+        }
+
+        if (isset($configuration['cache'])) {
+            $type = $configuration['cache']['type'];
+
+            $host = isset($configuration['cache']['host']) ? $configuration['cache']['host'] : null;
+            $port = isset($configuration['cache']['port']) ? $configuration['cache']['port'] : null;
+
+            $lifetime = isset($configuration['cache']['lifetime']) ? $configuration['cache']['lifetime'] : 360;
+            $revalidate = isset($configuration['cache']['revalidate']) ? $configuration['cache']['revalidate'] : null;
+
+            try {
+                $cacheAdapter = $configuration['cache_factory']->createGuzzleCacheAdapter($type, $host, $port);
+            } catch (RuntimeException $e) {
+                $logger->error(sprintf('Unable to create cache adapter %s', $type));
+                $cacheAdapter = $configuration['cache_factory']->createGuzzleCacheAdapter('array');
+            }
+
+            $guzzle->addSubscriber(new CachePlugin(array(
+                'adapter'      => $cacheAdapter,
+                'can_cache'    => $configuration['guzzle_can_cache'],
+                'default_ttl'  => $lifetime,
+                'revalidation' => $configuration['cache_revalidation_factory']->create($revalidate),
+            )));
+        }
+
+        if (isset($configuration['plugins'])) {
+            foreach ($configuration['plugins'] as $plugin) {
+                $guzzle->addSubscriber($plugin);
+            }
+        }
+
+        $client = new Client($key, $secret, new GuzzleAdapter($guzzle), $logger);
+
+        if (isset($configuration['token'])) {
+            $client->setAccessToken($configuration['token']);
+        }
+
+        return $client;
     }
 
     /**
