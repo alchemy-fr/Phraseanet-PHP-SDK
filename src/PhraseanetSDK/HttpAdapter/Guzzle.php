@@ -3,40 +3,32 @@
 namespace PhraseanetSDK\HttpAdapter;
 
 use Guzzle\Common\Exception\GuzzleException;
-use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Guzzle\Http\Exception\CurlException;
-use Monolog\Logger;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\RuntimeException;
 
 class Guzzle implements HttpAdapterInterface
 {
-    /**
-     * The guzzle client
-     *
-     * @var Guzzle\Http\ClientInterface
-     */
+    /** @var ClientInterface */
     private $client;
-
-    /**
-     * The oauth token
-     *
-     * @var string
-     */
+    /** @var string */
     private $token;
-
-    /**
-     * A monolog logger
-     *
-     * @var \Monolog\Logger
-     */
-    private $logger;
 
     public function __construct(ClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return ClientInterface
+     */
+    public function getAdapter()
+    {
+        return $this->client;
     }
 
     /**
@@ -63,94 +55,39 @@ class Guzzle implements HttpAdapterInterface
     }
 
     /**
-     * A logger
-     *
-     * @param \Monolog\Logger $logger
-     */
-    public function setLogger(Logger $logger = null)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
-     * GET request
-     *
-     * @param  string               $path The path to query
-     * @param  array                $args An array of query parameters
-     * @return string               The response body
-     * @throws BadResponseException
-     * @throws RuntimeException
+     * {@inheritdoc}
      */
     public function get($path, array $args = array())
     {
-        $queryDatas = $this->formatQueryParameters($args);
-
-        $path = sprintf('%s%s', ltrim($path, '/'), $this->getTemplate($queryDatas['data']));
-
-        try {
-            $request = $this->client->get(array($path, $queryDatas));
-            $request->setHeader('Accept', 'application/json');
-            $this->log($request->getRawHeaders());
-            $response = $request->send();
-            $this->log($response->getRawHeaders());
-        } catch (CurlException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
-        } catch (GuzzleBadResponse $e) {
-            $response = $e->getResponse();
-            $ex = new BadResponseException($response->getReasonPhrase(), $e->getCode(), $e);
-            $ex->setResponseBody($response->getBody())->setHttpStatusCode($response->getStatusCode());
-            throw $ex;
-        } catch (GuzzleException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
-
-        return $response->getBody();
+        return $this->doMethod('get', $path, $args);
     }
 
     /**
-     * Post request
-     *
-     * @param  string               $path The path to query
-     * @param  array                $args An array of query parameters
-     * @return string               The response body
-     * @throws BadResponseException
-     * @throws RuntimeException
+     * {@inheritdoc}
      */
     public function post($path, array $args = array())
     {
-        $queryDatas = $this->formatQueryParameters($args);
+        return $this->doMethod('post', $path, $args);
+    }
 
+    private function doMethod($name, $path, $args)
+    {
+        $queryDatas = $this->formatQueryParameters($args);
         $path = sprintf('%s%s', ltrim($path, '/'), $this->getTemplate($queryDatas['data']));
 
         try {
-            $request = $this->client->post(array($path, $queryDatas));
+            $request = call_user_func(array($this->client, $name), array($path, $queryDatas));
             $request->setHeader('Accept', 'application/json');
-            $this->log($request->getRawHeaders());
             $response = $request->send();
-            $this->log($response->getRawHeaders());
         } catch (CurlException $e) {
             throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
         } catch (GuzzleBadResponse $e) {
-            $response = $e->getResponse();
-            $ex = new BadResponseException($response->getReasonPhrase(), $e->getCode(), $e);
-            $ex->setResponseBody($response->getBody())->setHttpStatusCode($response->getStatusCode());
-
-            throw $ex;
+            throw BadResponseException::fromGuzzleResponse($e);
         } catch (GuzzleException $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 
         return $response->getBody();
-    }
-
-    /**
-     * Factory for the Guzzle HttpAdapter
-     *
-     * @return Guzzle
-     */
-    public static function create()
-    {
-        return new static(new Client());
     }
 
     /**
@@ -184,17 +121,5 @@ class Guzzle implements HttpAdapterInterface
         }
 
         return $queryDatas;
-    }
-
-    /**
-     * Log a message
-     *
-     * @param string $message
-     */
-    private function log($message)
-    {
-        if (null !== $this->logger) {
-            $this->logger->addInfo($message);
-        }
     }
 }
