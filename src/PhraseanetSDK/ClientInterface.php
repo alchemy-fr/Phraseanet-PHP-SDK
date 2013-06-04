@@ -65,6 +65,13 @@ interface ClientInterface
     public function logout();
 
     /**
+     * Returns the entity manager
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager();
+
+    /**
      *
      * Call a remote Phraseanet API method
      *

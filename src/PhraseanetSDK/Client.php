@@ -18,19 +18,19 @@ use Guzzle\Http\Client as Guzzle;
 use Guzzle\Plugin\Cache\CachePlugin;
 use PhraseanetSDK\Cache\CacheFactory;
 use PhraseanetSDK\Cache\RevalidationFactory;
+use PhraseanetSDK\Cache\CanCacheStrategy;
 use PhraseanetSDK\Authentication\StoreInterface;
 use PhraseanetSDK\Authentication\DefaultStore;
-use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadRequestException;
 use PhraseanetSDK\Exception\BadResponseException;
-use PhraseanetSDK\HttpAdapter\Response;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\TransportException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
-use Symfony\Component\HttpFoundation\Request;
+use PhraseanetSDK\HttpAdapter\Response;
+use PhraseanetSDK\HttpAdapter\HttpAdapterInterface;
 use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
-use PhraseanetSDK\Cache\CanCacheStrategy;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Phraseanet SDK Client, perform the HTTP requests against Phraseanet API
@@ -107,6 +107,14 @@ class Client implements ClientInterface
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->tokenStore = new DefaultStore();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEntityManager()
+    {
+        return new EntityManager($this);
     }
 
     /**

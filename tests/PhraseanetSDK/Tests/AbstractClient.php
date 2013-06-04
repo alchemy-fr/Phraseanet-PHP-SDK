@@ -34,6 +34,14 @@ abstract class AbstractClient extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @depends testGetClient
+     */
+    public function testGetEntityManager($client)
+    {
+        $this->assertInstanceOf('PhraseanetSDK\EntityManager', $client->getEntityManager());
+    }
+
+    /**
      * @covers PhraseanetSDK\Client::getAccessToken
      * @depends testGetClient
      */
