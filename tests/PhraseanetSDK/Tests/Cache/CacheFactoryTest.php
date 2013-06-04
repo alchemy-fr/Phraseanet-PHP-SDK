@@ -9,8 +9,14 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideValidParameters
      */
-    public function testCreateSuccess($type, $host, $port, $instanceOf)
+    public function testCreateSuccess($type, $host, $port, $instanceOf, $classExists)
     {
+        if (null !== $classExists) {
+            if (!class_exists($classExists)) {
+                $this->markTestSkipped(sprintf('Unable to find class %s', $classExists));
+            }
+        }
+
         $factory = new CacheFactory();
         $this->assertInstanceOf($instanceOf, $factory->create($type, $host, $port));
     }
@@ -18,12 +24,12 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
     public function provideValidParameters()
     {
         return array(
-            array('memcache', '127.0.0.1', 11211, 'Doctrine\Common\Cache\MemcacheCache'),
-            array('memcache', null, null, 'Doctrine\Common\Cache\MemcacheCache'),
-            array('memcached', '127.0.0.1', 11211, 'Doctrine\Common\Cache\MemcachedCache'),
-            array('memcached', null, null, 'Doctrine\Common\Cache\MemcachedCache'),
-            array('array', '127.0.0.1', 11211, 'Doctrine\Common\Cache\ArrayCache'),
-            array('array', null, null, 'Doctrine\Common\Cache\ArrayCache'),
+            array('memcache', '127.0.0.1', 11211, 'Doctrine\Common\Cache\MemcacheCache', 'Memcache'),
+            array('memcache', null, null, 'Doctrine\Common\Cache\MemcacheCache', 'Memcache'),
+            array('memcached', '127.0.0.1', 11211, 'Doctrine\Common\Cache\MemcachedCache', 'Memcached'),
+            array('memcached', null, null, 'Doctrine\Common\Cache\MemcachedCache', 'Memcached'),
+            array('array', '127.0.0.1', 11211, 'Doctrine\Common\Cache\ArrayCache', null),
+            array('array', null, null, 'Doctrine\Common\Cache\ArrayCache', null),
         );
     }
 
@@ -31,8 +37,14 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideInvalidParameters
      * @expectedException PhraseanetSDK\Exception\RuntimeException
      */
-    public function testCreateFailure($type, $host, $port)
+    public function testCreateFailure($type, $host, $port, $classExists)
     {
+        if (null !== $classExists) {
+            if (!class_exists($classExists)) {
+                $this->markTestSkipped(sprintf('Unable to find class %s', $classExists));
+            }
+        }
+        
         $factory = new CacheFactory();
         $factory->create($type, $host, $port);
     }
@@ -40,10 +52,10 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
     public function provideInvalidParameters()
     {
         return array(
-            array('memcache', 'nohost', 'noport'),
-            array('memcached', 'nohost', 'noport'),
-            array('unknown', 'nohost', 'noport'),
-            array('unknown', null, null),
+            array('memcache', 'nohost', 'noport', 'Memcache'),
+            array('memcached', 'nohost', 'noport', 'Memcache'),
+            array('unknown', 'nohost', 'noport', null),
+            array('unknown', null, null, null),
         );
     }
 }
