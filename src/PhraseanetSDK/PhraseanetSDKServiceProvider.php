@@ -43,7 +43,9 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             };
         }
 
-        $app['phraseanet-sdk.guzzle-plugins'] = array();
+        $app['phraseanet-sdk.guzzle-plugins'] = $app->share(function () {
+            return array();
+        });
 
         $app['phraseanet-sdk.config'] = $app->share(function (Application $app) {
             $config = array(
@@ -73,6 +75,36 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['phraseanet-sdk'] = $app->share(function (Application $app) {
             return Client::create($app['phraseanet-sdk.config']);
         });
+
+        if (isset($app['profiler'])) {
+
+            $app['phraseanet-sdk.history-plugin'] = $app->share(function (Application $app) {
+                return new \Guzzle\Plugin\History\HistoryPlugin();
+            });
+
+            $app['phraseanet-sdk.guzzle-plugins'] = $app->share($app->extend('phraseanet-sdk.guzzle-plugins', function ($plugins, $app) {
+                $plugins[] = $app['phraseanet-sdk.history-plugin'];
+
+                return $plugins;
+            }));
+
+            $app['data_collectors']= array_merge($app['data_collectors'], array(
+                'phraseanet-sdk' => $app->share(function ($app) {
+                    return new Profiler\PhraseanetSDKDataCollector($app['phraseanet-sdk.history-plugin']);
+                }),
+            ));
+            $app['data_collector.templates'] = array_merge($app['data_collector.templates'], array(
+                array('phrasea-sdk', '@PhraseanetSDK/Collector/phraseanet-sdk.html.twig')
+            ));
+
+            $app['phraseanet-sdk.profiler.templates_path'] = __DIR__ . '/Profiler/resources/views';
+
+            $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function ($loader, $app) {
+                $loader->addPath($app['phraseanet-sdk.profiler.templates_path'], 'PhraseanetSDK');
+
+                return $loader;
+            }));
+        }
     }
 
     public function boot(Application $app)

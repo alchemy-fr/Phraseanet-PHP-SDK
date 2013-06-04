@@ -1,0 +1,7 @@
+<div class="phraseanet-sdk">
+    <h2>Requests</h2>
+    {% for index,call in calls %}
+        {% include '@PhraseanetSDK/Profiler/call.html.twig' with { 'call': call } %}
+    {% endfor %}
+</div>
+{% include '@PhraseanetSDK/Profiler/javascript.html.twig' %}
