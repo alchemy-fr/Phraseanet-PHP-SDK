@@ -22,39 +22,14 @@
     <h1><a href="../PhraseanetSDK.html">PhraseanetSDK</a>\Client</h1>
     </div>
         <div class="content">
-                <p>class    <strong>Client</strong>        extends <a href="../PhraseanetSDK/AbstractClient.html"><abbr title="PhraseanetSDK\AbstractClient">AbstractClient</abbr></a></p>
+                <p>class    <strong>Client</strong>        implements
+        <a href="../PhraseanetSDK/ClientInterface.html"><abbr title="PhraseanetSDK\ClientInterface">ClientInterface</abbr></a></p>
 
             <div class="description">
-            <p>Phraseanet Client, perform the HTTP requests against Phraseanet API</p>
+            <p>Phraseanet SDK Client, perform the HTTP requests against Phraseanet API</p>
             <p></p>
         </div>
     
-            <h2>Constants</h2>
-
-            <table>
-                    <tr>
-                <td>TOKEN_ENDPOINT</td>
-                <td class="last">
-                    <p><em>Phraseanet API Endpoint</em></p>
-                    <p></p>
-                </td>
-            </tr>
-                    <tr>
-                <td>AUTH_ENDPOINT</td>
-                <td class="last">
-                    <p><em></em></p>
-                    <p></p>
-                </td>
-            </tr>
-                    <tr>
-                <td>GRANT_TYPE_AUTHORIZATION</td>
-                <td class="last">
-                    <p><em>Oauth grant type</em></p>
-                    <p></p>
-                </td>
-            </tr>
-            </table>
-
     
     
             <h2>Methods</h2>
@@ -62,7 +37,27 @@
             <table>
                     <tr>
                 <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(string $apiKey, string $apiSecret, <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $clientHttp)
+                    <p>To create an API key/secret pair, go to your account adminstation panel in your phraseanet application.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
                     <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setTokenStore">setTokenStore</a>(<a href="../PhraseanetSDK/Authentication/StoreInterface.html"><abbr title="PhraseanetSDK\Authentication\StoreInterface">StoreInterface</abbr></a> $store)
+                    <p>Set the token store</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
                 </td>
                 <td class="last">
                     <a href="#method_getAccessToken">getAccessToken</a>()
@@ -77,26 +72,6 @@
                 <td class="last">
                     <a href="#method_setAccessToken">setAccessToken</a>(string $token)
                     <p>Set the access token</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method___construct">__construct</a>(string $apiKey, string $apiSecret, <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $clientHttp, <abbr title="Monolog\Logger">Logger</abbr> $logger = null)
-                    <p>To create an API key/secret pair, go to your account adminstation panel in your phraseanet application.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_setTokenStore">setTokenStore</a>(<a href="../PhraseanetSDK/Authentication/StoreInterface.html"><abbr title="PhraseanetSDK\Authentication\StoreInterface">StoreInterface</abbr></a> $store)
-                    <p>Set the token store</p>
                 </td>
                 <td></td>
             </tr>
@@ -182,11 +157,21 @@
             </tr>
                     <tr>
                 <td class="type">
-                    <a href="../PhraseanetSDK/Response.html"><abbr title="PhraseanetSDK\Response">Response</abbr></a>
+                    <a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a>
                 </td>
                 <td class="last">
                     <a href="#method_call">call</a>(string $path, array $args = array(), string $httpMethod = &#039;POST&#039;)
                     <p>Call a remote Phraseanet API method</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;<a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_create">create</a>(array $config)
+                    <p>Creates a Client.</p>
                 </td>
                 <td></td>
             </tr>
@@ -195,68 +180,10 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method_getAccessToken">
-        <div class="location">at line 130</div>
-        <code>final            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
-    <strong>getAccessToken</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the access token</p>
-        <p></p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_setAccessToken">
-        <div class="location">at line 143</div>
-        <code>final            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
-    <strong>setAccessToken</strong>(string $token)</code>
-    </h3>
-    <div class="details">
-        <p>Set the access token</p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>string</td>
-                <td>$token</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method___construct">
-        <div class="location">at line 94</div>
+                        <h3 id="method___construct">
+        <div class="location">at line 97</div>
         <code>            public            
-    <strong>__construct</strong>(string $apiKey, string $apiSecret, <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $clientHttp, <abbr title="Monolog\Logger">Logger</abbr> $logger = null)</code>
+    <strong>__construct</strong>(string $apiKey, string $apiSecret, <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $clientHttp)</code>
     </h3>
     <div class="details">
         <p>To create an API key/secret pair, go to your account adminstation panel in your phraseanet application.</p>
@@ -279,11 +206,6 @@
                 <td><a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a></td>
                 <td>$clientHttp</td>
                 <td>An HTTP Client</td>
-            </tr>
-                    <tr>
-                <td><abbr title="Monolog\Logger">Logger</abbr></td>
-                <td>$logger</td>
-                <td>A logger</td>
             </tr>
             </table>
 
@@ -327,8 +249,66 @@
                     </div>
     </div>
 
+                <h3 id="method_getAccessToken">
+        <div class="location">at line 130</div>
+        <code>final            public            string
+    <strong>getAccessToken</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the access token</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAccessToken">
+        <div class="location">at line 141</div>
+        <code>final            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+    <strong>setAccessToken</strong>(string $token)</code>
+    </h3>
+    <div class="details">
+        <p>Set the access token</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_getHttpClient">
-        <div class="location">at line 155</div>
+        <div class="location">at line 153</div>
         <code>            public            <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a>
     <strong>getHttpClient</strong>()</code>
     </h3>
@@ -352,7 +332,7 @@
     </div>
 
                 <h3 id="method_setHttpClient">
-        <div class="location">at line 166</div>
+        <div class="location">at line 164</div>
         <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>setHttpClient</strong>(<a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $client)</code>
     </h3>
@@ -386,7 +366,7 @@
     </div>
 
                 <h3 id="method_setGrantType">
-        <div class="location">at line 191</div>
+        <div class="location">at line 189</div>
         <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>setGrantType</strong>(string $type, array $info = null, <abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request = null)</code>
     </h3>
@@ -445,7 +425,7 @@
     </div>
 
                 <h3 id="method_getGrantType">
-        <div class="location">at line 225</div>
+        <div class="location">at line 223</div>
         <code>            public            string
     <strong>getGrantType</strong>()</code>
     </h3>
@@ -469,7 +449,7 @@
     </div>
 
                 <h3 id="method_getGrantInformations">
-        <div class="location">at line 235</div>
+        <div class="location">at line 233</div>
         <code>            public            array
     <strong>getGrantInformations</strong>()</code>
     </h3>
@@ -493,7 +473,7 @@
     </div>
 
                 <h3 id="method_getAuthorizationUrl">
-        <div class="location">at line 247</div>
+        <div class="location">at line 245</div>
         <code>            public            string
     <strong>getAuthorizationUrl</strong>(array $scope = array())</code>
     </h3>
@@ -536,7 +516,7 @@
     </div>
 
                 <h3 id="method_retrieveAccessToken">
-        <div class="location">at line 272</div>
+        <div class="location">at line 270</div>
         <code>            public            
     <strong>retrieveAccessToken</strong>(<abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request)</code>
     </h3>
@@ -574,7 +554,7 @@
     </div>
 
                 <h3 id="method_logout">
-        <div class="location">at line 315</div>
+        <div class="location">at line 313</div>
         <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>logout</strong>()</code>
     </h3>
@@ -598,8 +578,8 @@
     </div>
 
                 <h3 id="method_call">
-        <div class="location">at line 335</div>
-        <code>            public            <a href="../PhraseanetSDK/Response.html"><abbr title="PhraseanetSDK\Response">Response</abbr></a>
+        <div class="location">at line 333</div>
+        <code>            public            <a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a>
     <strong>call</strong>(string $path, array $args = array(), string $httpMethod = &#039;POST&#039;)</code>
     </h3>
     <div class="details">
@@ -631,7 +611,7 @@
 
                     <table>
         <tr>
-            <td><a href="../PhraseanetSDK/Response.html"><abbr title="PhraseanetSDK\Response">Response</abbr></a></td>
+            <td><a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a></td>
             <td></td>
         </tr>
     </table>
@@ -651,6 +631,49 @@
                     <tr>
                 <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
                 <td>if problem occurs</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_create">
+        <div class="location">at line 370</div>
+        <code>        static    public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
+    <strong>create</strong>(array $config)</code>
+    </h3>
+    <div class="details">
+        <p>Creates a Client.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$config</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="http://php.net/InvalidArgumentException"><abbr title="InvalidArgumentException">InvalidArgumentException</abbr></a></td>
+                <td>In case a parameter is missing</td>
             </tr>
             </table>
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Phraseanet SDK.
+ *
+ * (c) Alchemy <info@alchemy.fr>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\EntityManager;
@@ -37,9 +46,9 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Query the API
      *
-     * @param  string                 $method HTTP method type (POST, GET ...)
-     * @param  string                 $path   The requested path (/path/to/ressource/1)
-     * @param  array                  $params An array of query parameters
+     * @param  string                             $method HTTP method type (POST, GET ...)
+     * @param  string                             $path   The requested path (/path/to/ressource/1)
+     * @param  array                              $params An array of query parameters
      * @return PhraseanetSDK\HttpAdapter\Response
      * @throws NotFoundException
      * @throws UnauthorizedException

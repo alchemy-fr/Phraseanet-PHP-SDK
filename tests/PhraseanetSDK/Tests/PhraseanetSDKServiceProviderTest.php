@@ -17,7 +17,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider());
 
-    	$this->assertInstanceOf($instanceOf, $app[$name]);
+        $this->assertInstanceOf($instanceOf, $app[$name]);
     }
 
     public function provideServices()
