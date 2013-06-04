@@ -137,7 +137,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     private function getSampleResponse($filename)
     {
-        $filename = __DIR__ . '/../../resources/response_samples/' . $filename . '.json';
+        $filename = __DIR__ . '/../../../resources/response_samples/' . $filename . '.json';
 
         return file_get_contents($filename);
     }

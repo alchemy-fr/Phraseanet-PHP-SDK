@@ -5,6 +5,7 @@ namespace PhraseanetSDK;
 use Monolog\Logger;
 use Guzzle\Plugin\Log\LogPlugin;
 use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Http\Client as Guzzle;
 use Guzzle\Plugin\Cache\CachePlugin;
 use PhraseanetSDK\Cache\CacheFactory;
 use PhraseanetSDK\Cache\RevalidationFactory;
@@ -23,72 +24,58 @@ use PhraseanetSDK\HttpAdapter\Guzzle as GuzzleAdapter;
 use PhraseanetSDK\Cache\CanCacheStrategy;
 
 /**
- *
- * Phraseanet Client, perform the HTTP requests against Phraseanet API
- *
+ * Phraseanet SDK Client, perform the HTTP requests against Phraseanet API
  */
-class Client extends AbstractClient
+class Client implements ClientInterface
 {
-    /**
-     * Phraseanet API Endpoint
-     * @var string
-     */
-    const TOKEN_ENDPOINT = '/api/oauthv2/token';
-    const AUTH_ENDPOINT = '/api/oauthv2/authorize';
-
-    /**
-     * Oauth grant type
-     */
-    const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
-
     /**
      * The OAuth authorization server endpoint URL
      */
-    protected $oauthAuthorizeEndpointUrl = '';
+    private $oauthAuthorizeEndpointUrl = '';
 
     /**
      * The OAuth token server endpoint URL
      */
-    protected $oauthTokenEndpointUrl = '';
+    private $oauthTokenEndpointUrl = '';
 
     /**
      * @var HttpAdapterInterface
      */
-    protected $httpClient;
+    private $httpClient;
 
     /**
      * Api Key
      *
      * @var string
      */
-    protected $apiKey;
+    private $apiKey;
 
     /**
      * Api Secret
      *
      * @var string
      */
-    protected $apiSecret;
+    private $apiSecret;
 
     /**
      * Grant type
      *
      * @var string
      */
-    protected $grantType;
+    private $grantType;
 
     /**
      * Infos associated to the grant type
      *
      * @var array
      */
-    protected $grantInfo;
+    private $grantInfo;
 
     /**
      *
      * @var StoreInterface
      */
-    protected $tokenStore;
+    private $tokenStore;
 
     /**
      * To create an API key/secret pair, go to your account adminstation panel
@@ -97,12 +84,10 @@ class Client extends AbstractClient
      * @param string               $apiKey     Your API key
      * @param string               $apiSecret  Your API secret
      * @param HttpAdapterInterface $clientHttp An HTTP Client
-     * @param Logger               $logger     A logger
      */
-    public function __construct($apiKey, $apiSecret, HttpAdapterInterface $clientHttp, Logger $logger = null)
+    public function __construct($apiKey, $apiSecret, HttpAdapterInterface $clientHttp)
     {
         $this->httpClient = $clientHttp;
-        $this->logger = $logger;
 
         $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
         $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
@@ -347,13 +332,11 @@ class Client extends AbstractClient
                 $start = microtime(true);
                 $responseContent = $this->httpClient->post($path, $args);
                 $stop = microtime(true);
-                $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
                 break;
             case 'GET' :
                 $start = microtime(true);
                 $responseContent = $this->httpClient->get($path, $args);
                 $stop = microtime(true);
-                $this->log(sprintf('Request to Phraseanet API %s s. - %s', $path, round($stop - $start, 6)));
                 break;
             default :
                 throw new BadRequestException(sprintf('Phraseanet API do not support %s method', $httpMethod));
@@ -366,81 +349,85 @@ class Client extends AbstractClient
         return new Response($json);
     }
 
-    public static function create(array $configuration)
+    /**
+     * Creates a Client.
+     *
+     * @param array $config
+     *
+     * @return Client
+     *
+     * @throws InvalidArgumentException In case a parameter is missing
+     */
+    public static function create(array $config)
     {
-        if (!isset($configuration['key'])) {
+        $config = array_replace_recursive(array(
+            'cache' => array(
+                'type' => 'array',
+                'host' => null,
+                'port' => null,
+            ),
+            'plugins' => array(),
+        ), $config);
+
+        if (!isset($config['key'])) {
             throw new InvalidArgumentException('Missing oauth key');
         }
-        if (!isset($configuration['secret'])) {
+        if (!isset($config['secret'])) {
             throw new InvalidArgumentException('Missing oauth secret');
         }
-        if (!isset($configuration['url'])) {
+        if (!isset($config['url'])) {
             throw new InvalidArgumentException('Missing instance url');
         }
 
-        if (!isset($configuration['cache_factory'])) {
-            $configuration['cache_factory'] = new CacheFactory();
+        if (!isset($config['cache_factory'])) {
+            $config['cache_factory'] = new CacheFactory();
         }
-        if (!isset($configuration['cache_revalidation_factory'])) {
-            $configuration['cache_revalidation_factory'] = new RevalidationFactory();
+        if (!isset($config['cache_revalidation_factory'])) {
+            $config['cache_revalidation_factory'] = new RevalidationFactory();
         }
-
-        $key = $configuration['key'];
-        $secret = $configuration['secret'];
-        $url = $configuration['url'];
-
-        if (!isset($configuration['guzzle-client'])) {
-            $configuration['guzzle-client'] = 'Guzzle\Http\Client';
+        if (!isset($config['guzzle_can_cache'])) {
+            $config['guzzle_can_cache'] = new CanCacheStrategy();
         }
 
-        if (!isset($configuration['guzzle_can_cache'])) {
-            $configuration['guzzle_can_cache'] = new CanCacheStrategy();
-        }
+        $key = $config['key'];
+        $secret = $config['secret'];
+        $url = $config['url'];
 
-        $guzzle = new $configuration['guzzle-client']($url);
+        $guzzle = new Guzzle($url);
 
-        if (isset($configuration['logger'])) {
-            $logger = $configuration['logger'];
+        if (isset($config['logger'])) {
+            $logger = $config['logger'];
             $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($logger)));
         } else {
             $logger = new Logger('Phraseanet SDK');
             $logger->pushHandler(new \Monolog\Handler\NullHandler());
         }
 
-        if (isset($configuration['cache'])) {
-            $type = $configuration['cache']['type'];
+        $lifetime = isset($config['cache']['lifetime']) ? $config['cache']['lifetime'] : 360;
+        $revalidate = isset($config['cache']['revalidate']) ? $config['cache']['revalidate'] : null;
 
-            $host = isset($configuration['cache']['host']) ? $configuration['cache']['host'] : null;
-            $port = isset($configuration['cache']['port']) ? $configuration['cache']['port'] : null;
-
-            $lifetime = isset($configuration['cache']['lifetime']) ? $configuration['cache']['lifetime'] : 360;
-            $revalidate = isset($configuration['cache']['revalidate']) ? $configuration['cache']['revalidate'] : null;
-
-            try {
-                $cacheAdapter = $configuration['cache_factory']->createGuzzleCacheAdapter($type, $host, $port);
-            } catch (RuntimeException $e) {
-                $logger->error(sprintf('Unable to create cache adapter %s', $type));
-                $cacheAdapter = $configuration['cache_factory']->createGuzzleCacheAdapter('array');
-            }
-
-            $guzzle->addSubscriber(new CachePlugin(array(
-                'adapter'      => $cacheAdapter,
-                'can_cache'    => $configuration['guzzle_can_cache'],
-                'default_ttl'  => $lifetime,
-                'revalidation' => $configuration['cache_revalidation_factory']->create($revalidate),
-            )));
+        try {
+            $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter($config['cache']['type'], $host = $config['cache']['host'], $config['cache']['port']);
+        } catch (RuntimeException $e) {
+            $logger->error(sprintf('Unable to create cache adapter %s', $config['cache']['type']));
+            $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter('array');
         }
 
-        if (isset($configuration['plugins'])) {
-            foreach ($configuration['plugins'] as $plugin) {
-                $guzzle->addSubscriber($plugin);
-            }
+        $guzzle->addSubscriber(new CachePlugin(array(
+            'adapter'      => $cacheAdapter,
+            'can_cache'    => $config['guzzle_can_cache'],
+            'default_ttl'  => $lifetime,
+            'revalidation' => $config['cache_revalidation_factory']->create($revalidate),
+        )));
+
+        foreach ($config['plugins'] as $plugin) {
+            $guzzle->addSubscriber($plugin);
         }
 
         $client = new Client($key, $secret, new GuzzleAdapter($guzzle), $logger);
 
-        if (isset($configuration['token'])) {
-            $client->setAccessToken($configuration['token']);
+        if (isset($config['token'])) {
+            $client->setAccessToken($config['token']);
         }
 
         return $client;
@@ -451,7 +438,7 @@ class Client extends AbstractClient
      *
      * @return String the current URL
      */
-    protected function getUrlWithoutOauth2Parameters(Request $request)
+    private function getUrlWithoutOauth2Parameters(Request $request)
     {
         $toReAdd = array();
 
@@ -471,17 +458,5 @@ class Client extends AbstractClient
         }
 
         return $ret;
-    }
-
-    /**
-     * Log a message
-     *
-     * @param string $message
-     */
-    private function log($message)
-    {
-        if (null !== $this->logger) {
-            $this->logger->addInfo($message);
-        }
     }
 }
