@@ -40,7 +40,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param  string                 $method HTTP method type (POST, GET ...)
      * @param  string                 $path   The requested path (/path/to/ressource/1)
      * @param  array                  $params An array of query parameters
-     * @return PhraseanetSDK\Response
+     * @return PhraseanetSDK\HttpAdapter\Response
      * @throws NotFoundException
      * @throws UnauthorizedException
      * @throws RuntimeException

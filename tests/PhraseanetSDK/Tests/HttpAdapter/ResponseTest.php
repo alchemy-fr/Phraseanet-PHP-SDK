@@ -1,14 +1,14 @@
 <?php
 
-namespace PhraseanetSDK\Tests;
+namespace PhraseanetSDK\Tests\HttpAdapter;
 
-use PhraseanetSDK\Response;
+use PhraseanetSDK\HttpAdapter\Response;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers PhraseanetSDK\Response::__construct
+     * @covers PhraseanetSDK\HttpAdapter\Response::__construct
      * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testBadResponse()
@@ -17,7 +17,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::__construct
+     * @covers PhraseanetSDK\HttpAdapter\Response::__construct
      */
     public function testContructor()
     {
@@ -26,7 +26,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getResult
+     * @covers PhraseanetSDK\HttpAdapter\Response::getResult
      */
     public function testGetResult()
     {
@@ -36,7 +36,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getHttpStatusCode
+     * @covers PhraseanetSDK\HttpAdapter\Response::getHttpStatusCode
      */
     public function testGetHttpStatusCode()
     {
@@ -48,7 +48,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::isOk
+     * @covers PhraseanetSDK\HttpAdapter\Response::isOk
      */
     public function testIsOk()
     {
@@ -63,7 +63,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getErrorMessage
+     * @covers PhraseanetSDK\HttpAdapter\Response::getErrorMessage
      */
     public function testGetErrorMessage()
     {
@@ -72,7 +72,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getErrorDetails
+     * @covers PhraseanetSDK\HttpAdapter\Response::getErrorDetails
      */
     public function testGetErrorDetails()
     {
@@ -81,7 +81,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getResponseTime
+     * @covers PhraseanetSDK\HttpAdapter\Response::getResponseTime
      */
     public function testGetResponseTime()
     {
@@ -91,7 +91,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getUri
+     * @covers PhraseanetSDK\HttpAdapter\Response::getUri
      */
     public function testGetUri()
     {
@@ -100,7 +100,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getMethod
+     * @covers PhraseanetSDK\HttpAdapter\Response::getMethod
      */
     public function testGetMethod()
     {
@@ -109,7 +109,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::isEmpty
+     * @covers PhraseanetSDK\HttpAdapter\Response::isEmpty
      */
     public function testIsEmpty()
     {
@@ -118,7 +118,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getCharset
+     * @covers PhraseanetSDK\HttpAdapter\Response::getCharset
      */
     public function testGetCharset()
     {
@@ -127,7 +127,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PhraseanetSDK\Response::getApiVersion
+     * @covers PhraseanetSDK\HttpAdapter\Response::getApiVersion
      */
     public function testGetApiVersion()
     {

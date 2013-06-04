@@ -3,7 +3,7 @@
 namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\Client;
-use PhraseanetSDK\Response;
+use PhraseanetSDK\HttpAdapter\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractClient extends \PHPUnit_Framework_TestCase

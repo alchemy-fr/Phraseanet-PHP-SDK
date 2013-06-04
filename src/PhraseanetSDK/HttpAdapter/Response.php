@@ -1,12 +1,11 @@
 <?php
 
-namespace PhraseanetSDK;
+namespace PhraseanetSDK\HttpAdapter;
 
 use PhraseanetSDK\Exception\InvalidArgumentException;
 
 /**
- *
- * Handle Response from a Phraseanet API call
+ * Response object from a Phraseanet API call
  */
 class Response
 {
@@ -60,7 +59,7 @@ class Response
      */
     public function isOk()
     {
-        return floor($this->getHttpStatusCode() / 100) < 4;
+        return $this->getHttpStatusCode() < 400;
     }
 
     /**
@@ -69,7 +68,7 @@ class Response
      */
     public function isEmpty()
     {
-        return ! get_object_vars($this->result) > 0;
+        return count(get_object_vars($this->result)) === 0;
     }
 
     /**
@@ -100,7 +99,7 @@ class Response
      */
     public function getResponseTime()
     {
-        return new \DateTime($this->meta->response_time);
+        return \DateTime::createFromFormat(DATE_ATOM, $this->meta->response_time);
     }
 
     /**
