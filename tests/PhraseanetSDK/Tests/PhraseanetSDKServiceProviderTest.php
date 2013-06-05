@@ -257,7 +257,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
                     'options' => array(
                         'file' => realpath(__DIR__ . '/../../..') . '/phraseanet.recorder.json',
                     ),
-                    'limit' => 400,
+                    'limit' => 1000,
                 )
             ),
             array(
