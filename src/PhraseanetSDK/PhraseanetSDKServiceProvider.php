@@ -80,7 +80,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 
         $app['phraseanet-sdk.guzzle.history-plugin'] = $app->share(function (Application $app) {
             $plugin = new HistoryPlugin();
-            $plugin->setLimit(9999);
+            $plugin->setLimit($app['phraseanet-sdk.recorder.config-merger']['limit']);
 
             return $plugin;
         });
@@ -128,7 +128,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 'options' => array(
                     'file' => realpath(__DIR__ . '/../..') . '/phraseanet.recorder.json',
                 ),
-                'limit' => 400,
+                'limit' => 1000,
             ), $app['phraseanet-sdk.recorder.config']);
 
             return $config;
