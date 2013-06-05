@@ -136,23 +136,27 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return $config;
         });
 
+        $app['phraseanet-sdk.recorder.storage'] = $app->share(function (Application $app) {
+            $config = $app['phraseanet-sdk.recorder.config-merger'];
+
+            return $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']);
+        });
+
         $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
             $config = $app['phraseanet-sdk.recorder.config-merger'];
 
             return new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
-                $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']),
+                $app['phraseanet-sdk.recorder.storage'],
                 $app['phraseanet-sdk.recorder.request-serializer'],
                 $config['limit']
             );
         });
 
         $app['phraseanet-sdk.player'] = $app->share(function (Application $app) {
-            $config = $app['phraseanet-sdk.recorder.config-merger'];
-
             return new Player(
                 $app['phraseanet-sdk']->getHttpClient()->getAdapter(),
-                $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']),
+                $app['phraseanet-sdk.recorder.storage'],
                 $app['phraseanet-sdk.recorder.request-serializer']
             );
         });
