@@ -120,9 +120,9 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
         'token' => $token,
         'cache' => array(
             'type' => 'memcached',
-            'type' => 'localhost',
-            'type' => 11211,
-            'type' => 300,
+            'host' => 'localhost',
+            'port' => 11211,
+            'ttl'  => 300,
         ),
         'logger' => $logger,
     )
@@ -193,9 +193,9 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
         'token' => $token,
         'cache' => array(
             'type' => 'memcached',
-            'type' => 'localhost',
-            'type' => 11211,
-            'type' => 300,
+            'host' => 'localhost',
+            'port' => 11211,
+            'ttl'  => 300,
             'revalidate' => 'deny',  // important
         )
     )
