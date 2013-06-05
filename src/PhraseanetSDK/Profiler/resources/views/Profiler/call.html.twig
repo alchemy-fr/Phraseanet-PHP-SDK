@@ -4,6 +4,7 @@
     <div class="summary">
         <h3>
             <span class="method">{{ call.request.method }}</span>
+            <span class="time">&nbsp{{ call.time.total ?: 0 }} ms</span
             <span class="path">&nbsp{{ call.request.path }}</span>
         </h3>
         <div class="code">
