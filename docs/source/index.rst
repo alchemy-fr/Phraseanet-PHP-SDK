@@ -1,6 +1,12 @@
 Documentation
 =============
 
+
+This documentation is out of date, please refer to the repository
+Phraseanet-PHP-SDK <https://github.com/alchemy-fr/Phraseanet-PHP-SDK
+
+
+
 Introduction
 ------------
 
@@ -32,7 +38,7 @@ no still use composer for your project, you can start with this
 
     {
         "require": {
-            "phraseanet/php-sdk": "dev-master"
+            "phraseanet/php-sdk": "~0.2"
         }
     }
 

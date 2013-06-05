@@ -5,10 +5,6 @@
 The Phraseanet PHP SDK is an OO library to interact with
 [Phraseanet API](https://docs.phraseanet.com/Devel).
 
-#Documentation
-
-Read the documentation at http://phraseanet-php-sdk.readthedocs.org/
-
 ## Basic Usage
 
 ### Create the client
@@ -117,7 +113,7 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
 $app = new Silex\Application();
 
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.config'           => array(
+    'phraseanet-sdk.config' => array(
         'client-id' => $clientId,
         'secret' => $secret,
         'url' => $url,
@@ -190,7 +186,7 @@ example), you must use the `deny` cache revalidation strategy :
 
 ```php
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.config'           => array(
+    'phraseanet-sdk.config' => array(
         'client-id' => $clientId,
         'secret' => $secret,
         'url' => $url,
