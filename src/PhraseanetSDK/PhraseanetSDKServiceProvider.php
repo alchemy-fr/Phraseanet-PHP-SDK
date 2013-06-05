@@ -21,6 +21,7 @@ use Monolog\Handler\NullHandler;
 use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
 use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Recorder\Recorder;
+use PhraseanetSDK\Recorder\RequestSerializer;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
 
 /**
@@ -116,6 +117,10 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return new StorageFactory($app['phraseanet-sdk.cache.factory']);
         });
 
+        $app['phraseanet-sdk.recorder.request-serializer'] = $app->share(function (Application $app) {
+            return new RequestSerializer();
+        });
+
         $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
             $config = $app['phraseanet-sdk.recorder.config'] = array_replace_recursive(array(
                 'type' => 'file',
@@ -128,6 +133,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
                 $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']),
+                $app['phraseanet-sdk.recorder.request-serializer'],
                 $config['limit']
             );
         });
