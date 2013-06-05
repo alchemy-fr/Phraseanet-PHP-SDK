@@ -113,9 +113,6 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
 
 ### Configure cache and log
 
-If no logger is passed and MonologServiceProvider registered, `$app['monolog']`
-service is used as a logger.
-
 ```php
 $app = new Silex\Application();
 
