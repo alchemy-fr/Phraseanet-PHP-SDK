@@ -13,6 +13,7 @@ namespace PhraseanetSDK\Recorder;
 
 use Guzzle\Http\ClientInterface;
 use PhraseanetSDK\Recorder\Storage\StorageInterface;
+use Psr\Log\LoggerInterface;
 
 class Player
 {
@@ -27,12 +28,15 @@ class Player
         $this->serializer = $serializer;
     }
 
-    public function play()
+    public function play(LoggerInterface $logger = null)
     {
         $data = $this->storage->fetch();
 
         foreach ($data as $serializedRequest) {
             $request = $this->serializer->unserialize($this->client, $serializedRequest);
+            if (null !== $logger) {
+                $logger->debug(sprintf('Executing request %s %s', $request->getMethod(), $request->getPath()));
+            }
             $request->send();
         }
     }
