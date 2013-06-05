@@ -53,18 +53,18 @@ class Client implements ClientInterface
     private $httpClient;
 
     /**
-     * Api Key
+     * Api ClientId
      *
      * @var string
      */
-    private $apiKey;
+    private $clientId;
 
     /**
      * Api Secret
      *
      * @var string
      */
-    private $apiSecret;
+    private $secret;
 
     /**
      * Grant type
@@ -87,14 +87,14 @@ class Client implements ClientInterface
     private $tokenStore;
 
     /**
-     * To create an API key/secret pair, go to your account adminstation panel
+     * To create an API client-id/secret pair, go to your account adminstation panel
      * in your phraseanet application.
      *
-     * @param string               $apiKey     Your API key
-     * @param string               $apiSecret  Your API secret
+     * @param string               $clientId     Your API ClientId
+     * @param string               $secret  Your API secret
      * @param HttpAdapterInterface $clientHttp An HTTP Client
      */
-    public function __construct($apiKey, $apiSecret, HttpAdapterInterface $clientHttp)
+    public function __construct($clientId, $secret, HttpAdapterInterface $clientHttp)
     {
         $this->httpClient = $clientHttp;
 
@@ -104,8 +104,8 @@ class Client implements ClientInterface
         $this->oauthAuthorizeEndpointUrl = sprintf('%s%s', $baseUrl, self::AUTH_ENDPOINT);
         $this->oauthTokenEndpointUrl = sprintf('%s%s', $baseUrl, self::TOKEN_ENDPOINT);
 
-        $this->apiKey = $apiKey;
-        $this->apiSecret = $apiSecret;
+        $this->clientId = $clientId;
+        $this->secret = $secret;
         $this->tokenStore = new DefaultStore();
     }
 
@@ -258,7 +258,7 @@ class Client implements ClientInterface
 
         $oauthParams = array(
             'response_type' => 'code'
-            , 'client_id'     => $this->apiKey
+            , 'client_id'     => $this->clientId
             , 'redirect_uri'  => $this->grantInfo['redirect_uri']
             , 'scope'         => implode(' ', $scope)
         );
@@ -291,8 +291,8 @@ class Client implements ClientInterface
 
             $args = array(
                 'grant_type'    => 'authorization_code',
-                'client_id'     => $this->apiKey,
-                'client_secret' => $this->apiSecret,
+                'client_id'     => $this->clientId,
+                'client_secret' => $this->secret,
                 'scope'         => $this->grantInfo['scope'],
                 'code'          => $request->get('code'),
                 'redirect_uri'  => $this->grantInfo['redirect_uri'],
@@ -378,75 +378,71 @@ class Client implements ClientInterface
     public static function create(array $config)
     {
         $config = array_replace_recursive(array(
+            'client-id' => null,
+            'secret'    => null,
+            'url'       => null,
+            'token'     => null,
+            'logger'    => null,
             'cache' => array(
                 'type' => 'array',
                 'host' => null,
                 'port' => null,
+                'ttl'  => 300,
+                'revalidate' => 'skip',
             ),
-            'plugins' => array(),
+            'guzzle' => array(
+                'plugins' => array(),
+            ),
         ), $config);
 
-        if (!isset($config['key'])) {
-            throw new InvalidArgumentException('Missing oauth key');
-        }
-        if (!isset($config['secret'])) {
-            throw new InvalidArgumentException('Missing oauth secret');
-        }
-        if (!isset($config['url'])) {
-            throw new InvalidArgumentException('Missing instance url');
+        foreach (array('client-id', 'secret', 'url') as $key) {
+            if (null === $config[$key]) {
+                throw new InvalidArgumentException(sprintf('Missing parameter %s', $key));
+            }
         }
 
-        if (!isset($config['cache_factory'])) {
-            $config['cache_factory'] = new CacheFactory();
+        if (!isset($config['cache']['factory'])) {
+            $config['cache']['factory'] = new CacheFactory();
         }
-        if (!isset($config['cache_revalidation_factory'])) {
-            $config['cache_revalidation_factory'] = new RevalidationFactory();
+        if (!isset($config['guzzle']['revalidation-factory'])) {
+            $config['guzzle']['revalidation-factory'] = new RevalidationFactory();
         }
-        if (!isset($config['guzzle_can_cache'])) {
-            $config['guzzle_can_cache'] = new CanCacheStrategy();
+        if (!isset($config['guzzle']['can-cache-strategy'])) {
+            $config['guzzle']['can-cache-strategy'] = new CanCacheStrategy();
         }
 
-        $key = $config['key'];
-        $secret = $config['secret'];
-        $url = $config['url'];
+        $guzzle = new Guzzle($config['url']);
 
-        $guzzle = new Guzzle($url);
-
-        if (isset($config['logger'])) {
+        if (null !== $config['logger']) {
             $logger = $config['logger'];
             $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($logger)));
-        } else {
-            $logger = new Logger('Phraseanet SDK');
-            $logger->pushHandler(new \Monolog\Handler\NullHandler());
         }
 
-        $lifetime = isset($config['cache']['lifetime']) ? $config['cache']['lifetime'] : 360;
-        $revalidate = isset($config['cache']['revalidate']) ? $config['cache']['revalidate'] : null;
-
         try {
-            $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter($config['cache']['type'], $host = $config['cache']['host'], $config['cache']['port']);
-            $logger->debug(sprintf('Using cache adapter %s', $config['cache']['type']));
+            $cacheAdapter = $config['cache']['factory']->createGuzzleCacheAdapter($config['cache']['type'], $config['cache']['host'], $config['cache']['port']);
+            if (isset($logger)) {
+                $logger->debug(sprintf('Using cache adapter %s', $config['cache']['type']));
+            }
         } catch (RuntimeException $e) {
-            $logger->error(sprintf('Unable to create cache adapter %s', $config['cache']['type']));
-            $cacheAdapter = $config['cache_factory']->createGuzzleCacheAdapter('array');
+            if (isset($logger)) {
+                $logger->error(sprintf('Unable to create cache adapter %s', $config['cache']['type']));
+            }
+            $cacheAdapter = $config['cache']['factory']->createGuzzleCacheAdapter('array');
         }
 
         $guzzle->addSubscriber(new CachePlugin(array(
             'adapter'      => $cacheAdapter,
-            'can_cache'    => $config['guzzle_can_cache'],
-            'default_ttl'  => $lifetime,
-            'revalidation' => $config['cache_revalidation_factory']->create($revalidate),
+            'can_cache'    => $config['guzzle']['can-cache-strategy'],
+            'default_ttl'  => $config['cache']['ttl'],
+            'revalidation' => $config['guzzle']['revalidation-factory']->create($config['cache']['revalidate']),
         )));
 
-        foreach ($config['plugins'] as $plugin) {
+        foreach ($config['guzzle']['plugins'] as $plugin) {
             $guzzle->addSubscriber($plugin);
         }
 
-        $client = new Client($key, $secret, new GuzzleAdapter($guzzle), $logger);
-
-        if (isset($config['token'])) {
-            $client->setAccessToken($config['token']);
-        }
+        $client = new Client($config['client-id'], $config['secret'], new GuzzleAdapter($guzzle));
+        $client->setAccessToken($config['token']);
 
         return $client;
     }

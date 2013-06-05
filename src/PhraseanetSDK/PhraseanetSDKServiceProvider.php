@@ -12,7 +12,6 @@
 namespace PhraseanetSDK;
 
 use PhraseanetSDK\Cache\CacheFactory;
-use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Client;
 use PhraseanetSDK\Cache\RevalidationFactory;
 use PhraseanetSDK\Cache\CanCacheStrategy;
@@ -29,13 +28,13 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['phraseanet-sdk.cache-factory'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.cache.factory'] = $app->share(function (Application $app) {
             return new CacheFactory();
         });
-        $app['phraseanet-sdk.cache-revalidation-factory'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.guzzle.revalidation-factory'] = $app->share(function (Application $app) {
             return new RevalidationFactory();
         });
-        $app['phraseanet-sdk.cache-can-cache-strategy'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.guzzle.can-cache-strategy'] = $app->share(function (Application $app) {
             return new CanCacheStrategy();
         });
 
@@ -45,55 +44,55 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             };
         }
 
-        $app['phraseanet-sdk.guzzle-plugins'] = $app->share(function () {
+        $app['phraseanet-sdk.guzzle.plugins'] = $app->share(function () {
             return array();
         });
 
-        $app['phraseanet-sdk.config'] = $app->share(function (Application $app) {
-            $config = array(
-                'key'                        => $app['phraseanet-sdk.apiKey'],
-                'secret'                     => $app['phraseanet-sdk.apiSecret'],
-                'url'                        => $app['phraseanet-sdk.apiUrl'],
-                'cache_revalidation_factory' => $app['phraseanet-sdk.cache-revalidation-factory'],
-                'guzzle_can_cache'           => $app['phraseanet-sdk.cache-can-cache-strategy'],
-                'plugins'                    => $app['phraseanet-sdk.guzzle-plugins'],
-                'cache'                      => array(
-                    'type'       => isset($app['phraseanet-sdk.cache']) ? $app['phraseanet-sdk.cache'] : 'array',
-                    'host'       => isset($app['phraseanet-sdk.cache_host']) ? $app['phraseanet-sdk.cache_host'] : null,
-                    'port'       => isset($app['phraseanet-sdk.cache_port']) ? $app['phraseanet-sdk.cache_port'] : null,
-                    'lifetime'   => isset($app['phraseanet-sdk.cache_ttl']) ? $app['phraseanet-sdk.cache_ttl'] : 300,
-                    'revalidate' => isset($app['phraseanet-sdk.cache_revalidate']) ? $app['phraseanet-sdk.cache_revalidate'] : 'skip',
-                ),
-            );
-
-            if (isset($app['monolog'])) {
-                $config['logger'] = $app['monolog'];
-            }
-            if (isset($app['phraseanet-sdk.apiDevToken'])) {
-                $config['token'] = $app['phraseanet-sdk.apiDevToken'];
-            }
-
-            return $config;
-        });
+        $app['phraseanet-sdk.cache.default'] =
+        $app['phraseanet-sdk.cache'] = array(
+            'type'       => 'array',
+            'lifetime'   => 300,
+            'revalidate' => 'skip',
+        );
 
         $app['phraseanet-sdk'] = $app->share(function (Application $app) {
-            return Client::create($app['phraseanet-sdk.config']);
+            $config = $app['phraseanet-sdk.config'] = array_replace_recursive(array(
+                'cache'     => array(
+                    'factory'    => $app['phraseanet-sdk.cache.factory'],
+                ),
+                'guzzle' => array(
+                    'revalidation-factory' => $app['phraseanet-sdk.guzzle.revalidation-factory'],
+                    'can-cache-strategy'   => $app['phraseanet-sdk.guzzle.can-cache-strategy'],
+                    'plugins'              => $app['phraseanet-sdk.guzzle.plugins'],
+                )
+            ), $app['phraseanet-sdk.config']);
+
+            return Client::create($config);
         });
 
+        $app['phraseanet-sdk.recorder.enabled'] = false;
+
+        $app['phraseanet-sdk.guzzle.history-plugin'] = $app->share(function (Application $app) {
+            $plugin = new HistoryPlugin();
+            $plugin->setLimit(9999);
+
+            return $plugin;
+        });
+
+        $app['phraseanet-sdk.recorder.enabled'] = false;
+
+        $app['phraseanet-sdk.guzzle.plugins'] = $app->share($app->extend('phraseanet-sdk.guzzle.plugins', function ($plugins, $app) {
+            if (isset($app['profile']) || $app['phraseanet-sdk.recorder.enabled']) {
+                $plugins[] = $app['phraseanet-sdk.guzzle.history-plugin'];
+            }
+
+            return $plugins;
+        }));
+
         if (isset($app['profiler'])) {
-            $app['phraseanet-sdk.history-plugin'] = $app->share(function (Application $app) {
-                return new HistoryPlugin();
-            });
-
-            $app['phraseanet-sdk.guzzle-plugins'] = $app->share($app->extend('phraseanet-sdk.guzzle-plugins', function ($plugins, $app) {
-                $plugins[] = $app['phraseanet-sdk.history-plugin'];
-
-                return $plugins;
-            }));
-
             $app['data_collectors']= array_merge($app['data_collectors'], array(
                 'phraseanet-sdk' => $app->share(function ($app) {
-                    return new PhraseanetSDKDataCollector($app['phraseanet-sdk.history-plugin']);
+                    return new PhraseanetSDKDataCollector($app['phraseanet-sdk.guzzle.history-plugin']);
                 }),
             ));
             $app['data_collector.templates'] = array_merge($app['data_collector.templates'], array(
@@ -108,21 +107,28 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 return $loader;
             }));
         }
+
+        $app['phraseanet-sdk.recorder.file'] = __DIR__ . '/recording.json';
+        $app['phraseanet-sdk.recorder.limit'] = 400;
+
+        $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
+            return new VCR\Recorder(
+                $app['phraseanet-sdk.guzzle.history-plugin'],
+                new VCR\FilesystemStorage($app['phraseanet-sdk.recorder.file']),
+                $app['phraseanet-sdk.recorder.limit']
+            );
+        });
+
     }
 
     public function boot(Application $app)
     {
-        if (!isset($app['phraseanet-sdk.apiSecret'])) {
-            throw new RuntimeException('You must provide an api secret');
-        }
-        if (!isset($app['phraseanet-sdk.apiKey'])) {
-            throw new RuntimeException('You must provide an api key');
-        }
-        if (!isset($app['phraseanet-sdk.apiUrl'])) {
-            throw new RuntimeException('You must provide an api url');
-        }
-        if (!isset($app['monolog'])) {
-            throw new RuntimeException('Phraseanet SDK Provider requires monolog service');
+        if ($app['phraseanet-sdk.recorder.enabled']) {
+            $app->finish(function () use ($app) {
+                $app['phraseanet-sdk.recorder']->save();
+
+                return;
+            });
         }
     }
 }

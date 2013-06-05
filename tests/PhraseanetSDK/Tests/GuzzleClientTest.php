@@ -62,7 +62,7 @@ class GuzzleClientTest extends AbstractClient
             ->will($this->returnValue($cache));
 
         $configuration = array(
-            'key' => '49ce2762ff5413607ae936b2ca6e409e',
+            'client-id' => '49ce2762ff5413607ae936b2ca6e409e',
             'secret' => '0da92439654ac3e45f9bbba67f53ea9b',
             'token' => '6774eda355b03c1d6b671010d855d9f6',
             'url' => 'https://demo.alchemyasp.com/',
@@ -70,9 +70,9 @@ class GuzzleClientTest extends AbstractClient
                 'type' => $cacheType,
                 'host'=> $cacheHost,
                 'port'=> $cachePort,
-                'lifetime' => $cacheTTL,
+                'ttl' => $cacheTTL,
+                'factory' => $factory,
             ),
-            'cache_factory' => $factory,
         );
 
         $client = Client::create($configuration);
@@ -105,7 +105,7 @@ class GuzzleClientTest extends AbstractClient
             ->method('debug');
 
         Client::create(array(
-            'key' => '1234',
+            'client-id' => '1234',
             'secret' => '4321',
             'url' => 'http://www.example.com/',
             'cache' => array(
