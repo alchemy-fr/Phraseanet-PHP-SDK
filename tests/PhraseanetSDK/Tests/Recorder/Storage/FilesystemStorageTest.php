@@ -47,9 +47,13 @@ class FilesystemStorageTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new FilesystemStorage($this->file);
         $storage->save(array('hello' => 'world'));
-        $json = '{
+        if (defined('JSON_PRETTY_PRINT')) {
+            $json = '{
     "hello": "world"
 }';
+        } else {
+            $json = '{"hello":"world"}';
+        }
         $this->assertEquals($json, file_get_contents($this->file));
     }
 
