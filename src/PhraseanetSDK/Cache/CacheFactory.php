@@ -17,7 +17,7 @@ use Doctrine\Common\Cache\MemcachedCache;
 use Guzzle\Cache\DoctrineCacheAdapter;
 use PhraseanetSDK\Exception\RuntimeException;
 
-class CacheFactory
+class CacheFactory implements CacheFactoryInterface
 {
     /**
      * {@inheritdoc}
