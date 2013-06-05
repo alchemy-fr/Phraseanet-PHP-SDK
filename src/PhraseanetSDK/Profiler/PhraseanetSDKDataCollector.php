@@ -130,7 +130,7 @@ class PhraseanetSDKDataCollector extends DataCollector
             'scheme'           => $request->getScheme(),
             'host'             => $request->getHost(),
             'query'            => $request->getQuery(),
-            'headers'          => $request->getHeaders(),
+            'headers'          => $request->getHeaders()->toArray(),
             'query_parameters' => $request->getUrl(true)->getQuery(),
         );
     }
@@ -145,7 +145,7 @@ class PhraseanetSDKDataCollector extends DataCollector
         return array(
             'statusCode'   => $response->getStatusCode(),
             'reasonPhrase' => $response->getReasonPhrase(),
-            'headers'      => $response->getHeaders(),
+            'headers'      => $response->getHeaders()->toArray(),
         );
     }
 
