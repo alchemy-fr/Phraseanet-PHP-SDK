@@ -76,7 +76,9 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return Client::create($config);
         });
 
-        $app['phraseanet-sdk.recorder.enabled'] = false;
+        $app['phraseanet-sdk.em'] = $app->share(function (Application $app) {
+            return $app['phraseanet-sdk']->getEntityManager();
+        });
 
         $app['phraseanet-sdk.guzzle.history-plugin'] = $app->share(function (Application $app) {
             $plugin = new HistoryPlugin();
