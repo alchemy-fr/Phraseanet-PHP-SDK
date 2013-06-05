@@ -90,8 +90,8 @@ class Client implements ClientInterface
      * To create an API client-id/secret pair, go to your account adminstation panel
      * in your phraseanet application.
      *
-     * @param string               $clientId     Your API ClientId
-     * @param string               $secret  Your API secret
+     * @param string               $clientId   Your API ClientId
+     * @param string               $secret     Your API secret
      * @param HttpAdapterInterface $clientHttp An HTTP Client
      */
     public function __construct($clientId, $secret, HttpAdapterInterface $clientHttp)
