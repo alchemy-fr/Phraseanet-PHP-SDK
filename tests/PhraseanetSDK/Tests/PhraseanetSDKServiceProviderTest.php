@@ -41,6 +41,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
             array('phraseanet-sdk.guzzle.revalidation-factory', 'PhraseanetSDK\Cache\RevalidationFactory'),
             array('phraseanet-sdk.guzzle.can-cache-strategy', 'PhraseanetSDK\Cache\CanCacheStrategy'),
             array('phraseanet-sdk.recorder', 'PhraseanetSDK\Recorder\Recorder'),
+            array('phraseanet-sdk.player', 'PhraseanetSDK\Recorder\Player'),
         );
     }
 

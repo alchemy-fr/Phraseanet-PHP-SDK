@@ -92,9 +92,6 @@ Cache parameters can be configured as follow :
 
  - type : either `array`, `memcache` or `memcached`.
 
-`skip` revalidation strategy will always use the data from cache if present,
-while `deny` will always consider cached data as invalid.
-
 ## Silex Provider
 
 A [Silex](http://silex.sensiolabs.org/) provider is bundled within this
@@ -135,6 +132,79 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
             'type' => 300,
         ),
         'logger' => $logger,
+    )
+));
+```
+
+## Record / Play requests
+
+### Recorder
+
+Recorder can be enabled per requests through service provider using the
+following code :
+
+```php
+$app = new Silex\Application();
+$app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
+    'phraseanet-sdk.config' => array(
+        'client-id' => $clientId,
+        'secret'    => $secret,
+        'url'       => $url,
+        'token'     => $token,
+    ),
+    'phraseanet-sdk.recorder.enabled' => true,
+    'phraseanet-sdk.recorder.config' => array(
+        'type' => 'memcached',
+        'options' => array(
+            'host' => 'localhost',
+            'port' => 11211,
+        ),
+        'limit' => 5000 // record up to 5000 requests
+    ),
+));
+```
+
+Requests can be store either in `memcache`, `memcached` or `file`. To use file,
+configuration should look like :
+
+```php
+$app = new Silex\Application();
+$app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
+    'phraseanet-sdk.recorder.config' => array(
+        'type' => 'memcached',
+        'options' => array(
+            'file' => '/path/to/logfile.json',
+        ),
+        'limit' => 5000 // record up to 5000 requests
+    ),
+));
+```
+
+### Player
+
+To replay stored requests, use the player
+
+```php
+$app['phraseanet-sdk.player']->play();
+```
+
+Please note that, in order to play request without using cache (to warm it for
+example), you must use the `deny` cache revalidation strategy :
+
+```php
+$app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
+    'phraseanet-sdk.config'           => array(
+        'client-id' => $clientId,
+        'secret' => $secret,
+        'url' => $url,
+        'token' => $token,
+        'cache' => array(
+            'type' => 'memcached',
+            'type' => 'localhost',
+            'type' => 11211,
+            'type' => 300,
+            'revalidate' => 'deny',  // important
+        )
     )
 ));
 ```

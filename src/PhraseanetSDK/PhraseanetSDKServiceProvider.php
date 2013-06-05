@@ -21,6 +21,7 @@ use Monolog\Handler\NullHandler;
 use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
 use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Recorder\Recorder;
+use PhraseanetSDK\Recorder\Player;
 use PhraseanetSDK\Recorder\RequestSerializer;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
 
@@ -121,7 +122,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return new RequestSerializer();
         });
 
-        $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.recorder.config-merger'] = $app->share(function (Application $app) {
             $config = $app['phraseanet-sdk.recorder.config'] = array_replace_recursive(array(
                 'type' => 'file',
                 'options' => array(
@@ -129,6 +130,12 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 ),
                 'limit' => 400,
             ), $app['phraseanet-sdk.recorder.config']);
+
+            return $config;
+        });
+
+        $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
+            $config = $app['phraseanet-sdk.recorder.config-merger'];
 
             return new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
@@ -138,6 +145,15 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             );
         });
 
+        $app['phraseanet-sdk.player'] = $app->share(function (Application $app) {
+            $config = $app['phraseanet-sdk.recorder.config-merger'];
+
+            return new Player(
+                $app['phraseanet-sdk']->getHttpClient()->getAdapter(),
+                $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']),
+                $app['phraseanet-sdk.recorder.request-serializer']
+            );
+        });
     }
 
     public function boot(Application $app)
