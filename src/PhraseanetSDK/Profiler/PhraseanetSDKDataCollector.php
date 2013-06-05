@@ -152,15 +152,24 @@ class PhraseanetSDKDataCollector extends DataCollector
     private function prettifyResponse($body)
     {
         if (!defined('JSON_PRETTY_PRINT')) {
-            return $body;
+            return $this->limitLength($body);
         }
 
         $data = @json_decode($body);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            return $body;
+            return $this->limitLength($body);
         }
 
-        return json_encode($data, JSON_PRETTY_PRINT);
+        return $this->limitLength(json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    private function limitLength($string, $length = 600)
+    {
+        if (strlen($string)) {
+            return substr($string, 0, $length) . "\n\n truncated response\n";
+        } else {
+            return $string;
+        }
     }
 }
