@@ -20,6 +20,8 @@ use Silex\ServiceProviderInterface;
 use Monolog\Handler\NullHandler;
 use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
 use Guzzle\Plugin\History\HistoryPlugin;
+use PhraseanetSDK\Recorder\Recorder;
+use PhraseanetSDK\Recorder\Storage\StorageFactory;
 
 /**
  * Phraseanet SDK Silex provider
@@ -28,6 +30,8 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
+        $app['phraseanet-sdk.config'] = $app['phraseanet-sdk.recorder.config'] = array();
+
         $app['phraseanet-sdk.cache.factory'] = $app->share(function (Application $app) {
             return new CacheFactory();
         });
@@ -82,7 +86,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['phraseanet-sdk.recorder.enabled'] = false;
 
         $app['phraseanet-sdk.guzzle.plugins'] = $app->share($app->extend('phraseanet-sdk.guzzle.plugins', function ($plugins, $app) {
-            if (isset($app['profile']) || $app['phraseanet-sdk.recorder.enabled']) {
+            if (isset($app['profiler']) || $app['phraseanet-sdk.recorder.enabled']) {
                 $plugins[] = $app['phraseanet-sdk.guzzle.history-plugin'];
             }
 
@@ -108,14 +112,23 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             }));
         }
 
-        $app['phraseanet-sdk.recorder.file'] = __DIR__ . '/recording.json';
-        $app['phraseanet-sdk.recorder.limit'] = 400;
+        $app['phraseanet-sdk.recorder.storage-factory'] = $app->share(function (Application $app) {
+            return new StorageFactory($app['phraseanet-sdk.cache.factory']);
+        });
 
         $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
-            return new VCR\Recorder(
+            $config = $app['phraseanet-sdk.recorder.config'] = array_replace_recursive(array(
+                'type' => 'file',
+                'options' => array(
+                    'file' => realpath(__DIR__ . '/../..') . '/phraseanet.recorder.json',
+                ),
+                'limit' => 400,
+            ), $app['phraseanet-sdk.recorder.config']);
+
+            return new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
-                new VCR\FilesystemStorage($app['phraseanet-sdk.recorder.file']),
-                $app['phraseanet-sdk.recorder.limit']
+                $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']),
+                $config['limit']
             );
         });
 

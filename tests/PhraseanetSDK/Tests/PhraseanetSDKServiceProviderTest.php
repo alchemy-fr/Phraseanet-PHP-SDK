@@ -22,7 +22,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            $app['phraseanet-sdk.config'] = array(
+            'phraseanet-sdk.config' => array(
                 'client-id' => 'sdfmqlsdkfm',
                 'secret'    => 'eoieep',
                 'url'       => 'https://bidule.net',
@@ -40,6 +40,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
             array('phraseanet-sdk.cache.factory', 'PhraseanetSDK\Cache\CacheFactory'),
             array('phraseanet-sdk.guzzle.revalidation-factory', 'PhraseanetSDK\Cache\RevalidationFactory'),
             array('phraseanet-sdk.guzzle.can-cache-strategy', 'PhraseanetSDK\Cache\CanCacheStrategy'),
+            array('phraseanet-sdk.recorder', 'PhraseanetSDK\Recorder\Recorder'),
         );
     }
 
@@ -59,6 +60,63 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($instanceOf, $app[$name]);
     }
 
+    /**
+     * @dataProvider provideRecorderEnabledOptions
+     */
+    public function testHistoryPluginLoadedIfRecorderEnabled($enable, $count)
+    {
+        $app = $this->getConfiguredApplication();
+        $app->register(new PhraseanetSDKServiceProvider());
+        $app['phraseanet-sdk.recorder.enabled'] = $enable;
+
+        $app->boot();
+
+        $plugins = $app['phraseanet-sdk.guzzle.plugins'];
+        $this->assertCount($count, $plugins);
+        if (0 < $count) {
+            $this->assertInstanceOf('Guzzle\Plugin\History\HistoryPlugin', array_pop($plugins));
+        }
+    }
+
+    public function provideRecorderEnabledOptions()
+    {
+        return array(
+            array(true, 1),
+            array(false, 0),
+        );
+    }
+
+    /**
+     * @dataProvider provideWebProfilerEnabledOptions
+     */
+    public function testHistoryPluginLoadedIfProfilerEnabled($enabled, $count)
+    {
+        $app = $this->getConfiguredApplication();
+        if ($enabled) {
+            $app->register(new TwigServiceProvider());
+            $app->register(new WebProfilerServiceProvider(), array(
+                'profiler.cache_dir' => __DIR__ . '/cache',
+            ));
+        }
+        $app->register(new PhraseanetSDKServiceProvider());
+
+        $app->boot();
+
+        $plugins = $app['phraseanet-sdk.guzzle.plugins'];
+        $this->assertCount($count, $plugins);
+        if (0 < $count) {
+            $this->assertInstanceOf('Guzzle\Plugin\History\HistoryPlugin', array_pop($plugins));
+        }
+    }
+
+    public function provideWebProfilerEnabledOptions()
+    {
+        return array(
+            array(true, 1),
+            array(false, 0),
+        );
+    }
+
     public function provideServicesWithProfiler()
     {
         return array(
@@ -70,7 +128,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            $app['phraseanet-sdk.config'] = array(
+            'phraseanet-sdk.config' => array(
                 'client-id' => 'sdfmqlsdkfm',
                 'secret'    => 'eoieep',
                 'url'       => 'https://bidule.net',
@@ -104,7 +162,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            $app['phraseanet-sdk.config'] = $config
+            'phraseanet-sdk.config' => $config
         ));
         // triggers build
         try {
@@ -171,6 +229,88 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
                 )
             )),
         );
+    }
+
+    /**
+     * @dataProvider provideVariousRecorderConfigs
+     */
+    public function testRecorderConfigMerge($config, $expected)
+    {
+        $app = $this->getConfiguredApplication();
+        $app->register(new PhraseanetSDKServiceProvider(), array(
+            'phraseanet-sdk.recorder.config' => $config
+        ));
+
+        $app['phraseanet-sdk.recorder'];
+        $this->assertEquals($expected, $app['phraseanet-sdk.recorder.config']);
+    }
+
+    public function provideVariousRecorderConfigs()
+    {
+        return array(
+            array(
+                array(
+                ),
+                array(
+                    'type' => 'file',
+                    'options' => array(
+                        'file' => realpath(__DIR__ . '/../../..') . '/phraseanet.recorder.json',
+                    ),
+                    'limit' => 400,
+                )
+            ),
+            array(
+                array(
+                    'type' => 'memcached',
+                    'options' => array(
+                        'host' => '127.0.0.1'
+                    ),
+                    'limit' => 500,
+                ),
+                array(
+                    'type' => 'memcached',
+                    'options' => array(
+                        'host' => '127.0.0.1',
+                        'file' => realpath(__DIR__ . '/../../..') . '/phraseanet.recorder.json',
+                    ),
+                    'limit' => 500,
+                )
+            ),
+        );
+    }
+
+    public function testRecordConfigIsPassedToFactory()
+    {
+        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+        $storageFactory = $this->getMockBuilder('PhraseanetSDK\Recorder\Storage\StorageFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $storageFactory->expects($this->once())
+            ->method('create')
+            ->with('memcached', array('host' => '127.0.0.1', 'file' => realpath(__DIR__ . '/../../..') . '/phraseanet.recorder.json'))
+            ->will($this->returnValue($storage));
+
+        $app = $this->getConfiguredApplication();
+        $app->register(new PhraseanetSDKServiceProvider(), array(
+            'phraseanet-sdk.recorder.config' => array(
+                'type' => 'memcached',
+                'options' => array(
+                    'host' => '127.0.0.1'
+                ),
+                'limit' => 666,
+            )
+        ));
+        $app['phraseanet-sdk.recorder.storage-factory'] = $storageFactory;
+        $app['phraseanet-sdk.guzzle.history-plugin'] = $this->getMockBuilder('Guzzle\Plugin\History\HistoryPlugin')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $recorder = $app['phraseanet-sdk.recorder'];
+        $this->assertEquals($storage, $recorder->getStorage());
+        $this->assertEquals(666, $recorder->getLimit());
+        $this->assertEquals($app['phraseanet-sdk.guzzle.history-plugin'], $recorder->getPlugin());
+
     }
 
     private function getConfiguredApplication()
