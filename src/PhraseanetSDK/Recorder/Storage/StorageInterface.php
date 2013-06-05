@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Recorder\Storage;
 
-interface StorageInterface
+interface StorageInterface extends \Countable
 {
     /**
      * Fetchs data from storage

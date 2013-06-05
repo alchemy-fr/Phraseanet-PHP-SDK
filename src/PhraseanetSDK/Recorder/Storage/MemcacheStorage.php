@@ -41,4 +41,12 @@ class MemcacheStorage implements StorageInterface
     {
         $this->memcache->save($this->key, $data);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->fetch());
+    }
 }

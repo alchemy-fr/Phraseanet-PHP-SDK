@@ -51,4 +51,12 @@ class FilesystemStorage implements StorageInterface
             throw new RuntimeException('Unable to save data to file');
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->fetch());
+    }
 }
