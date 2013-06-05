@@ -11,7 +11,6 @@
 
 namespace PhraseanetSDK;
 
-use Monolog\Logger;
 use Guzzle\Plugin\Log\LogPlugin;
 use Guzzle\Log\PsrLogAdapter;
 use Guzzle\Http\Client as Guzzle;
