@@ -26,7 +26,7 @@ class Cgus extends AbstractRepository
      */
     public function findByDatabox($databoxId)
     {
-        $response = $this->query('GET', sprintf('/databoxes/%d/termsOfUse/', $databoxId));
+        $response = $this->query('GET', sprintf('databoxes/%d/termsOfUse/', $databoxId));
 
         if (true !== $response->hasProperty('termsOfUse')) {
             throw new RuntimeException('Missing "termsOfuse" property in response content');

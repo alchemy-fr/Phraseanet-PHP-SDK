@@ -28,7 +28,7 @@ class Quarantine extends AbstractRepository
      */
     public function findByOffset($offsetStart = 0, $perPage = 10)
     {
-        $response = $this->query('GET', '/quarantine/list/', array(
+        $response = $this->query('GET', 'quarantine/list/', array(
             'offset_start' => $offsetStart,
             'per_page'     => $perPage
             ));
@@ -55,7 +55,7 @@ class Quarantine extends AbstractRepository
      */
     public function findById($id)
     {
-        $response = $this->query('GET', sprintf('/quarantine/item/%d/', $id));
+        $response = $this->query('GET', sprintf('quarantine/item/%d/', $id));
 
         if (true !== $response->hasProperty('quarantine_item')) {
             throw new RuntimeException('Missing "quarantine_item" property in response content');

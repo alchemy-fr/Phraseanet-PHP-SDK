@@ -26,7 +26,7 @@ class DataboxStatus extends AbstractRepository
      */
     public function findByDatabox($databoxId)
     {
-        $response = $this->query('GET', sprintf('/databoxes/%d/status/', $databoxId));
+        $response = $this->query('GET', sprintf('databoxes/%d/status/', $databoxId));
 
         if (true !== $response->hasProperty('status')) {
             throw new RuntimeException('Missing "status" property in response content');

@@ -62,10 +62,10 @@ abstract class AbstractRepository implements RepositoryInterface
             $httpStatusCode = $e->getHttpStatusCode();
             switch ($httpStatusCode) {
                 case 404:
-                    throw new NotFoundException(sprintf('Ressource under %s could not be found', $path));
+                    throw new NotFoundException(sprintf('Resource under %s could not be found', $path));
                     break;
                 case 401:
-                    throw new UnauthorizedException(sprintf('Access to the following ressource %s is forbidden', $path));
+                    throw new UnauthorizedException(sprintf('Access to the following resource %s is forbidden', $path));
                     break;
                 default:
                     throw new RuntimeException(sprintf('Something went wrong "%s"', $e->getMessage()));

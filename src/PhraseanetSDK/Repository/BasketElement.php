@@ -26,7 +26,7 @@ class BasketElement extends AbstractRepository
      */
     public function findByBasket($basketId)
     {
-        $response = $this->query('GET', sprintf('/baskets/%d/content/', $basketId));
+        $response = $this->query('GET', sprintf('baskets/%d/content/', $basketId));
 
         if (true !== $response->hasProperty('basket_elements')) {
             throw new RuntimeException('Missing "basket_elements" property in response content');

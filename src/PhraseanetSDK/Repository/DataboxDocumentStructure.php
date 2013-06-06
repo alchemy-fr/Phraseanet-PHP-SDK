@@ -26,7 +26,7 @@ class DataboxDocumentStructure extends AbstractRepository
      */
     public function findByDatabox($databoxId)
     {
-        $response = $this->query('GET', sprintf('/databoxes/%d/metadatas/', $databoxId));
+        $response = $this->query('GET', sprintf('databoxes/%d/metadatas/', $databoxId));
 
         if (true !== $response->hasProperty('document_metadatas')) {
             throw new RuntimeException('Missing "document_metadatas_structure" property in response content');

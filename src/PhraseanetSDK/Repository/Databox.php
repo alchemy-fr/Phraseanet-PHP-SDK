@@ -25,7 +25,7 @@ class Databox extends AbstractRepository
      */
     public function findAll()
     {
-        $response = $this->query('GET', '/databoxes/list/');
+        $response = $this->query('GET', 'databoxes/list/');
 
         if (true !== $response->hasProperty('databoxes')) {
             throw new RuntimeException('Missing "databoxes" property in response content');

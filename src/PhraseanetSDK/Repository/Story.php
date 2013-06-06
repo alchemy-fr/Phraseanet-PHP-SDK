@@ -27,7 +27,7 @@ class Story extends AbstractRepository
      */
     public function findById($databoxId, $recordId)
     {
-        $path = sprintf('/stories/%s/%s/', $databoxId, $recordId);
+        $path = sprintf('stories/%s/%s/', $databoxId, $recordId);
 
         $response = $this->query('GET', $path);
 
@@ -48,7 +48,7 @@ class Story extends AbstractRepository
      */
     public function find($offsetStart, $perPage)
     {
-        $response = $this->query('POST', '/search/', array(), array(
+        $response = $this->query('POST', 'search/', array(), array(
             'query'        => 'all',
             'search_type'  => 1,
             'offset_start' => (int) $offsetStart,
@@ -81,7 +81,7 @@ class Story extends AbstractRepository
      */
     public function search(array $parameters = array())
     {
-        $response = $this->query('POST', '/search/', array(), array_merge(
+        $response = $this->query('POST', 'search/', array(), array_merge(
             array('search_type' => 1), $parameters
         ));
 

@@ -27,7 +27,7 @@ class RecordStatus extends AbstractRepository
      */
     public function findByRecord($databoxId, $recordId)
     {
-        $response = $this->query('GET', sprintf('/records/%d/%d/status/', $databoxId, $recordId));
+        $response = $this->query('GET', sprintf('records/%d/%d/status/', $databoxId, $recordId));
 
         $statusCollection = new ArrayCollection();
 

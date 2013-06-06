@@ -27,7 +27,7 @@ class Metadatas extends AbstractRepository
      */
     public function findByRecord($databoxId, $recordId)
     {
-        $response = $this->query('GET', sprintf('/records/%d/%d/metadatas/', $databoxId, $recordId));
+        $response = $this->query('GET', sprintf('records/%d/%d/metadatas/', $databoxId, $recordId));
 
         if (true !== $response->hasProperty('record_metadatas')) {
             throw new RuntimeException('Missing "record_metadatas" property in response content');

@@ -26,7 +26,7 @@ class Basket extends AbstractRepository
      */
     public function findByRecord($databoxId, $recordId)
     {
-        $response = $this->query('GET', sprintf('/records/%d/%d/related/', $databoxId, $recordId));
+        $response = $this->query('GET', sprintf('records/%d/%d/related/', $databoxId, $recordId));
 
         if (true !== $response->hasProperty('baskets')) {
             throw new RuntimeException('Missing "baskets" property in response content');
@@ -49,7 +49,7 @@ class Basket extends AbstractRepository
      */
     public function findAll()
     {
-        $response = $this->query('GET', '/baskets/list/');
+        $response = $this->query('GET', 'baskets/list/');
 
         if (true !== $response->hasProperty('baskets')) {
             throw new RuntimeException('Missing "baskets" property in response content');

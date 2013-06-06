@@ -27,7 +27,7 @@ class Caption extends AbstractRepository
      */
     public function findByRecord($databoxId, $recordId)
     {
-        $response = $this->query('GET', sprintf('/records/%d/%d/caption/', $databoxId, $recordId));
+        $response = $this->query('GET', sprintf('records/%d/%d/caption/', $databoxId, $recordId));
 
         $caption = new ArrayCollection();
 

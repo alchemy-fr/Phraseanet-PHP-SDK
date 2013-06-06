@@ -26,7 +26,7 @@ class Entry extends AbstractRepository
      */
     public function findById($id)
     {
-        $response = $this->query('GET', sprintf('/feeds/entry/%d/', $id));
+        $response = $this->query('GET', sprintf('feeds/entry/%d/', $id));
 
         if (true !== $response->hasProperty('entry')) {
             throw new RuntimeException('Missing "entry" property in response content');
@@ -46,7 +46,7 @@ class Entry extends AbstractRepository
      */
     public function findByFeed($feedId, $offsetStart = 0, $perPage = 5)
     {
-        $response = $this->query('GET', sprintf('/feeds/%d/content/', $feedId), array(
+        $response = $this->query('GET', sprintf('feeds/%d/content/', $feedId), array(
             'offset_start' => $offsetStart,
             'per_page'     => $perPage
             ));
@@ -77,7 +77,7 @@ class Entry extends AbstractRepository
      * */
     public function findInAggregatedFeed($offsetStart = 0, $perPage = 5)
     {
-        $response = $this->query('GET', '/feeds/content/', array(
+        $response = $this->query('GET', 'feeds/content/', array(
             'offset_start' => $offsetStart,
             'per_page'     => $perPage
             ));

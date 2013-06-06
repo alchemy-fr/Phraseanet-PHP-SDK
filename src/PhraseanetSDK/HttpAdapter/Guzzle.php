@@ -92,8 +92,6 @@ class Guzzle implements HttpAdapterInterface
 
     private function doMethod($name, $path, array $query, array $postFields = array())
     {
-        $query = array_replace($query, array('token' => $this->token));
-
         try {
             $request = $this->client->createRequest($name, $path, array('Accept', 'application/json'));
             $this->addRequestParameters($request, $query, $postFields);
