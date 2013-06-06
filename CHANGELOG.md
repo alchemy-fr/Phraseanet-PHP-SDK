@@ -10,6 +10,7 @@ CHANGELOG
   * Add simpler log support.
   * Add support for PhraseanetSDK profiling through silex web profiler.
   * Add requests recorder.
+  * BC Break : Update ClientInterface::call signature, separate query and post fields parameters.
 
 * 0.2.2 (03-18-2013)
 
