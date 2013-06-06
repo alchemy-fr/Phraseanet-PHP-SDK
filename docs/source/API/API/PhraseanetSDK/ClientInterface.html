@@ -111,7 +111,7 @@
                     <a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_call">call</a>(string $path, array $args = array(), string $httpMethod = &#039;POST&#039;)
+                    <a href="#method_call">call</a>(string $method, string $path, array $query = array(), array $postFields = array())
                     <p>Call a remote Phraseanet API method</p>
                 </td>
                 <td></td>
@@ -268,7 +268,7 @@
                 <h3 id="method_call">
         <div class="location">at line 87</div>
         <code>            public            <a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a>
-    <strong>call</strong>(string $path, array $args = array(), string $httpMethod = &#039;POST&#039;)</code>
+    <strong>call</strong>(string $method, string $path, array $query = array(), array $postFields = array())</code>
     </h3>
     <div class="details">
         <p>Call a remote Phraseanet API method</p>
@@ -279,18 +279,23 @@
                     <table>
                     <tr>
                 <td>string</td>
+                <td>$method</td>
+                <td>http method</td>
+            </tr>
+                    <tr>
+                <td>string</td>
                 <td>$path</td>
                 <td>remote path</td>
             </tr>
                     <tr>
                 <td>array</td>
-                <td>$args</td>
-                <td>request parameters</td>
+                <td>$query</td>
+                <td>query parameters</td>
             </tr>
                     <tr>
-                <td>string</td>
-                <td>$httpMethod</td>
-                <td>http method</td>
+                <td>array</td>
+                <td>$postFields</td>
+                <td>post fields parameters</td>
             </tr>
             </table>
 

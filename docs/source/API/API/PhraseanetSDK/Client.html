@@ -30,6 +30,18 @@
             <p></p>
         </div>
     
+            <h2>Constants</h2>
+
+            <table>
+                    <tr>
+                <td>VERSION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
     
     
             <h2>Methods</h2>
@@ -170,7 +182,7 @@
                     <a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_call">call</a>(string $path, array $args = array(), string $httpMethod = &#039;POST&#039;)
+                    <a href="#method_call">call</a>(string $method, string $path, array $query = array(), array $postFields = array())
                     <p>Call a remote Phraseanet API method</p>
                 </td>
                 <td></td>
@@ -191,7 +203,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 97</div>
+        <div class="location">at line 98</div>
         <code>            public            
     <strong>__construct</strong>(string $clientId, string $secret, <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $clientHttp)</code>
     </h3>
@@ -226,7 +238,7 @@
     </div>
 
                 <h3 id="method_getEntityManager">
-        <div class="location">at line 115</div>
+        <div class="location">at line 116</div>
         <code>            public            <a href="../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a>
     <strong>getEntityManager</strong>()</code>
     </h3>
@@ -250,7 +262,7 @@
     </div>
 
                 <h3 id="method_setTokenStore">
-        <div class="location">at line 126</div>
+        <div class="location">at line 127</div>
         <code>final            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>setTokenStore</strong>(<a href="../PhraseanetSDK/Authentication/StoreInterface.html"><abbr title="PhraseanetSDK\Authentication\StoreInterface">StoreInterface</abbr></a> $store)</code>
     </h3>
@@ -284,7 +296,7 @@
     </div>
 
                 <h3 id="method_getAccessToken">
-        <div class="location">at line 138</div>
+        <div class="location">at line 139</div>
         <code>final            public            string
     <strong>getAccessToken</strong>()</code>
     </h3>
@@ -308,7 +320,7 @@
     </div>
 
                 <h3 id="method_setAccessToken">
-        <div class="location">at line 149</div>
+        <div class="location">at line 150</div>
         <code>final            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>setAccessToken</strong>(string $token)</code>
     </h3>
@@ -342,7 +354,7 @@
     </div>
 
                 <h3 id="method_getHttpClient">
-        <div class="location">at line 161</div>
+        <div class="location">at line 162</div>
         <code>            public            <a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a>
     <strong>getHttpClient</strong>()</code>
     </h3>
@@ -366,7 +378,7 @@
     </div>
 
                 <h3 id="method_setHttpClient">
-        <div class="location">at line 172</div>
+        <div class="location">at line 174</div>
         <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>setHttpClient</strong>(<a href="../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a> $client)</code>
     </h3>
@@ -400,7 +412,7 @@
     </div>
 
                 <h3 id="method_setGrantType">
-        <div class="location">at line 197</div>
+        <div class="location">at line 200</div>
         <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>setGrantType</strong>(string $type, array $info = null, <abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request = null)</code>
     </h3>
@@ -459,7 +471,7 @@
     </div>
 
                 <h3 id="method_getGrantType">
-        <div class="location">at line 231</div>
+        <div class="location">at line 234</div>
         <code>            public            string
     <strong>getGrantType</strong>()</code>
     </h3>
@@ -483,7 +495,7 @@
     </div>
 
                 <h3 id="method_getGrantInformations">
-        <div class="location">at line 241</div>
+        <div class="location">at line 244</div>
         <code>            public            array
     <strong>getGrantInformations</strong>()</code>
     </h3>
@@ -507,7 +519,7 @@
     </div>
 
                 <h3 id="method_getAuthorizationUrl">
-        <div class="location">at line 253</div>
+        <div class="location">at line 256</div>
         <code>            public            string
     <strong>getAuthorizationUrl</strong>(array $scope = array())</code>
     </h3>
@@ -550,7 +562,7 @@
     </div>
 
                 <h3 id="method_retrieveAccessToken">
-        <div class="location">at line 278</div>
+        <div class="location">at line 281</div>
         <code>            public            
     <strong>retrieveAccessToken</strong>(<abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr> $request)</code>
     </h3>
@@ -588,7 +600,7 @@
     </div>
 
                 <h3 id="method_logout">
-        <div class="location">at line 321</div>
+        <div class="location">at line 324</div>
         <code>            public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>logout</strong>()</code>
     </h3>
@@ -612,9 +624,9 @@
     </div>
 
                 <h3 id="method_call">
-        <div class="location">at line 341</div>
+        <div class="location">at line 334</div>
         <code>            public            <a href="../PhraseanetSDK/HttpAdapter/Response.html"><abbr title="PhraseanetSDK\HttpAdapter\Response">Response</abbr></a>
-    <strong>call</strong>(string $path, array $args = array(), string $httpMethod = &#039;POST&#039;)</code>
+    <strong>call</strong>(string $method, string $path, array $query = array(), array $postFields = array())</code>
     </h3>
     <div class="details">
         <p>Call a remote Phraseanet API method</p>
@@ -625,18 +637,23 @@
                     <table>
                     <tr>
                 <td>string</td>
+                <td>$method</td>
+                <td>http method</td>
+            </tr>
+                    <tr>
+                <td>string</td>
                 <td>$path</td>
                 <td>remote path</td>
             </tr>
                     <tr>
                 <td>array</td>
-                <td>$args</td>
-                <td>request parameters</td>
+                <td>$query</td>
+                <td>query parameters</td>
             </tr>
                     <tr>
-                <td>string</td>
-                <td>$httpMethod</td>
-                <td>http method</td>
+                <td>array</td>
+                <td>$postFields</td>
+                <td>post fields parameters</td>
             </tr>
             </table>
 
@@ -673,7 +690,7 @@
     </div>
 
                 <h3 id="method_create">
-        <div class="location">at line 378</div>
+        <div class="location">at line 371</div>
         <code>        static    public            <a href="../PhraseanetSDK/Client.html"><abbr title="PhraseanetSDK\Client">Client</abbr></a>
     <strong>create</strong>(array $config)</code>
     </h3>
