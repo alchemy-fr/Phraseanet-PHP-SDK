@@ -86,9 +86,9 @@ class GuzzleClientTest extends AbstractClient
 
         $client->getHttpClient()->getAdapter()->addSubscriber($mock);
 
-        $client->call('/url/lala', array());
-        $client->call('/url/lala', array());
-        $client->call('/url/lala', array());
+        $client->call('GET', '/url/lala');
+        $client->call('GET', '/url/lala');
+        $client->call('GET', '/url/lala');
     }
 
     /**

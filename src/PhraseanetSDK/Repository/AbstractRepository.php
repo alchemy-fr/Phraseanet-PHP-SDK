@@ -54,10 +54,10 @@ abstract class AbstractRepository implements RepositoryInterface
      * @throws UnauthorizedException
      * @throws RuntimeException
      */
-    protected function query($method, $path, $params = array())
+    protected function query($method, $path, $query = array(), $postFields = array())
     {
         try {
-            $response = $this->getClient()->call($path, $params, $method);
+            $response = $this->getClient()->call($method, $path, $query, $postFields);
         } catch (BadResponseException $e) {
             $httpStatusCode = $e->getHttpStatusCode();
             switch ($httpStatusCode) {

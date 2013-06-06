@@ -19,14 +19,14 @@ class Recorder
     private $plugin;
     private $storage;
     private $limit;
-    private $serializer;
+    private $extractor;
 
-    public function __construct(HistoryPlugin $plugin, StorageInterface $storage, RequestSerializer $serializer, $limit = 400)
+    public function __construct(HistoryPlugin $plugin, StorageInterface $storage, RequestExtractor $extractor, $limit = 400)
     {
         $this->plugin = $plugin;
         $this->storage = $storage;
         $this->limit = $limit;
-        $this->serializer = $serializer;
+        $this->extractor = $extractor;
     }
 
     public function getPlugin()
@@ -49,7 +49,7 @@ class Recorder
         $stack = $this->storage->fetch();
 
         foreach ($this->plugin->getIterator() as $request) {
-            $data = $this->serializer->serialize($request);
+            $data = $this->extractor->extract($request);
             $stack[] = $data;
         }
         $this->removeDuplicates($stack);

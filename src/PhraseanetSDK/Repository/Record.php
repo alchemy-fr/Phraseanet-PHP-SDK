@@ -48,9 +48,11 @@ class Record extends AbstractRepository
      */
     public function find($offsetStart, $perPage)
     {
-        $response = $this->query('POST', '/records/search/', array(
-            'query'       => 'all', 'offset_start' => (int) $offsetStart, 'per_page'    => (int) $perPage
-            ));
+        $response = $this->query('POST', '/records/search/', array(), array(
+            'query'        => 'all',
+            'offset_start' => (int) $offsetStart,
+            'per_page'     => (int) $perPage,
+        ));
 
         if (true !== $response->hasProperty('results')) {
             throw new RuntimeException('Missing "results" property in response content');
@@ -74,7 +76,7 @@ class Record extends AbstractRepository
      */
     public function search(array $parameters = array())
     {
-        $response = $this->query('POST', '/records/search/', $parameters);
+        $response = $this->query('POST', '/records/search/', array(), $parameters);
 
         if ($response->isEmpty()) {
             throw new RuntimeException('Response content is empty');

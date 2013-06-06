@@ -190,7 +190,7 @@ abstract class AbstractClient extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getSDKClient($this->getSampleResponse('200'));
         $client->setAccessToken("123456789");
-        $response = $client->call('/path/to/ressource');
+        $response = $client->call('POST', '/path/to/ressource');
 
         $this->assertTrue($response instanceof Response);
         $this->assertEquals(200, $response->getHttpStatusCode());
@@ -202,7 +202,7 @@ abstract class AbstractClient extends \PHPUnit_Framework_TestCase
     public function testGETCall200()
     {
         $client = $this->getSDKClient($this->getSampleResponse('200'));
-        $response = $client->call('/path/to/ressource', array('key' => 'value'), 'GET');
+        $response = $client->call('POST', '/path/to/ressource', array('key' => 'value'));
 
         $this->assertTrue($response instanceof Response);
         $this->assertEquals(200, $response->getHttpStatusCode());
@@ -217,7 +217,7 @@ abstract class AbstractClient extends \PHPUnit_Framework_TestCase
     public function testBadRequestException($method)
     {
         $client = $this->getSDKClient();
-        $client->call('/path/to/ressource', array(), $method);
+        $client->call($method, '/path/to/ressource');
     }
 
     /**
@@ -229,7 +229,7 @@ abstract class AbstractClient extends \PHPUnit_Framework_TestCase
     public function testBadResponseException($httpCode)
     {
         $client = $this->getSDKClient('', $httpCode);
-        $client->call('/path/to/ressource');
+        $client->call('GET', '/path/to/ressource');
     }
 
     public function methodProvider()

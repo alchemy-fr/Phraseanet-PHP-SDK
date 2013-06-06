@@ -11,25 +11,22 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPlay()
     {
-        $client = $this->getMock('Guzzle\Http\ClientInterface');
+        $client = $this->getMock('PhraseanetSDK\ClientInterface');
         $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
-        $serializer = $this->getMock('PhraseanetSDK\Recorder\RequestSerializer');
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
 
-        $serializedRequest = array('serialized request');
+        $serializedRequest = array(
+            'query'       => array('query' => 'value'),
+            'post-fields' => array('param' => 'value'),
+            'method'      => 'POST',
+            'path'        => '/path/to/resource',
+        );
         $storageData = array($serializedRequest);
 
         $storage->expects($this->once())
             ->method('fetch')
             ->will($this->returnValue($storageData));
-        $serializer->expects($this->once())
-            ->method('unserialize')
-            ->with($client, $serializedRequest)
-            ->will($this->returnValue($request));
-        $request->expects($this->once())
-            ->method('send');
 
-        $player = new Player($client, $storage, $serializer);
+        $player = new Player($client, $storage);
         $player->play();
     }
 }

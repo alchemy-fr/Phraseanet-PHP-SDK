@@ -11,33 +11,45 @@
 
 namespace PhraseanetSDK\Recorder;
 
-use Guzzle\Http\ClientInterface;
+use PhraseanetSDK\ClientInterface;
 use PhraseanetSDK\Recorder\Storage\StorageInterface;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Player
 {
     private $client;
     private $storage;
-    private $serializer;
 
-    public function __construct(ClientInterface $client, StorageInterface $storage, RequestSerializer $serializer)
+    public function __construct(ClientInterface $client, StorageInterface $storage)
     {
         $this->client = $client;
         $this->storage = $storage;
-        $this->serializer = $serializer;
     }
 
-    public function play(LoggerInterface $logger = null)
+    public function play(OutputInterface $output = null)
     {
         $data = $this->storage->fetch();
 
-        foreach ($data as $serializedRequest) {
-            $request = $this->serializer->unserialize($this->client, $serializedRequest);
-            if (null !== $logger) {
-                $logger->debug(sprintf('Executing request %s %s', $request->getMethod(), $request->getPath()));
-            }
-            $request->send();
+        foreach ($data as $request) {
+            $this->output($output, sprintf(
+                "--> Executing request %s %s", $request['method'], $request['path']
+            ));
+
+            $start = microtime(true);
+            $this->client->call($request['method'], $request['path'], $request['query'], $request['post-fields']);
+            $duration = microtime(true) - $start;
+
+            $this->output($output, sprintf(
+                "    Query took <comment>%f</comment>.\n",
+                $duration
+            ));
+        }
+    }
+
+    private function output(OutputInterface $output = null, $message)
+    {
+        if (null !== $output) {
+            $output->writeln($message);
         }
     }
 }

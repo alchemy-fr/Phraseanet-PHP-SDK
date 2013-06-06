@@ -72,17 +72,17 @@ interface ClientInterface
     public function getEntityManager();
 
     /**
-     *
      * Call a remote Phraseanet API method
      *
+     * @param  string   $method     http method
      * @param  string   $path       remote path
-     * @param  array    $args       request parameters
-     * @param  string   $httpMethod http method
+     * @param  array    $query      query parameters
+     * @param  array    $postFields post fields parameters
      * @return Response
      *
      * @throws BadRequestException  if method is unsupported phraseanet API
      * @throws BadResponseException if response is 4xx or 5xx
      * @throws RuntimeException     if problem occurs
      */
-    public function call($path, $args = array(), $httpMethod = 'POST');
+    public function call($method, $path, $query = array(), $postFields = array());
 }

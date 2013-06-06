@@ -11,7 +11,7 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
     {
         $history = $this->getMock('Guzzle\Plugin\History\HistoryPlugin');
         $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
-        $serializer = $this->getMock('PhraseanetSDK\Recorder\RequestSerializer');
+        $extractor = $this->getMock('PhraseanetSDK\Recorder\RequestExtractor');
         $limit = 3;
 
         $request1 = new Request('GET', '/path1');
@@ -29,8 +29,8 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
             ->method('getIterator')
             ->will($this->returnValue($requests));
 
-        $serializer->expects($this->any())
-            ->method('serialize')
+        $extractor->expects($this->any())
+            ->method('extract')
             ->will($this->returnCallback(function ($data) {
                 return $data;
             }));
@@ -43,7 +43,7 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
                 $request4,
             ));
 
-        $recorder = new Recorder($history, $storage, $serializer, $limit);
+        $recorder = new Recorder($history, $storage, $extractor, $limit);
         $recorder->save();
     }
 }

@@ -48,8 +48,11 @@ class Story extends AbstractRepository
      */
     public function find($offsetStart, $perPage)
     {
-        $response = $this->query('POST', '/search/', array(
-            'query'       => 'all', 'search_type' => 1, 'offset_start' => (int) $offsetStart, 'per_page'    => (int) $perPage
+        $response = $this->query('POST', '/search/', array(), array(
+            'query'        => 'all',
+            'search_type'  => 1,
+            'offset_start' => (int) $offsetStart,
+            'per_page'     => (int) $perPage
         ));
 
         if (true !== $response->hasProperty('results')) {
@@ -78,9 +81,9 @@ class Story extends AbstractRepository
      */
     public function search(array $parameters = array())
     {
-        $parameters = array_merge(array('search_type' => 1), $parameters);
-
-        $response = $this->query('POST', '/search/', $parameters);
+        $response = $this->query('POST', '/search/', array(), array_merge(
+            array('search_type' => 1), $parameters
+        ));
 
         if ($response->isEmpty()) {
             throw new RuntimeException('Response content is empty');

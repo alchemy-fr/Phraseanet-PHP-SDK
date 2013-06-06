@@ -17,6 +17,9 @@ use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Guzzle\Http\Exception\CurlException;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\RuntimeException;
+use Guzzle\Http\Message\EntityEnclosingRequestInterface;
+use Guzzle\Http\Message\RequestInterface;
+use PhraseanetSDK\Exception\InvalidArgumentException;
 
 class Guzzle implements HttpAdapterInterface
 {
@@ -66,27 +69,34 @@ class Guzzle implements HttpAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function get($path, array $args = array())
+    public function get($path, array $query = array())
     {
-        return $this->doMethod('get', $path, $args);
+        return $this->doMethod('GET', $path, $query);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function post($path, array $args = array())
+    public function post($path, array $query = array(), array $postFields = array())
     {
-        return $this->doMethod('post', $path, $args);
+        return $this->doMethod('POST', $path, $query, $postFields);
     }
 
-    private function doMethod($name, $path, $args)
+    /**
+     * {@inheritdoc}
+     */
+    public function setUserAgent($ua)
     {
-        $queryDatas = $this->formatQueryParameters($args);
-        $path = sprintf('%s%s', ltrim($path, '/'), $this->getTemplate($queryDatas['data']));
+        $this->client->setUserAgent($ua);
+    }
+
+    private function doMethod($name, $path, array $query, array $postFields = array())
+    {
+        $query = array_replace($query, array('token' => $this->token));
 
         try {
-            $request = call_user_func(array($this->client, $name), array($path, $queryDatas));
-            $request->setHeader('Accept', 'application/json');
+            $request = $this->client->createRequest($name, $path, array('Accept', 'application/json'));
+            $this->addRequestParameters($request, $query, $postFields);
             $response = $request->send();
         } catch (CurlException $e) {
             throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
@@ -99,36 +109,18 @@ class Guzzle implements HttpAdapterInterface
         return $response->getBody();
     }
 
-    /**
-     * Return an URI template
-     *
-     * @param  array  $args
-     * @return string
-     */
-    private function getTemplate(array $args)
+    private function addRequestParameters(RequestInterface $request, $query, $postFields)
     {
-        return '{?' . (null !== $this->token ? 'oauth_token,' : '') . ( ! empty($args) ? 'data*' : '' ) . '}';
-    }
-
-    /**
-     * Format query parameters
-     *
-     * @param  array $args
-     * @return array
-     */
-    private function formatQueryParameters($args)
-    {
-        if (isset($args['oauth_token'])) {
-            $this->token = $args['oauth_token'];
-            unset($args['oauth_token']);
+        foreach ($query as $name => $value) {
+            $request->getQuery()->add($name, $value);
         }
 
-        $queryDatas = array('data' => $args);
-
-        if ($this->token) {
-            $queryDatas['oauth_token'] = $this->token;
+        if ($request instanceof EntityEnclosingRequestInterface) {
+            foreach ($postFields as $name => $value) {
+                $request->getPostFields()->add($name, $value);
+            }
+        } elseif (0 < count($postFields)) {
+            throw new InvalidArgumentException('Can not add post fields to GET request');
         }
-
-        return $queryDatas;
     }
 }

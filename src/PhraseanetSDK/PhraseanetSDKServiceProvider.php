@@ -22,7 +22,7 @@ use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
 use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Recorder\Recorder;
 use PhraseanetSDK\Recorder\Player;
-use PhraseanetSDK\Recorder\RequestSerializer;
+use PhraseanetSDK\Recorder\RequestExtractor;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
 
 /**
@@ -32,7 +32,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['phraseanet-sdk.config'] = $app['phraseanet-sdk.recorder.config'] = array();
+        $app['phraseanet-sdk.recorder.config'] = array();
 
         $app['phraseanet-sdk.cache.factory'] = $app->share(function (Application $app) {
             return new CacheFactory();
@@ -54,11 +54,12 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return array();
         });
 
-        $app['phraseanet-sdk.cache.default'] =
-        $app['phraseanet-sdk.cache'] = array(
-            'type'       => 'array',
-            'lifetime'   => 300,
-            'revalidate' => 'skip',
+        $app['phraseanet-sdk.config'] = array(
+            'cache' => array(
+                'type'       => 'array',
+                'lifetime'   => 300,
+                'revalidate' => 'skip',
+            ),
         );
 
         $app['phraseanet-sdk'] = $app->share(function (Application $app) {
@@ -120,8 +121,8 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return new StorageFactory($app['phraseanet-sdk.cache.factory']);
         });
 
-        $app['phraseanet-sdk.recorder.request-serializer'] = $app->share(function (Application $app) {
-            return new RequestSerializer();
+        $app['phraseanet-sdk.recorder.request-extractor'] = $app->share(function (Application $app) {
+            return new RequestExtractor();
         });
 
         $app['phraseanet-sdk.recorder.config-merger'] = $app->share(function (Application $app) {
@@ -148,16 +149,15 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
                 $app['phraseanet-sdk.recorder.storage'],
-                $app['phraseanet-sdk.recorder.request-serializer'],
+                $app['phraseanet-sdk.recorder.request-extractor'],
                 $config['limit']
             );
         });
 
         $app['phraseanet-sdk.player'] = $app->share(function (Application $app) {
             return new Player(
-                $app['phraseanet-sdk']->getHttpClient()->getAdapter(),
-                $app['phraseanet-sdk.recorder.storage'],
-                $app['phraseanet-sdk.recorder.request-serializer']
+                $app['phraseanet-sdk'],
+                $app['phraseanet-sdk.recorder.storage']
             );
         });
     }

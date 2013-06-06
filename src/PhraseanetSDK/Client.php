@@ -36,6 +36,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Client implements ClientInterface
 {
+    const VERSION = '0.3-dev';
+
     /**
      * The OAuth authorization server endpoint URL
      */
@@ -95,7 +97,7 @@ class Client implements ClientInterface
      */
     public function __construct($clientId, $secret, HttpAdapterInterface $clientHttp)
     {
-        $this->httpClient = $clientHttp;
+        $this->setHttpClient($clientHttp);
 
         $baseUrl = rtrim($this->httpClient->getBaseUrl(), '/');
         $this->httpClient->setBaseUrl($baseUrl . '/api/v1');
@@ -165,12 +167,14 @@ class Client implements ClientInterface
     /**
      * Set the HTTP Client Adapter
      *
-     * @param  HttpAdapter\HttpAdapterInterface $client
+     * @param HttpAdapter\HttpAdapterInterface $client
+     *
      * @return Client
      */
     public function setHttpClient(HttpAdapter\HttpAdapterInterface $client)
     {
         $this->httpClient = $client;
+        $client->setUserAgent(sprintf('Phraseanet API SDK Version %s', static::VERSION));
 
         return $this;
     }
@@ -325,37 +329,27 @@ class Client implements ClientInterface
     }
 
     /**
-     *
-     * Call a remote Phraseanet API method
-     *
-     * @param  string   $path       remote path
-     * @param  array    $args       request parameters
-     * @param  string   $httpMethod http method
-     * @return Response
-     *
-     * @throws BadRequestException  if method is unsupported phraseanet API
-     * @throws BadResponseException if response is 4xx or 5xx
-     * @throws RuntimeException     if problem occurs
+     * {@inheritdoc}
      */
-    public function call($path, $args = array(), $httpMethod = 'POST')
+    public function call($method, $path, $query = array(), $postFields = array())
     {
         $responseContent = null;
 
         $args['oauth_token'] = $this->getAccessToken();
 
-        switch (strtoupper($httpMethod)) {
+        switch (strtoupper($method)) {
             case 'POST' :
                 $start = microtime(true);
-                $responseContent = $this->httpClient->post($path, $args);
+                $responseContent = $this->httpClient->post($path, $query, $postFields);
                 $stop = microtime(true);
                 break;
             case 'GET' :
                 $start = microtime(true);
-                $responseContent = $this->httpClient->get($path, $args);
+                $responseContent = $this->httpClient->get($path, $query);
                 $stop = microtime(true);
                 break;
             default :
-                throw new BadRequestException(sprintf('Phraseanet API do not support %s method', $httpMethod));
+                throw new BadRequestException(sprintf('Phraseanet API do not support %s method', $method));
         }
 
         if (null === $json = json_decode($responseContent)) {
