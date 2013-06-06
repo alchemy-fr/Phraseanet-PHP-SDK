@@ -26,6 +26,7 @@ interface ClientInterface
      */
     const TOKEN_ENDPOINT = '/api/oauthv2/token';
     const AUTH_ENDPOINT = '/api/oauthv2/authorize';
+    const API_MOUNT_POINT = '/api/v1/';
 
     /**
      * Oauth grant type
