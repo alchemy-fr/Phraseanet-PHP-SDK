@@ -335,7 +335,7 @@ class Client implements ClientInterface
     {
         $responseContent = null;
 
-        $query = array_replace(array('token' => $this->getAccessToken()), $query);
+        $query = array_replace(array('oauth_token' => $this->getAccessToken()), $query);
 
         switch (strtoupper($method)) {
             case 'POST' :
