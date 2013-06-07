@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\HttpAdapter;
+namespace PhraseanetSDK\Http;
 
 use Guzzle\Common\Exception\GuzzleException;
 use Guzzle\Http\ClientInterface;
@@ -21,16 +21,14 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 
-class Guzzle implements HttpAdapterInterface
+class GuzzleAdapter implements GuzzleAdapterInterface
 {
     /** @var ClientInterface */
-    private $client;
-    /** @var string */
-    private $token;
+    private $guzzle;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $guzzle)
     {
-        $this->client = $client;
+        $this->guzzle = $guzzle;
     }
 
     /**
@@ -38,62 +36,48 @@ class Guzzle implements HttpAdapterInterface
      *
      * @return ClientInterface
      */
-    public function getAdapter()
+    public function getGuzzle()
     {
-        return $this->client;
+        return $this->guzzle;
     }
 
     /**
-     * Get client base URL
+     * Returns the client base URL
      *
      * @return string
      */
     public function getBaseUrl()
     {
-        return $this->client->getBaseUrl();
+        return $this->guzzle->getBaseUrl();
     }
 
     /**
-     * Set client base URL
+     * Sets the user agent
      *
-     * @param  string                            $url
-     * @return \PhraseanetSDK\HttpAdapter\Guzzle
+     * @param type $ua
      */
-    public function setBaseUrl($url)
+    public function setUserAgent($userAgent)
     {
-        $this->client->setBaseUrl($url);
-
-        return $this;
+        $this->guzzle->setUserAgent($userAgent);
     }
 
     /**
-     * {@inheritdoc}
+     * Performs an HTTP request, returns the body response
+     *
+     * @param string $method       The method
+     * @param string $path       The path to query
+     * @param array  $query      An array of query parameters
+     * @param array  $postFields An array of post fields
+     *
+     * @return string The response body
+     *
+     * @throws BadResponseException
+     * @throws RuntimeException
      */
-    public function get($path, array $query = array())
-    {
-        return $this->doMethod('GET', $path, $query);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function post($path, array $query = array(), array $postFields = array())
-    {
-        return $this->doMethod('POST', $path, $query, $postFields);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUserAgent($ua)
-    {
-        $this->client->setUserAgent($ua);
-    }
-
-    private function doMethod($name, $path, array $query, array $postFields = array())
+    public function call($method, $path, array $query = array(), array $postFields = array())
     {
         try {
-            $request = $this->client->createRequest($name, $path, array('Accept', 'application/json'));
+            $request = $this->guzzle->createRequest($method, $path, array('accept' => 'application/json'));
             $this->addRequestParameters($request, $query, $postFields);
             $response = $request->send();
         } catch (CurlException $e) {
@@ -104,7 +88,7 @@ class Guzzle implements HttpAdapterInterface
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $response->getBody();
+        return $response->getBody(true);
     }
 
     private function addRequestParameters(RequestInterface $request, $query, $postFields)

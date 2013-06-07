@@ -16,6 +16,7 @@ use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Http\APIResponse;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
@@ -49,7 +50,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param  string                             $method HTTP method type (POST, GET ...)
      * @param  string                             $path   The requested path (/path/to/ressource/1)
      * @param  array                              $params An array of query parameters
-     * @return PhraseanetSDK\HttpAdapter\Response
+     * @return APIResponse
      * @throws NotFoundException
      * @throws UnauthorizedException
      * @throws RuntimeException
@@ -59,8 +60,8 @@ abstract class AbstractRepository implements RepositoryInterface
         try {
             $response = $this->getClient()->call($method, $path, $query, $postFields);
         } catch (BadResponseException $e) {
-            $httpStatusCode = $e->getHttpStatusCode();
-            switch ($httpStatusCode) {
+            $statusCode = $e->getStatusCode();
+            switch ($statusCode) {
                 case 404:
                     throw new NotFoundException(sprintf('Resource under %s could not be found', $path));
                     break;

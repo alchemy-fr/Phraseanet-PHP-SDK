@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK;
 
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Repository\Factory as RepoFactory;
 use PhraseanetSDK\Entity\Factory as EntityFactory;
 use PhraseanetSDK\Entity\EntityHydrator;
@@ -25,7 +26,7 @@ class EntityManager
      *
      * @param Client $client
      */
-    public function __construct(Client $client)
+    public function __construct(APIGuzzleAdapter $client)
     {
         $this->client = $client;
     }
@@ -74,7 +75,7 @@ class EntityManager
     /**
      * Return the client attached to this entity manager
      *
-     * @return Client
+     * @return GuzzleAdapter
      */
     public function getClient()
     {

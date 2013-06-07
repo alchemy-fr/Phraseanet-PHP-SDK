@@ -12,78 +12,76 @@
 namespace PhraseanetSDK;
 
 use PhraseanetSDK\Cache\CacheFactory;
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Cache\RevalidationFactory;
 use PhraseanetSDK\Cache\CanCacheStrategy;
-use Silex\Application;
+use Silex\Application as SilexApplication;
 use Silex\ServiceProviderInterface;
-use Monolog\Handler\NullHandler;
 use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
 use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Recorder\Recorder;
 use PhraseanetSDK\Recorder\Player;
 use PhraseanetSDK\Recorder\RequestExtractor;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
 
 /**
  * Phraseanet SDK Silex provider
  */
 class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 {
-    public function register(Application $app)
+    public function register(SilexApplication $app)
     {
         $app['phraseanet-sdk.recorder.config'] = array();
+        $app['phraseanet-sdk.config'] = array();
+        $app['phraseanet-sdk.cache.config'] = array();
 
-        $app['phraseanet-sdk.cache.factory'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.recorder.config.merged'] = $app->share(function(SilexApplication $app) {
+            return $app['phraseanet-sdk.recorder.config'] = array_replace_recursive(array(
+                'type' => 'file',
+                'options' => array(
+                    'file' => realpath(__DIR__ . '/../..') . '/phraseanet.recorder.json',
+                ),
+                'limit' => 1000,
+            ), $app['phraseanet-sdk.recorder.config']);
+        });
+
+        $app['phraseanet-sdk.cache.config.merged'] = $app->share(function(SilexApplication $app) {
+            return $app['phraseanet-sdk.cache.config'] = array_replace_recursive(array(
+                'type'       => 'array',
+                'lifetime'   => 300,
+                'revalidate' => 'skip',
+                'factory'    => $app['phraseanet-sdk.cache.factory'],
+                'revalidation-factory' => $app['phraseanet-sdk.guzzle.revalidation-factory'],
+                'can-cache-strategy'   => $app['phraseanet-sdk.guzzle.can-cache-strategy'],
+            ), $app['phraseanet-sdk.cache.config']);
+        });
+
+        $app['phraseanet-sdk.cache.factory'] = $app->share(function (SilexApplication $app) {
             return new CacheFactory();
         });
-        $app['phraseanet-sdk.guzzle.revalidation-factory'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.guzzle.revalidation-factory'] = $app->share(function (SilexApplication $app) {
             return new RevalidationFactory();
         });
-        $app['phraseanet-sdk.guzzle.can-cache-strategy'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.guzzle.can-cache-strategy'] = $app->share(function (SilexApplication $app) {
             return new CanCacheStrategy();
         });
-
-        if (!isset($app['monolog.handler'])) {
-            $app['monolog.handler'] = function () use ($app) {
-                return new NullHandler();
-            };
-        }
 
         $app['phraseanet-sdk.guzzle.plugins'] = $app->share(function () {
             return array();
         });
 
-        $app['phraseanet-sdk.config'] = array(
-            'cache' => array(
-                'type'       => 'array',
-                'lifetime'   => 300,
-                'revalidate' => 'skip',
-            ),
-        );
-
-        $app['phraseanet-sdk'] = $app->share(function (Application $app) {
-            $config = $app['phraseanet-sdk.config'] = array_replace_recursive(array(
-                'cache'     => array(
-                    'factory'    => $app['phraseanet-sdk.cache.factory'],
-                ),
-                'guzzle' => array(
-                    'revalidation-factory' => $app['phraseanet-sdk.guzzle.revalidation-factory'],
-                    'can-cache-strategy'   => $app['phraseanet-sdk.guzzle.can-cache-strategy'],
-                    'plugins'              => $app['phraseanet-sdk.guzzle.plugins'],
-                )
-            ), $app['phraseanet-sdk.config']);
-
-            return Client::create($config);
+        $app['phraseanet-sdk'] = $app->share(function (SilexApplication $app) {
+            return Application::create(
+                $app['phraseanet-sdk.config'],
+                $app['phraseanet-sdk.cache.config.merged'],
+                $app['phraseanet-sdk.guzzle.plugins']
+            );
         });
 
-        $app['phraseanet-sdk.em'] = $app->share(function (Application $app) {
-            return $app['phraseanet-sdk']->getEntityManager();
-        });
-
-        $app['phraseanet-sdk.guzzle.history-plugin'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.guzzle.history-plugin'] = $app->share(function (SilexApplication $app) {
             $plugin = new HistoryPlugin();
-            $plugin->setLimit($app['phraseanet-sdk.recorder.config-merger']['limit']);
+            $plugin->setLimit($app['phraseanet-sdk.recorder.config.merged']['limit']);
 
             return $plugin;
         });
@@ -117,34 +115,22 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             }));
         }
 
-        $app['phraseanet-sdk.recorder.storage-factory'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.recorder.storage-factory'] = $app->share(function (SilexApplication $app) {
             return new StorageFactory($app['phraseanet-sdk.cache.factory']);
         });
 
-        $app['phraseanet-sdk.recorder.request-extractor'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.recorder.request-extractor'] = $app->share(function (SilexApplication $app) {
             return new RequestExtractor();
         });
 
-        $app['phraseanet-sdk.recorder.config-merger'] = $app->share(function (Application $app) {
-            $config = $app['phraseanet-sdk.recorder.config'] = array_replace_recursive(array(
-                'type' => 'file',
-                'options' => array(
-                    'file' => realpath(__DIR__ . '/../..') . '/phraseanet.recorder.json',
-                ),
-                'limit' => 1000,
-            ), $app['phraseanet-sdk.recorder.config']);
-
-            return $config;
-        });
-
-        $app['phraseanet-sdk.recorder.storage'] = $app->share(function (Application $app) {
-            $config = $app['phraseanet-sdk.recorder.config-merger'];
+        $app['phraseanet-sdk.recorder.storage'] = $app->share(function (SilexApplication $app) {
+            $config = $app['phraseanet-sdk.recorder.config.merged'];
 
             return $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']);
         });
 
-        $app['phraseanet-sdk.recorder'] = $app->share(function (Application $app) {
-            $config = $app['phraseanet-sdk.recorder.config-merger'];
+        $app['phraseanet-sdk.recorder'] = $app->share(function (SilexApplication $app) {
+            $config = $app['phraseanet-sdk.recorder.config.merged'];
 
             return new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
@@ -154,15 +140,19 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $app['phraseanet-sdk.player'] = $app->share(function (Application $app) {
+        $app['phraseanet-sdk.player'] = function ($token) use ($app) {
             return new Player(
-                $app['phraseanet-sdk'],
+                new APIGuzzleAdapter(
+                    new ConnectedGuzzleAdapter(
+                        $token, $app['phraseanet-sdk']->getAdapter()
+                    )
+                ),
                 $app['phraseanet-sdk.recorder.storage']
             );
-        });
+        };
     }
 
-    public function boot(Application $app)
+    public function boot(SilexApplication $app)
     {
         if ($app['phraseanet-sdk.recorder.enabled']) {
             $app->finish(function () use ($app) {

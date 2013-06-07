@@ -122,14 +122,9 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
 
     public function testHydrate()
     {
-
-        $client = $this->getMock(
-            'PhraseanetSDK\\Client'
-            , array()
-            , array()
-            , ''
-            , false
-        );
+        $client = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $em = new EntityManager($client);
 

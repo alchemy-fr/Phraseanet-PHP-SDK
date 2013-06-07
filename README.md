@@ -7,30 +7,59 @@ The Phraseanet PHP SDK is an OO library to interact with
 
 ## Basic Usage
 
-### Create the client
+### Create the application
 
-Here is the minimum to create the Phraseanet client ; please
-note that client `client-id`, `url`, `secret` and `token` a required. Please refer to
+Here is the minimum to create the Phraseanet SDK Application ; please
+note that client `client-id`, `url` and `secret` a required. Please refer to
 the [online documentation](https://docs.phraseanet.com/3.7/en/Devel/ApplicationDeveloper.html)
-to get more more information about getting those.
+to get more more information about generating those.
 
 ```php
-use PhraseanetSDK\Client;
-
-$client = Client::create(array(
+$app = PhraseanetSDK\Application::create(array(
     'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
     'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
-    'token'     => 'd855d9f66774eda3b67101055b03c1d6',
     'url'       => 'https://your.phraseanet-install.com/', // Phraseanet install URI
 ));
 ```
+
+### Getting an oauth token
+
+Once the application is created, a token is required to query the API. There are
+two ways :
+
+#### Developer token
+
+The developer token can be retrieved from Phraseanet developer application
+panel (My account > developer > applications).
+
+#### OAuth2 authentication flow
+
+Phraseanet SDK provides a convenient way to retrieve an oauth token. Use the
+OAuth2Connector for that :
+
+- Redirect the end user to the Phraseanet authorization URL :
+
+```php
+$connector = $app->getOauth2Connector();
+$url = $connector->getAuthorizationUrl($redirectUri); // must be the same as the one declared
+                                                      // in the application your created in Phraseanet
+```
+
+- Retrieve the access token in you application callback :
+
+```php
+$connector = $app->getOauth2Connector();
+$token = $connector->retrieveAccessToken($code, $redirectUri);
+```
+
+Once you have the token, you can use the `EntityManager`.
 
 ### Use the EntityManager
 
 The `EntityManager` is the entry point to retrieve Phraseanet entities.
 
 ```php
-$em = $client->getEntityManager();
+$em = $app->getEntityManager($token);
 
 $query = $em->getRepository('Record')->search(array(
     'query'        => 'animals',
@@ -47,7 +76,7 @@ foreach($query->getResults() as $record) {
 }
 ```
 
-## Advanced Usage
+## Configuration
 
 ### Log
 
@@ -58,7 +87,6 @@ the configuration.
 $client = Client::create(array(
     'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
     'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
-    'token'     => 'd855d9f66774eda3b67101055b03c1d6',
     'url'       => 'https://your.phraseanet-install.com/',
     'logger'    => $logger,
 ));
@@ -70,17 +98,17 @@ For performance, it is strongly recommended to use a cache system. This can be
 easily done using the following configuration.
 
 ```php
-$client = Client::create(array(
-    'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
-    'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
-    'token'     => 'd855d9f66774eda3b67101055b03c1d6',
-    'url'       => 'https://your.phraseanet-install.com/',
-    'cache'  => array(
+$client = Client::create(
+    array(
+        'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
+        'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
+        'url'       => 'https://your.phraseanet-install.com/',
+    ), array(
         'type'       => 'memcached', // cache type
         'host'       => '127.0.0.1', // cache server host
         'port'       => 11211,       // cache server port
         'lifetime'   => 300,         // cache lifetime in seconds
-    ),
+    )
 ));
 ```
 
@@ -102,7 +130,6 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
         'client-id' => $clientId,
         'secret'    => $secret,
         'url'       => $url,
-        'token'     => $token,
     ),
 ));
 ```
@@ -115,17 +142,16 @@ $app = new Silex\Application();
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
     'phraseanet-sdk.config' => array(
         'client-id' => $clientId,
-        'secret' => $secret,
-        'url' => $url,
-        'token' => $token,
-        'cache' => array(
-            'type' => 'memcached',
-            'host' => 'localhost',
-            'port' => 11211,
-            'ttl'  => 300,
-        ),
-        'logger' => $logger,
-    )
+        'secret'    => $secret,
+        'url'       => $url,
+        'logger'    => $logger,
+    ),
+    'phraseanet-sdk.cache.config' = array(
+        'type' => 'memcached',
+        'host' => 'localhost',
+        'port' => 11211,
+        'ttl'  => 300,
+    ),
 ));
 ```
 
@@ -143,7 +169,6 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
         'client-id' => $clientId,
         'secret'    => $secret,
         'url'       => $url,
-        'token'     => $token,
     ),
     'phraseanet-sdk.recorder.enabled' => true,
     'phraseanet-sdk.recorder.config' => array(
@@ -190,14 +215,13 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
         'client-id' => $clientId,
         'secret' => $secret,
         'url' => $url,
-        'token' => $token,
-        'cache' => array(
-            'type' => 'memcached',
-            'host' => 'localhost',
-            'port' => 11211,
-            'ttl'  => 300,
-            'revalidate' => 'deny',  // important
-        )
+    ),
+    'phraseanet-sdk.cache.config' = array(
+        'type' => 'memcached',
+        'host' => 'localhost',
+        'port' => 11211,
+        'ttl'  => 300,
+        'revalidate' => 'deny',  // important
     )
 ));
 ```

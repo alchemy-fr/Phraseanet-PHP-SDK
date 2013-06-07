@@ -2,13 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Subdef;
 use PhraseanetSDK\EntityManager;
 
-class SubdefTest extends Repository
+class SubdefTest extends RepositoryTestCase
 {
 
     /**

@@ -56,7 +56,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
      *
      * @return integer
      */
-    public function getHttpStatusCode()
+    public function getStatusCode()
     {
         return $this->httpStatusCode;
     }

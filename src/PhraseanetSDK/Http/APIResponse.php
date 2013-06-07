@@ -9,29 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\HttpAdapter;
+namespace PhraseanetSDK\Http;
 
 use PhraseanetSDK\Exception\InvalidArgumentException;
 
 /**
  * Response object from a Phraseanet API call
  */
-class Response
+class APIResponse
 {
-    /**
-     *
-     * @var stdClass
-     */
+    /** @var \stdClass */
     protected $result;
 
-    /**
-     *
-     * @var stdClass
-     */
+    /** @var \stdClass */
     private $meta;
 
     /**
-     *
      * @param \stdClass $response
      */
     public function __construct(\stdClass $response)
@@ -45,8 +38,9 @@ class Response
     }
 
     /**
-     * Return the result of the response
-     * @return stdClass
+     * Returns the result of the response
+     *
+     * @return \stdClass
      */
     public function getResult()
     {
@@ -54,25 +48,28 @@ class Response
     }
 
     /**
-     * Return the HTTP code
+     * Returns the HTTP code
+     *
      * @return integer
      */
-    public function getHttpStatusCode()
+    public function getStatusCode()
     {
         return (int) $this->meta->http_code;
     }
 
     /**
-     * Check id the Response is a success
-     * @return integer
+     * Returns true is the response is successful
+     *
+     * @return Boolean
      */
     public function isOk()
     {
-        return $this->getHttpStatusCode() < 400;
+        return $this->getStatusCode() < 400;
     }
 
     /**
-     * Checker whether the response content is empty
+     * Returns true if the response content is empty
+     *
      * @return Boolean
      */
     public function isEmpty()
@@ -81,10 +78,9 @@ class Response
     }
 
     /**
-     * Get error message if present
-     * @return mixed
-     * Return the Error message if present
-     * Return null
+     * Returns the error message
+     *
+     * @return string|null
      */
     public function getErrorMessage()
     {
@@ -92,10 +88,9 @@ class Response
     }
 
     /**
-     * Get error detail if present
-     * @return mixed
-     * Return the Error details if present
-     * Return null
+     * Returns error details
+     *
+     * @return string|null
      */
     public function getErrorDetails()
     {
@@ -103,7 +98,8 @@ class Response
     }
 
     /**
-     * Get Response time
+     * Returns the response datetime
+     *
      * @return \DateTime
      */
     public function getResponseTime()
@@ -112,7 +108,8 @@ class Response
     }
 
     /**
-     * Get requested URI
+     * Returns the requested URI
+     *
      * @return string
      */
     public function getUri()
@@ -123,7 +120,8 @@ class Response
     }
 
     /**
-     * Get Requested method
+     * Returns the requested method
+     *
      * @return string
      */
     public function getMethod()
@@ -134,7 +132,8 @@ class Response
     }
 
     /**
-     * Get Response charset
+     * Returns the response charset
+     *
      * @return string
      */
     public function getCharset()
@@ -143,7 +142,8 @@ class Response
     }
 
     /**
-     * get API version
+     * Returns the API version
+     *
      * @return string
      */
     public function getApiVersion()
@@ -152,9 +152,10 @@ class Response
     }
 
     /**
-     * Check existence of $property in response object
+     * Returns trueif the response has the given property
      *
-     * @param  string  $property property name
+     * @param  string  $property The property name
+     *
      * @return Boolean
      */
     public function hasProperty($property)
@@ -163,9 +164,10 @@ class Response
     }
 
     /**
-     * Check existence of $property in response object
+     * Returns the response property, null if the property does not exist
      *
-     * @param  string  $property property name
+     * @param  string  $property The property name
+     *
      * @return Boolean
      */
     public function getProperty($property)
