@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Basket extends AbstractEntity implements EntityInterface
+class Basket extends AbstractEntity
 {
     protected $basketId;
     protected $name;
@@ -50,7 +50,7 @@ class Basket extends AbstractEntity implements EntityInterface
      *
      * @return string
      */
-        public function getName()
+    public function getName()
     {
         return $this->name;
     }
@@ -227,5 +227,4 @@ class Basket extends AbstractEntity implements EntityInterface
     {
         $this->validationInitiator = $validationInitiator;
     }
-
 }

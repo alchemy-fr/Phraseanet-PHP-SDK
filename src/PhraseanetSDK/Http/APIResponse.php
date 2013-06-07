@@ -154,7 +154,7 @@ class APIResponse
     /**
      * Returns trueif the response has the given property
      *
-     * @param  string  $property The property name
+     * @param string $property The property name
      *
      * @return Boolean
      */
@@ -166,7 +166,7 @@ class APIResponse
     /**
      * Returns the response property, null if the property does not exist
      *
-     * @param  string  $property The property name
+     * @param string $property The property name
      *
      * @return Boolean
      */

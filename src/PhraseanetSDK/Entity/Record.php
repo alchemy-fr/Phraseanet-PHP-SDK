@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Record extends AbstractEntity implements EntityInterface
+class Record extends AbstractEntity
 {
     protected $recordId;
     protected $databoxId;

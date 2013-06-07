@@ -5,8 +5,6 @@ namespace PhraseanetSDK;
 use PhraseanetSDK\Http\GuzzleAdapter;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadResponseException;
-use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\TransportException;
 
 class OAuth2Connector
@@ -15,7 +13,7 @@ class OAuth2Connector
     const AUTH_ENDPOINT = '/api/oauthv2/authorize';
 
     /**
-     * Oauth grant type
+     * Oauth authorization grant type
      */
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
@@ -40,9 +38,11 @@ class OAuth2Connector
     /**
      * Builds the Authorization Url
      *
-     * @param  array            $scope the requested scope
-     * @return string           the authorization url
-     * @throws RuntimeException if bad grant type provided
+     * @param string $redirectUri
+     * @param array  $parameters
+     * @param array  $scopes
+     *
+     * @return string
      */
     public function getAuthorizationUrl($redirectUri, array $parameters = array(), array $scopes = array())
     {

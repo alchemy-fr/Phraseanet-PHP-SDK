@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Result extends AbstractEntity implements EntityInterface
+class Result extends AbstractEntity
 {
     protected $records;
     protected $stories;
@@ -37,5 +37,4 @@ class Result extends AbstractEntity implements EntityInterface
     {
         $this->stories = $stories;
     }
-
 }

@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxDocumentStructure extends AbstractEntity implements EntityInterface
+class DataboxDocumentStructure extends AbstractEntity
 {
     protected $id;
     protected $namespace;

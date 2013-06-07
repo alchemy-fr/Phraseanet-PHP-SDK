@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class QuerySuggestion extends AbstractEntity implements EntityInterface
+class QuerySuggestion extends AbstractEntity
 {
     protected $value;
     protected $current;
@@ -61,5 +61,4 @@ class QuerySuggestion extends AbstractEntity implements EntityInterface
     {
         $this->hits = $hits;
     }
-
 }

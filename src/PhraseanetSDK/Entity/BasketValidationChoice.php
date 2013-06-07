@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class BasketValidationChoice extends AbstractEntity implements EntityInterface
+class BasketValidationChoice extends AbstractEntity
 {
     protected $validationUser;
     protected $agreement;

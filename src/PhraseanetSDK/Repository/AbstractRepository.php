@@ -43,9 +43,9 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Query the API
      *
-     * @param  string                             $method HTTP method type (POST, GET ...)
-     * @param  string                             $path   The requested path (/path/to/ressource/1)
-     * @param  array                              $params An array of query parameters
+     * @param  string                $method HTTP method type (POST, GET ...)
+     * @param  string                $path   The requested path (/path/to/ressource/1)
+     * @param  array                 $params An array of query parameters
      * @return APIResponse
      * @throws NotFoundException
      * @throws UnauthorizedException

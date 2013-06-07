@@ -91,6 +91,8 @@ class Application implements ApplicationInterface
      * Creates the application.
      *
      * @param array $config
+     * @param array $cache
+     * @param array $plugins
      *
      * @return Application
      *

@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class BasketValidationParticipant extends AbstractEntity implements EntityInterface
+class BasketValidationParticipant extends AbstractEntity
 {
     protected $usrId;
     protected $usrName;
@@ -93,5 +93,4 @@ class BasketValidationParticipant extends AbstractEntity implements EntityInterf
     {
         $this->canSeeOthers = $canSeeOthers;
     }
-
 }

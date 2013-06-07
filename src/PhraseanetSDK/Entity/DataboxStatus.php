@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxStatus extends AbstractEntity implements EntityInterface
+class DataboxStatus extends AbstractEntity
 {
     protected $bit;
     protected $labelOn;
@@ -125,5 +125,4 @@ class DataboxStatus extends AbstractEntity implements EntityInterface
     {
         $this->printable = $printable;
     }
-
 }

@@ -63,7 +63,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     /**
      * Sets the user agent
      *
-     * @param type $ua
+     * @param string $userAgent
      */
     public function setUserAgent($userAgent)
     {
@@ -73,7 +73,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     /**
      * Performs an HTTP request, returns the body response
      *
-     * @param string $method       The method
+     * @param string $method     The method
      * @param string $path       The path to query
      * @param array  $query      An array of query parameters
      * @param array  $postFields An array of post fields

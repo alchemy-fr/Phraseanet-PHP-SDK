@@ -78,7 +78,6 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($accessToken, $connector->retrieveAccessToken($code, $redirectUri));
     }
 
-
     public function testRetrieveAccessTokenWithBadResponse()
     {
         $clientId = 'api-client-id';

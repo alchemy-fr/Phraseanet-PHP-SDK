@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Metadatas extends AbstractEntity implements EntityInterface
+class Metadatas extends AbstractEntity
 {
     protected $metaId;
     protected $metaStructureId;

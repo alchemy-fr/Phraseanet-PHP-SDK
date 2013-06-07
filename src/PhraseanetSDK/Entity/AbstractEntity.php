@@ -13,12 +13,9 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\EntityManager;
 
-abstract class AbstractEntity
+abstract class AbstractEntity implements EntityInterface
 {
-    /**
-     *
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     protected $em;
 
     final public function __construct(EntityManager $em)

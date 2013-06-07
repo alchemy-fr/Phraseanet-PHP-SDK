@@ -11,18 +11,12 @@
 
 namespace PhraseanetSDK\Entity;
 
-class FeedEntryItem extends AbstractEntity implements EntityInterface
+class FeedEntryItem extends AbstractEntity
 {
-    /**
-     *
-     * @var integer
-     */
+    /** @var integer */
     protected $itemId;
 
-    /**
-     *
-     * @var Record
-     */
+    /** @var Record */
     protected $record;
 
     /**
