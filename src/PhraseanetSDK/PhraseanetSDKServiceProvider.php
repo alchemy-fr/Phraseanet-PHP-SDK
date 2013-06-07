@@ -11,19 +11,20 @@
 
 namespace PhraseanetSDK;
 
+use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Cache\CacheFactory;
 use PhraseanetSDK\Cache\RevalidationFactory;
 use PhraseanetSDK\Cache\CanCacheStrategy;
-use Silex\Application as SilexApplication;
-use Silex\ServiceProviderInterface;
+use PhraseanetSDK\Http\GuzzleAdapter;
+use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
-use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Recorder\Recorder;
 use PhraseanetSDK\Recorder\Player;
 use PhraseanetSDK\Recorder\RequestExtractor;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
-use PhraseanetSDK\Http\APIGuzzleAdapter;
-use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use Silex\Application as SilexApplication;
+use Silex\ServiceProviderInterface;
 
 /**
  * Phraseanet SDK Silex provider
@@ -71,11 +72,27 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return array();
         });
 
-        $app['phraseanet-sdk'] = $app->share(function (SilexApplication $app) {
-            return Application::create(
+        $app['phraseanet-sdk.guzzle-adapter'] = $app->share(function (SilexApplication $app) {
+            return GuzzleAdapter::create(
                 $app['phraseanet-sdk.config'],
                 $app['phraseanet-sdk.cache.config.merged'],
                 $app['phraseanet-sdk.guzzle.plugins']
+            );
+        });
+
+        $app['phraseanet-sdk.guzzle-connected-adapter'] = $app->protect(function ($token) use ($app) {
+            return new ConnectedGuzzleAdapter($token, $app['phraseanet-sdk.guzzle-adapter']);
+        });
+
+        $app['phraseanet-sdk.guzzle-api-adapter'] = $app->protect(function ($token) use ($app) {
+            return new APIGuzzleAdapter($app['phraseanet-sdk.guzzle-connected-adapter']($token));
+        });
+
+        $app['phraseanet-sdk'] = $app->share(function (SilexApplication $app) {
+            return new Application(
+                $app['phraseanet-sdk.guzzle-adapter'],
+                $app['phraseanet-sdk.config']['client-id'],
+                $app['phraseanet-sdk.config']['secret']
             );
         });
 
@@ -140,16 +157,12 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $app['phraseanet-sdk.player'] = function ($token) use ($app) {
+        $app['phraseanet-sdk.player.factory'] = $app->protect(function ($token) use ($app) {
             return new Player(
-                new APIGuzzleAdapter(
-                    new ConnectedGuzzleAdapter(
-                        $token, $app['phraseanet-sdk']->getAdapter()
-                    )
-                ),
+                $app['phraseanet-sdk.guzzle-api-adapter']($token),
                 $app['phraseanet-sdk.recorder.storage']
             );
-        };
+        });
     }
 
     public function boot(SilexApplication $app)

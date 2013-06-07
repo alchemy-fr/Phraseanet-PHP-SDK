@@ -203,7 +203,8 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
 To replay stored requests, use the player
 
 ```php
-$app['phraseanet-sdk.player']->play();
+$player = $app['phraseanet-sdk.player.factory']($token);
+$player->play();
 ```
 
 Please note that, in order to play request without using cache (to warm it for

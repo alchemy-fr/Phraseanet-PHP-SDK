@@ -12,14 +12,23 @@
 namespace PhraseanetSDK\Http;
 
 use Guzzle\Common\Exception\GuzzleException;
+use Guzzle\Http\Client as Guzzle;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Guzzle\Http\Exception\CurlException;
-use PhraseanetSDK\Exception\BadResponseException;
-use PhraseanetSDK\Exception\RuntimeException;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Plugin\Log\LogPlugin;
+use Guzzle\Plugin\Cache\CachePlugin;
+use PhraseanetSDK\ApplicationInterface;
+use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Cache\CacheFactory;
+use PhraseanetSDK\Cache\RevalidationFactory;
+use PhraseanetSDK\Cache\CanCacheStrategy;
+use Psr\Log\LoggerInterface;
 
 class GuzzleAdapter implements GuzzleAdapterInterface
 {
@@ -91,6 +100,32 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         return $response->getBody(true);
     }
 
+    public static function create(array $config, array $cache = array(), array $plugins = array())
+    {
+        $config = static::getConfig($config);
+        $cache = static::getCacheConfig($cache);
+
+        $guzzle = new Guzzle(static::generateUrl($config['url']));
+        $guzzle->setUserAgent(sprintf('Phraseanet SDK version %s', ApplicationInterface::VERSION));
+
+        if (null !== $config['logger']) {
+            $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($config['logger'])));
+        }
+
+        $guzzle->addSubscriber(new CachePlugin(array(
+            'adapter'      => static::createCacheAdapter($cache, $config['logger']),
+            'can_cache'    => $cache['can-cache-strategy'],
+            'default_ttl'  => $cache['ttl'],
+            'revalidation' => $cache['revalidation-factory']->create($cache['revalidate']),
+        )));
+
+        foreach ($plugins as $plugin) {
+            $guzzle->addSubscriber($plugin);
+        }
+
+        return new static($guzzle);
+    }
+
     private function addRequestParameters(RequestInterface $request, $query, $postFields)
     {
         foreach ($query as $name => $value) {
@@ -104,5 +139,78 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         } elseif (0 < count($postFields)) {
             throw new InvalidArgumentException('Can not add post fields to GET request');
         }
+    }
+
+    private static function createCacheAdapter($cache, LoggerInterface $logger = null)
+    {
+        try {
+            $cacheAdapter = $cache['factory']->createGuzzleCacheAdapter($cache['type'], $cache['host'], $cache['port']);
+            if (isset($logger)) {
+                $logger->debug(sprintf('Using cache adapter %s', $cache['type']));
+            }
+        } catch (RuntimeException $e) {
+            if (isset($logger)) {
+                $logger->error(sprintf('Unable to create cache adapter %s', $cache['type']));
+            }
+            $cacheAdapter = $cache['factory']->createGuzzleCacheAdapter('array');
+        }
+
+        return $cacheAdapter;
+    }
+
+    private static function getConfig(array $config)
+    {
+        $config = array_replace(array(
+            'client-id' => null,
+            'secret'    => null,
+            'url'       => null,
+            'logger'    => null,
+        ), $config);
+
+        foreach (array('client-id', 'secret', 'url') as $key) {
+            if (null === $config[$key]) {
+                throw new InvalidArgumentException(sprintf('Missing parameter %s', $key));
+            }
+        }
+
+        return $config;
+    }
+
+    private static function getCacheConfig(array $cache)
+    {
+        $cache = array_replace(array(
+            'type' => 'array',
+            'host' => null,
+            'port' => null,
+            'ttl'  => 300,
+            'revalidate' => 'skip',
+        ), $cache);
+
+        if (!isset($cache['factory'])) {
+            $cache['factory'] = new CacheFactory();
+        }
+
+        if (!isset($cache['revalidation-factory'])) {
+            $cache['revalidation-factory'] = new RevalidationFactory();
+        }
+        if (!isset($cache['can-cache-strategy'])) {
+            $cache['can-cache-strategy'] = new CanCacheStrategy();
+        }
+
+        return $cache;
+    }
+
+    private static function generateUrl($url)
+    {
+        $end = substr($url, -7);
+
+        if ('api/v1/' === $end) {
+            return $url;
+        }
+        if ('/api/v1' === $end) {
+            return $url . '/';
+        }
+
+        return rtrim($url, '/') . ApplicationInterface::API_MOUNT_POINT;
     }
 }
