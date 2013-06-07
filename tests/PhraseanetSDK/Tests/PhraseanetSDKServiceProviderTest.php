@@ -39,8 +39,26 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
             array('phraseanet-sdk.guzzle.revalidation-factory', 'PhraseanetSDK\Cache\RevalidationFactory'),
             array('phraseanet-sdk.guzzle.can-cache-strategy', 'PhraseanetSDK\Cache\CanCacheStrategy'),
             array('phraseanet-sdk.recorder', 'PhraseanetSDK\Recorder\Recorder'),
-            array('phraseanet-sdk.player', 'PhraseanetSDK\Recorder\Player'),
         );
+    }
+
+    public function testPlayerFactory()
+    {
+        $app = $this->getConfiguredApplication();
+        $app->register(new PhraseanetSDKServiceProvider(), array(
+            'phraseanet-sdk.config' => array(
+                'client-id' => 'sdfmqlsdkfm',
+                'secret'    => 'eoieep',
+                'url'       => 'https://bidule.net',
+            )
+        ));
+        $app->boot();
+
+        $player1 = $app['phraseanet-sdk.player.factory']('token');
+        $player2 = $app['phraseanet-sdk.player.factory']('token');
+        $this->assertInstanceOf('PhraseanetSDK\Recorder\Player', $player1);
+        $this->assertInstanceOf('PhraseanetSDK\Recorder\Player', $player2);
+        $this->assertNotSame($player2, $player1);
     }
 
     /**
