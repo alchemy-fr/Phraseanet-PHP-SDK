@@ -21,11 +21,11 @@ class EntityManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($instanceOf, $em->getEntity($type));
     }
 
-    public function testGetClient()
+    public function testGetAdapter()
     {
         $adapter = $this->createAdapterMock();
         $em = new EntityManager($adapter);
-        $this->assertSame($adapter, $em->getClient());
+        $this->assertSame($adapter, $em->getAdapter());
     }
 
     public function provideRepositories()

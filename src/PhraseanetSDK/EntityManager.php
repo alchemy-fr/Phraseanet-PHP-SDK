@@ -19,16 +19,16 @@ use PhraseanetSDK\Entity\EntityInterface;
 
 class EntityManager
 {
-    private $client;
+    private $adapter;
     private $repositories;
 
     /**
      *
-     * @param Client $client
+     * @param APIGuzzleAdapter $adapter
      */
-    public function __construct(APIGuzzleAdapter $client)
+    public function __construct(APIGuzzleAdapter $adapter)
     {
-        $this->client = $client;
+        $this->adapter = $adapter;
     }
 
     /**
@@ -75,10 +75,10 @@ class EntityManager
     /**
      * Return the client attached to this entity manager
      *
-     * @return GuzzleAdapter
+     * @return APIGuzzleAdapter
      */
-    public function getClient()
+    public function getAdapter()
     {
-        return $this->client;
+        return $this->adapter;
     }
 }

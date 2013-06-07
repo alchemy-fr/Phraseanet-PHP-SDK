@@ -23,7 +23,7 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($baseUrl));
 
         $connector = new OAuth2Connector($adapter, $clientId, $secret);
-        $url = $connector->getAuthorizationUrl(OAuth2Connector::GRANT_TYPE_AUTHORIZATION, $redirectUri, $parameters, $scopes);
+        $url = $connector->getAuthorizationUrl($redirectUri, $parameters, $scopes);
         $this->assertSame($expectedUrl, $url);
     }
 
@@ -45,22 +45,6 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
                 array('scope1', 'scope2'),
             ),
         );
-    }
-
-    /**
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
-     */
-    public function testGetAuthorizationUrlWithInvalidGrantType()
-    {
-        $clientId = 'api-client-id';
-        $secret = 'api-client-secret';
-
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $connector = new OAuth2Connector($adapter, $clientId, $secret);
-        $connector->getAuthorizationUrl('invalid-grant-type', 'http://consumer.com/callback');
     }
 
     public function testRetrieveAccessToken()
