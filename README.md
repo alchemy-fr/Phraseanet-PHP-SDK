@@ -45,6 +45,10 @@ $url = $connector->getAuthorizationUrl($redirectUri); // must be the same as the
                                                       // in the application your created in Phraseanet
 ```
 
+Note that extra parameters can be passed to the `getAuthorizationUrl` method.
+Please refer to the [online documentation](https://docs.phraseanet.com/Devel)
+about available parameters.
+
 - Retrieve the access token in you application callback :
 
 ```php
