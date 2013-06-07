@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\Entity\QuarantineSession | Phraseanet PHP SDK API</title>
+        <title>PhraseanetSDK\Http\ConnectedGuzzleAdapter | Phraseanet PHP SDK API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,10 +19,11 @@
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\QuarantineSession</h1>
+    <h1><a href="../../PhraseanetSDK/Http.html">PhraseanetSDK\Http</a>\ConnectedGuzzleAdapter</h1>
     </div>
         <div class="content">
-                <p>class    <strong>QuarantineSession</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></p>
+                <p>class    <strong>ConnectedGuzzleAdapter</strong>        implements
+        <a href="../../PhraseanetSDK/Http/GuzzleAdapterInterface.html"><abbr title="PhraseanetSDK\Http\GuzzleAdapterInterface">GuzzleAdapterInterface</abbr></a></p>
 
     
     
@@ -35,18 +36,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)
+                    <a href="#method___construct">__construct</a>($token, <a href="../../PhraseanetSDK/Http/GuzzleAdapterInterface.html"><abbr title="PhraseanetSDK\Http\GuzzleAdapterInterface">GuzzleAdapterInterface</abbr></a> $adapter)
                     <p></p>
-                </td>
-                <td><small>from&nbsp;<a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></small></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    integer
-                </td>
-                <td class="last">
-                    <a href="#method_getId">getId</a>()
-                    <p>The session id</p>
                 </td>
                 <td></td>
             </tr>
@@ -55,18 +46,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setId">setId</a>($id)
+                    <a href="#method_getToken">getToken</a>()
                     <p></p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    integer
-                </td>
-                <td class="last">
-                    <a href="#method_getUsrId">getUsrId</a>()
-                    <p>The user id</p>
                 </td>
                 <td></td>
             </tr>
@@ -75,7 +56,27 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setUsrId">setUsrId</a>($usrId)
+                    <a href="#method_setToken">setToken</a>($token)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getGuzzle">getGuzzle</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_call">call</a>($method, $path, array $query = array(), array $postFields = array())
                     <p></p>
                 </td>
                 <td></td>
@@ -86,9 +87,9 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">in <a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a> at line 21</div>
-        <code>final            public            
-    <strong>__construct</strong>(<a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)</code>
+        <div class="location">at line 20</div>
+        <code>            public            
+    <strong>__construct</strong>($token, <a href="../../PhraseanetSDK/Http/GuzzleAdapterInterface.html"><abbr title="PhraseanetSDK\Http\GuzzleAdapterInterface">GuzzleAdapterInterface</abbr></a> $adapter)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -98,8 +99,13 @@
 
                     <table>
                     <tr>
-                <td><a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a></td>
-                <td>$em</td>
+                <td></td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Http/GuzzleAdapterInterface.html"><abbr title="PhraseanetSDK\Http\GuzzleAdapterInterface">GuzzleAdapterInterface</abbr></a></td>
+                <td>$adapter</td>
                 <td></td>
             </tr>
             </table>
@@ -110,34 +116,25 @@
                     </div>
     </div>
 
-                <h3 id="method_getId">
-        <div class="location">at line 24</div>
-        <code>            public            integer
-    <strong>getId</strong>()</code>
+                <h3 id="method_getToken">
+        <div class="location">at line 26</div>
+        <code>            public            
+    <strong>getToken</strong>()</code>
     </h3>
     <div class="details">
-        <p>The session id</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>integer</td>
-            <td></td>
-        </tr>
-    </table>
-
             
             
                     </div>
     </div>
 
-                <h3 id="method_setId">
-        <div class="location">at line 29</div>
+                <h3 id="method_setToken">
+        <div class="location">at line 31</div>
         <code>            public            
-    <strong>setId</strong>($id)</code>
+    <strong>setToken</strong>($token)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -148,7 +145,7 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$id</td>
+                <td>$token</td>
                 <td></td>
             </tr>
             </table>
@@ -159,34 +156,25 @@
                     </div>
     </div>
 
-                <h3 id="method_getUsrId">
-        <div class="location">at line 39</div>
-        <code>            public            integer
-    <strong>getUsrId</strong>()</code>
+                <h3 id="method_getGuzzle">
+        <div class="location">at line 38</div>
+        <code>            public            
+    <strong>getGuzzle</strong>()</code>
     </h3>
     <div class="details">
-        <p>The user id</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>integer</td>
-            <td></td>
-        </tr>
-    </table>
-
             
             
                     </div>
     </div>
 
-                <h3 id="method_setUsrId">
-        <div class="location">at line 44</div>
+                <h3 id="method_call">
+        <div class="location">at line 43</div>
         <code>            public            
-    <strong>setUsrId</strong>($usrId)</code>
+    <strong>call</strong>($method, $path, array $query = array(), array $postFields = array())</code>
     </h3>
     <div class="details">
         <p></p>
@@ -197,7 +185,22 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$usrId</td>
+                <td>$method</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$path</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$query</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$postFields</td>
                 <td></td>
             </tr>
             </table>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\HttpAdapter\Guzzle | Phraseanet PHP SDK API</title>
+        <title>PhraseanetSDK\Http\GuzzleAdapter | Phraseanet PHP SDK API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,11 +19,11 @@
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Class</div>
-    <h1><a href="../../PhraseanetSDK/HttpAdapter.html">PhraseanetSDK\HttpAdapter</a>\Guzzle</h1>
+    <h1><a href="../../PhraseanetSDK/Http.html">PhraseanetSDK\Http</a>\GuzzleAdapter</h1>
     </div>
         <div class="content">
-                <p>class    <strong>Guzzle</strong>        implements
-        <a href="../../PhraseanetSDK/HttpAdapter/HttpAdapterInterface.html"><abbr title="PhraseanetSDK\HttpAdapter\HttpAdapterInterface">HttpAdapterInterface</abbr></a></p>
+                <p>class    <strong>GuzzleAdapter</strong>        implements
+        <a href="../../PhraseanetSDK/Http/GuzzleAdapterInterface.html"><abbr title="PhraseanetSDK\Http\GuzzleAdapterInterface">GuzzleAdapterInterface</abbr></a></p>
 
     
     
@@ -36,7 +36,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr> $client)
+                    <a href="#method___construct">__construct</a>(<abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr> $guzzle)
                     <p></p>
                 </td>
                 <td></td>
@@ -46,8 +46,8 @@
                     <abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr>
                 </td>
                 <td class="last">
-                    <a href="#method_getAdapter">getAdapter</a>()
-                    <p>Returns the encapsulated adapter</p>
+                    <a href="#method_getGuzzle">getGuzzle</a>()
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -57,37 +57,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getBaseUrl">getBaseUrl</a>()
-                    <p>Get client base URL</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    <a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a>
-                </td>
-                <td class="last">
-                    <a href="#method_setBaseUrl">setBaseUrl</a>(string $url)
-                    <p>Set client base URL</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method_get">get</a>(string $path, array $query = array())
-                    <p>Executes a GET request</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method_post">post</a>(string $path, array $query = array(), array $postFields = array())
-                    <p>Executes a POST request</p>
+                    <p>Returns the client base URL</p>
                 </td>
                 <td></td>
             </tr>
@@ -96,8 +66,28 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setUserAgent">setUserAgent</a>(<abbr title="PhraseanetSDK\HttpAdapter\type">type</abbr> $ua)
+                    <a href="#method_setUserAgent">setUserAgent</a>(string $userAgent)
                     <p>Sets the user agent</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_call">call</a>(string $method, string $path, array $query = array(), array $postFields = array())
+                    <p>Performs an HTTP request, returns the body response</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;
+                </td>
+                <td class="last">
+                    <a href="#method_create">create</a>(array $config, array $cache = array(), array $plugins = array())
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -107,9 +97,9 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 31</div>
+        <div class="location">at line 38</div>
         <code>            public            
-    <strong>__construct</strong>(<abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr> $client)</code>
+    <strong>__construct</strong>(<abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr> $guzzle)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -120,7 +110,7 @@
                     <table>
                     <tr>
                 <td><abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr></td>
-                <td>$client</td>
+                <td>$guzzle</td>
                 <td></td>
             </tr>
             </table>
@@ -131,13 +121,13 @@
                     </div>
     </div>
 
-                <h3 id="method_getAdapter">
-        <div class="location">at line 41</div>
+                <h3 id="method_getGuzzle">
+        <div class="location">at line 48</div>
         <code>            public            <abbr title="Guzzle\Http\ClientInterface">ClientInterface</abbr>
-    <strong>getAdapter</strong>()</code>
+    <strong>getGuzzle</strong>()</code>
     </h3>
     <div class="details">
-        <p>Returns the encapsulated adapter</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
@@ -156,12 +146,12 @@
     </div>
 
                 <h3 id="method_getBaseUrl">
-        <div class="location">at line 51</div>
+        <div class="location">at line 58</div>
         <code>            public            string
     <strong>getBaseUrl</strong>()</code>
     </h3>
     <div class="details">
-        <p>Get client base URL</p>
+        <p>Returns the client base URL</p>
         <p></p>
         <div class="tags">
             
@@ -179,13 +169,13 @@
                     </div>
     </div>
 
-                <h3 id="method_setBaseUrl">
-        <div class="location">at line 62</div>
-        <code>            public            <a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a>
-    <strong>setBaseUrl</strong>(string $url)</code>
+                <h3 id="method_setUserAgent">
+        <div class="location">at line 68</div>
+        <code>            public            
+    <strong>setUserAgent</strong>(string $userAgent)</code>
     </h3>
     <div class="details">
-        <p>Set client base URL</p>
+        <p>Sets the user agent</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -193,33 +183,24 @@
                     <table>
                     <tr>
                 <td>string</td>
-                <td>$url</td>
+                <td>$userAgent</td>
                 <td></td>
             </tr>
             </table>
 
             
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td><a href="../../PhraseanetSDK/HttpAdapter/Guzzle.html"><abbr title="PhraseanetSDK\HttpAdapter\Guzzle">Guzzle</abbr></a></td>
-            <td></td>
-        </tr>
-    </table>
-
             
             
                     </div>
     </div>
 
-                <h3 id="method_get">
-        <div class="location">at line 72</div>
+                <h3 id="method_call">
+        <div class="location">at line 86</div>
         <code>            public            string
-    <strong>get</strong>(string $path, array $query = array())</code>
+    <strong>call</strong>(string $method, string $path, array $query = array(), array $postFields = array())</code>
     </h3>
     <div class="details">
-        <p>Executes a GET request</p>
+        <p>Performs an HTTP request, returns the body response</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -227,56 +208,9 @@
                     <table>
                     <tr>
                 <td>string</td>
-                <td>$path</td>
-                <td>The path to query</td>
+                <td>$method</td>
+                <td>The method</td>
             </tr>
-                    <tr>
-                <td>array</td>
-                <td>$query</td>
-                <td>An array of query parameters</td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>string</td>
-            <td>The response body</td>
-        </tr>
-    </table>
-
-            
-                            <h4>Exceptions</h4>
-
-                    <table>
-                    <tr>
-                <td><abbr title="BadResponseException">BadResponseException</abbr></td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="http://php.net/RuntimeException"><abbr title="RuntimeException">RuntimeException</abbr></a></td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                    </div>
-    </div>
-
-                <h3 id="method_post">
-        <div class="location">at line 80</div>
-        <code>            public            string
-    <strong>post</strong>(string $path, array $query = array(), array $postFields = array())</code>
-    </h3>
-    <div class="details">
-        <p>Executes a POST request</p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
                     <tr>
                 <td>string</td>
                 <td>$path</td>
@@ -322,21 +256,31 @@
                     </div>
     </div>
 
-                <h3 id="method_setUserAgent">
-        <div class="location">at line 88</div>
-        <code>            public            
-    <strong>setUserAgent</strong>(<abbr title="PhraseanetSDK\HttpAdapter\type">type</abbr> $ua)</code>
+                <h3 id="method_create">
+        <div class="location">at line 103</div>
+        <code>        static    public            
+    <strong>create</strong>(array $config, array $cache = array(), array $plugins = array())</code>
     </h3>
     <div class="details">
-        <p>Sets the user agent</p>
+        <p></p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
 
                     <table>
                     <tr>
-                <td><abbr title="PhraseanetSDK\HttpAdapter\type">type</abbr></td>
-                <td>$ua</td>
+                <td>array</td>
+                <td>$config</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$cache</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$plugins</td>
                 <td></td>
             </tr>
             </table>

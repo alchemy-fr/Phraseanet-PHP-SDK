@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>PhraseanetSDK\Authentication\StoreInterface | Phraseanet PHP SDK API</title>
+        <title>PhraseanetSDK\Http\GuzzleAdapterInterface | Phraseanet PHP SDK API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,10 +19,10 @@
         <div id="title">Phraseanet PHP SDK API</div>
 
             <div class="type">Interface</div>
-    <h1><a href="../../PhraseanetSDK/Authentication.html">PhraseanetSDK\Authentication</a>\StoreInterface</h1>
+    <h1><a href="../../PhraseanetSDK/Http.html">PhraseanetSDK\Http</a>\GuzzleAdapterInterface</h1>
     </div>
         <div class="content">
-                <p>interface    <strong>StoreInterface</strong></p>
+                <p>interface    <strong>GuzzleAdapterInterface</strong></p>
 
     
     
@@ -35,7 +35,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_saveToken">saveToken</a>($token)
+                    <a href="#method_getGuzzle">getGuzzle</a>()
                     <p></p>
                 </td>
                 <td></td>
@@ -45,7 +45,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_getToken">getToken</a>()
+                    <a href="#method_call">call</a>($method, $path, array $query = array(), array $postFields = array())
                     <p></p>
                 </td>
                 <td></td>
@@ -55,10 +55,25 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method_saveToken">
-        <div class="location">at line 16</div>
+                        <h3 id="method_getGuzzle">
+        <div class="location">at line 7</div>
         <code>            public            
-    <strong>saveToken</strong>($token)</code>
+    <strong>getGuzzle</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_call">
+        <div class="location">at line 9</div>
+        <code>            public            
+    <strong>call</strong>($method, $path, array $query = array(), array $postFields = array())</code>
     </h3>
     <div class="details">
         <p></p>
@@ -69,26 +84,26 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$token</td>
+                <td>$method</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$path</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$query</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$postFields</td>
                 <td></td>
             </tr>
             </table>
 
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_getToken">
-        <div class="location">at line 17</div>
-        <code>            public            
-    <strong>getToken</strong>()</code>
-    </h3>
-    <div class="details">
-        <p></p>
-        <p></p>
-        <div class="tags">
             
             
             
