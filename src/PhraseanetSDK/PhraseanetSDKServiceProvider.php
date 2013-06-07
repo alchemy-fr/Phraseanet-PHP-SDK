@@ -23,6 +23,8 @@ use PhraseanetSDK\Recorder\Recorder;
 use PhraseanetSDK\Recorder\Player;
 use PhraseanetSDK\Recorder\RequestExtractor;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
+use PhraseanetSDK\Recorder\Filters\DuplicateFilter;
+use PhraseanetSDK\Recorder\Filters\LimitFilter;
 use Silex\Application as SilexApplication;
 use Silex\ServiceProviderInterface;
 
@@ -146,15 +148,25 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return $app['phraseanet-sdk.recorder.storage-factory']->create($config['type'], $config['options']);
         });
 
-        $app['phraseanet-sdk.recorder'] = $app->share(function (SilexApplication $app) {
-            $config = $app['phraseanet-sdk.recorder.config.merged'];
+        $app['phraseanet-sdk.recorder.filters'] = $app->share(function (SilexApplication $app) {
+            return array(
+                new DuplicateFilter(),
+                new LimitFilter($app['phraseanet-sdk.recorder.config.merged']['limit']),
+            );
+        });
 
-            return new Recorder(
+        $app['phraseanet-sdk.recorder'] = $app->share(function (SilexApplication $app) {
+            $recorder = new Recorder(
                 $app['phraseanet-sdk.guzzle.history-plugin'],
                 $app['phraseanet-sdk.recorder.storage'],
-                $app['phraseanet-sdk.recorder.request-extractor'],
-                $config['limit']
+                $app['phraseanet-sdk.recorder.request-extractor']
             );
+
+            foreach ($app['phraseanet-sdk.recorder.filters'] as $filter) {
+                $recorder->addFilter($filter);
+            }
+
+            return $recorder;
         });
 
         $app['phraseanet-sdk.player.factory'] = $app->protect(function ($token) use ($app) {

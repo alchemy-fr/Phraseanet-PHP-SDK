@@ -311,7 +311,6 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $recorder = $app['phraseanet-sdk.recorder'];
         $this->assertEquals($storage, $recorder->getStorage());
-        $this->assertEquals(666, $recorder->getLimit());
         $this->assertEquals($app['phraseanet-sdk.guzzle.history-plugin'], $recorder->getPlugin());
 
     }
