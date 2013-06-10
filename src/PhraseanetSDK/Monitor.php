@@ -107,9 +107,10 @@ class Monitor
     private function getEntity($name, $data)
     {
         $entity = new static::$mappings[$name]['entity']();
+        $camelizer = $this->camelizer;
 
-        array_walk($data, function ($value, $property) use ($entity) {
-            $method = 'set'.$this->camelizer->camelize($property);
+        array_walk($data, function ($value, $property) use ($entity, $camelizer) {
+            $method = 'set' . $camelizer->camelize($property);
 
             $ref = new \ReflectionParameter(array($entity, $method), 0);
             if (null !== $ref->getClass()) {
