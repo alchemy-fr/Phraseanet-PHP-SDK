@@ -152,7 +152,7 @@ class APIResponse
     }
 
     /**
-     * Returns trueif the response has the given property
+     * Returns true if the response has the given property
      *
      * @param string $property The property name
      *
