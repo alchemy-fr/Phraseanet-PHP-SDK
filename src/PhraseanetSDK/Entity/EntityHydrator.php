@@ -22,6 +22,7 @@ class EntityHydrator
      */
     CONST OBJECT_SCHEMA_URI = 'http://api.phraseanet.com/api/objects/';
     CONST TYPE_JSON_SCHEMA = '@entity@';
+
     /**
      * Transform a string to CamelStyle pr pascalCase
      *
@@ -38,9 +39,9 @@ class EntityHydrator
     /**
      * Hydrate an entity object from  a source
      *
-     * @param type          $entity is the entity we want to populate
-     * @param \stdClass     $object is the source of datas
-     * @param EntityManager $em     The entity manager
+     * @param EntityInterface $entity is the entity we want to populate
+     * @param \stdClass       $object is the source of datas
+     * @param EntityManager   $em     The entity manager
      *
      * @return \PhraseanetSDK\Entity\EntityInterface
      */

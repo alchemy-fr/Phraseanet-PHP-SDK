@@ -2,13 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Quarantine;
 use PhraseanetSDK\EntityManager;
 
-class QuarantineTest extends Repository
+class QuarantineTest extends RepositoryTestCase
 {
 
     public function testFindByOffset()

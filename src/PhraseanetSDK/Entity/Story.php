@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Story extends AbstractEntity implements EntityInterface
+class Story extends AbstractEntity
 {
     protected $storyId;
     protected $databoxId;
@@ -22,9 +22,7 @@ class Story extends AbstractEntity implements EntityInterface
     protected $collectionId;
     protected $uuid;
     protected $thumbnail;
-
     protected $records;
-
     protected $metadatas;
 
     /**

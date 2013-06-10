@@ -2,13 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Story;
 use PhraseanetSDK\EntityManager;
 
-class StoryTest extends Repository
+class StoryTest extends RepositoryTestCase
 {
     public function testSearch()
     {

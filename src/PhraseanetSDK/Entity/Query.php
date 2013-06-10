@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Query extends AbstractEntity implements EntityInterface
+class Query extends AbstractEntity
 {
     protected $offsetStart;
     protected $perPage;
@@ -207,5 +207,4 @@ class Query extends AbstractEntity implements EntityInterface
     {
         $this->results = $results;
     }
-
 }

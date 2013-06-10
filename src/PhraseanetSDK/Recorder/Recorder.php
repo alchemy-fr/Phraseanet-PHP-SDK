@@ -13,30 +13,32 @@ namespace PhraseanetSDK\Recorder;
 
 use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Recorder\Storage\StorageInterface;
+use PhraseanetSDK\Recorder\Filters\FilterInterface;
 
 class Recorder
 {
     private $plugin;
     private $storage;
-    private $limit;
     private $extractor;
+    private $filters = array();
 
-    public function __construct(HistoryPlugin $plugin, StorageInterface $storage, RequestExtractor $extractor, $limit = 400)
+    public function __construct(HistoryPlugin $plugin, StorageInterface $storage, RequestExtractor $extractor)
     {
         $this->plugin = $plugin;
         $this->storage = $storage;
-        $this->limit = $limit;
         $this->extractor = $extractor;
+    }
+
+    public function addFilter(FilterInterface $filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
     }
 
     public function getPlugin()
     {
         return $this->plugin;
-    }
-
-    public function getLimit()
-    {
-        return $this->limit;
     }
 
     public function getStorage()
@@ -52,32 +54,15 @@ class Recorder
             $data = $this->extractor->extract($request);
             $stack[] = $data;
         }
-        $this->removeDuplicates($stack);
-        $this->removeOldest($stack);
 
+        $this->applyFilters($stack);
         $this->storage->save($stack);
     }
 
-    private function removeOldest(&$stack)
+    private function applyFilters(&$stack)
     {
-        while (count($stack) > $this->limit) {
-            array_shift($stack);
+        foreach ($this->filters as $filter) {
+            $filter->apply($stack);
         }
-    }
-
-    private function removeDuplicates(&$stack)
-    {
-        $knowns = array();
-        $output = array();
-
-        foreach (array_reverse($stack) as $key => $data) {
-            $md5 = md5(serialize($data));
-            if (!isset($knowns[$md5])) {
-                array_unshift($output, $data);
-                $knowns[$md5] = true;
-            }
-        }
-
-        $stack = $output;
     }
 }

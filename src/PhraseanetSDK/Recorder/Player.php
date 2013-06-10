@@ -11,18 +11,18 @@
 
 namespace PhraseanetSDK\Recorder;
 
-use PhraseanetSDK\ClientInterface;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Recorder\Storage\StorageInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Player
 {
-    private $client;
+    private $adapter;
     private $storage;
 
-    public function __construct(ClientInterface $client, StorageInterface $storage)
+    public function __construct(APIGuzzleAdapter $adapter, StorageInterface $storage)
     {
-        $this->client = $client;
+        $this->adapter = $adapter;
         $this->storage = $storage;
     }
 
@@ -36,7 +36,7 @@ class Player
             ));
 
             $start = microtime(true);
-            $this->client->call($request['method'], $request['path'], $request['query'], $request['post-fields']);
+            $this->adapter->call($request['method'], $request['path'], $request['query'], $request['post-fields']);
             $duration = microtime(true) - $start;
 
             $this->output($output, sprintf(

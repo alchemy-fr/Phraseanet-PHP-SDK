@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class RecordCaption extends AbstractEntity implements EntityInterface
+class RecordCaption extends AbstractEntity
 {
     protected $metaStructureId;
     protected $name;

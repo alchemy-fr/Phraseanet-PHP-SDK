@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxCollection extends AbstractEntity implements EntityInterface
+class DataboxCollection extends AbstractEntity
 {
     protected $baseId;
     protected $collectionId;

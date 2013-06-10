@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Cgus extends AbstractEntity implements EntityInterface
+class Cgus extends AbstractEntity
 {
     protected $locale;
     protected $terms;
@@ -35,5 +35,4 @@ class Cgus extends AbstractEntity implements EntityInterface
     {
         $this->terms = $terms;
     }
-
 }

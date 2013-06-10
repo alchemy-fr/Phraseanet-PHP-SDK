@@ -13,5 +13,4 @@ namespace PhraseanetSDK\Entity;
 
 interface EntityInterface
 {
-
 }

@@ -2,13 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\DataboxCollection;
 use PhraseanetSDK\EntityManager;
 
-class DataboxCollectionTest extends Repository
+class DataboxCollectionTest extends RepositoryTestCase
 {
     public function testFindByDatabox()
     {

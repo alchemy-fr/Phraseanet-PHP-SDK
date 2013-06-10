@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Subdef extends AbstractEntity implements EntityInterface
+class Subdef extends AbstractEntity
 {
     protected $name;
     protected $height;

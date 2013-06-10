@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Recorder;
 
-use PhraseanetSDK\ClientInterface;
+use PhraseanetSDK\ApplicationInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 
@@ -23,7 +23,7 @@ class RequestExtractor
             'query'       => $request->getQuery()->toArray(),
             'post-fields' => $request instanceof EntityEnclosingRequestInterface ? $request->getPostFields()->toArray() : array(),
             'method'      => $request->getMethod(),
-            'path'        => substr($request->getPath(), strlen(ClientInterface::API_MOUNT_POINT)),
+            'path'        => substr($request->getPath(), strlen(ApplicationInterface::API_MOUNT_POINT)),
         );
     }
 }

@@ -11,7 +11,6 @@
 
 namespace PhraseanetSDK\Entity;
 
-class StoryMetadataBag extends AbstractEntity implements EntityInterface
+class StoryMetadataBag extends AbstractEntity
 {
-
 }

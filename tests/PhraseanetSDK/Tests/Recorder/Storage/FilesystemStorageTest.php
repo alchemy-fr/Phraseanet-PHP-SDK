@@ -57,6 +57,16 @@ class FilesystemStorageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($json, file_get_contents($this->file));
     }
 
+    public function testCount()
+    {
+        $storage = new FilesystemStorage($this->file);
+        $this->assertCount(0, $storage);
+        $storage->save(array('hello' => 'world'));
+        $this->assertCount(1, $storage);
+        $storage->save(array('hello' => 'world', 'bim' => 'bam'));
+        $this->assertCount(2, $storage);
+    }
+
     /**
      * @expectedException PhraseanetSDK\Exception\RuntimeException
      */

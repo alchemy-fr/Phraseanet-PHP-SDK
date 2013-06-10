@@ -2,12 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
 use PhraseanetSDK\Repository\Cgus;
 use PhraseanetSDK\EntityManager;
 
-class CgusTest extends Repository
+class CgusTest extends RepositoryTestCase
 {
 
     public function testfindCgus()

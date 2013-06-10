@@ -6,12 +6,11 @@ use PhraseanetSDK\Recorder\Player;
 
 class PlayerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers PhraseanetSDK\Recorder\Player::play
-     */
     public function testPlay()
     {
-        $client = $this->getMock('PhraseanetSDK\ClientInterface');
+        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+            ->disableOriginalConstructor()
+            ->getMock();
         $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
 
         $serializedRequest = array(
@@ -26,7 +25,9 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
             ->method('fetch')
             ->will($this->returnValue($storageData));
 
-        $player = new Player($client, $storage);
-        $player->play();
+        $output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
+
+        $player = new Player($adapter, $storage);
+        $player->play($output);
     }
 }

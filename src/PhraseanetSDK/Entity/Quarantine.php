@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Quarantine extends AbstractEntity implements EntityInterface
+class Quarantine extends AbstractEntity
 {
     protected $id;
     protected $quarantineSession;
@@ -164,7 +164,7 @@ class Quarantine extends AbstractEntity implements EntityInterface
     /**
      * Last updated date
      *
-     * @return type
+     * @return \DateTime
      */
     public function getUpdatedOn()
     {
@@ -175,5 +175,4 @@ class Quarantine extends AbstractEntity implements EntityInterface
     {
         $this->updatedOn = $updatedOn;
     }
-
 }
