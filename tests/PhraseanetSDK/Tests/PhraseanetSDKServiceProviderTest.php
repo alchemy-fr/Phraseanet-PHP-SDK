@@ -205,7 +205,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type' => 'array',
-                    'lifetime' => 300,
+                    'ttl' => 300,
                     'revalidate' => 'skip',
                     'factory' => $factory,
                     'can-cache-strategy' => $canCache,
@@ -215,14 +215,14 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'type' => 'couchdb',
-                    'lifetime' => 666,
+                    'ttl' => 666,
                     'revalidate' => 'deny',
                     'host' => 'notlocalhost',
                     'port' => 5432,
                 ),
                 array(
                     'type' => 'couchdb',
-                    'lifetime' => 666,
+                    'ttl' => 666,
                     'revalidate' => 'deny',
                     'host' => 'notlocalhost',
                     'port' => 5432,

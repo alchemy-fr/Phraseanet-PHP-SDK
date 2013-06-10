@@ -53,7 +53,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['phraseanet-sdk.cache.config.merged'] = $app->share(function(SilexApplication $app) {
             return $app['phraseanet-sdk.cache.config'] = array_replace_recursive(array(
                 'type'       => 'array',
-                'lifetime'   => 300,
+                'ttl'        => 300,
                 'revalidate' => 'skip',
                 'factory'    => $app['phraseanet-sdk.cache.factory'],
                 'revalidation-factory' => $app['phraseanet-sdk.guzzle.revalidation-factory'],
