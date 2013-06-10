@@ -34,4 +34,13 @@ interface ApplicationInterface
      * @return EntityManager
      */
     public function getEntityManager($token);
+
+    /**
+     * Returns a monitor instance
+     *
+     * @param string $token
+     *
+     * @return Monitor
+     */
+    public function getMonitor($token);
 }

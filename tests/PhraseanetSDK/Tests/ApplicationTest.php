@@ -207,6 +207,29 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($em2, $application->getEntityManager($token2));
     }
 
+    public function testMonitorAlwaysTheSame()
+    {
+        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $token1 = 'abcdef';
+        $token2 = 'fedcba';
+
+        $application = new Application($adapter, '12345', '54321');
+
+        $mon1 = $application->getMonitor($token1);
+        $mon2 = $application->getMonitor($token2);
+
+        $this->assertInstanceOf('PhraseanetSDK\Monitor', $mon1);
+        $this->assertInstanceOf('PhraseanetSDK\Monitor', $mon2);
+
+        $this->assertNotSame($mon1, $mon2);
+
+        $this->assertSame($mon1, $application->getMonitor($token1));
+        $this->assertSame($mon2, $application->getMonitor($token2));
+    }
+
     /**
      * @dataProvider provideInvalidTokens
      * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
