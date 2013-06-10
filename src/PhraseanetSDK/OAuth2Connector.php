@@ -46,12 +46,12 @@ class OAuth2Connector
      */
     public function getAuthorizationUrl($redirectUri, array $parameters = array(), array $scopes = array())
     {
-        $oauthParams = array_replace(array(
+        $oauthParams = array_replace($parameters, array(
             'redirect_uri'  => $redirectUri,
             'response_type' => 'code',
             'client_id'     => $this->clientId,
             'scope'         => implode(' ', $scopes),
-        ), $parameters);
+        ));
 
         $parameters = http_build_query($oauthParams, null, '&');
 
