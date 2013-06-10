@@ -30,6 +30,10 @@ class CanCacheStrategy implements CanCacheStrategyInterface
      */
     public function canCacheResponse(Response $response)
     {
+        if (false !== strpos($response->getEffectiveUrl(), '/api/v1/monitor/')) {
+            return false;
+        }
+
         return $response->isSuccessful();
     }
 }

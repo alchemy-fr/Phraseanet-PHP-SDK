@@ -78,6 +78,28 @@ class Application implements ApplicationInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getMonitor($token)
+    {
+        if ('' === trim($token)) {
+            throw new InvalidArgumentException('Token can not be empty.');
+        }
+
+        if (isset($this->monitors[$token])) {
+            return $this->monitors[$token];
+        }
+
+        return $this->monitors[$token] = new Monitor(
+            new APIGuzzleAdapter(
+                new ConnectedGuzzleAdapter(
+                    $token, $this->adapter
+                )
+            )
+        );
+    }
+
+    /**
      * Returns the guzzle adapter
      *
      * @return GuzzleAdapter
