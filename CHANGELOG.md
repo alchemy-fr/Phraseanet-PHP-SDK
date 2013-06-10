@@ -9,6 +9,7 @@ CHANGELOG
   * Add simpler log support.
   * Add support for PhraseanetSDK profiling through silex web profiler.
   * Add requests recorder.
+  * Add support for monitoring routes.
 
 * 0.2.2 (03-18-2013)
 
