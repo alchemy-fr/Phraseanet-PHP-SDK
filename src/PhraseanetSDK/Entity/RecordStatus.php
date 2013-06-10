@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class RecordStatus extends AbstractEntity implements EntityInterface
+class RecordStatus extends AbstractEntity
 {
     protected $bit;
     protected $state;
@@ -45,5 +45,4 @@ class RecordStatus extends AbstractEntity implements EntityInterface
     {
         $this->state = $state;
     }
-
 }

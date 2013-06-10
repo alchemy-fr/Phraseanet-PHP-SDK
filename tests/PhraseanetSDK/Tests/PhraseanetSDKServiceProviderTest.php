@@ -3,9 +3,7 @@
 namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\PhraseanetSDKServiceProvider;
-use Monolog\Handler\NullHandler;
 use Silex\Application;
-use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use PhraseanetSDK\Cache\CanCacheStrategy;
@@ -36,13 +34,31 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function provideServices()
     {
         return array(
-            array('phraseanet-sdk', 'PhraseanetSDK\Client'),
+            array('phraseanet-sdk', 'PhraseanetSDK\Application'),
             array('phraseanet-sdk.cache.factory', 'PhraseanetSDK\Cache\CacheFactory'),
             array('phraseanet-sdk.guzzle.revalidation-factory', 'PhraseanetSDK\Cache\RevalidationFactory'),
             array('phraseanet-sdk.guzzle.can-cache-strategy', 'PhraseanetSDK\Cache\CanCacheStrategy'),
             array('phraseanet-sdk.recorder', 'PhraseanetSDK\Recorder\Recorder'),
-            array('phraseanet-sdk.player', 'PhraseanetSDK\Recorder\Player'),
         );
+    }
+
+    public function testPlayerFactory()
+    {
+        $app = $this->getConfiguredApplication();
+        $app->register(new PhraseanetSDKServiceProvider(), array(
+            'phraseanet-sdk.config' => array(
+                'client-id' => 'sdfmqlsdkfm',
+                'secret'    => 'eoieep',
+                'url'       => 'https://bidule.net',
+            )
+        ));
+        $app->boot();
+
+        $player1 = $app['phraseanet-sdk.player.factory']('token');
+        $player2 = $app['phraseanet-sdk.player.factory']('token');
+        $this->assertInstanceOf('PhraseanetSDK\Recorder\Player', $player1);
+        $this->assertInstanceOf('PhraseanetSDK\Recorder\Player', $player2);
+        $this->assertNotSame($player2, $player1);
     }
 
     /**
@@ -157,13 +173,13 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provideVariousConfigs
+     * @dataProvider provideVariousCacheConfigs
      */
-    public function testConfigMerge($config, $expected)
+    public function testCacheConfigMerge($config, $expected)
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            'phraseanet-sdk.config' => $config
+            'phraseanet-sdk.cache.config' => $config
         ));
         // triggers build
         try {
@@ -171,64 +187,50 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         } catch (ExceptionInterface $e) {
 
         }
-        $this->assertEquals($expected, $app['phraseanet-sdk.config']);
+        $this->assertEquals($expected, $app['phraseanet-sdk.cache.config']);
     }
 
-    public function provideVariousConfigs()
+    public function provideVariousCacheConfigs()
     {
         $revalidation = $this->getMock('PhraseanetSDK\Cache\RevalidationFactoryInterface');
         $canCache = $this->getMock('Guzzle\Plugin\Cache\CanCacheStrategyInterface');
         $factory = $this->getMock('PhraseanetSDK\Cache\CacheFactoryInterface');
-        $plugins = array('plugin');
 
         return array(
-            array(array(
-                'cache'     => array(
+            array(
+                array(
                     'factory' => $factory,
+                    'can-cache-strategy' => $canCache,
+                    'revalidation-factory' => $revalidation,
                 ),
-                'guzzle' => array(
-                    'plugins' => $plugins,
+                array(
+                    'type' => 'array',
+                    'lifetime' => 300,
+                    'revalidate' => 'skip',
+                    'factory' => $factory,
                     'can-cache-strategy' => $canCache,
                     'revalidation-factory' => $revalidation,
                 )
-            ),array(
-                'cache'     => array(
-                    'factory' => $factory,
+            ),
+            array(
+                array(
+                    'type' => 'couchdb',
+                    'lifetime' => 666,
+                    'revalidate' => 'deny',
+                    'host' => 'notlocalhost',
+                    'port' => 5432,
                 ),
-                'guzzle' => array(
-                    'plugins' => $plugins,
-                    'can-cache-strategy' => $canCache,
-                    'revalidation-factory' => $revalidation,
-                )
-            )),
-            array(array(
-                'client-id' => 'sdfmqlsdkfm',
-                'secret'    => 'eoieep',
-                'url'       => 'https://bidule.net',
-            ),array(
-                'client-id' => 'sdfmqlsdkfm',
-                'secret'    => 'eoieep',
-                'url'       => 'https://bidule.net',
-                'cache'     => array(
+                array(
+                    'type' => 'couchdb',
+                    'lifetime' => 666,
+                    'revalidate' => 'deny',
+                    'host' => 'notlocalhost',
+                    'port' => 5432,
                     'factory' => new CacheFactory(),
-                ),
-                'guzzle' => array(
-                    'plugins' => array(),
-                    'can-cache-strategy' => new CanCacheStrategy,
-                    'revalidation-factory' => new RevalidationFactory,
+                    'can-cache-strategy' => new CanCacheStrategy(),
+                    'revalidation-factory' => new RevalidationFactory(),
                 )
-            )),
-            array(array(
-            ),array(
-                'cache'     => array(
-                    'factory' => new CacheFactory(),
-                ),
-                'guzzle' => array(
-                    'plugins' => array(),
-                    'can-cache-strategy' => new CanCacheStrategy,
-                    'revalidation-factory' => new RevalidationFactory,
-                )
-            )),
+            ),
         );
     }
 
@@ -309,18 +311,12 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $recorder = $app['phraseanet-sdk.recorder'];
         $this->assertEquals($storage, $recorder->getStorage());
-        $this->assertEquals(666, $recorder->getLimit());
         $this->assertEquals($app['phraseanet-sdk.guzzle.history-plugin'], $recorder->getPlugin());
 
     }
 
     private function getConfiguredApplication()
     {
-        $app = new Application();
-
-        $app->register(new MonologServiceProvider());
-        $app['monolog.handler'] = new NullHandler();
-
-        return $app;
+        return new Application();
     }
 }

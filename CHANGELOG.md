@@ -3,14 +3,12 @@ CHANGELOG
 
 * 0.3.0 (xx-xx-2013)
 
-  * Add PhraseanetSDK\ClientInterface.
-  * Add Client::getEntityManager method.
-  * Simplification of Client creation with Client::create method.
+  * Add PhraseanetSDK\Application ; BC Break, PhraseanetSDK\Client does not
+    exist anymore.
   * Add cache support.
   * Add simpler log support.
   * Add support for PhraseanetSDK profiling through silex web profiler.
   * Add requests recorder.
-  * BC Break : Update ClientInterface::call signature, separate query and post fields parameters.
 
 * 0.2.2 (03-18-2013)
 

@@ -16,17 +16,15 @@ use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
-    /**
-     *
-     * @var Manager
-     */
+    /** @var EntityManager */
     protected $em;
 
     /**
-     *
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
@@ -35,21 +33,20 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @codeCoverageIgnore
-     * @return PhraseanetSDK\Client
+     * @return APIGuzzleAdapter
      */
-    private function getClient()
+    private function getAdapter()
     {
-        return $this->em->getClient();
+        return $this->em->getAdapter();
     }
 
     /**
      * Query the API
      *
-     * @param  string                             $method HTTP method type (POST, GET ...)
-     * @param  string                             $path   The requested path (/path/to/ressource/1)
-     * @param  array                              $params An array of query parameters
-     * @return PhraseanetSDK\HttpAdapter\Response
+     * @param  string                $method HTTP method type (POST, GET ...)
+     * @param  string                $path   The requested path (/path/to/ressource/1)
+     * @param  array                 $params An array of query parameters
+     * @return APIResponse
      * @throws NotFoundException
      * @throws UnauthorizedException
      * @throws RuntimeException
@@ -57,10 +54,10 @@ abstract class AbstractRepository implements RepositoryInterface
     protected function query($method, $path, $query = array(), $postFields = array())
     {
         try {
-            $response = $this->getClient()->call($method, $path, $query, $postFields);
+            $response = $this->getAdapter()->call($method, $path, $query, $postFields);
         } catch (BadResponseException $e) {
-            $httpStatusCode = $e->getHttpStatusCode();
-            switch ($httpStatusCode) {
+            $statusCode = $e->getStatusCode();
+            switch ($statusCode) {
                 case 404:
                     throw new NotFoundException(sprintf('Resource under %s could not be found', $path));
                     break;

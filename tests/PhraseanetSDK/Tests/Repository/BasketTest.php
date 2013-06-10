@@ -2,13 +2,11 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Repository\Basket;
 use PhraseanetSDK\EntityManager;
 
-class BasketTest extends Repository
+class BasketTest extends RepositoryTestCase
 {
 
     public function testFindByRecord()

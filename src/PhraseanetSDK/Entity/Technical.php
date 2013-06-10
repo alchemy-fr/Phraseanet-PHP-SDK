@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Technical extends AbstractEntity implements EntityInterface
+class Technical extends AbstractEntity
 {
     protected $name;
     protected $value;

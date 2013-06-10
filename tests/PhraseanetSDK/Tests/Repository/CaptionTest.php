@@ -2,13 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\Caption;
 use PhraseanetSDK\EntityManager;
 
-class CaptionTest extends Repository
+class CaptionTest extends RepositoryTestCase
 {
 
     public function testfindCaptionByRecord()

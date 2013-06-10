@@ -2,13 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
-use PhraseanetSDK\Client;
 use PhraseanetSDK\Repository\RecordStatus;
 use PhraseanetSDK\EntityManager;
 
-class RecordStatusTest extends Repository
+class RecordStatusTest extends RepositoryTestCase
 {
 
     public function testFindByRecord()

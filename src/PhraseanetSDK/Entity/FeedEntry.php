@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class FeedEntry extends AbstractEntity implements EntityInterface
+class FeedEntry extends AbstractEntity
 {
     protected $id;
     protected $feedId;
@@ -159,5 +159,4 @@ class FeedEntry extends AbstractEntity implements EntityInterface
     {
         $this->feedId = $feedId;
     }
-
 }

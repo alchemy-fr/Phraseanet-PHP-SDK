@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class QuarantineSession extends AbstractEntity implements EntityInterface
+class QuarantineSession extends AbstractEntity
 {
     protected $id;
     protected $usrId;

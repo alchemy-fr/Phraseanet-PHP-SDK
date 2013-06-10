@@ -11,24 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Databox extends AbstractEntity implements EntityInterface
+class Databox extends AbstractEntity
 {
-    /**
-     *
-     * @var integer
-     */
+    /** @var integer */
     protected $databoxId;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $version;
 
     /**

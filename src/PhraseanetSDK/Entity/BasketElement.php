@@ -13,7 +13,7 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class BasketElement extends AbstractEntity implements EntityInterface
+class BasketElement extends AbstractEntity
 {
     protected $basketElementId;
     protected $order;

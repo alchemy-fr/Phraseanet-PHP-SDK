@@ -2,12 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
-require_once 'Repository.php';
-
 use PhraseanetSDK\Repository\BasketElement;
 use PhraseanetSDK\EntityManager;
 
-class BasketElementTest extends Repository
+class BasketElementTest extends RepositoryTestCase
 {
 
     public function testFindByBasket()

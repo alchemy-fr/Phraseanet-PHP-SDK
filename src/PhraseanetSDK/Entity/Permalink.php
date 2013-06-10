@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Permalink extends AbstractEntity implements EntityInterface
+class Permalink extends AbstractEntity
 {
     protected $id;
     protected $isActivated;

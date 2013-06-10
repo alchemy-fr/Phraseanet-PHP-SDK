@@ -13,78 +13,45 @@ namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Feed extends AbstractEntity implements EntityInterface
+class Feed extends AbstractEntity
 {
-    /**
-     *
-     * @var int
-     */
+    /** @var integer */
     protected $id;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $title;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $icon;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $subTitle;
 
-    /**
-     *
-     * @var int
-     */
+    /** @var integer */
     protected $totalEntries;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $createdOn;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     protected $updatedOn;
 
-    /**
-     *
-     * @var Doctrine\Common\ArrayCollection
-     */
+    /** @var ArrayCollection */
     protected $entries;
 
-    /**
-     *
-     * @var Boolean
-     */
+    /** @var Boolean */
     protected $public;
 
-    /**
-     *
-     * @var Boolean
-     */
+    /** @var Boolean */
     protected $readonly;
 
-    /**
-     *
-     * @var Boolean
-     */
+    /** @var Boolean */
     protected $deletable;
 
     /**
      * The feed id
      *
-     * @return type
+     * @return integer
      */
     public function getId()
     {
@@ -144,7 +111,7 @@ class Feed extends AbstractEntity implements EntityInterface
     /**
      * Get the total entries of the feed
      *
-     * @return type
+     * @return integer
      */
     public function getTotalEntries()
     {
