@@ -38,7 +38,7 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
                 array(),
             ),
             array(
-                'http://phraseanet.com/api/oauthv2/authorize?redirect_uri='.urlencode('http://consumer.com/callback/').'&response_type=code&client_id=api-client-id&scope=scope1+scope2&extra=param%C3%A8ter',
+                'http://phraseanet.com/api/oauthv2/authorize?extra=param%C3%A8ter&redirect_uri='.urlencode('http://consumer.com/callback/').'&response_type=code&client_id=api-client-id&scope=scope1+scope2',
                 'http://phraseanet.com/api/v1/',
                 'http://consumer.com/callback/',
                 array('extra' => 'paramèter'),

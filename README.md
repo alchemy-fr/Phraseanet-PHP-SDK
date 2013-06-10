@@ -111,7 +111,7 @@ $client = Client::create(
         'type'       => 'memcached', // cache type
         'host'       => '127.0.0.1', // cache server host
         'port'       => 11211,       // cache server port
-        'lifetime'   => 300,         // cache lifetime in seconds
+        'ttl'        => 300,         // cache ttl in seconds
     )
 ));
 ```
@@ -229,6 +229,17 @@ $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
         'revalidate' => 'deny',  // important
     )
 ));
+```
+
+## Monitor
+
+SDK provides a tool to monitor Phraseanet :
+
+```php
+$monitor = $app->getMonitor($token);
+$scheduler = $monitor->getScheduler();
+
+echo sprintf("Scheduler state is %s", $scheduler->getState());
 ```
 
 ## License

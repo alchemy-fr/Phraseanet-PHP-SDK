@@ -23,6 +23,7 @@ use PhraseanetSDK\Recorder\Recorder;
 use PhraseanetSDK\Recorder\Player;
 use PhraseanetSDK\Recorder\RequestExtractor;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
+use PhraseanetSDK\Recorder\Filters\MonitorFilter;
 use PhraseanetSDK\Recorder\Filters\DuplicateFilter;
 use PhraseanetSDK\Recorder\Filters\LimitFilter;
 use Silex\Application as SilexApplication;
@@ -52,7 +53,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['phraseanet-sdk.cache.config.merged'] = $app->share(function(SilexApplication $app) {
             return $app['phraseanet-sdk.cache.config'] = array_replace_recursive(array(
                 'type'       => 'array',
-                'lifetime'   => 300,
+                'ttl'        => 300,
                 'revalidate' => 'skip',
                 'factory'    => $app['phraseanet-sdk.cache.factory'],
                 'revalidation-factory' => $app['phraseanet-sdk.guzzle.revalidation-factory'],
@@ -150,6 +151,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 
         $app['phraseanet-sdk.recorder.filters'] = $app->share(function (SilexApplication $app) {
             return array(
+                new MonitorFilter(),
                 new DuplicateFilter(),
                 new LimitFilter($app['phraseanet-sdk.recorder.config.merged']['limit']),
             );
