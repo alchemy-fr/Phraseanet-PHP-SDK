@@ -1,7 +1,7 @@
 CHANGELOG
 ---------
 
-* 0.3.0 (xx-xx-2013)
+* 0.3.0 (06-10-2013)
 
   * Add PhraseanetSDK\Application ; BC Break, PhraseanetSDK\Client does not
     exist anymore.

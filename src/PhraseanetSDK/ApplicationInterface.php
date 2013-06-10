@@ -17,7 +17,7 @@ interface ApplicationInterface
     const API_MOUNT_POINT = '/api/v1/';
 
     /** @var string SDK version */
-    const VERSION = '0.3-dev';
+    const VERSION = '0.3.0';
 
     /**
      * Return the OAuth2Connector
