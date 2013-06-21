@@ -77,17 +77,18 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * @param string $path       The path to query
      * @param array  $query      An array of query parameters
      * @param array  $postFields An array of post fields
+     * @param array  $files      An array of post files
      *
      * @return string The response body
      *
      * @throws BadResponseException
      * @throws RuntimeException
      */
-    public function call($method, $path, array $query = array(), array $postFields = array())
+    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array())
     {
         try {
             $request = $this->guzzle->createRequest($method, $path, array('accept' => 'application/json'));
-            $this->addRequestParameters($request, $query, $postFields);
+            $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
         } catch (CurlException $e) {
             throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
@@ -126,7 +127,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         return new static($guzzle);
     }
 
-    private function addRequestParameters(RequestInterface $request, $query, $postFields)
+    private function addRequestParameters(RequestInterface $request, $query, $postFields, $files)
     {
         foreach ($query as $name => $value) {
             $request->getQuery()->add($name, $value);
@@ -135,6 +136,9 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         if ($request instanceof EntityEnclosingRequestInterface) {
             foreach ($postFields as $name => $value) {
                 $request->getPostFields()->add($name, $value);
+            }
+            foreach ($files as $name => $filename) {
+                $request->addPostFile($name, $filename);
             }
         } elseif (0 < count($postFields)) {
             throw new InvalidArgumentException('Can not add post fields to GET request');

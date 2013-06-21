@@ -207,6 +207,29 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($em2, $application->getEntityManager($token2));
     }
 
+    public function testLoadersAreAlwaysTheSame()
+    {
+        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $token1 = 'abcdef';
+        $token2 = 'fedcba';
+
+        $application = new Application($adapter, '12345', '54321');
+
+        $loader1 = $application->getLoader($token1);
+        $loader2 = $application->getLoader($token2);
+
+        $this->assertInstanceOf('PhraseanetSDK\Loader', $loader1);
+        $this->assertInstanceOf('PhraseanetSDK\Loader', $loader2);
+
+        $this->assertNotSame($loader2, $loader1);
+
+        $this->assertSame($loader1, $application->getLoader($token1));
+        $this->assertSame($loader2, $application->getLoader($token2));
+    }
+
     public function testMonitorAlwaysTheSame()
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')

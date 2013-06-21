@@ -9,27 +9,27 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideCallParameters
      */
-    public function testCall($method, $path, $query, $postFields, $token)
+    public function testCall($method, $path, $query, $postFields, $token, $files)
     {
         $response = mt_rand() . 'response';
 
         $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('call')
-            ->with($method, $path, array_replace($query, array('oauth_token' => $token)), $postFields)
+            ->with($method, $path, array_replace($query, array('oauth_token' => $token)), $postFields, $files)
             ->will($this->returnValue($response));
 
         $connected = new ConnectedGuzzleAdapter($token, $adapter);
-        $connected->call($method, $path, $query, $postFields);
+        $connected->call($method, $path, $query, $postFields, $files);
     }
 
     public function provideCallParameters()
     {
         return array(
-            array('GET', '/path/to/resource', array(), array(), 'token-'.mt_rand()),
-            array('GET', '/path/to/resource', array('query1' => 'value1', 'oauth_token' => 'custom_token'), array(), 'token-'.mt_rand()),
-            array('POST', '/path/to/resource', array('query1' => 'value1', 'oauth_token' => 'custom_token'), array('post' => 'value'), 'token-'.mt_rand()),
-            array('POST', '/path/to/resource', array('query1' => 'value1'), array('post' => 'value'), 'token-'.mt_rand()),
+            array('GET', '/path/to/resource', array(), array(), 'token-'.mt_rand(), array()),
+            array('GET', '/path/to/resource', array('query1' => 'value1', 'oauth_token' => 'custom_token'), array(), 'token-'.mt_rand(), array()),
+            array('POST', '/path/to/resource', array('query1' => 'value1', 'oauth_token' => 'custom_token'), array('post' => 'value'), 'token-'.mt_rand(), array('file' => '/path/to/file')),
+            array('POST', '/path/to/resource', array('query1' => 'value1'), array('post' => 'value'), 'token-'.mt_rand(), array('file' => '/path/to/file')),
         );
     }
 
