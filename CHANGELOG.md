@@ -1,7 +1,7 @@
 CHANGELOG
 ---------
 
-* 0.3.1 (xx-xx-2013)
+* 0.4.0 (06-21-2013)
 
   * Add SDK Loader to upload files to Phraseanet.
 
