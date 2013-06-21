@@ -121,7 +121,7 @@ $result = $loader->upload('/path/to/file.jpg', $base_id, $behavior, '1011000');
 Behavior can be either :
 
  - 0 to force record
- - 0 to force quarantine
+ - 1 to force quarantine
  - null to let Phraseanet check (default behavior)
 
 ## Configuration
