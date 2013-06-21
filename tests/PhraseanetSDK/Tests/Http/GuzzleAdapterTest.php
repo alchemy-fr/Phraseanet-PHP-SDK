@@ -39,7 +39,7 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideCallParameters
      */
-    public function testCall($method, $path, $query, $postFields)
+    public function testCall($method, $path, $query, $postFields, $files)
     {
         if ('GET' === $method) {
             $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
@@ -51,6 +51,9 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
             $request->expects($this->exactly(count($postFields)))
                 ->method('getPostFields')
                 ->will($this->returnValue($queryPostFields));
+
+            $request->expects($this->exactly(count($files)))
+                ->method('addPostFile');
         }
 
         $body = 'body '.mt_rand();
@@ -79,18 +82,21 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($request));
 
         $adapter = new GuzzleAdapter($guzzle);
-        $this->assertEquals($body, $adapter->call($method, $path, $query, $postFields));
+        $this->assertEquals($body, $adapter->call($method, $path, $query, $postFields, $files));
     }
 
     public function provideCallParameters()
     {
         return array(
-            array('GET', 'path/to/resource', array(), array()),
-            array('GET', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array()),
-            array('POST', 'path/to/resource', array(), array()),
-            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array()),
-            array('POST', 'path/to/resource', array(), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3')),
-            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3')),
+            array('GET', 'path/to/resource', array(), array(), array()),
+            array('GET', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array()),
+            array('POST', 'path/to/resource', array(), array(), array()),
+            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array()),
+            array('POST', 'path/to/resource', array(), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array()),
+            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array()),
+            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array('file' => '/path/to/file')),
+            array('POST', 'path/to/resource', array(), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array('file' => '/path/to/file')),
+            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array('file' => '/path/to/file')),
         );
     }
 

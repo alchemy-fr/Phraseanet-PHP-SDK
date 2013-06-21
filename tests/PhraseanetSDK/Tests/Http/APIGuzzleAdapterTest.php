@@ -26,16 +26,17 @@ class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $path = '/path/to/resource';
         $query = array('query' => 'value');
         $postFields = array('post' => 'field');
+        $files = array('file' => '/path/to/file');
         $response = array('meta' => array(), 'response' => array());
 
         $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('call')
-            ->with()
+            ->with($method, $path, $query, $postFields, $files)
             ->will($this->returnValue(json_encode($response)));
 
         $connected = new APIGuzzleAdapter($adapter);
-        $apiResponse = $connected->call($method, $path, $query, $postFields);
+        $apiResponse = $connected->call($method, $path, $query, $postFields, $files);
 
         $this->assertInstanceOf('PhraseanetSDK\Http\APIResponse', $apiResponse);
         $this->assertEquals(new APIResponse(json_decode(json_encode($response))), $apiResponse);
@@ -47,15 +48,16 @@ class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $path = '/path/to/resource';
         $query = array('query' => 'value');
         $postFields = array('post' => 'field');
+        $files = array('file' => '/path/to/file');
 
         $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('call')
-            ->with()
+            ->with($method, $path, $query, $postFields, $files)
             ->will($this->returnValue('non json string'));
 
         $connected = new APIGuzzleAdapter($adapter);
         $this->setExpectedException('PhraseanetSDK\Exception\RuntimeException');
-        $connected->call($method, $path, $query, $postFields);
+        $connected->call($method, $path, $query, $postFields, $files);
     }
 }
