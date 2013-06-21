@@ -112,7 +112,7 @@ if ($result instanceof PhraseanetSDK\Entity\Record) {
 entity.
 
 Please note that you can force the behavior with the third argument and pass
-a binary string of status as fourth argument :
+a Phraseanet record status (binary string) as fourth argument :
 
 ```php
 $result = $loader->upload('/path/to/file.jpg', $base_id, $behavior, '1011000');
