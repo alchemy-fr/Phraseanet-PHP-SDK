@@ -80,6 +80,38 @@ foreach($query->getResults() as $record) {
 }
 ```
 
+### Upload files
+
+The Loader is used to upload files to Phraseanet.
+
+```php
+$loader = $app->getLoader($token);
+
+$result = $loader->upload('/path/to/file.jpg', $base_id);
+
+if ($result instanceof PhraseanetSDK\Entity\Record) {
+    // record has been created
+} elseif ($result instanceof PhraseanetSDK\Entity\Quarantine) {
+    // record has been quarantined
+}
+```
+
+`$base_id` can be either a `base_id` value or a `PhraseanetSDK\Entity\DataboxCollection`
+entity.
+
+Please note that you can force the behavior with the third argument and pass
+a binary string of status as fourth argument :
+
+```php
+$result = $loader->upload('/path/to/file.jpg', $base_id, $behavior, '1011000');
+```
+
+Behavior can be either :
+
+ - 0 to force record
+ - 0 to force quarantine
+ - null to let Phraseanet check (default behavior)
+
 ## Configuration
 
 ### Log
