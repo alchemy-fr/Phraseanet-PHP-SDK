@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+* 0.3.1 (xx-xx-2013)
+
+  * Add SDK Loader to upload files to Phraseanet.
+
 * 0.3.0 (06-10-2013)
 
   * Add PhraseanetSDK\Application ; BC Break, PhraseanetSDK\Client does not

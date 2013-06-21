@@ -36,6 +36,12 @@ class Application implements ApplicationInterface
     /** @var OAuth2Connector */
     private $connector;
 
+    /** @var APIGuzzleAdapter */
+    private $APIAdapter = array();
+
+    /** @var array An array of loaders */
+    private $loaders = array();
+
     public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
     {
         $this->adapter = $adapter;
@@ -55,6 +61,19 @@ class Application implements ApplicationInterface
         return $this->connector = new OAuth2Connector($this->adapter, $this->clientId, $this->secret);
     }
 
+    public function getLoader($token)
+    {
+        if ('' === trim($token)) {
+            throw new InvalidArgumentException('Token can not be empty.');
+        }
+
+        if (isset($this->loaders[$token])) {
+            return $this->loaders[$token];
+        }
+
+        return $this->loaders[$token] = new Loader($this->getAPIGuzzleAdapter($token), $this->getEntityManager($token));
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -68,13 +87,7 @@ class Application implements ApplicationInterface
             return $this->ems[$token];
         }
 
-        return $this->ems[$token] = new EntityManager(
-            new APIGuzzleAdapter(
-                new ConnectedGuzzleAdapter(
-                    $token, $this->adapter
-                )
-            )
-        );
+        return $this->ems[$token] = new EntityManager($this->getAPIGuzzleAdapter($token));
     }
 
     /**
@@ -90,13 +103,7 @@ class Application implements ApplicationInterface
             return $this->monitors[$token];
         }
 
-        return $this->monitors[$token] = new Monitor(
-            new APIGuzzleAdapter(
-                new ConnectedGuzzleAdapter(
-                    $token, $this->adapter
-                )
-            )
-        );
+        return $this->monitors[$token] = new Monitor($this->getAPIGuzzleAdapter($token));
     }
 
     /**
@@ -127,5 +134,18 @@ class Application implements ApplicationInterface
             $config['client-id'],
             $config['secret']
         );
+    }
+
+    private function getAPIGuzzleAdapter($token)
+    {
+        if (!isset($this->APIAdapter[$token])) {
+            $this->APIAdapter[$token] = new APIGuzzleAdapter(
+                new ConnectedGuzzleAdapter(
+                    $token, $this->adapter
+                )
+            );
+        }
+
+        return $this->APIAdapter[$token];
     }
 }
