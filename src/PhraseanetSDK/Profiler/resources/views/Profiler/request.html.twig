@@ -102,6 +102,26 @@
         </tbody>
     </table>
 
+    {% if request.post_parameters %}
+        <h5>Post Parameters</h5>
+        <table>
+            <tbody>
+            {% for name,parameter in request.post_parameters %}
+                <tr>
+                    <th>{{ name }}</th>
+                    <td>
+                        {% if parameter is iterable %}
+                            {{ _self.display_array_recursive(parameter) }}
+                        {% else %}
+                            {{ parameter }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
     {% if requestContent is not empty %}
         <h5>Content</h5>
         <pre class="prettyprint linenums"><code class="language-javascript  ">{{ requestContent|replace({"\t\t\n": "", "\t": "  "}) }}</code></pre>

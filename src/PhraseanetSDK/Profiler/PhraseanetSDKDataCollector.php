@@ -123,6 +123,8 @@ class PhraseanetSDKDataCollector extends DataCollector
      */
     private function sanitizeRequest(RequestInterface $request)
     {
+        $postParameters = $request instanceof EntityEnclosingRequestInterface ? $request->getPostFields() : null;
+
         return array(
             'method'           => $request->getMethod(),
             'protocol_version' => $request->getProtocolVersion(),
@@ -132,6 +134,7 @@ class PhraseanetSDKDataCollector extends DataCollector
             'query'            => $request->getQuery(),
             'headers'          => $request->getHeaders()->toArray(),
             'query_parameters' => $request->getUrl(true)->getQuery(),
+            'post_parameters'  => $postParameters,
         );
     }
 
