@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Recorder;
 
+use Guzzle\Common\Exception\GuzzleException;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Recorder\Storage\StorageInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,13 +37,25 @@ class Player
             ));
 
             $start = microtime(true);
-            $this->adapter->call($request['method'], $request['path'], $request['query'], $request['post-fields']);
+            $error = null;
+            try {
+                $this->adapter->call($request['method'], $request['path'], $request['query'], $request['post-fields']);
+            } catch (GuzzleException $e) {
+                $error = $e;
+            }
             $duration = microtime(true) - $start;
 
-            $this->output($output, sprintf(
-                "    Query took <comment>%f</comment>.\n",
-                $duration
-            ));
+            if (null !== $error) {
+                $this->output($output, sprintf(
+                    "    Query <error>failed</error> : %s.\n",
+                    $e->getMessage()
+                ));
+            } else {
+                $this->output($output, sprintf(
+                    "    Query took <comment>%f</comment>.\n",
+                    $duration
+                ));
+            }
         }
     }
 
