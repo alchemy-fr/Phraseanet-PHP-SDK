@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+* 0.4.2 (xx-xx-2014)
+
+  * Avoid player crashs because of HTTP failure.
+
 * 0.4.1 (01-31-2014)
 
   * Add post parameters to profiler.
