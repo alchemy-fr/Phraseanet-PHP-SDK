@@ -1,7 +1,7 @@
 CHANGELOG
 ---------
 
-* 0.4.2 (xx-xx-2014)
+* 0.4.2 (02-19-2014)
 
   * Avoid player crashs because of HTTP failure.
 
