@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+* 0.4.3 (03-24-2014)
+
+  * Remove final constructor in entities to allow overloading.
+
 * 0.4.2 (02-19-2014)
 
   * Avoid player crashs because of HTTP failure.
