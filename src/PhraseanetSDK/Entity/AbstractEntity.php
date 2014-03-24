@@ -18,7 +18,7 @@ abstract class AbstractEntity implements EntityInterface
     /** @var EntityManager */
     protected $em;
 
-    final public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
