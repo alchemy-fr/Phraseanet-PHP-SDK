@@ -153,4 +153,9 @@ class Story extends AbstractEntity
 
         return $this->em->getRepository('subdef')->findByRecord($this->getDataboxId(), $this->getStoryId());
     }
+
+    public function getCaption()
+    {
+        return $this->em->getRepository('caption')->findByRecord($this->getDataboxId(), $this->getStoryId());
+    }
 }
