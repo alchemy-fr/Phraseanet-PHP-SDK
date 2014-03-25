@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+* 0.4.4 (03-25-2014)
+
+  * Add possibility to fetch a story caption.
+
 * 0.4.3 (03-24-2014)
 
   * Remove final constructor in entities to allow overloading.
