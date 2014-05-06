@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+* 0.4.5 (05-05-2014)
+
+  * Implements feeds restriction on aggregated feed entries.
+
 * 0.4.4 (03-25-2014)
 
   * Add possibility to fetch a story caption.
