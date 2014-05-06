@@ -68,6 +68,7 @@ class Entry extends AbstractRepository
      *
      * @param  integer                                      $offsetStart The start offset
      * @param  integer                                      $perPage     The number of entries
+     * @param  array                                        $feed        The feed id's to look for
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @throws RuntimeException
      */
@@ -75,11 +76,12 @@ class Entry extends AbstractRepository
     /**
      * rename to find
      * */
-    public function findInAggregatedFeed($offsetStart = 0, $perPage = 5)
+    public function findInAggregatedFeed($offsetStart = 0, $perPage = 5, array $feeds = array())
     {
         $response = $this->query('GET', 'feeds/content/', array(
             'offset_start' => $offsetStart,
-            'per_page'     => $perPage
+            'per_page'     => $perPage,
+            'feeds'        => $feeds
             ));
 
         if (true !== $response->hasProperty('entries')) {
