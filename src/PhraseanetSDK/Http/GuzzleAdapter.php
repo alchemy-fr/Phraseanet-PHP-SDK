@@ -78,16 +78,17 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * @param array  $query      An array of query parameters
      * @param array  $postFields An array of post fields
      * @param array  $files      An array of post files
+     * @param array  $headers    An array of request headers
      *
      * @return string The response body
      *
      * @throws BadResponseException
      * @throws RuntimeException
      */
-    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array())
+    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), $headers = array())
     {
         try {
-            $request = $this->guzzle->createRequest($method, $path, array('accept' => 'application/json'));
+            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' => 'application/json'), $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
         } catch (CurlException $e) {
@@ -107,7 +108,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         $cache = static::getCacheConfig($cache);
 
         $guzzle = new Guzzle(static::generateUrl($config['url']));
-        $guzzle->setUserAgent(sprintf('Phraseanet SDK version %s', ApplicationInterface::VERSION));
+        $guzzle->setUserAgent(sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION));
 
         if (null !== $config['logger']) {
             $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($config['logger'])));

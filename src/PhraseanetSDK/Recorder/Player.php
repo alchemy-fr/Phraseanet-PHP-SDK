@@ -12,12 +12,15 @@
 namespace PhraseanetSDK\Recorder;
 
 use Guzzle\Common\Exception\GuzzleException;
+use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Recorder\Storage\StorageInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Player
 {
+    const USER_AGENT = 'Phraseanet SDK Player';
+
     private $adapter;
     private $storage;
 
@@ -30,7 +33,6 @@ class Player
     public function play(OutputInterface $output = null)
     {
         $data = $this->storage->fetch();
-
         foreach ($data as $request) {
             $this->output($output, sprintf(
                 "--> Executing request %s %s", $request['method'], $request['path']
@@ -39,7 +41,7 @@ class Player
             $start = microtime(true);
             $error = null;
             try {
-                $this->adapter->call($request['method'], $request['path'], $request['query'], $request['post-fields']);
+                $this->adapter->call($request['method'], $request['path'], $request['query'], $request['post-fields'], array(), array('User-Agent' => sprintf('%s/%s', self::USER_AGENT, ApplicationInterface::VERSION)));
             } catch (GuzzleException $e) {
                 $error = $e;
             }
