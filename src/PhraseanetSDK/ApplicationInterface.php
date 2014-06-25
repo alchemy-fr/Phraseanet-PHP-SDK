@@ -16,6 +16,9 @@ interface ApplicationInterface
     /** @var string Phraseanet API mount point */
     const API_MOUNT_POINT = '/api/v1/';
 
+    /** @var string PHP SDK user agent */
+    const USER_AGENT = 'Phraseanet SDK';
+
     /** @var string SDK version */
     const VERSION = '0.5.x-dev';
 
