@@ -2,10 +2,10 @@
 
 namespace PhraseanetSDK\Tests;
 
-use PhraseanetSDK\Loader;
+use PhraseanetSDK\Uploader;
 use PhraseanetSDK\Http\APIResponse;
 
-class LoaderTest extends \PHPUnit_Framework_TestCase
+class UploaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideUploadParameters
@@ -35,7 +35,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
             ->with('POST', 'records/add/', array(), $this->isType('array'), array('file' => $file))
             ->will($this->returnValue($result));
 
-        $loader = new \PhraseanetSDK\Loader($guzzle, $em);
+        $loader = new Uploader($guzzle, $em);
         $this->assertSame($expected, $loader->upload($file, $coll, $behavior, $status));
     }
 

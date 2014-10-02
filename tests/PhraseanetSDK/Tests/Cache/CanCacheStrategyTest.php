@@ -6,14 +6,6 @@ use PhraseanetSDK\Cache\CanCacheStrategy;
 
 class CanCacheStrategyTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCanCacheRequestAlwaysTrue()
-    {
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
-
-        $canCache = new CanCacheStrategy();
-        $this->assertTrue($canCache->canCacheRequest($request));
-    }
-
     /**
      * @dataProvider provideSuccessVariants
      */
@@ -29,6 +21,10 @@ class CanCacheStrategyTest extends \PHPUnit_Framework_TestCase
         $response->expects($this->any())
             ->method('isSuccessful')
             ->will($this->returnValue($success));
+
+        $response->expects($this->any())
+                 ->method('canCache')
+                 ->will($this->returnValue(true));
 
         $canCache = new CanCacheStrategy();
         $this->assertSame($cacheable, $canCache->canCacheResponse($response));

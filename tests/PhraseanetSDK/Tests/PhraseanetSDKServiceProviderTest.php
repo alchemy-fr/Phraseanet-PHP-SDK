@@ -2,6 +2,7 @@
 
 namespace PhraseanetSDK\Tests;
 
+use PhraseanetSDK\Cache\BackendCacheFactory;
 use PhraseanetSDK\PhraseanetSDKServiceProvider;
 use Silex\Application;
 use Silex\Provider\WebProfilerServiceProvider;
@@ -21,23 +22,26 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
             'phraseanet-sdk.config' => array(
-                'client-id' => 'sdfmqlsdkfm',
-                'secret'    => 'eoieep',
-                'url'       => 'https://bidule.net',
+                'client-id' => '9dPT7Gq5',
+                'secret'    => 'nEXqhaF5',
+                'url'       => 'https://www.phraseanet.com',
             )
         ));
         $app->boot();
 
-        $this->assertInstanceOf($instanceOf, $app[$name]);
+        $service = $app[$name];
+
+        $this->assertInstanceOf($instanceOf, $service);
     }
 
     public function provideServices()
     {
         return array(
             array('phraseanet-sdk', 'PhraseanetSDK\Application'),
-            array('phraseanet-sdk.cache.factory', 'PhraseanetSDK\Cache\CacheFactory'),
-            array('phraseanet-sdk.guzzle.revalidation-factory', 'PhraseanetSDK\Cache\RevalidationFactory'),
-            array('phraseanet-sdk.guzzle.can-cache-strategy', 'PhraseanetSDK\Cache\CanCacheStrategy'),
+            array('phraseanet-sdk.guzzle-adapter', 'PhraseanetSDK\Http\GuzzleAdapter'),
+            array('phraseanet-sdk.cache.adapter', 'Guzzle\Cache\CacheAdapterInterface'),
+            array('phraseanet-sdk.cache.plugin', 'Guzzle\Plugin\Cache\CachePlugin'),
+            array('phraseanet-sdk.guzzle.history-plugin', 'Guzzle\Plugin\History\HistoryPlugin'),
             array('phraseanet-sdk.recorder', 'PhraseanetSDK\Recorder\Recorder'),
         );
     }
@@ -47,8 +51,8 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
             'phraseanet-sdk.config' => array(
-                'client-id' => 'sdfmqlsdkfm',
-                'secret'    => 'eoieep',
+                'client-id' => 'eY+dnmxX',
+                'secret'    => 'ru3wqcys',
                 'url'       => 'https://bidule.net',
             )
         ));
@@ -67,71 +71,46 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testServicesWithProfiler($name, $instanceOf)
     {
         $app = $this->getConfiguredApplication();
+
+        $app->register(new TwigServiceProvider());
+        $app->register(new WebProfilerServiceProvider(), array(
+            'profiler.cache_dir' => __DIR__ . '/cache',
+        ));
+
+        $app->register(new PhraseanetSDKServiceProvider());
+        $app->boot();
+
+        $service = $app[$name];
+
+        $this->assertInstanceOf($instanceOf, $service);
+    }
+
+    public function testHistoryPluginLoadedIfRecorderEnabled()
+    {
+        $app = $this->getConfiguredApplication();
+        $app->register(new PhraseanetSDKServiceProvider());
+        $app['phraseanet-sdk.recorder.enabled'] = true;
+
+        $app->boot();
+
+        $plugins = $app['phraseanet-sdk.guzzle.plugins'];
+        $this->assertContains($app['phraseanet-sdk.guzzle.history-plugin'], $plugins);
+    }
+
+
+    public function testHistoryPluginLoadedIfProfilerEnabled()
+    {
+        $app = $this->getConfiguredApplication();
         $app->register(new TwigServiceProvider());
         $app->register(new WebProfilerServiceProvider(), array(
             'profiler.cache_dir' => __DIR__ . '/cache',
         ));
         $app->register(new PhraseanetSDKServiceProvider());
-        $app->boot();
-
-        $this->assertInstanceOf($instanceOf, $app[$name]);
-    }
-
-    /**
-     * @dataProvider provideRecorderEnabledOptions
-     */
-    public function testHistoryPluginLoadedIfRecorderEnabled($enable, $count)
-    {
-        $app = $this->getConfiguredApplication();
-        $app->register(new PhraseanetSDKServiceProvider());
-        $app['phraseanet-sdk.recorder.enabled'] = $enable;
 
         $app->boot();
 
         $plugins = $app['phraseanet-sdk.guzzle.plugins'];
-        $this->assertCount($count, $plugins);
-        if (0 < $count) {
-            $this->assertInstanceOf('Guzzle\Plugin\History\HistoryPlugin', array_pop($plugins));
-        }
-    }
-
-    public function provideRecorderEnabledOptions()
-    {
-        return array(
-            array(true, 1),
-            array(false, 0),
-        );
-    }
-
-    /**
-     * @dataProvider provideWebProfilerEnabledOptions
-     */
-    public function testHistoryPluginLoadedIfProfilerEnabled($enabled, $count)
-    {
-        $app = $this->getConfiguredApplication();
-        if ($enabled) {
-            $app->register(new TwigServiceProvider());
-            $app->register(new WebProfilerServiceProvider(), array(
-                'profiler.cache_dir' => __DIR__ . '/cache',
-            ));
-        }
-        $app->register(new PhraseanetSDKServiceProvider());
-
-        $app->boot();
-
-        $plugins = $app['phraseanet-sdk.guzzle.plugins'];
-        $this->assertCount($count, $plugins);
-        if (0 < $count) {
-            $this->assertInstanceOf('Guzzle\Plugin\History\HistoryPlugin', array_pop($plugins));
-        }
-    }
-
-    public function provideWebProfilerEnabledOptions()
-    {
-        return array(
-            array(true, 1),
-            array(false, 0),
-        );
+        $this->assertContains($app['phraseanet-sdk.guzzle.history-plugin'], $plugins);
     }
 
     public function provideServicesWithProfiler()
@@ -179,56 +158,64 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            'phraseanet-sdk.cache.config' => $config
+            'cache.config' => $config
         ));
-        // triggers build
-        try {
-           $app['phraseanet-sdk'];
-        } catch (ExceptionInterface $e) {
 
+        $revalidation = $app['phraseanet-sdk.cache.revalidation'];
+        $canCache = $app['phraseanet-sdk.cache.can_cache'];
+        $keyProvider = $app['phraseanet-sdk.cache.key_provider'];
+
+        if (is_object($revalidation)) {
+            $this->assertInstanceOf($expected['revalidation'], $revalidation);
+        } else {
+            $this->assertNull($expected['revalidation'], $app['phraseanet-sdk.cache.revalidation']);
         }
-        $this->assertEquals($expected, $app['phraseanet-sdk.cache.config']);
+        if (is_object($canCache)) {
+            $this->assertInstanceOf($expected['can_cache'], $canCache);
+        } else {
+            $this->assertNull($expected['can_cache'], $app['phraseanet-sdk.cache.can_cache']);
+        }
+        if (is_object($keyProvider)) {
+            $this->assertInstanceOf($expected['key_provider'], $keyProvider);
+        } else {
+            $this->assertNull($expected['key_provider'], $app['phraseanet-sdk.cache.key_provider']);
+        }
     }
 
     public function provideVariousCacheConfigs()
     {
-        $revalidation = $this->getMock('PhraseanetSDK\Cache\RevalidationFactoryInterface');
-        $canCache = $this->getMock('Guzzle\Plugin\Cache\CanCacheStrategyInterface');
-        $factory = $this->getMock('PhraseanetSDK\Cache\CacheFactoryInterface');
-
         return array(
             array(
                 array(
-                    'factory' => $factory,
-                    'can-cache-strategy' => $canCache,
-                    'revalidation-factory' => $revalidation,
-                ),
-                array(
                     'type' => 'array',
-                    'ttl' => 300,
-                    'revalidate' => 'skip',
-                    'factory' => $factory,
-                    'can-cache-strategy' => $canCache,
-                    'revalidation-factory' => $revalidation,
+                    'revalidation' => 'skip',
+                ),
+                array (
+                    'revalidation' => 'Guzzle\Plugin\Cache\SkipRevalidation',
+                    'can_cache' => 'PhraseanetSDK\Cache\CanCacheStrategy',
+                    'key_provider' => null,
                 )
             ),
             array(
                 array(
-                    'type' => 'couchdb',
+                    'type' => 'redis',
                     'ttl' => 666,
-                    'revalidate' => 'deny',
-                    'host' => 'notlocalhost',
-                    'port' => 5432,
+                    'revalidation' => 'deny',
                 ),
+                array (
+                    'revalidation' => 'Guzzle\Plugin\Cache\DenyRevalidation',
+                    'can_cache' => 'PhraseanetSDK\Cache\CanCacheStrategy',
+                    'key_provider' => null,
+                )
+            ),
+            array(
                 array(
-                    'type' => 'couchdb',
                     'ttl' => 666,
-                    'revalidate' => 'deny',
-                    'host' => 'notlocalhost',
-                    'port' => 5432,
-                    'factory' => new CacheFactory(),
-                    'can-cache-strategy' => new CanCacheStrategy(),
-                    'revalidation-factory' => new RevalidationFactory(),
+                ),
+                array (
+                    'revalidation' => null,
+                    'can_cache' => 'PhraseanetSDK\Cache\CanCacheStrategy',
+                    'key_provider' => null,
                 )
             ),
         );
@@ -241,10 +228,9 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            'phraseanet-sdk.recorder.config' => $config
+            'recorder.config' => $config
         ));
 
-        $app['phraseanet-sdk.recorder'];
         $this->assertEquals($expected, $app['phraseanet-sdk.recorder.config']);
     }
 
@@ -296,7 +282,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider(), array(
-            'phraseanet-sdk.recorder.config' => array(
+            'recorder.config' => array(
                 'type' => 'memcached',
                 'options' => array(
                     'host' => '127.0.0.1'

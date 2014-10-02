@@ -2,8 +2,9 @@
 
 namespace PhraseanetSDK\Tests\Recorder\Storage;
 
+use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Recorder\Storage\StorageFactory;
-use PhraseanetSDK\Cache\CacheFactory;
+use PhraseanetSDK\Cache\BackendCacheFactory;
 
 class StorageFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,8 +17,12 @@ class StorageFactoryTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped("Extension $test not loaded");
         }
 
-        $factory = new StorageFactory(new CacheFactory());
-        $this->assertInstanceOf($instanceOf, $factory->create($type, $options));
+        $factory = new StorageFactory(new BackendCacheFactory());
+        try {
+            $this->assertInstanceOf($instanceOf, $factory->create($type, $options));
+        } catch (RuntimeException $e) {
+            $this->assertContains(ucfirst(strtolower($type)), $e->getMessage());
+        }
     }
 
     public function provideCacheConfigs()
@@ -38,7 +43,7 @@ class StorageFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateFailure($type, $options)
     {
-        $factory = new StorageFactory(new CacheFactory());
+        $factory = new StorageFactory(new BackendCacheFactory());
         $factory->create($type, $options);
     }
 

@@ -17,7 +17,7 @@ use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Quarantine;
 
-class Loader
+class Uploader
 {
     /** @var APIGuzzleAdapter */
     private $adapter;
@@ -45,7 +45,7 @@ class Loader
      *
      * @return Record|Quarantine
      *
-     * @throws RuntimeException In case an error occured
+     * @throws RuntimeException In case an error occurred
      */
     public function upload($file, $collection, $behavior = null, $status = null)
     {

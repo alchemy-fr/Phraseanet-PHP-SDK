@@ -13,13 +13,13 @@ namespace PhraseanetSDK\Recorder\Storage;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
-use PhraseanetSDK\Cache\CacheFactoryInterface;
+use PhraseanetSDK\Cache\BackendCacheFactory;
 
 class StorageFactory
 {
     private $cacheFactory;
 
-    public function __construct(CacheFactoryInterface $cacheFactory)
+    public function __construct(BackendCacheFactory $cacheFactory)
     {
         $this->cacheFactory = $cacheFactory;
     }

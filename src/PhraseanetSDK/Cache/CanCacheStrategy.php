@@ -13,16 +13,16 @@ namespace PhraseanetSDK\Cache;
 
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Cache\CanCacheStrategyInterface;
+use Guzzle\Plugin\Cache\DefaultCanCacheStrategy;
 
-class CanCacheStrategy implements CanCacheStrategyInterface
+class CanCacheStrategy extends DefaultCanCacheStrategy
 {
     /**
      * {@inheritdoc}
      */
     public function canCacheRequest(RequestInterface $request)
     {
-        return true;
+        return parent::canCacheRequest($request);
     }
 
     /**
@@ -34,6 +34,6 @@ class CanCacheStrategy implements CanCacheStrategyInterface
             return false;
         }
 
-        return $response->isSuccessful();
+        return parent::canCacheResponse($response);
     }
 }
