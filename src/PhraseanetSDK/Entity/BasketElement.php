@@ -12,30 +12,47 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class BasketElement extends AbstractEntity
+class BasketElement
 {
-    protected $basketElementId;
+    /**
+     * @ApiField(bind_to="basket_element_id", type="int")
+     */
+    protected $id;
+    /**
+     * @ApiField(bind_to="order", type="int")
+     */
     protected $order;
+    /**
+     * @ApiField(bind_to="validation_item", type="boolean")
+     */
     protected $validationItem;
+    /**
+     * @ApiField(bind_to="record", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="Record")
+     */
     protected $record;
+    /**
+     * @ApiField(bind_to="basket_validation_choices", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="BasketValidationChoice")
+     */
     protected $validationChoices;
-    protected $note;
-    protected $agreement;
 
     /**
      * The id of the element
      *
      * @return integer
      */
-    public function getBasketElementId()
+    public function getId()
     {
-        return $this->basketElementId;
+        return $this->id;
     }
 
-    public function setBasketElementId($basketElementId)
+    public function setId($id)
     {
-        $this->basketElementId = $basketElementId;
+        $this->id = $id;
     }
 
     /**
@@ -101,39 +118,5 @@ class BasketElement extends AbstractEntity
     public function setValidationChoices(ArrayCollection $validationChoices)
     {
         $this->validationChoices = $validationChoices;
-    }
-
-    /**
-     * Get the annotation about the validation of the current authenticated user
-     *
-     * @return string
-     */
-    public function getNote()
-    {
-        return $this->note;
-    }
-
-    public function setNote($note)
-    {
-        $this->note = $note;
-    }
-
-    /**
-     * Get the agreement of the current authenticated user
-     *
-     * - null : no response yet
-     * - true : accepted
-     * - false: rejected
-     *
-     * @return null|boolean
-     */
-    public function getAgreement()
-    {
-        return $this->agreement;
-    }
-
-    public function setAgreement($agreement)
-    {
-        $this->agreement = $agreement;
     }
 }

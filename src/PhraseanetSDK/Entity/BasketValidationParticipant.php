@@ -11,42 +11,46 @@
 
 namespace PhraseanetSDK\Entity;
 
-class BasketValidationParticipant extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class BasketValidationParticipant
 {
-    protected $usrId;
-    protected $usrName;
+    /**
+     * @ApiField(bind_to="user", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="User")
+     */
+    protected $user;
+    /**
+     * @ApiField(bind_to="confirmed", type="boolean")
+     */
     protected $confirmed;
+    /**
+     * @ApiField(bind_to="can_agree", type="boolean")
+     */
     protected $canAgree;
+    /**
+     * @ApiField(bind_to="can_see_others", type="boolean")
+     */
     protected $canSeeOthers;
+    /**
+     * @ApiField(bind_to="readonly", type="boolean")
+     */
+    protected $readOnly;
 
     /**
-     * Get the user id
+     * Get the user
      *
-     * @return integer
+     * @return User
      */
-    public function getUsrId()
+    public function getUser()
     {
-        return $this->usrId;
+        return $this->user;
     }
 
-    public function setUsrId($usrId)
+    public function setUser($user)
     {
-        $this->usrId = $usrId;
-    }
-
-    /**
-     * Get the user name
-     *
-     * @return string
-     */
-    public function getUsrName()
-    {
-        return $this->usrName;
-    }
-
-    public function setUsrName($usrName)
-    {
-        $this->usrName = $usrName;
+        $this->user = user;
     }
 
     /**
@@ -65,7 +69,7 @@ class BasketValidationParticipant extends AbstractEntity
     }
 
     /**
-     * Tell whether the particpant can agree
+     * Tell whether the participant can agree
      *
      * @return Boolean
      */
@@ -80,17 +84,32 @@ class BasketValidationParticipant extends AbstractEntity
     }
 
     /**
-     * Tell whether the participant can see the other particpants
+     * Tell whether the participant can see the other participants
      *
      * @return Boolean
      */
     public function canSeeOthers()
-    {
-        return $this->canSeeOthers;
-    }
+{
+    return $this->canSeeOthers;
+}
 
     public function setCanSeeOthers($canSeeOthers)
     {
         $this->canSeeOthers = $canSeeOthers;
+    }
+
+    /**
+     * Tell whether the participant can access data in readonly mode
+     *
+     * @return Boolean
+     */
+    public function isReadOnly()
+    {
+        return $this->readOnly;
+    }
+
+    public function setReadonly($readonly)
+    {
+        $this->readOnly = $readonly;
     }
 }

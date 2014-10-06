@@ -9,8 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\Entity;
+namespace PhraseanetSDK\Repository;
 
-class StoryMetadataBag extends AbstractEntity
+use PhraseanetSDK\Exception\RuntimeException;
+use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
+
+class User extends AbstractRepository
 {
+
 }

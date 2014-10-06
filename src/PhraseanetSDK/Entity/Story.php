@@ -12,18 +12,50 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class Story extends AbstractEntity
+class Story
 {
+    /**
+     * @ApiField(bind_to="story_id", type="int")
+     */
     protected $storyId;
+    /**
+     * @ApiField(bind_to="databox_id", type="int")
+     */
     protected $databoxId;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="collection_id", type="int")
+     */
     protected $collectionId;
+    /**
+     * @ApiField(bind_to="uuid", type="string")
+     */
     protected $uuid;
+    /**
+     * @ApiField(bind_to="thumbnail")
+     * @ApiRelation(type="one_to_one", target_entity="Subdef")
+     */
     protected $thumbnail;
+    /**
+     * @ApiField(bind_to="records", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Record")
+     */
     protected $records;
-    protected $metadatas;
+    /**
+     * @ApiField(bind_to="metadatas")
+     * @ApiRelation(type="one_to_many", target_entity="Metadata")
+     */
+    protected $metadata;
 
     /**
      * Get the record id
@@ -135,14 +167,14 @@ class Story extends AbstractEntity
         $this->records = $records;
     }
 
-    public function getMetadatas()
+    public function getMetadata()
     {
-        return $this->metadatas;
+        return $this->metadata;
     }
 
-    public function setMetadatas(ArrayCollection $metadatas)
+    public function setMetadata(ArrayCollection $metadata)
     {
-        $this->metadatas = $metadatas;
+        $this->metadata = $metadata;
     }
 
     public function getSubdefs($name = null)

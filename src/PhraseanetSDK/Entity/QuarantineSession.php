@@ -11,10 +11,20 @@
 
 namespace PhraseanetSDK\Entity;
 
-class QuarantineSession extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class QuarantineSession
 {
+    /**
+     * @ApiField(bind_to="id", type="int")
+     */
     protected $id;
-    protected $usrId;
+    /**
+     * @ApiField(bind_to="user", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="User")
+     */
+    protected $user;
 
     /**
      * The session id
@@ -36,13 +46,13 @@ class QuarantineSession extends AbstractEntity
      *
      * @return integer
      */
-    public function getUsrId()
+    public function getUser()
     {
-        return $this->usrId;
+        return $this->user;
     }
 
-    public function setUsrId($usrId)
+    public function setUser($user)
     {
-        $this->usrId = $usrId;
+        $this->user = $user;
     }
 }

@@ -11,10 +11,22 @@
 
 namespace PhraseanetSDK\Entity;
 
-class QuerySuggestion extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class QuerySuggestion
 {
+    /**
+     * @ApiField(bind_to="value", type="string")
+     */
     protected $value;
+    /**
+     * @ApiField(bind_to="current", type="string")
+     */
     protected $current;
+    /**
+     * @ApiField(bind_to="hits", type="int")
+     */
     protected $hits;
 
     /**

@@ -12,40 +12,55 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class Feed extends AbstractEntity
+class Feed
 {
-    /** @var integer */
+    /**
+     * @ApiField(bind_to="id", type="int")
+     */
     protected $id;
-
-    /** @var string */
+    /**
+     * @ApiField(bind_to="title", type="string")
+     */
     protected $title;
-
-    /** @var string */
+    /**
+     * @ApiField(bind_to="icon", type="string")
+     */
     protected $icon;
-
-    /** @var string */
+    /**
+     * @ApiField(bind_to="subtitle", type="string")
+     */
     protected $subTitle;
-
-    /** @var integer */
+    /**
+     * @ApiField(bind_to="total_entries", type="int")
+     */
     protected $totalEntries;
-
-    /** @var string */
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
-
-    /** @var string */
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
-
-    /** @var ArrayCollection */
+    /**
+     * @ApiField(bind_to="entries", type="relation", virtual="1")
+     * @ApiRelation(type="one_to_many", target_entity="FeedEntry")
+     */
     protected $entries;
-
-    /** @var Boolean */
+    /**
+     * @ApiField(bind_to="public", type="boolean")
+     */
     protected $public;
-
-    /** @var Boolean */
+    /**
+     * @ApiField(bind_to="readonly", type="boolean")
+     */
     protected $readonly;
-
-    /** @var Boolean */
+    /**
+     * @ApiField(bind_to="deletable", type="boolean")
+     */
     protected $deletable;
 
     /**
@@ -155,17 +170,18 @@ class Feed extends AbstractEntity
 
     /**
      * Get the feed entries
-     * Return a collection of PraseanetSDL\Entity\FeedEntry object
+     * Return a collection of PhraseanetSDK\Entity\FeedEntry object
      *
      * /!\ This method requests the API
      *
-     * @param  integer         $offset  The offset
-     * @param  interger        $perPage The number of items
+     * @param  integer        $offset  The offset
+     * @param  integer        $perPage The number of items
      * @return ArrayCollection
      */
     public function getEntries($offset, $perPage)
     {
-        return $this->em->getRepository('entry')->findByFeed($this->getId(), $offset, $perPage);
+        return $this->entries;
+        //return $this->em->getRepository('entry')->findByFeed($this->getId(), $offset, $perPage);
     }
 
     public function setEntries(ArrayCollection $entries)

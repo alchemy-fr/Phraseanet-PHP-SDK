@@ -11,10 +11,22 @@
 
 namespace PhraseanetSDK\Entity;
 
-class RecordCaption extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class RecordCaption
 {
+    /**
+     * @ApiField(bind_to="meta_structure_id", type="int")
+     */
     protected $metaStructureId;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="value", type="string")
+     */
     protected $value;
 
     /**

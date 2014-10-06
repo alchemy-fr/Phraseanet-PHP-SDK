@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class DataboxDocumentStructure extends AbstractRepository
 {
-
     /**
      * Find All structure document of the desired databox
      *
@@ -34,8 +34,8 @@ class DataboxDocumentStructure extends AbstractRepository
 
         $databoxDocumentStructure = new ArrayCollection();
 
-        foreach ($response->getProperty('document_metadatas') as $databoxMetadataDatas) {
-            $databoxDocumentStructure->add($this->em->hydrateEntity($this->em->getEntity('databoxDocumentStructure'), $databoxMetadataDatas));
+        foreach ($response->getProperty('document_metadatas') as $databoxMetadataData) {
+            $databoxDocumentStructure->add(EntityHydrator::hydrate('databoxDocumentStructure', $databoxMetadataData, $this->em));
         }
 
         return $databoxDocumentStructure;

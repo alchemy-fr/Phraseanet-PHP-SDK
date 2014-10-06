@@ -13,12 +13,12 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
-class Metadatas extends AbstractRepository
+class Metadata extends AbstractRepository
 {
-
     /**
-     * Find All the metadatas for the record provided in parameters
+     * Find All the metadata for the record provided in parameters
      *
      * @param  integer          $databoxId The databox id
      * @param  integer          $recordId  The record id
@@ -35,8 +35,8 @@ class Metadatas extends AbstractRepository
 
         $metaCollection = new ArrayCollection();
 
-        foreach ($response->getProperty('record_metadatas') as $metaDatas) {
-            $metaCollection->add($this->em->hydrateEntity($this->em->getEntity('metadatas'), $metaDatas));
+        foreach ($response->getProperty('record_metadatas') as $feedData) {
+            $metaCollection->add(EntityHydrator::hydrate('metadata', $feedData, $this->em));
         }
 
         return $metaCollection;

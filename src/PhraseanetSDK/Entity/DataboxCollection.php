@@ -11,11 +11,26 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxCollection extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class DataboxCollection
 {
+    /**
+     * @ApiField(bind_to="base_id", type="int")
+     */
     protected $baseId;
+    /**
+     * @ApiField(bind_to="coll_id", type="int")
+     */
     protected $collectionId;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="record_amount", type="int")
+     */
     protected $recordAmount;
 
     /**

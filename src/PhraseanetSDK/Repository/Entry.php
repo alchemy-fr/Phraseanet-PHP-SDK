@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Entry extends AbstractRepository
 {
-
     /**
      * Retrieve the entry identified by its id
      *
@@ -32,7 +32,7 @@ class Entry extends AbstractRepository
             throw new RuntimeException('Missing "entry" property in response content');
         }
 
-        return $this->em->hydrateEntity($this->em->getEntity('feedEntry'), $response->getProperty('entry'));
+        return EntityHydrator::hydrate('feedEntry', $response->getProperty('entry'), $this->em);
     }
 
     /**
@@ -58,7 +58,7 @@ class Entry extends AbstractRepository
         $entries = new ArrayCollection();
 
         foreach ($response->getProperty('entries') as $entryData) {
-            $entries->add($this->em->hydrateEntity($this->em->getEntity('feedEntry'), $entryData));
+            $entries->add(EntityHydrator::hydrate('feedEntry', $entryData, $this->em));
         }
 
         return $entries;
@@ -91,7 +91,7 @@ class Entry extends AbstractRepository
         $entries = new ArrayCollection();
 
         foreach ($response->getProperty('entries') as $entryData) {
-            $entries->add($this->em->hydrateEntity($this->em->getEntity('feedEntry'), $entryData));
+            $entries->add(EntityHydrator::hydrate('feedEntry', $entryData, $this->em));
         }
 
         return $entries;

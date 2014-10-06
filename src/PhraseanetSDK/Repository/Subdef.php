@@ -14,10 +14,10 @@ namespace PhraseanetSDK\Repository;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\NotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Subdef extends AbstractRepository
 {
-
     /**
      * Find all subdefs that belong to the provided record
      *
@@ -48,10 +48,10 @@ class Subdef extends AbstractRepository
 
         $subdefCollection = new ArrayCollection();
 
-        foreach ($response->getProperty('embed') as $subdefDatas) {
+        foreach ($response->getProperty('embed') as $subdefData) {
             // subdefDatas can be null
-            if ($subdefDatas !== null) {
-                $subdef = $this->em->hydrateEntity($this->em->getEntity('subdef'), $subdefDatas);
+            if ($subdefData !== null) {
+                $subdef = EntityHydrator::hydrate('subdef', $subdefData, $this->em);
                 $subdefCollection->add($subdef);
             }
         }

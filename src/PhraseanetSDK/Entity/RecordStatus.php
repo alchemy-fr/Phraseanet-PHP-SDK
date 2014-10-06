@@ -11,9 +11,18 @@
 
 namespace PhraseanetSDK\Entity;
 
-class RecordStatus extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class RecordStatus
 {
+    /**
+     * @ApiField(bind_to="bit", type="int")
+     */
     protected $bit;
+    /**
+     * @ApiField(bind_to="state", type="boolean")
+     */
     protected $state;
 
     /**

@@ -11,45 +11,42 @@
 
 namespace PhraseanetSDK\Entity;
 
-class BasketValidationChoice extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class BasketValidationChoice
 {
-    protected $validationUser;
+    /**
+     * @ApiField(bind_to="agreement", type="boolean", nullable="1")
+     */
     protected $agreement;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="note", type="int")
+     */
     protected $note;
+    /**
+     * @ApiField(bind_to="validation_user", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="BasketValidationParticipant")
+     */
+    protected $participant;
 
     /**
      * Get the validation user
      *
      * @return BasketValidationParticipant
      */
-    public function getValidationUser()
+    public function getParticipant()
     {
-        return $this->validationUser;
+        return $this->participant;
     }
 
-    public function setValidationUser(BasketValidationParticipant $validationUser)
+    public function setParticipant(BasketValidationParticipant $participant)
     {
-        $this->validationUser = $validationUser;
-    }
-
-    /**
-     * Get the user agreement
-     *
-     * - null : no response yet
-     * - true : accepted
-     * - false: rejected
-     *
-     * @return Boolean|null
-     */
-    public function getAgreement()
-    {
-        return $this->agreement;
-    }
-
-    public function setAgreement($agreement)
-    {
-        $this->agreement = $agreement;
+        $this->participant = $participant;
     }
 
     /**
@@ -68,7 +65,7 @@ class BasketValidationChoice extends AbstractEntity
     }
 
     /**
-     * Get the user annotation
+     * Get the annotation about the validation of the current authenticated user
      *
      * @return string
      */
@@ -80,5 +77,24 @@ class BasketValidationChoice extends AbstractEntity
     public function setNote($note)
     {
         $this->note = $note;
+    }
+
+    /**
+     * Get the agreement of the current authenticated user
+     *
+     * - null : no response yet
+     * - true : accepted
+     * - false: rejected
+     *
+     * @return null|boolean
+     */
+    public function getAgreement()
+    {
+        return $this->agreement;
+    }
+
+    public function setAgreement($agreement)
+    {
+        $this->agreement = $agreement;
     }
 }

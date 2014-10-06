@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Databox extends AbstractRepository
 {
-
     /**
      * Find All databoxes
      *
@@ -33,8 +33,8 @@ class Databox extends AbstractRepository
 
         $databoxCollection = new ArrayCollection();
 
-        foreach ($response->getProperty('databoxes') as $databoxDatas) {
-            $databoxCollection->add($this->em->hydrateEntity($this->em->getEntity('databox'), $databoxDatas));
+        foreach ($response->getProperty('databoxes') as $databoxData) {
+            $databoxCollection->add(EntityHydrator::hydrate('databox', $databoxData, $this->em));
         }
 
         return $databoxCollection;

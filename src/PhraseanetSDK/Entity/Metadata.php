@@ -11,26 +11,41 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Metadatas extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class Metadata
 {
-    protected $metaId;
+    /**
+     * @ApiField(bind_to="meta_id", type="int")
+     */
+    protected $id;
+    /**
+     * @ApiField(bind_to="meta_structure_id", type="int")
+     */
     protected $metaStructureId;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="value", type="string")
+     */
     protected $value;
 
     /**
-     * Get the metadatas id
+     * Get the metadata id
      *
      * @return integer
      */
-    public function getMetaId()
+    public function geId()
     {
-        return $this->metaId;
+        return $this->id;
     }
 
-    public function setMetaId($id)
+    public function setId($id)
     {
-        $this->metaId = $id;
+        $this->id = $id;
     }
 
     /**

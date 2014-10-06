@@ -12,17 +12,48 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class FeedEntry extends AbstractEntity
+class FeedEntry
 {
+    /**
+     * @ApiField(bind_to="id", type="int")
+     */
     protected $id;
-    protected $feedId;
+    /**
+     * @ApiField(bind_to="feed", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="Feed")
+     */
+    protected $feed;
+    /**
+     * @ApiField(bind_to="author_email", type="string")
+     */
     protected $authorEmail;
+    /**
+     * @ApiField(bind_to="author_name", type="string")
+     */
     protected $authorName;
+    /**
+     * @ApiField(bind_to="title", type="string")
+     */
     protected $title;
+    /**
+     * @ApiField(bind_to="subtitle", type="string")
+     */
     protected $subtitle;
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="items", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="FeedEntryItem")
+     */
     protected $items;
 
     /**

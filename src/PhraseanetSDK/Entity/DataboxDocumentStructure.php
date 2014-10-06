@@ -11,19 +11,58 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxDocumentStructure extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class DataboxDocumentStructure
 {
+    /**
+     * @ApiField(bind_to="id", type="int")
+     */
     protected $id;
+    /**
+     * @ApiField(bind_to="namespace", type="string")
+     */
     protected $namespace;
+    /**
+     * @ApiField(bind_to="source", type="string")
+     */
     protected $source;
-    protected $tagname;
+    /**
+     * @ApiField(bind_to="tagname", type="string")
+     */
+    protected $tagName;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="separator", type="string")
+     */
     protected $separator;
+    /**
+     * @ApiField(bind_to="thesaurus_branch", type="string")
+     */
     protected $thesaurusBranch;
+    /**
+     * @ApiField(bind_to="type", type="string")
+     */
     protected $type;
-    protected $indexable;
-    protected $multivalue;
+    /**
+     * @ApiField(bind_to="indexable", type="boolean")
+     */
+    protected $searchable;
+    /**
+     * @ApiField(bind_to="multivalue", type="boolean")
+     */
+    protected $multivalued;
+    /**
+     * @ApiField(bind_to="readonly", type="boolean")
+     */
     protected $readonly;
+    /**
+     * @ApiField(bind_to="required", type="boolean")
+     */
     protected $required;
 
     /**
@@ -51,13 +90,13 @@ class DataboxDocumentStructure extends AbstractEntity
         return $this->namespace;
     }
 
-    public function setNamespace($namepsace)
+    public function setNamespace($namespace)
     {
-        $this->namespace = $namepsace;
+        $this->namespace = $namespace;
     }
 
     /**
-     * The documentary field metadatas source
+     * The documentary field metadata source
      *
      * @return string
      */
@@ -72,18 +111,18 @@ class DataboxDocumentStructure extends AbstractEntity
     }
 
     /**
-     * The documentary field metadatas tagname
+     * The documentary field metadata tagname
      *
      * @return string
      */
-    public function getTagname()
+    public function getTagName()
     {
-        return $this->tagname;
+        return $this->tagName;
     }
 
-    public function setTagname($tagname)
+    public function setTagName($tagName)
     {
-        $this->tagname = $tagname;
+        $this->tagName = $tagName;
     }
 
     /**
@@ -102,7 +141,7 @@ class DataboxDocumentStructure extends AbstractEntity
     }
 
     /**
-     * The mutlivalue field separator
+     * The multi value field separator
      *
      * @return string
      */
@@ -147,33 +186,33 @@ class DataboxDocumentStructure extends AbstractEntity
     }
 
     /**
-     * Tell whether the field is indexable
+     * Tell whether the field is searchable
      *
      * @return Boolean
      */
-    public function isIndexable()
+    public function isSearchable()
     {
-        return $this->indexable;
+        return $this->searchable;
     }
 
-    public function setIndexable($indexable)
+    public function setSearchable($searchable)
     {
-        $this->indexable = $indexable;
+        $this->searchable = $searchable;
     }
 
     /**
-     * Tell wheteher the field is ultivalued or not
+     * Tell whether the field is multivalued or not
      *
      * @return Boolean
      */
-    public function isMultivalue()
+    public function isMultivalued()
     {
-        return $this->multivalue;
+        return $this->multivalued;
     }
 
-    public function setMultivalue($multivalue)
+    public function setMultivalued($multivalued)
     {
-        $this->multivalue = $multivalue;
+        $this->multivalued = $multivalued;
     }
 
     /**
@@ -192,7 +231,7 @@ class DataboxDocumentStructure extends AbstractEntity
     }
 
     /**
-     * Tell whether the firld is required
+     * Tell whether the field is required
      *
      *  @return Boolean
      */

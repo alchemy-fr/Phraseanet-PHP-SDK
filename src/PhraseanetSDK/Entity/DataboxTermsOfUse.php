@@ -11,9 +11,18 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Cgus extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+
+class DataboxTermsOfUse
 {
+    /**
+     * @ApiField(bind_to="locale", type="string")
+     */
     protected $locale;
+    /**
+     * @ApiField(bind_to="terms", type="string")
+     */
     protected $terms;
 
     public function getLocale()
