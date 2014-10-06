@@ -13,7 +13,6 @@ namespace PhraseanetSDK;
 
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Utils\Camelizer;
 
 /**
  * @method \PhraseanetSDK\Monitor getScheduler()
@@ -25,7 +24,6 @@ use PhraseanetSDK\Utils\Camelizer;
 class Monitor
 {
     private $adapter;
-    private $camelizer;
     private static $mappings = array(
         'getScheduler' => array(
             'path'            => 'monitor/scheduler/',
@@ -67,7 +65,6 @@ class Monitor
     public function __construct(APIGuzzleAdapter $adapter)
     {
         $this->adapter = $adapter;
-        $this->camelizer = new Camelizer();
     }
 
     public function __call($name, $arguments)
@@ -107,10 +104,9 @@ class Monitor
     private function getEntity($name, $data)
     {
         $entity = new static::$mappings[$name]['entity']();
-        $camelizer = $this->camelizer;
 
-        array_walk($data, function ($value, $property) use ($entity, $camelizer) {
-            $method = 'set' . $camelizer->camelize($property);
+        array_walk($data, function ($value, $property) use ($entity) {
+            $method = 'set' . ucfirst(strtolower($property));
 
             $ref = new \ReflectionParameter(array($entity, $method), 0);
             if (null !== $ref->getClass()) {
