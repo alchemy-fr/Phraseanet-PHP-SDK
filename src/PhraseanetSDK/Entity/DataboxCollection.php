@@ -21,7 +21,7 @@ class DataboxCollection
      */
     protected $baseId;
     /**
-     * @ApiField(bind_to="coll_id", type="int")
+     * @ApiField(bind_to="collection_id", type="int")
      */
     protected $collectionId;
     /**
@@ -85,11 +85,11 @@ class DataboxCollection
      */
     public function getRecordAmount()
     {
-        return $this->record_amount;
+        return $this->recordAmount;
     }
 
-    public function setRecordAmount($record_amount)
+    public function setRecordAmount($recordAmount)
     {
-        $this->record_amount = $record_amount;
+        $this->recordAmount = $recordAmount;
     }
 }

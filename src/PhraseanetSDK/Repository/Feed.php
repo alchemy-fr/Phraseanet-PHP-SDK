@@ -55,11 +55,7 @@ class Feed extends AbstractRepository
         $feedCollection = new ArrayCollection();
 
         foreach ($response->getProperty('feeds') as $feedData) {
-            $feedCollection->add(
-                $this->em->hydrateEntity(
-                    'feed', $feedData, $this->em
-                )
-            );
+            $feedCollection->add(EntityHydrator::hydrate('feed', $feedData, $this->em));
         }
 
         return $feedCollection;

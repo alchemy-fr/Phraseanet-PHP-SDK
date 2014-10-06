@@ -50,7 +50,7 @@ class BasketValidationParticipant
 
     public function setUser($user)
     {
-        $this->user = user;
+        $this->user = $user;
     }
 
     /**

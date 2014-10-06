@@ -29,59 +29,59 @@ class User
      */
     protected $login;
     /**
-     * @ApiField(bind_to="first_name", type="string", nullable="1")
+     * @ApiField(bind_to="first_name", type="string")
      */
     protected $firstName;
     /**
-     * @ApiField(bind_to="last_name", type="string", nullable="1")
+     * @ApiField(bind_to="last_name", type="string")
      */
     protected $lastName;
     /**
-     * @ApiField(bind_to="display_name", type="string", nullable="1")
+     * @ApiField(bind_to="display_name", type="string")
      */
     protected $displayName;
     /**
-     * @ApiField(bind_to="gender", type="string", nullable="1")
+     * @ApiField(bind_to="gender", type="string")
      */
     protected $gender;
     /**
-     * @ApiField(bind_to="address", type="string", nullable="1")
+     * @ApiField(bind_to="address", type="string")
      */
     protected $address;
     /**
-     * @ApiField(bind_to="zip_code", type="string", nullable="1")
+     * @ApiField(bind_to="zip_code", type="string")
      */
     protected $zipCode;
     /**
-     * @ApiField(bind_to="city", type="string", nullable="1")
+     * @ApiField(bind_to="city", type="string")
      */
     protected $city;
     /**
-     * @ApiField(bind_to="country", type="string", nullable="1")
+     * @ApiField(bind_to="country", type="string")
      */
     protected $country;
     /**
-     * @ApiField(bind_to="phone", type="string", nullable="1")
+     * @ApiField(bind_to="phone", type="string")
      */
     protected $phone;
     /**
-     * @ApiField(bind_to="fax", type="string", nullable="1")
+     * @ApiField(bind_to="fax", type="string")
      */
     protected $fax;
     /**
-     * @ApiField(bind_to="job", type="string", nullable="1")
+     * @ApiField(bind_to="job", type="string")
      */
     protected $job;
     /**
-     * @ApiField(bind_to="position", type="string", nullable="1")
+     * @ApiField(bind_to="position", type="string")
      */
     protected $position;
     /**
-     * @ApiField(bind_to="company", type="string", nullable="1")
+     * @ApiField(bind_to="company", type="string")
      */
     protected $company;
     /**
-     * @ApiField(bind_to="geoname_id", type="int", nullable="1")
+     * @ApiField(bind_to="geoname_id", type="int")
      */
     protected $geonameId;
     /**
@@ -89,7 +89,7 @@ class User
      */
     protected $locale;
     /**
-     * @ApiField(bind_to="update_on", type="date")
+     * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**

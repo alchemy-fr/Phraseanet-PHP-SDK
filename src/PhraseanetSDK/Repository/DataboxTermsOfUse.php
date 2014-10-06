@@ -15,7 +15,7 @@ use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
 
-class Cgus extends AbstractRepository
+class DataboxTermsOfUse extends AbstractRepository
 {
 
     /**
@@ -36,7 +36,7 @@ class Cgus extends AbstractRepository
         $metaCollection = new ArrayCollection();
 
         foreach ($response->getProperty('termsOfUse') as $metadata) {
-            $metaCollection->add(EntityHydrator::hydrate('cgus', $metadata));
+            $metaCollection->add(EntityHydrator::hydrate('databoxTermsOfUse', $metadata, $this->em));
         }
 
         return $metaCollection;

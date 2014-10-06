@@ -36,7 +36,7 @@ class Caption extends AbstractRepository
         }
 
         foreach ($response->getProperty('caption_metadatas') as $metaData) {
-            $caption->add(EntityHydrator::hydrate('recordCaption', $metaData));
+            $caption->add(EntityHydrator::hydrate('recordCaption', $metaData, $this->em));
         }
 
         return $caption;

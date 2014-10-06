@@ -97,6 +97,15 @@ class Record
     protected $caption;
 
     /**
+     * Get unique id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getDataboxId().'_'.$this->getRecordId();
+    }
+    /**
      * Get the record id
      *
      * @return integer
@@ -242,7 +251,7 @@ class Record
         return $this->thumbnail;
     }
 
-    public function setThumbnail(Subdef $thumbnail)
+    public function setThumbnail(Subdef $thumbnail = null)
     {
         $this->thumbnail = $thumbnail;
     }
@@ -323,28 +332,6 @@ class Record
     {
         return $this->metadata;
     }
-    ///**
-    // * Return a collection of PhraseanetSDK\Entity\Subdef for the record
-    // *
-    // * Precise an array of devices or mime types for the desired sub definitions
-    // *
-    // * /!\ This method requests the API
-    // *
-    // * @param  array           $devices The desired devices
-    // * @param  array           $mimes   The desired mimes type
-    // * @return ArrayCollection
-    // *
-    // * @throws RuntimeException in case of response not valid
-    // */
-    //public function getSubdefsByDevicesAndMimeTypes(array $devices, array $mimes)
-    //{
-    //    return $this->em->getRepository('subdef')->findByRecord(
-    //        $this->getDataboxId(),
-    //        $this->getRecordId(),
-    //        $devices,
-    //        $mimes
-    //    );
-    //}
 
     public function setCaption($caption)
     {

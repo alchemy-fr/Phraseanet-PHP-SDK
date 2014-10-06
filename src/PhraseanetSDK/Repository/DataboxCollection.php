@@ -35,7 +35,7 @@ class DataboxCollection extends AbstractRepository
         $databoxCollections = new ArrayCollection();
 
         foreach ($response->getProperty('collections') as $databoxCollectionDatas) {
-            $databoxCollections->add(EntityHydrator::hydrate('databoxCollection', $databoxCollectionDatas));
+            $databoxCollections->add(EntityHydrator::hydrate('databoxCollection', $databoxCollectionDatas, $this->em));
         }
 
         return $databoxCollections;

@@ -18,6 +18,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class BasketElement
 {
     /**
+     *
      * @ApiField(bind_to="basket_element_id", type="int")
      */
     protected $id;
@@ -35,7 +36,7 @@ class BasketElement
      */
     protected $record;
     /**
-     * @ApiField(bind_to="basket_validation_choices", type="relation")
+     * @ApiField(bind_to="validation_choices", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="BasketValidationChoice")
      */
     protected $validationChoices;
@@ -115,7 +116,7 @@ class BasketElement
         return $this->validationChoices;
     }
 
-    public function setValidationChoices(ArrayCollection $validationChoices)
+    public function setValidationChoices(ArrayCollection $validationChoices = null)
     {
         $this->validationChoices = $validationChoices;
     }

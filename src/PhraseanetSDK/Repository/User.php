@@ -17,5 +17,15 @@ use PhraseanetSDK\EntityHydrator;
 
 class User extends AbstractRepository
 {
+    public function findMe()
+    {
+        $response = $this->query('GET', 'me');
 
+        if (true !== $response->hasProperty('user')) {
+            throw new RuntimeException('Missing "user" property in response content');
+        }
+        
+        return EntityHydrator::hydrate('user', $response->getProperty('user'), $this->em);
+
+    }
 }

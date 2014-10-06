@@ -65,7 +65,7 @@ class Story extends AbstractRepository
 
         if (isset($results->stories) && is_array($results->stories)) {
             foreach ($results->stories as $storyData) {
-                $stories->add(EntityHydrator::hydrate('story', $storyData));
+                $stories->add(EntityHydrator::hydrate('story', $storyData, $this->em));
             }
         }
 

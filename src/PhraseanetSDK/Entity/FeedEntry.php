@@ -18,14 +18,26 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class FeedEntry
 {
     /**
+     *
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
-     * @ApiField(bind_to="feed", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Feed")
+     * @ApiField(bind_to="feed_id", type="int")
      */
-    protected $feed;
+    protected $feedId;
+    /**
+     * @ApiField(bind_to="feed_title", type="string")
+     */
+    protected $feedTitle;
+    /**
+     * @ApiField(bind_to="feed_url", type="string")
+     */
+    protected $feedUrl;
+    /**
+     * @ApiField(bind_to="url", type="string")
+     */
+    protected $url;
     /**
      * @ApiField(bind_to="author_email", type="string")
      */
@@ -189,5 +201,53 @@ class FeedEntry
     public function setFeedId($feedId)
     {
         $this->feedId = $feedId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFeedTitle()
+    {
+        return $this->feedTitle;
+    }
+
+    /**
+     * @param mixed $feedTitle
+     */
+    public function setFeedTitle($feedTitle)
+    {
+        $this->feedTitle = $feedTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFeedUrl()
+    {
+        return $this->feedUrl;
+    }
+
+    /**
+     * @param mixed $feedUrl
+     */
+    public function setFeedUrl($feedUrl)
+    {
+        $this->feedUrl = $feedUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 }

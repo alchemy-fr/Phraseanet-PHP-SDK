@@ -154,7 +154,7 @@ class Feed
     }
 
     /**
-     * Last updted date
+     * Last updated date
      *
      * @return \DateTime
      */
@@ -168,20 +168,9 @@ class Feed
         $this->updatedOn = $updatedOn;
     }
 
-    /**
-     * Get the feed entries
-     * Return a collection of PhraseanetSDK\Entity\FeedEntry object
-     *
-     * /!\ This method requests the API
-     *
-     * @param  integer        $offset  The offset
-     * @param  integer        $perPage The number of items
-     * @return ArrayCollection
-     */
     public function getEntries($offset, $perPage)
     {
         return $this->entries;
-        //return $this->em->getRepository('entry')->findByFeed($this->getId(), $offset, $perPage);
     }
 
     public function setEntries(ArrayCollection $entries)

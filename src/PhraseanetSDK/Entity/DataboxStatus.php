@@ -17,7 +17,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class DataboxStatus
 {
     /**
-     * @ApiField(bind_to="id", type="int")
+     * @ApiField(bind_to="bit", type="int")
      */
     protected $bit;
     /**

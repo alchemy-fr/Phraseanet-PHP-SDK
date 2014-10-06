@@ -80,7 +80,7 @@ class Application implements ApplicationInterface
     /**
      * {@inheritdoc}
      */
-    public function getEntityManager($token)
+    public function getEntityManager($token, array $options = array())
     {
         if ('' === trim($token)) {
             throw new InvalidArgumentException('Token can not be empty.');
@@ -90,7 +90,7 @@ class Application implements ApplicationInterface
             return $this->ems[$token];
         }
 
-        return $this->ems[$token] = new EntityManager($this->getAdapter($token));
+        return $this->ems[$token] = new EntityManager($this->getAdapter($token), $options);
     }
 
     /**

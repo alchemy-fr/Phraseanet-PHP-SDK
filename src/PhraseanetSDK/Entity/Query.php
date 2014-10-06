@@ -201,16 +201,12 @@ class Query
      *
      * @return ArrayCollection
      */
-    public function getResults($type='record')
+    public function getResults()
     {
-        if ('record' === $type) {
-           return $this->results->getRecords();
-        }
-
-        return $this->results->getStories();
+        return $this->results;
     }
 
-    public function setResults(Result $results)
+    public function setResults(ArrayCollection $results)
     {
         $this->results = $results;
     }

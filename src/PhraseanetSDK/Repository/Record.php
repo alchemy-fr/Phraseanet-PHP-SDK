@@ -82,12 +82,6 @@ class Record extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        $records = new ArrayCollection();
-
-        foreach ($response->getProperty('results') as $recordData) {
-            $records->add(EntityHydrator::hydrate('record', $recordData, $this->em));
-        }
-
-        return $records;
+        return EntityHydrator::hydrate('query', $response->getResult(), $this->em);
     }
 }

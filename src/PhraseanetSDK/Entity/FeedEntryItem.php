@@ -17,6 +17,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class FeedEntryItem
 {
     /**
+     *
      * @ApiField(bind_to="item_id", type="int")
      */
     protected $id;
@@ -31,14 +32,14 @@ class FeedEntryItem
      *
      * @return integer
      */
-    public function getItemId()
+    public function getId()
     {
-        return $this->itemId;
+        return $this->id;
     }
 
-    public function setItemId($id)
+    public function setId($id)
     {
-        $this->itemId = $id;
+        $this->id = $id;
     }
 
     /**

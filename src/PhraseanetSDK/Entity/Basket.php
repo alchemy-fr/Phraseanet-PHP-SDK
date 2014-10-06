@@ -14,11 +14,12 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\Annotation\Id;
 
 class Basket
 {
     /**
-     * @ApiField(bind_to="ssel_id", type="int")
+     * @ApiField(bind_to="basket_id", type="int")
      */
     protected $id;
     /**
@@ -57,11 +58,11 @@ class Basket
     protected $validationBasket;
     /**
      * @ApiField(bind_to="validation_users", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="User")
+     * @ApiRelation(type="one_to_many", target_entity="BasketValidationParticipant")
      */
     protected $validationUsers;
     /**
-     * @ApiField(bind_to="validation_end_date", type="date")
+     * @ApiField(bind_to="expires_on", type="date")
      */
     protected $expiresOn;
     /**
@@ -210,7 +211,7 @@ class Basket
         return $this->validationUsers;
     }
 
-    public function setValidationUsers(ArrayCollection $validationUsers)
+    public function setValidationUsers(ArrayCollection $validationUsers = null)
     {
         $this->validationUsers = $validationUsers;
     }
@@ -225,7 +226,7 @@ class Basket
         return $this->expiresOn;
     }
 
-    public function setExpiresOn(\DateTime $expiresOn)
+    public function setExpiresOn(\DateTime $expiresOn = null)
     {
         $this->expiresOn = $expiresOn;
     }
@@ -274,5 +275,21 @@ class Basket
     public function setValidationInitiator($validationInitiator)
     {
         $this->validationInitiator = $validationInitiator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
     }
 }

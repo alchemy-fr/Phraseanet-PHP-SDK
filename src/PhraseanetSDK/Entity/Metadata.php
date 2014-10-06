@@ -17,6 +17,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class Metadata
 {
     /**
+     *
      * @ApiField(bind_to="meta_id", type="int")
      */
     protected $id;
@@ -38,7 +39,7 @@ class Metadata
      *
      * @return integer
      */
-    public function geId()
+    public function getId()
     {
         return $this->id;
     }

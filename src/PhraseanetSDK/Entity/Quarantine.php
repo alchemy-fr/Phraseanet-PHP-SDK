@@ -18,11 +18,12 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class Quarantine
 {
     /**
+     *
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
-     * @ApiField(bind_to="id", type="relation")
+     * @ApiField(bind_to="quarantine_session", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="QuarantineSession")
      */
     protected $session;
@@ -43,7 +44,7 @@ class Quarantine
      */
     protected $uuid;
     /**
-     * @ApiField(bind_to="forced", type="int")
+     * @ApiField(bind_to="forced", type="boolean")
      */
     protected $forced;
     /**
@@ -189,7 +190,7 @@ class Quarantine
         return $this->createdOn;
     }
 
-    public function setCreatedOn(\DateTime $createdOn)
+    public function setCreatedOn(\DateTime $createdOn = null)
     {
         $this->createdOn = $createdOn;
     }
@@ -204,7 +205,7 @@ class Quarantine
         return $this->updatedOn;
     }
 
-    public function setUpdatedOn(\DateTime $updatedOn)
+    public function setUpdatedOn(\DateTime $updatedOn = null)
     {
         $this->updatedOn = $updatedOn;
     }

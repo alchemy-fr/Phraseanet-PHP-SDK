@@ -17,7 +17,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class BasketValidationChoice
 {
     /**
-     * @ApiField(bind_to="agreement", type="boolean", nullable="1")
+     * @ApiField(bind_to="agreement", type="boolean")
      */
     protected $agreement;
     /**

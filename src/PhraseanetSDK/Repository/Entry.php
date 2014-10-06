@@ -49,7 +49,7 @@ class Entry extends AbstractRepository
         $response = $this->query('GET', sprintf('feeds/%d/content/', $feedId), array(
             'offset_start' => $offsetStart,
             'per_page'     => $perPage
-            ));
+        ));
 
         if (true !== $response->hasProperty('entries')) {
             throw new RuntimeException('Missing "entries" property in response content');

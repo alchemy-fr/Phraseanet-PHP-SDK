@@ -19,7 +19,7 @@ use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Http\APIResponse;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 
-abstract class AbstractRepository implements RepositoryInterface
+abstract class AbstractRepository
 {
     /** @var EntityManager */
     protected $em;

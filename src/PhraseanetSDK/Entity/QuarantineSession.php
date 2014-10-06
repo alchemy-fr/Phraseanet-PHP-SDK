@@ -17,6 +17,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class QuarantineSession
 {
     /**
+     *
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;

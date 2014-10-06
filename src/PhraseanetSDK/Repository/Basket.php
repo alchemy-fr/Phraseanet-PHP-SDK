@@ -59,7 +59,7 @@ class Basket extends AbstractRepository
         $baskets = new ArrayCollection();
 
         foreach ($response->getProperty('baskets') as $basketData) {
-            $baskets->add(EntityHydrator::hydrate('basket', $basketData));
+            $baskets->add(EntityHydrator::hydrate('basket', $basketData, $this->em));
         }
 
         return $baskets;

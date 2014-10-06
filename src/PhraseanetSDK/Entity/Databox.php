@@ -17,6 +17,7 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class Databox
 {
     /**
+     *
      * @ApiField(bind_to="databox_id", type="int")
      */
     protected $id;
