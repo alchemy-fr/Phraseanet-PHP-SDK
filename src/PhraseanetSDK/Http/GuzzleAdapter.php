@@ -28,6 +28,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
 {
     /** @var ClientInterface */
     private $guzzle;
+    private $extended = false;
 
     public function __construct(ClientInterface $guzzle)
     {
@@ -65,6 +66,27 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     }
 
     /**
+     * Sets extended mode
+     *
+     * Extended mode fetch more data (status, meta, subdefs) in one request
+     * for a record
+     *
+     * @param boolean $extended
+     */
+    public function setExtended($extended)
+    {
+        $this->extended = (boolean) $extended;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExtended()
+    {
+        return $this->extended;
+    }
+
+    /**
      * Performs an HTTP request, returns the body response
      *
      * @param string $method     The method
@@ -81,8 +103,11 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), $headers = array())
     {
+        echo  __METHOD__."\n";
         try {
-            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' => 'application/json'), $headers));
+            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' =>
+                $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
+            ), $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
         } catch (CurlException $e) {

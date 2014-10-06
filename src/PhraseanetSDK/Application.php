@@ -151,6 +151,18 @@ class Application implements ApplicationInterface
         );
     }
 
+    /**
+     * Activate extended graph object by adding required accept headers.
+     * This results in bigger response message but less requests to get
+     * relation of queried object.
+     *
+     * @param $mode
+     */
+    public function setExtendedMode($mode)
+    {
+        $this->adapter->setExtended($mode);
+    }
+
     private function getAdapter($token)
     {
         if (!isset($this->adapters[$token])) {
