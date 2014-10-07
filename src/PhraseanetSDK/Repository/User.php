@@ -12,7 +12,6 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
-use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
 
 class User extends AbstractRepository
@@ -24,7 +23,7 @@ class User extends AbstractRepository
         if (true !== $response->hasProperty('user')) {
             throw new RuntimeException('Missing "user" property in response content');
         }
-        
+
         return EntityHydrator::hydrate('user', $response->getProperty('user'), $this->em);
 
     }

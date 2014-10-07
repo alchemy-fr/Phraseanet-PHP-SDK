@@ -56,7 +56,7 @@ class Query
     protected $suggestions;
     /**
      * @ApiField(bind_to="results", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Record")
+     * @ApiRelation(type="one_to_one", target_entity="Result")
      */
     protected $results;
 
@@ -197,16 +197,15 @@ class Query
     }
 
     /**
-     * Get result as a collection of PhraseanetSDK\Entity\Record objects
      *
-     * @return ArrayCollection
+     * @return Result
      */
     public function getResults()
     {
         return $this->results;
     }
 
-    public function setResults(ArrayCollection $results)
+    public function setResults(Result $results)
     {
         $this->results = $results;
     }

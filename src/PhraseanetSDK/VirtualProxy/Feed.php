@@ -28,8 +28,8 @@ class Feed
      *
      * /!\ This method requests the API
      *
-     * @param  integer        $offset  The offset
-     * @param  integer        $perPage The number of items
+     * @param  integer         $offset  The offset
+     * @param  integer         $perPage The number of items
      * @return ArrayCollection
      */
     public function getEntries(\PhraseanetSDK\Entity\Feed $feed, $offset, $perPage)

@@ -2,15 +2,12 @@
 
 namespace PhraseanetSDK\Tests;
 
-use PhraseanetSDK\Cache\BackendCacheFactory;
 use PhraseanetSDK\PhraseanetSDKServiceProvider;
 use Silex\Application;
+use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use PhraseanetSDK\Cache\CanCacheStrategy;
-use PhraseanetSDK\Cache\RevalidationFactory;
-use PhraseanetSDK\Cache\CacheFactory;
-use PhraseanetSDK\Exception\ExceptionInterface;
 
 class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -76,7 +73,6 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app->register(new WebProfilerServiceProvider(), array(
             'profiler.cache_dir' => __DIR__ . '/cache',
         ));
-
         $app->register(new PhraseanetSDKServiceProvider());
         $app->boot();
 
@@ -96,7 +92,6 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $plugins = $app['phraseanet-sdk.guzzle.plugins'];
         $this->assertContains($app['phraseanet-sdk.guzzle.history-plugin'], $plugins);
     }
-
 
     public function testHistoryPluginLoadedIfProfilerEnabled()
     {
@@ -303,6 +298,9 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     private function getConfiguredApplication()
     {
-        return new Application();
+        $app = new Application();
+        $app->register(new ServiceControllerServiceProvider());
+
+        return $app;
     }
 }

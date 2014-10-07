@@ -76,7 +76,9 @@ class Record extends AbstractRepository
      */
     public function search(array $parameters = array())
     {
-        $response = $this->query('POST', 'records/search/', array(), $parameters);
+        $response = $this->query('POST', 'search/', array(), array_merge(
+            array('search_type' => 0), $parameters
+        ));
 
         if ($response->isEmpty()) {
             throw new RuntimeException('Response content is empty');

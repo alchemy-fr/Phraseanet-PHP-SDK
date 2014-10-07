@@ -28,7 +28,7 @@ class RecordTest extends RepositoryTestCase
 
     public function testFind()
     {
-        $client = $this->getClient($this->getSampleResponse('repository/query/search'));
+        $client = $this->getClient($this->getSampleResponse('repository/record/find'));
         $recordRepo = new Record(new EntityManager($client));
         $records = $recordRepo->find(1, 10);
         $this->assertIsCollection($records);

@@ -1,8 +1,8 @@
 {
     "meta": {
-        "api_version": "1.2",
-        "request": "POST /api/v1/records/search/",
-        "response_time": "2012-06-29T16:01:07+02:00",
+        "api_version": "1.3",
+        "request": "GET /api/v1/search/",
+        "response_time": "2014-10-07T17:21:16+02:00",
         "http_code": 200,
         "error_type": null,
         "error_message": null,
@@ -12,147 +12,2330 @@
     "response": {
         "offset_start": 0,
         "per_page": 10,
-        "available_results": 209,
-        "total_results": 209,
+        "available_results": 6,
+        "total_results": 6,
         "error": "",
         "warning": "",
-        "query_time": 0.001243,
+        "query_time": 0.001253,
         "search_indexes": "",
-        "suggestions": [
-        {
-            "value" : "test",
-            "hits" : 34,
-            "current" : true
-        },
-        {
-            "value" : "test2",
-            "hits" : 2,
-            "current" : true
-        }
-        ],
+        "suggestions": [],
         "results": {
-            "records" : [{
-                "databox_id": 1,
-                "record_id": 646,
-                "mime_type": "application/pdf",
-                "title": "Pile Documents.pdf",
-                "original_name": "Pile Documents.pdf",
-                "updated-on": "2012-06-28T17:16:56+02:00",
-                "created_on": "2012-06-27T18:02:39+02:00",
-                "collection_id": 1,
-                "sha256": "e861b99a6943ecede619d90215bfc6348aa28a11e6c6ebcf5f5448868dc010e6",
-                "thumbnail": {
-                    "name": "thumbnail",
-                    "permalink": {
-                        "created_on": "2012-06-29T16:01:02+02:00",
-                        "id": 2056,
-                        "is_activated": true,
-                        "label": "00244566185628356178ogv",
-                        "updated_on": "2012-06-29T16:01:02+02:00",
-                        "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
-                        "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
-                    },
-                    "height": 113,
-                    "width": 150,
-                    "filesize": 2139,
-                    "devices": [
-                    "screen"
-                    ],
-                    "player_type": "IMAGE",
-                    "mime_type": "image/jpeg"
-                },
-                "technical_informations": [
+            "records": [],
+            "stories": [
                 {
-                    "name": "FileSize",
-                    "value": 470877
-                },
-                {
-                    "name": "MimeType",
-                    "value": "application/pdf"
-                }
-                ],
-                "phrasea_type": "document",
-                "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a"
-            }],
-            "stories" : [{
-                "@entity@" : "http://api.phraseanet.com/api/objects/story",
-                "databox_id": 1,
-                "story_id": 646,
-                "updated-on": "2012-06-28T17:16:56+02:00",
-                "created_on": "2012-06-27T18:02:39+02:00",
-                "collection_id": 1,
-                "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a",
-                "thumbnail": {
-                    "name": "thumbnail",
-                    "permalink": {
-                        "created_on": "2012-06-29T16:01:02+02:00",
-                        "id": 2056,
-                        "is_activated": true,
-                        "label": "00244566185628356178ogv",
-                        "updated_on": "2012-06-29T16:01:02+02:00",
-                        "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
-                        "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
-                    },
-                    "height": 113,
-                    "width": 150,
-                    "filesize": 2139,
-                    "devices": [
-                    "screen"
-                    ],
-                    "player_type": "IMAGE",
-                    "mime_type": "image/jpeg"
-                },
-                "metadatas": {
-                    "@entity@" : "http://api.phraseanet.com/objects/api/story-metadata-bag",
-                    "aaa"   : "aaaa",
-                    "aaaa"  : "aaaa",
-                    "aaa"   : "aaaa",
-                    "aaaa"  : "aaaa"
-                },
-                "records" : [{
+                    "@entity@": "http://api.phraseanet.com/api/objects/story",
                     "databox_id": 1,
-                    "record_id": 646,
-                    "mime_type": "application/pdf",
-                    "title": "Pile Documents.pdf",
-                    "original_name": "Pile Documents.pdf",
-                    "updated-on": "2012-06-28T17:16:56+02:00",
-                    "created_on": "2012-06-27T18:02:39+02:00",
+                    "story_id": 2027,
+                    "updated_on": "2014-09-17T18:31:46+02:00",
+                    "created_on": "2014-07-09T12:24:31+02:00",
                     "collection_id": 1,
-                    "sha256": "e861b99a6943ecede619d90215bfc6348aa28a11e6c6ebcf5f5448868dc010e6",
                     "thumbnail": {
                         "name": "thumbnail",
                         "permalink": {
-                            "created_on": "2012-06-29T16:01:02+02:00",
-                            "id": 2056,
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6150,
                             "is_activated": true,
-                            "label": "00244566185628356178ogv",
-                            "updated_on": "2012-06-29T16:01:02+02:00",
-                            "page_url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/view/",
-                            "url": "http://dev.phrasea.net/permalink/v1/00244566185628356178ogv/1/645/1JieBXqF/thumbnail/"
+                            "label": "test-pour-PHRAS-109-et-aussi-pour-PHRAS-108-avec-un-long-titre",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2027/thumbnail/?token=sS2PPtv1",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2027/thumbnail/test-pour-PHRAS-109-et-aussi-pour-PHRAS-108-avec-un-long-titre.jpg?token=sS2PPtv1&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2027/thumbnail/test-pour-PHRAS-109-et-aussi-pour-PHRAS-108-avec-un-long-titre.jpg?token=sS2PPtv1"
                         },
-                        "height": 113,
+                        "height": 200,
                         "width": 150,
-                        "filesize": 2139,
-                        "devices": [
-                        "screen"
-                        ],
+                        "filesize": 3954,
+                        "devices": [],
                         "player_type": "IMAGE",
                         "mime_type": "image/jpeg"
                     },
-                    "technical_informations": [
-                    {
-                        "name": "FileSize",
-                        "value": 470877
+                    "uuid": "31d80ad3-a613-4c97-a699-7166409888b6",
+                    "metadatas": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                        "dc:contributor": null,
+                        "dc:coverage": null,
+                        "dc:creator": null,
+                        "dc:date": null,
+                        "dc:description": null,
+                        "dc:format": null,
+                        "dc:identifier": null,
+                        "dc:language": null,
+                        "dc:publisher": null,
+                        "dc:relation": null,
+                        "dc:rights": null,
+                        "dc:source": null,
+                        "dc:subject": null,
+                        "dc:title": null,
+                        "dc:type": null
                     },
-                    {
-                        "name": "MimeType",
-                        "value": "application/pdf"
-                    }
-                    ],
-                    "phrasea_type": "document",
-                    "uuid": "037aa6a5-3abc-4f18-88f3-c464fda0bb8a"
-                }]
-            }]
+                    "records": [
+                        {
+                            "databox_id": 1,
+                            "record_id": 2030,
+                            "mime_type": "image/jpeg",
+                            "title": "IMG_3066",
+                            "original_name": "IMG_3066.jpg",
+                            "updated_on": "2014-09-17T23:48:37+02:00",
+                            "created_on": "2014-07-28T21:33:54+02:00",
+                            "collection_id": 1,
+                            "sha256": "05efa2ac1acfdb1453e173cff6d35f599ba15753bec265c9ee5941dd2e5a8e46",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-28T21:34:49+02:00",
+                                    "id": 5232,
+                                    "is_activated": true,
+                                    "label": "IMG_3066",
+                                    "updated_on": "2014-07-28T21:34:49+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2030/thumbnail/?token=IRhZ0rjB",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2030/thumbnail/IMG_3066.jpg?token=IRhZ0rjB&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2030/thumbnail/IMG_3066.jpg?token=IRhZ0rjB"
+                                },
+                                "height": 200,
+                                "width": 150,
+                                "filesize": 5696,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Aperture",
+                                    "value": 2.2
+                                },
+                                {
+                                    "name": "CameraModel",
+                                    "value": "iPhone 5s"
+                                },
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 1984448
+                                },
+                                {
+                                    "name": "FlashFired",
+                                    "value": 0
+                                },
+                                {
+                                    "name": "FocalLength",
+                                    "value": 4.12
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 3264
+                                },
+                                {
+                                    "name": "HyperfocalDistance",
+                                    "value": 1.8698439341847
+                                },
+                                {
+                                    "name": "ISO",
+                                    "value": 32
+                                },
+                                {
+                                    "name": "Latitude",
+                                    "value": 48.887505555556
+                                },
+                                {
+                                    "name": "LightValue",
+                                    "value": 14.488718845698
+                                },
+                                {
+                                    "name": "Longitude",
+                                    "value": 2.2828
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "ShutterSpeed",
+                                    "value": 0.0006578947368
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 2448
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "20c54fe4-a863-4b73-ac3d-6deb652a6e5a"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2029,
+                            "mime_type": "image/jpeg",
+                            "title": "IMG_3070",
+                            "original_name": "IMG_3070.jpg",
+                            "updated_on": "2014-09-17T23:48:43+02:00",
+                            "created_on": "2014-07-22T20:14:42+02:00",
+                            "collection_id": 1,
+                            "sha256": "ad9ea2d4808f386858d0a551bd4790af3252fa3998eac379e22502a6e83d43fe",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-22T20:14:50+02:00",
+                                    "id": 5228,
+                                    "is_activated": true,
+                                    "label": "IMG_3070",
+                                    "updated_on": "2014-07-22T20:14:50+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2029/thumbnail/?token=tvSGeyn2",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2029/thumbnail/IMG_3070.jpg?token=tvSGeyn2&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2029/thumbnail/IMG_3070.jpg?token=tvSGeyn2"
+                                },
+                                "height": 200,
+                                "width": 150,
+                                "filesize": 3951,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Aperture",
+                                    "value": 2.4
+                                },
+                                {
+                                    "name": "CameraModel",
+                                    "value": "iPhone 4S"
+                                },
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 1489383
+                                },
+                                {
+                                    "name": "FlashFired",
+                                    "value": 0
+                                },
+                                {
+                                    "name": "FocalLength",
+                                    "value": 4.28
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 3264
+                                },
+                                {
+                                    "name": "HyperfocalDistance",
+                                    "value": 2.0773522348635
+                                },
+                                {
+                                    "name": "ISO",
+                                    "value": 50
+                                },
+                                {
+                                    "name": "Latitude",
+                                    "value": 48.887388888889
+                                },
+                                {
+                                    "name": "LightValue",
+                                    "value": 8.1110313122733
+                                },
+                                {
+                                    "name": "Longitude",
+                                    "value": 2.2827638888889
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "ShutterSpeed",
+                                    "value": 0.04166666667
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 2448
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "cbedf373-5f0e-4b54-b3db-1ddf59b41413"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2031,
+                            "mime_type": "image/jpeg",
+                            "title": "IMG_3062",
+                            "original_name": "IMG_3062.jpg",
+                            "updated_on": "2014-09-17T23:48:30+02:00",
+                            "created_on": "2014-07-28T21:35:37+02:00",
+                            "collection_id": 1,
+                            "sha256": "8586dcceb9978a71a461bf739368467a76d79a325cfbd0aac0d989fa360d9707",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-28T21:35:43+02:00",
+                                    "id": 5236,
+                                    "is_activated": true,
+                                    "label": "IMG_3062",
+                                    "updated_on": "2014-07-28T21:35:43+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2031/thumbnail/?token=PawWwwWm",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2031/thumbnail/IMG_3062.jpg?token=PawWwwWm&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2031/thumbnail/IMG_3062.jpg?token=PawWwwWm"
+                                },
+                                "height": 200,
+                                "width": 150,
+                                "filesize": 7061,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Width",
+                                    "value": 2448
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 3264
+                                },
+                                {
+                                    "name": "FocalLength",
+                                    "value": 4.12
+                                },
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "CameraModel",
+                                    "value": "iPhone 5s"
+                                },
+                                {
+                                    "name": "FlashFired",
+                                    "value": 0
+                                },
+                                {
+                                    "name": "Aperture",
+                                    "value": 2.2
+                                },
+                                {
+                                    "name": "ShutterSpeed",
+                                    "value": 0.01666666667
+                                },
+                                {
+                                    "name": "HyperfocalDistance",
+                                    "value": 1.8698439341847
+                                },
+                                {
+                                    "name": "ISO",
+                                    "value": 40
+                                },
+                                {
+                                    "name": "LightValue",
+                                    "value": 9.5038257377072
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "Longitude",
+                                    "value": 2.2828
+                                },
+                                {
+                                    "name": "Latitude",
+                                    "value": 48.887505555556
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 1907977
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "81b8be16-37e5-424a-a593-c0b02ea0b2fe"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1917,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-780-slow.avi - Xmen-OpenDivX-780-slow",
+                            "original_name": "Xmen-OpenDivX-780-slow.avi",
+                            "updated_on": "2014-06-24T00:55:08+02:00",
+                            "created_on": "2014-06-24T00:39:36+02:00",
+                            "collection_id": 3,
+                            "sha256": "c42ce67be06e892664fe38c5e0273f8bc97db083c3e8fe8b2e7bf9335da2db62",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6136,
+                                    "is_activated": true,
+                                    "label": "Xmen-OpenDivX-780-slow---samplefiletesttestsDivX-testXmen-OpenDi",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1917/thumbnail/?token=Ea5ZnqAR",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1917/thumbnail/Xmen-OpenDivX-780-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=Ea5ZnqAR&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1917/thumbnail/Xmen-OpenDivX-780-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=Ea5ZnqAR"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 5086,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "AudioCodec",
+                                    "value": 1
+                                },
+                                {
+                                    "name": "AudioSamplerate",
+                                    "value": 44100
+                                },
+                                {
+                                    "name": "Duration",
+                                    "value": 1.6
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 335872
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": 44100.000002822
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "7bd33097-fe1f-40a3-b2ab-16b92998bd64"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1916,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-780-fast.avi - Xmen-OpenDivX-780-fast",
+                            "original_name": "Xmen-OpenDivX-780-fast.avi",
+                            "updated_on": "2014-06-24T00:55:12+02:00",
+                            "created_on": "2014-06-24T00:39:35+02:00",
+                            "collection_id": 3,
+                            "sha256": "ecf09544baaac4750e5afa7e3272f16d4b33d13f5bd743cdbb475c6182338777",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6138,
+                                    "is_activated": true,
+                                    "label": "Xmen-OpenDivX-780-fast---samplefiletesttestsDivX-testXmen-OpenDi",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1916/thumbnail/?token=XMGUsRS9",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1916/thumbnail/Xmen-OpenDivX-780-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=XMGUsRS9&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1916/thumbnail/Xmen-OpenDivX-780-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=XMGUsRS9"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 3221,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 4
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 499712
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "1a625863-ed63-4984-b020-1edf758429fe"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1915,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-650-slow.avi - Xmen-OpenDivX-650-slow",
+                            "original_name": "Xmen-OpenDivX-650-slow.avi",
+                            "updated_on": "2014-06-24T00:55:15+02:00",
+                            "created_on": "2014-06-24T00:39:34+02:00",
+                            "collection_id": 3,
+                            "sha256": "4e3ace1ac8e775c1dbcd19cce9a7397876a7c695a82814dec500abdcd4a6b448",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6140,
+                                    "is_activated": true,
+                                    "label": "Xmen-OpenDivX-650-slow---samplefiletesttestsDivX-testXmen-OpenDi",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1915/thumbnail/?token=nsmrTl5j",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1915/thumbnail/Xmen-OpenDivX-650-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=nsmrTl5j&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1915/thumbnail/Xmen-OpenDivX-650-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=nsmrTl5j"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 5151,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 2.4
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 225280
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "6c09e6de-f131-4d67-ac39-744d9d7273c3"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1914,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-650-fast.avi - Xmen-OpenDivX-650-fast",
+                            "original_name": "Xmen-OpenDivX-650-fast.avi",
+                            "updated_on": "2014-06-24T00:55:18+02:00",
+                            "created_on": "2014-06-24T00:39:33+02:00",
+                            "collection_id": 3,
+                            "sha256": "c1d768ce548ad4798f2079d8a17cbbad1cafe9e87cd47b7204b57a53ce9f28da",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6142,
+                                    "is_activated": true,
+                                    "label": "Xmen-OpenDivX-650-fast---samplefiletesttestsDivX-testXmen-OpenDi",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1914/thumbnail/?token=QaDgfev7",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1914/thumbnail/Xmen-OpenDivX-650-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=QaDgfev7&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1914/thumbnail/Xmen-OpenDivX-650-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=QaDgfev7"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 3284,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 4
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 399360
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "5998becc-b0ce-476e-abcd-9f4672f7c39a"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1913,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-200-slow.avi - Xmen-OpenDivX-200-slow",
+                            "original_name": "Xmen-OpenDivX-200-slow.avi",
+                            "updated_on": "2014-06-24T00:55:22+02:00",
+                            "created_on": "2014-06-24T00:39:32+02:00",
+                            "collection_id": 3,
+                            "sha256": "c5ed0a19dde40ced639b99ab15a6f49ffd7aa95fea7371b279b18ae1d2b795d2",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6144,
+                                    "is_activated": true,
+                                    "label": "Xmen-OpenDivX-200-slow---samplefiletesttestsDivX-testXmen-OpenDi",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1913/thumbnail/?token=9GodgB6v",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1913/thumbnail/Xmen-OpenDivX-200-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=9GodgB6v&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1913/thumbnail/Xmen-OpenDivX-200-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=9GodgB6v"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 5042,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 5.2
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 169984
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "745c44ad-fdd2-443d-b926-2870d4406e7c"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1912,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-DivX-1800-slow.avi - Xmen-DivX-1800-slow",
+                            "original_name": "Xmen-DivX-1800-slow.avi",
+                            "updated_on": "2014-06-24T00:55:24+02:00",
+                            "created_on": "2014-06-24T00:39:31+02:00",
+                            "collection_id": 3,
+                            "sha256": "1d0733d7ef29879c0e3f5ddbc5af4533b001fa83490c4c70087e745094e7adf4",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6146,
+                                    "is_activated": true,
+                                    "label": "Xmen-DivX-1800-slow---samplefiletesttestsDivX-testXmen-DivX-1800",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1912/thumbnail/?token=senNmWRM",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1912/thumbnail/Xmen-DivX-1800-slow---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=senNmWRM&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1912/thumbnail/Xmen-DivX-1800-slow---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=senNmWRM"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 4730,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "AudioCodec",
+                                    "value": 1
+                                },
+                                {
+                                    "name": "AudioSamplerate",
+                                    "value": 44100
+                                },
+                                {
+                                    "name": "Duration",
+                                    "value": 1.6
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 296960
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": 44100.000002822
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "217a25d2-ea86-4353-b655-5e326c463737"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 1911,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/tests/DivX-test/Xmen-DivX-1800-fast.avi - Xmen-DivX-1800-fast",
+                            "original_name": "Xmen-DivX-1800-fast.avi",
+                            "updated_on": "2014-06-24T00:55:31+02:00",
+                            "created_on": "2014-06-24T00:39:30+02:00",
+                            "collection_id": 3,
+                            "sha256": "39c42f904d203e78635df28554bed0d542ee2842f790117941130465355eab1c",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-17T18:17:51+02:00",
+                                    "id": 6148,
+                                    "is_activated": true,
+                                    "label": "Xmen-DivX-1800-fast---samplefiletesttestsDivX-testXmen-DivX-1800",
+                                    "updated_on": "2014-09-17T18:17:51+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1911/thumbnail/?token=6E2CnnpP",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1911/thumbnail/Xmen-DivX-1800-fast---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=6E2CnnpP&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1911/thumbnail/Xmen-DivX-1800-fast---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=6E2CnnpP"
+                                },
+                                "height": 136,
+                                "width": 200,
+                                "filesize": 3014,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 4
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 401408
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 25
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 352
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "02bb7c72-1471-4add-9b9e-fc8e18b214dd"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2246,
+                            "mime_type": "image/jpeg",
+                            "title": "Unimog stock 1974",
+                            "original_name": "1974MercedesBenzUnimog_01_700.jpg",
+                            "updated_on": "2014-09-17T23:24:27+02:00",
+                            "created_on": "2014-09-05T10:28:51+02:00",
+                            "collection_id": 1,
+                            "sha256": "ac1b46e076c25976f823825bf83ab9962fa91621fea0db9251e3e43b4deb4bae",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:29:48+02:00",
+                                    "id": 6005,
+                                    "is_activated": true,
+                                    "label": "1974MercedesBenzUnimog_01_700",
+                                    "updated_on": "2014-09-05T10:29:48+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2246/thumbnail/?token=IbmmTXT5",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2246/thumbnail/1974MercedesBenzUnimog_01_700.jpg?token=IbmmTXT5&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2246/thumbnail/1974MercedesBenzUnimog_01_700.jpg?token=IbmmTXT5"
+                                },
+                                "height": 154,
+                                "width": 200,
+                                "filesize": 5659,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 54490
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 538
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 700
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "456ed534-2a92-4a7e-a1c0-ff4f5df40b4b"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2245,
+                            "mime_type": "image/jpeg",
+                            "title": "Unimog vert olive",
+                            "original_name": "Unimog-2-700x533.jpg",
+                            "updated_on": "2014-09-17T23:24:31+02:00",
+                            "created_on": "2014-09-05T10:28:50+02:00",
+                            "collection_id": 1,
+                            "sha256": "78aefdab3ce443e0b1803ce91b634a615eb536540afdb9f9b9630052ccd3bf22",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:29:54+02:00",
+                                    "id": 6008,
+                                    "is_activated": true,
+                                    "label": "Unimog-2-700x533",
+                                    "updated_on": "2014-09-05T10:29:54+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2245/thumbnail/?token=lGvicehc",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2245/thumbnail/Unimog-2-700x533.jpg?token=lGvicehc&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2245/thumbnail/Unimog-2-700x533.jpg?token=lGvicehc"
+                                },
+                                "height": 152,
+                                "width": 200,
+                                "filesize": 7734,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 135016
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 533
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 700
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "f45f9926-5f82-4df1-a470-288eed46364e"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2244,
+                            "mime_type": "image/jpeg",
+                            "title": "Unimog pour l'autoroute",
+                            "original_name": "Unimog_U400.jpg",
+                            "updated_on": "2014-09-17T23:24:34+02:00",
+                            "created_on": "2014-09-05T10:28:49+02:00",
+                            "collection_id": 1,
+                            "sha256": "0b6f98c3338a454f8892f688f26e93cf3e13844034cb55111a82b491213d4b47",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:29:56+02:00",
+                                    "id": 6011,
+                                    "is_activated": true,
+                                    "label": "Unimog_U400",
+                                    "updated_on": "2014-09-05T10:29:56+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2244/thumbnail/?token=tj7IZaDp",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2244/thumbnail/Unimog_U400.jpg?token=tj7IZaDp&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2244/thumbnail/Unimog_U400.jpg?token=tj7IZaDp"
+                                },
+                                "height": 171,
+                                "width": 200,
+                                "filesize": 12152,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 505737
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 846
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 990
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "5c9940d7-bf98-4bb6-9b48-d6fe0ecf97f5"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2243,
+                            "mime_type": "image/jpeg",
+                            "title": "Unimog de l'armée",
+                            "original_name": "Mercedes-Benz_Unimog_U_5000.jpg",
+                            "updated_on": "2014-09-17T23:24:36+02:00",
+                            "created_on": "2014-09-05T10:28:47+02:00",
+                            "collection_id": 1,
+                            "sha256": "ee2296096570e6039cf14e350782a4e738e115e29baaec379a3f0955282526cf",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:28:49+02:00",
+                                    "id": 5982,
+                                    "is_activated": true,
+                                    "label": "Mercedes-Benz_Unimog_U_5000",
+                                    "updated_on": "2014-09-05T10:28:49+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2243/thumbnail/?token=qxucde2q",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2243/thumbnail/Mercedes-Benz_Unimog_U_5000.jpg?token=qxucde2q&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2243/thumbnail/Mercedes-Benz_Unimog_U_5000.jpg?token=qxucde2q"
+                                },
+                                "height": 150,
+                                "width": 200,
+                                "filesize": 6333,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Aperture",
+                                    "value": 5.6
+                                },
+                                {
+                                    "name": "CameraModel",
+                                    "value": "DSC-W100"
+                                },
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 3460370
+                                },
+                                {
+                                    "name": "FlashFired",
+                                    "value": 0
+                                },
+                                {
+                                    "name": "FocalLength",
+                                    "value": 7.9
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 2448
+                                },
+                                {
+                                    "name": "ISO",
+                                    "value": 125
+                                },
+                                {
+                                    "name": "LightValue",
+                                    "value": 11.97085365434
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "ShutterSpeed",
+                                    "value": 0.00625
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 3264
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "f118bb77-a0d1-4531-88c1-4630ad6fc846"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2242,
+                            "mime_type": "image/jpeg",
+                            "title": "La famille Unimog",
+                            "original_name": "UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_history_home_715x230.jpg",
+                            "updated_on": "2014-09-17T23:24:38+02:00",
+                            "created_on": "2014-09-05T10:28:45+02:00",
+                            "collection_id": 1,
+                            "sha256": "1c6da4a93d7fcc05042db01d3dcaac768608856f8bbe2e371ff37385c5001282",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:28:52+02:00",
+                                    "id": 5987,
+                                    "is_activated": true,
+                                    "label": "UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_hist",
+                                    "updated_on": "2014-09-05T10:28:52+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2242/thumbnail/?token=9NsUeTNu",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2242/thumbnail/UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_hist.jpg?token=9NsUeTNu&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2242/thumbnail/UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_hist.jpg?token=9NsUeTNu"
+                                },
+                                "height": 64,
+                                "width": 200,
+                                "filesize": 3694,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 72746
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 230
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 715
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "a2a79dc6-6997-485f-b670-91b82c285b5a"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2241,
+                            "mime_type": "image/jpeg",
+                            "title": "Concept truck Unimog",
+                            "original_name": "unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg",
+                            "updated_on": "2014-09-17T23:24:39+02:00",
+                            "created_on": "2014-09-05T10:28:44+02:00",
+                            "collection_id": 1,
+                            "sha256": "fe8c1aa38f79c4a45e6d7e5de5587c751ebb2466e2b2f47641b6d048938ad4dd",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:28:54+02:00",
+                                    "id": 5990,
+                                    "is_activated": true,
+                                    "label": "unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog",
+                                    "updated_on": "2014-09-05T10:28:54+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/?token=og6qy4RR",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg?token=og6qy4RR&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg?token=og6qy4RR"
+                                },
+                                "height": 125,
+                                "width": 200,
+                                "filesize": 5518,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 447218
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 938
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 1500
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "dc0e45d4-bd96-47a2-b2c8-edb8c9bc0bc4"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2240,
+                            "mime_type": "image/jpeg",
+                            "title": "Unimog avec un frein à main",
+                            "original_name": "mercedes_benz-unimog_mp35_pic_29397.jpg",
+                            "updated_on": "2014-09-17T23:24:41+02:00",
+                            "created_on": "2014-09-05T10:28:42+02:00",
+                            "collection_id": 1,
+                            "sha256": "ed44c00a679e487c43c7d6c017d0eb130ecb319124971257c187000dd077228f",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:28:56+02:00",
+                                    "id": 5993,
+                                    "is_activated": true,
+                                    "label": "mercedes_benz-unimog_mp35_pic_29397",
+                                    "updated_on": "2014-09-05T10:28:56+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2240/thumbnail/?token=ncgJdO9O",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2240/thumbnail/mercedes_benz-unimog_mp35_pic_29397.jpg?token=ncgJdO9O&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2240/thumbnail/mercedes_benz-unimog_mp35_pic_29397.jpg?token=ncgJdO9O"
+                                },
+                                "height": 160,
+                                "width": 200,
+                                "filesize": 9351,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 256369
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 1024
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 1280
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "34c7e683-1153-4c88-9494-6132d94a63c4"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2239,
+                            "mime_type": "image/jpeg",
+                            "title": "Unimog et Smart faisant la course",
+                            "original_name": "57975564_9393659d84.jpg",
+                            "updated_on": "2014-09-17T23:24:42+02:00",
+                            "created_on": "2014-09-05T10:28:41+02:00",
+                            "collection_id": 1,
+                            "sha256": "34c68e927f39cce8b6fb5dad28e2103956cc087db6f572cb924044ea76673af8",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-09-05T10:28:58+02:00",
+                                    "id": 5996,
+                                    "is_activated": true,
+                                    "label": "57975564_9393659d84",
+                                    "updated_on": "2014-09-05T10:28:58+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/?token=o0o1s1pI",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/57975564_9393659d84.jpg?token=o0o1s1pI&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/57975564_9393659d84.jpg?token=o0o1s1pI"
+                                },
+                                "height": 133,
+                                "width": 200,
+                                "filesize": 6199,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Channels",
+                                    "value": 3
+                                },
+                                {
+                                    "name": "ColorDepth",
+                                    "value": 8
+                                },
+                                {
+                                    "name": "ColorSpace",
+                                    "value": "RGB"
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 37146
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 373
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/jpeg"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 559
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "bae3d525-7e06-49c6-8e6e-f770838ebe9b"
+                        }
+                    ]
+                },
+                {
+                    "@entity@": "http://api.phraseanet.com/api/objects/story",
+                    "databox_id": 1,
+                    "story_id": 2026,
+                    "updated_on": "2014-07-08T15:26:34+02:00",
+                    "created_on": "2014-07-08T15:26:32+02:00",
+                    "collection_id": 1,
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-07-08T17:26:11+02:00",
+                            "id": 5206,
+                            "is_activated": true,
+                            "label": "La-nouvelle-gamme-Unimog",
+                            "updated_on": "2014-07-08T17:26:11+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2026/thumbnail/?token=70AyCdwY",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2026/thumbnail/La-nouvelle-gamme-Unimog.jpg?token=70AyCdwY&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2026/thumbnail/La-nouvelle-gamme-Unimog.jpg?token=70AyCdwY"
+                        },
+                        "height": 151,
+                        "width": 200,
+                        "filesize": 3293,
+                        "devices": [],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "uuid": "dc361707-c82d-47d7-90fd-0ad725f79d0e",
+                    "metadatas": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                        "dc:contributor": null,
+                        "dc:coverage": null,
+                        "dc:creator": null,
+                        "dc:date": null,
+                        "dc:description": null,
+                        "dc:format": null,
+                        "dc:identifier": null,
+                        "dc:language": null,
+                        "dc:publisher": null,
+                        "dc:relation": null,
+                        "dc:rights": null,
+                        "dc:source": null,
+                        "dc:subject": null,
+                        "dc:title": null,
+                        "dc:type": null
+                    },
+                    "records": [
+                        {
+                            "databox_id": 1,
+                            "record_id": 289,
+                            "mime_type": "video/x-msvideo",
+                            "title": "samplefiletest/avi/AV36_1.AVI - AV36_1 - 1000",
+                            "original_name": "AV36_1.AVI",
+                            "updated_on": "2014-06-23T19:36:52+02:00",
+                            "created_on": "2014-06-23T17:42:49+02:00",
+                            "collection_id": 3,
+                            "sha256": "83488fbe760db6b97f1442a9e742d58eb069728835bdb19b2853253c5c35eff2",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T17:25:15+02:00",
+                                    "id": 5205,
+                                    "is_activated": true,
+                                    "label": "AV36_1---samplefiletestaviAV36_1AVI",
+                                    "updated_on": "2014-07-08T17:25:15+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/289/thumbnail/?token=bdutlwgK",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/289/thumbnail/AV36_1---samplefiletestaviAV36_1AVI.jpg?token=bdutlwgK&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/289/thumbnail/AV36_1---samplefiletestaviAV36_1AVI.jpg?token=bdutlwgK"
+                                },
+                                "height": 151,
+                                "width": 200,
+                                "filesize": 3288,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "AudioCodec",
+                                    "value": 2
+                                },
+                                {
+                                    "name": "AudioSamplerate",
+                                    "value": 21
+                                },
+                                {
+                                    "name": "Duration",
+                                    "value": 32.933004
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 9765854
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 15.0001500015
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": 21.788085938244
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 320
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "9a375bf9-a046-469f-aee7-bdf7ff2baef6"
+                        }
+                    ]
+                },
+                {
+                    "@entity@": "http://api.phraseanet.com/api/objects/story",
+                    "databox_id": 1,
+                    "story_id": 2024,
+                    "updated_on": "2014-07-08T15:06:07+02:00",
+                    "created_on": "2014-07-08T15:05:57+02:00",
+                    "collection_id": 1,
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-10-07T17:21:17+02:00",
+                            "id": 6435,
+                            "is_activated": true,
+                            "label": "Un-reportage-avec-des-pdf---1024",
+                            "updated_on": "2014-10-07T17:21:17+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2024/thumbnail/?token=86Emj0SC",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2024/thumbnail/Un-reportage-avec-des-pdf---1024.jpg?token=86Emj0SC&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2024/thumbnail/Un-reportage-avec-des-pdf---1024.jpg?token=86Emj0SC"
+                        },
+                        "height": 141,
+                        "width": 200,
+                        "filesize": 5411,
+                        "devices": [],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "uuid": "7fc5fca0-da42-495d-9a57-27aea1c4498f",
+                    "metadatas": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                        "dc:contributor": null,
+                        "dc:coverage": null,
+                        "dc:creator": null,
+                        "dc:date": null,
+                        "dc:description": null,
+                        "dc:format": null,
+                        "dc:identifier": null,
+                        "dc:language": null,
+                        "dc:publisher": null,
+                        "dc:relation": null,
+                        "dc:rights": null,
+                        "dc:source": null,
+                        "dc:subject": null,
+                        "dc:title": null,
+                        "dc:type": null
+                    },
+                    "records": [
+                        {
+                            "databox_id": 1,
+                            "record_id": 2015,
+                            "mime_type": "application/pdf",
+                            "title": "lpd-oxygene-com--3 - 1024",
+                            "original_name": "lpd-oxygene-com--3.pdf",
+                            "updated_on": "2014-07-08T12:04:11+02:00",
+                            "created_on": "2014-07-08T12:01:05+02:00",
+                            "collection_id": 1,
+                            "sha256": "19fe2c5c910c79cd802e5bd1b93b517a83261b7f4b230beb7420cc4677128f0a",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:04:03+02:00",
+                                    "id": 5149,
+                                    "is_activated": true,
+                                    "label": "lpd-oxygene-com--3",
+                                    "updated_on": "2014-07-08T12:04:03+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2015/thumbnail/?token=xiva0OhI",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2015/thumbnail/lpd-oxygene-com--3.jpg?token=xiva0OhI&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2015/thumbnail/lpd-oxygene-com--3.jpg?token=xiva0OhI"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 8023,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 352182
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "d719ef17-b936-4a4b-8c1c-d76b7cf29ba4"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2017,
+                            "mime_type": "application/pdf",
+                            "title": "LPD-OXYGENE-COM-16 - 1024",
+                            "original_name": "LPD-OXYGENE-COM-16.pdf",
+                            "updated_on": "2014-07-08T12:03:48+02:00",
+                            "created_on": "2014-07-08T12:01:07+02:00",
+                            "collection_id": 1,
+                            "sha256": "c49b7182f8b878932552aabea7b22334880f520e9f0039bc41a136272a7f0936",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:03:41+02:00",
+                                    "id": 5145,
+                                    "is_activated": true,
+                                    "label": "LPD-OXYGENE-COM-16",
+                                    "updated_on": "2014-07-08T12:03:41+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2017/thumbnail/?token=pprdtDGk",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2017/thumbnail/LPD-OXYGENE-COM-16.jpg?token=pprdtDGk&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2017/thumbnail/LPD-OXYGENE-COM-16.jpg?token=pprdtDGk"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 8986,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 337088
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "844c8116-e369-4209-8e19-02b4449aa068"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2016,
+                            "mime_type": "application/pdf",
+                            "title": "LPD-OXYGENE-COM-_- - 1024",
+                            "original_name": "LPD-OXYGENE-COM-_-.pdf",
+                            "updated_on": "2014-07-08T12:04:01+02:00",
+                            "created_on": "2014-07-08T12:01:06+02:00",
+                            "collection_id": 1,
+                            "sha256": "65eb2c8e50c795545995f1910549f6bba00b99c8a04fcd45925a4031e8a120e8",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:03:49+02:00",
+                                    "id": 5147,
+                                    "is_activated": true,
+                                    "label": "LPD-OXYGENE-COM-_-",
+                                    "updated_on": "2014-07-08T12:03:49+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2016/thumbnail/?token=90UadfRx",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2016/thumbnail/LPD-OXYGENE-COM-_-.jpg?token=90UadfRx&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2016/thumbnail/LPD-OXYGENE-COM-_-.jpg?token=90UadfRx"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 7545,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 391469
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "8eaf1df4-c4ad-4eba-98a4-dc80b282958d"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2014,
+                            "mime_type": "application/pdf",
+                            "title": "LPD-OXYGENE-COM-17 - 1024",
+                            "original_name": "LPD-OXYGENE-COM-17.pdf",
+                            "updated_on": "2014-07-08T12:04:23+02:00",
+                            "created_on": "2014-07-08T12:01:04+02:00",
+                            "collection_id": 1,
+                            "sha256": "194ce965ab8c89cbb89cc6da93e9f96793f5f91ed259927dee3ecefccec2be0c",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:04:13+02:00",
+                                    "id": 5151,
+                                    "is_activated": true,
+                                    "label": "LPD-OXYGENE-COM-17",
+                                    "updated_on": "2014-07-08T12:04:13+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2014/thumbnail/?token=JracVEsG",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2014/thumbnail/LPD-OXYGENE-COM-17.jpg?token=JracVEsG&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2014/thumbnail/LPD-OXYGENE-COM-17.jpg?token=JracVEsG"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 8338,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 395870
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "f508ec69-14a5-4861-b7bb-c73cf9ecdeb8"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2013,
+                            "mime_type": "application/pdf",
+                            "title": "lpd-oxygene-com--2 - 1024",
+                            "original_name": "lpd-oxygene-com--2.pdf",
+                            "updated_on": "2014-07-08T12:04:30+02:00",
+                            "created_on": "2014-07-08T12:01:02+02:00",
+                            "collection_id": 1,
+                            "sha256": "a302e4b14d53c1a4be3e1ec0a594df27003a93e44ec1349cf829def74740ef5b",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:04:24+02:00",
+                                    "id": 5153,
+                                    "is_activated": true,
+                                    "label": "lpd-oxygene-com--2",
+                                    "updated_on": "2014-07-08T12:04:24+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2013/thumbnail/?token=zPAufLYE",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2013/thumbnail/lpd-oxygene-com--2.jpg?token=zPAufLYE&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2013/thumbnail/lpd-oxygene-com--2.jpg?token=zPAufLYE"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 7385,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 302221
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "47d6669c-04b2-41f0-adab-a57e1c84ab03"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2012,
+                            "mime_type": "application/pdf",
+                            "title": "LPD-OXYGENE-COM-18 - 1024",
+                            "original_name": "LPD-OXYGENE-COM-18.pdf",
+                            "updated_on": "2014-07-08T12:04:38+02:00",
+                            "created_on": "2014-07-08T12:01:01+02:00",
+                            "collection_id": 1,
+                            "sha256": "ac10ec2b85a5b4d67fc668f21992f258472a26ce03bd0460838bece74269ff49",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:04:32+02:00",
+                                    "id": 5155,
+                                    "is_activated": true,
+                                    "label": "LPD-OXYGENE-COM-18",
+                                    "updated_on": "2014-07-08T12:04:32+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2012/thumbnail/?token=69RRzp4j",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2012/thumbnail/LPD-OXYGENE-COM-18.jpg?token=69RRzp4j&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2012/thumbnail/LPD-OXYGENE-COM-18.jpg?token=69RRzp4j"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 5577,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 258714
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "8d19f619-a5c7-48d4-b14d-752b373c6df2"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 2011,
+                            "mime_type": "application/pdf",
+                            "title": "LPD-OXYGENE-niveau - 1024",
+                            "original_name": "LPD-OXYGENE-niveau.pdf",
+                            "updated_on": "2014-07-08T12:04:51+02:00",
+                            "created_on": "2014-07-08T12:00:59+02:00",
+                            "collection_id": 1,
+                            "sha256": "b38076f690be617e00f8cab1c247fddbfa6c53fdfc16cbdda6ce34f1bd509c99",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-07-08T12:04:40+02:00",
+                                    "id": 5157,
+                                    "is_activated": true,
+                                    "label": "LPD-OXYGENE-niveau",
+                                    "updated_on": "2014-07-08T12:04:40+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2011/thumbnail/?token=aUFbFluy",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2011/thumbnail/LPD-OXYGENE-niveau.jpg?token=aUFbFluy&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2011/thumbnail/LPD-OXYGENE-niveau.jpg?token=aUFbFluy"
+                                },
+                                "height": 141,
+                                "width": 200,
+                                "filesize": 7507,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 391301
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "phrasea_type": "document",
+                            "uuid": "e9494d27-6972-4cd5-8780-a00d4324d841"
+                        }
+                    ]
+                },
+                {
+                    "@entity@": "http://api.phraseanet.com/api/objects/story",
+                    "databox_id": 1,
+                    "story_id": 234,
+                    "updated_on": "2014-06-23T14:41:15+02:00",
+                    "created_on": "2014-06-19T18:31:57+02:00",
+                    "collection_id": 1,
+                    "thumbnail": null,
+                    "uuid": "f5b7c371-9999-4097-87ba-a5481307577a",
+                    "metadatas": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                        "dc:contributor": null,
+                        "dc:coverage": null,
+                        "dc:creator": null,
+                        "dc:date": null,
+                        "dc:description": null,
+                        "dc:format": null,
+                        "dc:identifier": null,
+                        "dc:language": null,
+                        "dc:publisher": null,
+                        "dc:relation": null,
+                        "dc:rights": null,
+                        "dc:source": null,
+                        "dc:subject": null,
+                        "dc:title": null,
+                        "dc:type": null
+                    },
+                    "records": []
+                },
+                {
+                    "@entity@": "http://api.phraseanet.com/api/objects/story",
+                    "databox_id": 1,
+                    "story_id": 191,
+                    "updated_on": "2014-05-23T14:49:51+02:00",
+                    "created_on": "2014-05-23T14:49:46+02:00",
+                    "collection_id": 1,
+                    "thumbnail": null,
+                    "uuid": "d2d8131f-7597-4cdc-b355-e075c4940c1a",
+                    "metadatas": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                        "dc:contributor": null,
+                        "dc:coverage": null,
+                        "dc:creator": null,
+                        "dc:date": null,
+                        "dc:description": null,
+                        "dc:format": null,
+                        "dc:identifier": null,
+                        "dc:language": null,
+                        "dc:publisher": null,
+                        "dc:relation": null,
+                        "dc:rights": null,
+                        "dc:source": null,
+                        "dc:subject": null,
+                        "dc:title": null,
+                        "dc:type": null
+                    },
+                    "records": [
+                        {
+                            "databox_id": 1,
+                            "record_id": 184,
+                            "mime_type": "video/quicktime",
+                            "title": "IMG_2469.MOV",
+                            "original_name": "IMG_2469.MOV",
+                            "updated_on": "2014-06-09T20:30:57+02:00",
+                            "created_on": "2014-05-19T21:44:03+02:00",
+                            "collection_id": 1,
+                            "sha256": "a7f5905c38ea18e81e4c75ff238a63593d8e8b0b0ea83628b5d24361f9f313ee",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-06-09T15:56:01+02:00",
+                                    "id": 646,
+                                    "is_activated": true,
+                                    "label": "IMG_2469",
+                                    "updated_on": "2014-06-09T15:56:01+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/184/thumbnail/?token=yCoK36er",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/184/thumbnail/IMG_2469.jpg?token=yCoK36er&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/184/thumbnail/IMG_2469.jpg?token=yCoK36er"
+                                },
+                                "height": 113,
+                                "width": 200,
+                                "filesize": 4183,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "AudioCodec",
+                                    "value": "mp4a"
+                                },
+                                {
+                                    "name": "AudioSamplerate",
+                                    "value": 44100
+                                },
+                                {
+                                    "name": "Duration",
+                                    "value": 10.615
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 17325721
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 120.16951812902
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 720
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/quicktime"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": 0
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 1280
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "87931cd4-eb24-40d0-86d2-729bf79de796"
+                        }
+                    ]
+                },
+                {
+                    "@entity@": "http://api.phraseanet.com/api/objects/story",
+                    "databox_id": 1,
+                    "story_id": 149,
+                    "updated_on": "2014-06-19T19:09:30+02:00",
+                    "created_on": "2014-04-30T20:40:05+02:00",
+                    "collection_id": 1,
+                    "thumbnail": null,
+                    "uuid": "6a1618ac-c3a8-4e8f-9d52-ec8c69466a15",
+                    "metadatas": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                        "dc:contributor": null,
+                        "dc:coverage": null,
+                        "dc:creator": null,
+                        "dc:date": null,
+                        "dc:description": null,
+                        "dc:format": null,
+                        "dc:identifier": null,
+                        "dc:language": null,
+                        "dc:publisher": null,
+                        "dc:relation": null,
+                        "dc:rights": null,
+                        "dc:source": null,
+                        "dc:subject": null,
+                        "dc:title": null,
+                        "dc:type": null
+                    },
+                    "records": [
+                        {
+                            "databox_id": 1,
+                            "record_id": 122,
+                            "mime_type": "video/mp4",
+                            "title": "Olympics2002_2_64kb.mp4",
+                            "original_name": "Olympics2002_2_64kb.mp4",
+                            "updated_on": "2014-04-23T14:02:35+02:00",
+                            "created_on": "2014-04-23T13:57:26+02:00",
+                            "collection_id": 1,
+                            "sha256": "45299e0b9d20b3b0482c547ad4bdda11ad3dd4c2b1f1c7e90c36bb461f0aaf40",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-10-07T17:21:17+02:00",
+                                    "id": 6436,
+                                    "is_activated": true,
+                                    "label": "Olympics2002_2_64kb",
+                                    "updated_on": "2014-10-07T17:21:17+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/122/thumbnail/?token=UrIICFzT",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/122/thumbnail/Olympics2002_2_64kb.jpg?token=UrIICFzT&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/122/thumbnail/Olympics2002_2_64kb.jpg?token=UrIICFzT"
+                                },
+                                "height": 120,
+                                "width": 160,
+                                "filesize": 1162,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 1732.0970333333
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 33489256
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 29.97002997003
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 120
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/mp4"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": "mp4v"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 160
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "224b54fa-903e-408d-a8bc-78bdda19e9f3"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 121,
+                            "mime_type": "video/mp4",
+                            "title": "Olympics2002_2_256kb.mp4",
+                            "original_name": "Olympics2002_2_256kb.mp4",
+                            "updated_on": "2014-04-23T14:08:12+02:00",
+                            "created_on": "2014-04-23T13:57:20+02:00",
+                            "collection_id": 1,
+                            "sha256": "37daaffe0c48f8a537d84413f4be24c9d8a833c78fdaf0823f76a7b0898accad",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-10-07T17:21:17+02:00",
+                                    "id": 6437,
+                                    "is_activated": true,
+                                    "label": "Olympics2002_2_256kb",
+                                    "updated_on": "2014-10-07T17:21:17+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/121/thumbnail/?token=t3PBg9rS",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/121/thumbnail/Olympics2002_2_256kb.jpg?token=t3PBg9rS&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/121/thumbnail/Olympics2002_2_256kb.jpg?token=t3PBg9rS"
+                                },
+                                "height": 150,
+                                "width": 200,
+                                "filesize": 2897,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 1732.0970333333
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 75542585
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 29.97002997003
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/mp4"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": "mp4v"
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 320
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "a3d32ca6-5b9c-47b2-b76e-6a4e5b516a59"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 118,
+                            "mime_type": "video/x-msvideo",
+                            "title": "Olympics2002_2.avi",
+                            "original_name": "Olympics2002_2.avi",
+                            "updated_on": "2014-04-23T14:23:16+02:00",
+                            "created_on": "2014-04-23T13:56:36+02:00",
+                            "collection_id": 1,
+                            "sha256": "c3ee411c69dbe586e3732358a272a205a0aba207f91216f40f2794660bf42558",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-10-07T17:21:17+02:00",
+                                    "id": 6438,
+                                    "is_activated": true,
+                                    "label": "Olympics2002_2",
+                                    "updated_on": "2014-10-07T17:21:17+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/118/thumbnail/?token=oq0sAkH3",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/118/thumbnail/Olympics2002_2.jpg?token=oq0sAkH3&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/118/thumbnail/Olympics2002_2.jpg?token=oq0sAkH3"
+                                },
+                                "height": 150,
+                                "width": 200,
+                                "filesize": 6022,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "AudioCodec",
+                                    "value": 85
+                                },
+                                {
+                                    "name": "AudioSamplerate",
+                                    "value": 6966
+                                },
+                                {
+                                    "name": "Duration",
+                                    "value": 1332.477778
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 70468716
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 29.969730572122
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/x-msvideo"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": 6966.000000985
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 320
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "01c71043-b82c-42f8-9703-4cf32b6e2b8c"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 232,
+                            "mime_type": "application/octet-stream",
+                            "title": "Concession_LAN_800k.mp4",
+                            "original_name": "Concession_LAN_800k.mp4",
+                            "updated_on": "2014-06-11T15:54:22+02:00",
+                            "created_on": "2014-06-11T15:53:44+02:00",
+                            "collection_id": 1,
+                            "sha256": "fdc529abef0935ddc848e39f475c794ea1e91cdd1adcbe82e75de8bcc28230c5",
+                            "thumbnail": null,
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 2520457
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "application/octet-stream"
+                                }
+                            ],
+                            "phrasea_type": "unknown",
+                            "uuid": "991bebf0-1a4a-4edb-bee4-02cddeb998ac"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 227,
+                            "mime_type": "image/x-icon",
+                            "title": "encoded.m4v",
+                            "original_name": "encoded.m4v",
+                            "updated_on": "2014-06-11T15:56:13+02:00",
+                            "created_on": "2014-06-11T15:53:34+02:00",
+                            "collection_id": 1,
+                            "sha256": "a1f5310a87545a781c0b60416fa810cc74c68b2adab6cae5192e8470965646fd",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-06-26T17:10:13+02:00",
+                                    "id": 5001,
+                                    "is_activated": true,
+                                    "label": "encoded",
+                                    "updated_on": "2014-06-26T17:10:13+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/227/thumbnail/?token=WnQN17dv",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/227/thumbnail/encoded.jpg?token=WnQN17dv&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/227/thumbnail/encoded.jpg?token=WnQN17dv"
+                                },
+                                "height": 164,
+                                "width": 200,
+                                "filesize": 6771,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "FileSize",
+                                    "value": 2469432
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "image/x-icon"
+                                }
+                            ],
+                            "phrasea_type": "image",
+                            "uuid": "e91e0886-7d7f-4a38-8b10-f8682ab857fd"
+                        },
+                        {
+                            "databox_id": 1,
+                            "record_id": 230,
+                            "mime_type": "video/quicktime",
+                            "title": "MPEGSolution_jurassic.mp4",
+                            "original_name": "MPEGSolution_jurassic.mp4",
+                            "updated_on": "2014-06-23T14:42:11+02:00",
+                            "created_on": "2014-06-11T15:53:41+02:00",
+                            "collection_id": 1,
+                            "sha256": "a23f55986867a348b67db3378ab7faee05a5002515ddbf541eb568c829c4483b",
+                            "thumbnail": {
+                                "name": "thumbnail",
+                                "permalink": {
+                                    "created_on": "2014-06-23T14:42:10+02:00",
+                                    "id": 789,
+                                    "is_activated": true,
+                                    "label": "MPEGSolution_jurassic",
+                                    "updated_on": "2014-06-23T14:42:10+02:00",
+                                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/230/thumbnail/?token=KRdbLS0L",
+                                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/230/thumbnail/MPEGSolution_jurassic.jpg?token=KRdbLS0L&download=1",
+                                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/230/thumbnail/MPEGSolution_jurassic.jpg?token=KRdbLS0L"
+                                },
+                                "height": 150,
+                                "width": 200,
+                                "filesize": 7030,
+                                "devices": [
+                                    "screen"
+                                ],
+                                "player_type": "IMAGE",
+                                "mime_type": "image/jpeg"
+                            },
+                            "technical_informations": [
+                                {
+                                    "name": "Duration",
+                                    "value": 70.101
+                                },
+                                {
+                                    "name": "FileSize",
+                                    "value": 10559566
+                                },
+                                {
+                                    "name": "FrameRate",
+                                    "value": 43.066432718506
+                                },
+                                {
+                                    "name": "Height",
+                                    "value": 240
+                                },
+                                {
+                                    "name": "MimeType",
+                                    "value": "video/quicktime"
+                                },
+                                {
+                                    "name": "VideoCodec",
+                                    "value": ""
+                                },
+                                {
+                                    "name": "Width",
+                                    "value": 320
+                                }
+                            ],
+                            "phrasea_type": "video",
+                            "uuid": "085b36c6-2e19-45fd-8ddb-68156e37a5dd"
+                        }
+                    ]
+                }
+            ]
         },
         "query": "all"
     }

@@ -106,7 +106,9 @@ class Monitor
         $entity = new static::$mappings[$name]['entity']();
 
         array_walk($data, function ($value, $property) use ($entity) {
-            $method = 'set' . ucfirst(strtolower($property));
+            $method = 'set' . implode('', array_map(function ($chunk) {
+                    return ucfirst($chunk);
+                }, preg_split('/[-_]/', $property)));
 
             $ref = new \ReflectionParameter(array($entity, $method), 0);
             if (null !== $ref->getClass()) {

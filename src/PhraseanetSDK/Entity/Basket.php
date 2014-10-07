@@ -77,6 +77,10 @@ class Basket
      * @ApiField(bind_to="validation_initiator_user", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="User")
      */
+    protected $validationInitiatorUser;
+    /**
+     * @ApiField(bind_to="validation_initiator", type="boolean")
+     */
     protected $validationInitiator;
 
     /**
@@ -272,9 +276,19 @@ class Basket
         return $this->validationInitiator;
     }
 
-    public function setValidationInitiator($validationInitiator)
+    public function setValidationInitiator($initiator)
     {
-        $this->validationInitiator = $validationInitiator;
+        $this->validationInitiator = $initiator;
+    }
+
+    public function getValidationInitiatorUser()
+    {
+        return $this->validationInitiatorUser;
+    }
+
+    public function setValidationInitiatorUser($validationInitiator)
+    {
+        $this->validationInitiatorUser = $validationInitiator;
     }
 
     /**

@@ -21,10 +21,8 @@ class RevalidationFactory
     {
         switch (strtolower($type)) {
             case 'skip':
-
                 return new SkipRevalidation();
             case 'deny':
-
                 return new DenyRevalidation();
             default:
                 throw new RuntimeException(sprintf('Unknown revalidation type %s, available are `skip`, `deny`.', $type));

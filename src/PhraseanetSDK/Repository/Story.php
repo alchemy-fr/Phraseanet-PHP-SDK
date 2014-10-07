@@ -59,17 +59,9 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "results" property in response content');
         }
 
-        $stories = new ArrayCollection();
+        $query = EntityHydrator::hydrate('query', $response->getResult(), $this->em);
 
-        $results = $response->getProperty('results');
-
-        if (isset($results->stories) && is_array($results->stories)) {
-            foreach ($results->stories as $storyData) {
-                $stories->add(EntityHydrator::hydrate('story', $storyData, $this->em));
-            }
-        }
-
-        return $stories;
+        return $query->getResults()->getStories();
     }
 
     /**
@@ -89,6 +81,6 @@ class Story extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return EntityHydrator::hydrate('query', $response->getResult());
+        return EntityHydrator::hydrate('query', $response->getResult(), $this->em);
     }
 }

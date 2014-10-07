@@ -18,7 +18,6 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class BasketElement
 {
     /**
-     *
      * @ApiField(bind_to="basket_element_id", type="int")
      */
     protected $id;
@@ -40,6 +39,14 @@ class BasketElement
      * @ApiRelation(type="one_to_many", target_entity="BasketValidationChoice")
      */
     protected $validationChoices;
+    /**
+     * @ApiField(bind_to="note", type="int")
+     */
+    protected $note;
+    /**
+     * @ApiField(bind_to="agreement", type="boolean")
+     */
+    protected $agreement;
 
     /**
      * The id of the element
@@ -119,5 +126,39 @@ class BasketElement
     public function setValidationChoices(ArrayCollection $validationChoices = null)
     {
         $this->validationChoices = $validationChoices;
+    }
+
+    /**
+     * Get the annotation about the validation of the current authenticated user
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * Get the agreement of the current authenticated user
+     *
+     * - null : no response yet
+     * - true : accepted
+     * - false: rejected
+     *
+     * @return null|boolean
+     */
+    public function getAgreement()
+    {
+        return $this->agreement;
+    }
+
+    public function setAgreement($agreement)
+    {
+        $this->agreement = $agreement;
     }
 }

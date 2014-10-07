@@ -52,10 +52,19 @@ class Story
      */
     protected $records;
     /**
-     * @ApiField(bind_to="metadatas")
-     * @ApiRelation(type="one_to_many", target_entity="Metadata")
+     * @ApiField(bind_to="metadatas", type="array")
      */
     protected $metadata;
+
+    /**
+     * Get unique id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getDataboxId().'_'.$this->getStoryId();
+    }
 
     /**
      * Get the record id
@@ -175,19 +184,5 @@ class Story
     public function setMetadata(ArrayCollection $metadata)
     {
         $this->metadata = $metadata;
-    }
-
-    public function getSubdefs($name = null)
-    {
-        if (null !== $name) {
-            return $this->em->getRepository('subdef')->findByRecordAndName($this->getDataboxId(), $this->getStoryId(), $name);
-        }
-
-        return $this->em->getRepository('subdef')->findByRecord($this->getDataboxId(), $this->getStoryId());
-    }
-
-    public function getCaption()
-    {
-        return $this->em->getRepository('caption')->findByRecord($this->getDataboxId(), $this->getStoryId());
     }
 }

@@ -22,7 +22,6 @@ use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Cache\CacheFactory;
 
 class GuzzleAdapter implements GuzzleAdapterInterface
 {
@@ -103,7 +102,6 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), $headers = array())
     {
-        echo  __METHOD__."\n";
         try {
             $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' =>
                 $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'

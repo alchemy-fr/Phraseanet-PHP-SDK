@@ -66,7 +66,7 @@ class Record
      * @ApiField(bind_to="technical_informations", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Technical")
      */
-    protected $technicalInformations;
+    protected $technicalInformation;
     /**
      * @ApiField(bind_to="phrasea_type", type="string")
      */
@@ -291,14 +291,14 @@ class Record
      *
      * @return ArrayCollection
      */
-    public function getTechnicalInformations()
+    public function getTechnicalInformation()
     {
-        return $this->technicalInformations;
+        return $this->technicalInformation;
     }
 
-    public function setTechnicalInformations(ArrayCollection $technicalInformations)
+    public function setTechnicalInformation(ArrayCollection $technicalInformations)
     {
-        $this->technicalInformations = $technicalInformations;
+        $this->technicalInformation = $technicalInformations;
     }
 
     /**

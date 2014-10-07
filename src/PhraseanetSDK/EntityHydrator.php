@@ -12,7 +12,6 @@
 namespace PhraseanetSDK;
 
 use PhraseanetSDK\Annotation\ApiField;
-use PhraseanetSDK\Entity\EntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiRelation;
 use PhraseanetSDK\Exception\InvalidArgumentException;
@@ -25,9 +24,9 @@ class EntityHydrator
     /**
      * Hydrate an entity object from  a source
      *
-     * @param                 $name
-     * @param \stdClass       $object
-     * @param EntityManager   $em
+     * @param               $name
+     * @param \stdClass     $object
+     * @param EntityManager $em
      *
      * @return \ProxyManager\Proxy\GhostObjectInterface A proxy of the entity
      */
@@ -84,16 +83,15 @@ class EntityHydrator
             $apiField = $propertyFieldAnnotation->{"bind_to"};
             $apiFieldType = $propertyFieldAnnotation->{"type"};
 
-            if (!array_key_exists($apiField, $objectVars) && !$extendedObject) {
-                self::log($logger, LogLevel::DEBUG, sprintf('Could not find bind property "%s" declared for "%s->%s class property in response object only [%s] available', $apiField, $entityClassName, $propertyName, implode(', ', array_keys(get_object_vars($object)))));
-
-                $dataMapping[$propertyName] = null;
+            if (!array_key_exists($apiField, $objectVars) && $extendedObject && ApiField::RELATION === $apiFieldType) {
+                $virtualProperties[$propertyName] = $reflectionProperty;
 
                 continue;
             }
+            if (!array_key_exists($apiField, $objectVars)) {
+                self::log($logger, LogLevel::DEBUG, sprintf('Could not find bind property "%s" declared for "%s->%s class property in response object only [%s] available', $apiField, $entityClassName, $propertyName, implode(', ', array_keys(get_object_vars($object)))));
 
-            if (!array_key_exists($apiField, $objectVars) && $extendedObject && ApiField::RELATION === $apiFieldType) {
-                $virtualProperties[$propertyName] = $reflectionProperty;
+                $dataMapping[$propertyName] = null;
 
                 continue;
             }
@@ -206,7 +204,7 @@ class EntityHydrator
             }
 
             // bind all data
-            foreach($dataMapping as $propertyName => $data) {
+            foreach ($dataMapping as $propertyName => $data) {
                 $setter = sprintf('set%s', ucfirst($propertyName));
 
                 if (!method_exists($proxy, $setter)) {
@@ -230,7 +228,6 @@ class EntityHydrator
             // check if called method is a getter
             $getterPrefix = 'get';
             if (0 !== stripos($method, $getterPrefix)) {
-
                 return true;
             }
 
@@ -239,7 +236,6 @@ class EntityHydrator
 
             // check if property is a virtual one
             if (!array_key_exists($propertyName, $virtualProperties)) {
-
                 return true;
             }
 

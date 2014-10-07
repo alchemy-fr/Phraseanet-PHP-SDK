@@ -1,8 +1,8 @@
 {
     "meta": {
-        "api_version": "1.2",
-        "request": "GET /api/v1/records/1/633/embed/",
-        "response_time": "2012-06-29T16:02:40+02:00",
+        "api_version": "1.3",
+        "request": "GET /api/v1/records/1/2107/embed/",
+        "response_time": "2014-10-07T17:41:19+02:00",
         "http_code": 200,
         "error_type": null,
         "error_message": null,
@@ -11,106 +11,111 @@
     },
     "response": {
         "embed": [
-        {
-            "name": "document",
-            "permalink": {
-                "created_on": "2012-06-22T21:20:55+02:00",
-                "id": 1972,
-                "is_activated": true,
-                "label": "0113JPG",
-                "updated_on": "2012-06-22T21:20:55+02:00",
-                "page_url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/gAZMiywc/document/view/",
-                "url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/gAZMiywc/document/"
+            {
+                "name": "document",
+                "permalink": {
+                    "created_on": "2014-07-29T14:26:42+02:00",
+                    "id": 5526,
+                    "is_activated": true,
+                    "label": "09062005005",
+                    "updated_on": "2014-07-29T14:26:42+02:00",
+                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/document/?token=ocftos1X",
+                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/document/09062005005.jpg?token=ocftos1X&download=1",
+                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/document/09062005005.jpg?token=ocftos1X"
+                },
+                "height": 960,
+                "width": 1280,
+                "filesize": 81634,
+                "devices": [
+                    "all"
+                ],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
             },
-            "height": 4256,
-            "width": 2832,
-            "filesize": 1101093,
-            "devices": [
-            "all"
-            ],
-            "player_type": "IMAGE",
-            "mime_type": "image/jpeg"
-        },
-        {
-            "name": "preview",
-            "permalink": {
-                "created_on": "2012-06-25T18:07:20+02:00",
-                "id": 2039,
-                "is_activated": true,
-                "label": "0113JPG",
-                "updated_on": "2012-06-25T18:07:20+02:00",
-                "page_url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/ThQIeo0w/preview/view/",
-                "url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/ThQIeo0w/preview/"
+            {
+                "name": "preview",
+                "permalink": {
+                    "created_on": "2014-07-31T13:42:39+02:00",
+                    "id": 5617,
+                    "is_activated": true,
+                    "label": "09062005005",
+                    "updated_on": "2014-07-31T13:42:39+02:00",
+                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/preview/?token=5h903ojv",
+                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/preview/09062005005.jpg?token=5h903ojv&download=1",
+                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/preview/09062005005.jpg?token=5h903ojv"
+                },
+                "height": 600,
+                "width": 800,
+                "filesize": 39724,
+                "devices": [
+                    "screen"
+                ],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
             },
-            "height": 480,
-            "width": 319,
-            "filesize": 11933,
-            "devices": [
-            "screen"
-            ],
-            "player_type": "IMAGE",
-            "mime_type": "image/jpeg"
-        },
-        {
-            "name": "thumbnail",
-            "permalink": {
-                "created_on": "2012-06-25T18:05:20+02:00",
-                "id": 2027,
-                "is_activated": true,
-                "label": "0113JPG",
-                "updated_on": "2012-06-25T18:05:20+02:00",
-                "page_url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/cw1tOY9C/thumbnail/view/",
-                "url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/cw1tOY9C/thumbnail/"
+            {
+                "name": "thumbnail",
+                "permalink": {
+                    "created_on": "2014-07-29T14:26:46+02:00",
+                    "id": 5528,
+                    "is_activated": true,
+                    "label": "09062005005",
+                    "updated_on": "2014-07-29T14:26:46+02:00",
+                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/thumbnail/?token=bf8pIV34",
+                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/thumbnail/09062005005.jpg?token=bf8pIV34&download=1",
+                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/thumbnail/09062005005.jpg?token=bf8pIV34"
+                },
+                "height": 150,
+                "width": 200,
+                "filesize": 4909,
+                "devices": [
+                    "screen"
+                ],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
             },
-            "height": 150,
-            "width": 100,
-            "filesize": 2453,
-            "devices": [
-            "screen"
-            ],
-            "player_type": "IMAGE",
-            "mime_type": "image/jpeg"
-        },
-        {
-            "name": "preview_mobile",
-            "permalink": {
-                "created_on": "2012-06-22T21:24:57+02:00",
-                "id": 1992,
-                "is_activated": true,
-                "label": "0113JPG",
-                "updated_on": "2012-06-22T21:24:57+02:00",
-                "page_url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/STLrJt9Y/preview_mobile/view/",
-                "url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/STLrJt9Y/preview_mobile/"
+            {
+                "name": "preview_mobile",
+                "permalink": {
+                    "created_on": "2014-07-29T14:26:51+02:00",
+                    "id": 5529,
+                    "is_activated": true,
+                    "label": "09062005005",
+                    "updated_on": "2014-07-29T14:26:51+02:00",
+                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/preview_mobile/?token=pzecOErz",
+                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/preview_mobile/09062005005.jpg?token=pzecOErz&download=1",
+                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/preview_mobile/09062005005.jpg?token=pzecOErz"
+                },
+                "height": 360,
+                "width": 480,
+                "filesize": 17920,
+                "devices": [
+                    "handheld"
+                ],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
             },
-            "height": 480,
-            "width": 319,
-            "filesize": 11933,
-            "devices": [
-            "handheld"
-            ],
-            "player_type": "IMAGE",
-            "mime_type": "image/jpeg"
-        },
-        {
-            "name": "thumbnail_mobile",
-            "permalink": {
-                "created_on": "2012-06-22T21:25:00+02:00",
-                "id": 1993,
-                "is_activated": true,
-                "label": "0113JPG",
-                "updated_on": "2012-06-22T21:25:00+02:00",
-                "page_url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/3ssBc2YY/thumbnail_mobile/view/",
-                "url": "http://dev.phrasea.net/permalink/v1/0113JPG/1/633/3ssBc2YY/thumbnail_mobile/"
-            },
-            "height": 150,
-            "width": 100,
-            "filesize": 2453,
-            "devices": [
-            "handheld"
-            ],
-            "player_type": "IMAGE",
-            "mime_type": "image/jpeg"
-        }
+            {
+                "name": "thumbnail_mobile",
+                "permalink": {
+                    "created_on": "2014-07-29T14:26:53+02:00",
+                    "id": 5530,
+                    "is_activated": true,
+                    "label": "09062005005",
+                    "updated_on": "2014-07-29T14:26:53+02:00",
+                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/thumbnail_mobile/?token=86izrSqu",
+                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/thumbnail_mobile/09062005005.jpg?token=86izrSqu&download=1",
+                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2107/thumbnail_mobile/09062005005.jpg?token=86izrSqu"
+                },
+                "height": 113,
+                "width": 150,
+                "filesize": 3271,
+                "devices": [
+                    "handheld"
+                ],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
+            }
         ]
     }
 }
