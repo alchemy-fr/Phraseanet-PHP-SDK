@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php"                     : ">=5.3.2",
+        "php"                     : ">5.3.3",
         "doctrine/cache"          : "~1.0",
         "doctrine/collections"    : "~1.0",
         "doctrine/annotations"    : "~1.0",
@@ -32,10 +32,9 @@
         "silex/silex"             : "~1.0",
         "silex/web-profiler"      : "~1.0",
         "symfony/console"         : "~2.0",
-        "phpunit/phpunit"         : "~3.7"
+        "phpunit/phpunit"         : "~4.0"
     },
     "suggest": {
-        "monolog/monolog"         : "To log requests",
         "silex/web-profiler"      : "To use the WebProfiler with silex",
         "symfony/console"         : "To run the request player with a console output"
     },
