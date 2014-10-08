@@ -31,6 +31,10 @@ class DataboxCollection
      * @ApiField(bind_to="record_amount", type="int")
      */
     protected $recordAmount;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * The collection base id
@@ -90,5 +94,21 @@ class DataboxCollection
     public function setRecordAmount($recordAmount)
     {
         $this->recordAmount = $recordAmount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

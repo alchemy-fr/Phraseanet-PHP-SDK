@@ -28,6 +28,10 @@ class Databox
      * @ApiField(bind_to="version", type="string")
      */
     protected $version;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * the databox id
@@ -72,5 +76,21 @@ class Databox
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

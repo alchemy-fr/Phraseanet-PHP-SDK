@@ -43,6 +43,10 @@ class DataboxStatus
      * @ApiField(bind_to="printable", type="boolean")
      */
     protected $printable;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * Get the status bit
@@ -147,5 +151,21 @@ class DataboxStatus
     public function setPrintable($printable)
     {
         $this->printable = $printable;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

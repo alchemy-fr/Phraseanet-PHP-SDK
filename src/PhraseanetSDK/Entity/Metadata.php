@@ -32,6 +32,10 @@ class Metadata
      * @ApiField(bind_to="value", type="string")
      */
     protected $value;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * Get the metadata id
@@ -91,5 +95,21 @@ class Metadata
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

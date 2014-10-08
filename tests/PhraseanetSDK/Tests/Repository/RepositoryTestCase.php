@@ -70,7 +70,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($basket->isValidationInitiator());
             $this->assertInternalType('boolean', $basket->isValidationInitiator());
             $this->assertNotNull($users = $basket->getValidationUsers());
-            if (! $users instanceof Doctrine\Common\Collection) {
+            if (! $users instanceof ArrayCollection) {
                 $basket->getId();
             }
 
@@ -139,36 +139,40 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $collection->getName());
         $this->assertNotNull($collection->getRecordAmount());
         $this->assertInternalType('integer', $collection->getRecordAmount());
+        $this->assertNotNull($collection->getLabels());
+        $this->assertTrue($collection->getLabels() instanceof ArrayCollection);
     }
 
-    public function checkDataboxStructure($metadatas)
+    public function checkDataboxStructure($metadata)
     {
-        $this->assertTrue($metadatas instanceof \PhraseanetSDK\Entity\DataboxDocumentStructure);
-        /* @var $metadatas \PhraseanetSDK\Entity\DataboxDocumentStructure */
-        $this->assertNotNull($metadatas->getId());
-        $this->assertInternalType('integer', $metadatas->getId());
-        $this->assertNotNull($metadatas->getNamespace());
-        $this->assertInternalType('string', $metadatas->getNamespace());
-        $this->assertNotNull($metadatas->getSource());
-        $this->assertInternalType('string', $metadatas->getSource());
-        $this->assertNotNull($metadatas->getTagname());
-        $this->assertInternalType('string', $metadatas->getTagname());
-        $this->assertNotNull($metadatas->getName());
-        $this->assertInternalType('string', $metadatas->getName());
-        $this->assertNotNull($metadatas->getSeparator());
-        $this->assertInternalType('string', $metadatas->getSeparator());
-        $this->assertNotNull($metadatas->getThesaurusBranch());
-        $this->assertInternalType('string', $metadatas->getThesaurusBranch());
-        $this->assertNotNull($metadatas->getType());
-        $this->assertInternalType('string', $metadatas->getType());
-        $this->assertNotNull($metadatas->isSearchable());
-        $this->assertInternalType('boolean', $metadatas->isSearchable());
-        $this->assertNotNull($metadatas->isMultivalued());
-        $this->assertInternalType('boolean', $metadatas->isMultivalued());
-        $this->assertNotNull($metadatas->isRequired());
-        $this->assertInternalType('boolean', $metadatas->isRequired());
-        $this->assertNotNull($metadatas->isReadonly());
-        $this->assertInternalType('boolean', $metadatas->isReadonly());
+        $this->assertTrue($metadata instanceof \PhraseanetSDK\Entity\DataboxDocumentStructure);
+        /* @var $metadata \PhraseanetSDK\Entity\DataboxDocumentStructure */
+        $this->assertNotNull($metadata->getId());
+        $this->assertInternalType('integer', $metadata->getId());
+        $this->assertNotNull($metadata->getNamespace());
+        $this->assertInternalType('string', $metadata->getNamespace());
+        $this->assertNotNull($metadata->getSource());
+        $this->assertInternalType('string', $metadata->getSource());
+        $this->assertNotNull($metadata->getTagname());
+        $this->assertInternalType('string', $metadata->getTagname());
+        $this->assertNotNull($metadata->getName());
+        $this->assertInternalType('string', $metadata->getName());
+        $this->assertNotNull($metadata->getSeparator());
+        $this->assertInternalType('string', $metadata->getSeparator());
+        $this->assertNotNull($metadata->getThesaurusBranch());
+        $this->assertInternalType('string', $metadata->getThesaurusBranch());
+        $this->assertNotNull($metadata->getType());
+        $this->assertInternalType('string', $metadata->getType());
+        $this->assertNotNull($metadata->isSearchable());
+        $this->assertInternalType('boolean', $metadata->isSearchable());
+        $this->assertNotNull($metadata->isMultivalued());
+        $this->assertInternalType('boolean', $metadata->isMultivalued());
+        $this->assertNotNull($metadata->isRequired());
+        $this->assertInternalType('boolean', $metadata->isRequired());
+        $this->assertNotNull($metadata->isReadonly());
+        $this->assertInternalType('boolean', $metadata->isReadonly());
+        $this->assertNotNull($metadata->getLabels());
+        $this->assertTrue($metadata->getLabels() instanceof ArrayCollection);
     }
 
     public function checkDataBoxStatus($status)
@@ -189,6 +193,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('boolean', $status->isSearchable());
         $this->assertNotNull($status->isPrintable());
         $this->assertInternalType('boolean', $status->isPrintable());
+        $this->assertNotNull($status->getLabels());
+        $this->assertTrue($status->getLabels() instanceof ArrayCollection);
     }
 
     protected function checkParticipant($participant)
@@ -300,9 +306,11 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($databox->getId());
         $this->assertNotNull($databox->getName());
         $this->assertNotNull($databox->getVersion());
+        $this->assertNotNull($databox->getLabels());
         $this->assertInternalType('integer', $databox->getId());
         $this->assertInternalType('string', $databox->getVersion());
         $this->assertInternalType('string', $databox->getName());
+        $this->assertTrue($databox->getLabels() instanceof ArrayCollection);
     }
 
     protected function checkTechnicalInformation($technical)
@@ -383,25 +391,25 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
     protected function checkTermsOfUse($cgus)
     {
         $this->assertTrue($cgus instanceof \PhraseanetSDK\Entity\DataboxTermsOfUse);
-        /* @var $metadatas \PhraseanetSDK\Entity\Metadata */
+        /* @var $metadata \PhraseanetSDK\Entity\Metadata */
         $this->assertNotNull($cgus->getLocale());
         $this->assertInternalType('string', $cgus->getLocale());
         $this->assertNotNull($cgus->getTerms());
         $this->assertInternalType('string', $cgus->getTerms());
     }
 
-    protected function checkMetadata($metadatas)
+    protected function checkMetadata($metadata)
     {
-        $this->assertTrue($metadatas instanceof \PhraseanetSDK\Entity\Metadata);
-        /* @var $metadatas \PhraseanetSDK\Entity\Metadata */
-        $this->assertNotNull($metadatas->getId());
-        $this->assertInternalType('integer', $metadatas->getId());
-        $this->assertNotNull($metadatas->getMetaStructureId());
-        $this->assertInternalType('integer', $metadatas->getMetaStructureId());
-        $this->assertNotNull($metadatas->getName());
-        $this->assertInternalType('string', $metadatas->getName());
-        $this->assertNotNull($metadatas->getValue());
-        $this->assertInternalType('string', $metadatas->getValue());
+        $this->assertTrue($metadata instanceof \PhraseanetSDK\Entity\Metadata);
+        /* @var $metadata \PhraseanetSDK\Entity\Metadata */
+        $this->assertNotNull($metadata->getId());
+        $this->assertInternalType('integer', $metadata->getId());
+        $this->assertNotNull($metadata->getMetaStructureId());
+        $this->assertInternalType('integer', $metadata->getMetaStructureId());
+        $this->assertNotNull($metadata->getName());
+        $this->assertInternalType('string', $metadata->getName());
+        $this->assertNotNull($metadata->getValue());
+        $this->assertInternalType('string', $metadata->getValue());
     }
 
     protected function checkPermalink($permalink)

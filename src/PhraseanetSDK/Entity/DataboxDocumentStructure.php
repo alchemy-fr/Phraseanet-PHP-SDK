@@ -64,6 +64,10 @@ class DataboxDocumentStructure
      * @ApiField(bind_to="required", type="boolean")
      */
     protected $required;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * The documentary field id
@@ -243,5 +247,21 @@ class DataboxDocumentStructure
     public function setRequired($required)
     {
         $this->required = $required;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }
