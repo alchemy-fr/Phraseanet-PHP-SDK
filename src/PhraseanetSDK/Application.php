@@ -74,7 +74,7 @@ class Application implements ApplicationInterface
             return $this->uploaders[$token];
         }
 
-        return $this->uploaders[$token] = new Uploader($this->getAdapter($token), $this->getEntityManager($token));
+        return $this->uploaders[$token] = new Uploader($this->getAdapterByToken($token), $this->getEntityManager($token));
     }
 
     /**
@@ -90,7 +90,7 @@ class Application implements ApplicationInterface
             return $this->ems[$token];
         }
 
-        return $this->ems[$token] = new EntityManager($this->getAdapter($token), $options);
+        return $this->ems[$token] = new EntityManager($this->getAdapterByToken($token), $options);
     }
 
     /**
@@ -106,7 +106,7 @@ class Application implements ApplicationInterface
             return $this->monitors[$token];
         }
 
-        return $this->monitors[$token] = new Monitor($this->getAdapter($token));
+        return $this->monitors[$token] = new Monitor($this->getAdapterByToken($token));
     }
 
     /**
@@ -114,7 +114,7 @@ class Application implements ApplicationInterface
      *
      * @return GuzzleAdapter
      */
-    public function getOriginalAdapter()
+    public function getAdapter()
     {
         return $this->adapter;
     }
@@ -163,7 +163,7 @@ class Application implements ApplicationInterface
         $this->adapter->setExtended($mode);
     }
 
-    private function getAdapter($token)
+    private function getAdapterByToken($token)
     {
         if (!isset($this->adapters[$token])) {
             $this->adapters[$token] = new APIGuzzleAdapter(

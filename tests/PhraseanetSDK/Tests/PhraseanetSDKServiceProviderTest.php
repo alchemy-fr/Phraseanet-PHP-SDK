@@ -85,7 +85,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getConfiguredApplication();
         $app->register(new PhraseanetSDKServiceProvider());
-        $app['phraseanet-sdk.recorder.enabled'] = true;
+        $app['recorder.enabled'] = true;
 
         $app->boot();
 
@@ -126,7 +126,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
             )
         ));
 
-        $app['phraseanet-sdk.recorder.enabled'] = true;
+        $app['recorder.enabled'] = true;
         $app['phraseanet-sdk.recorder'] = $this->getMockBuilder('PhraseanetSDK\Recorder\Recorder')
             ->disableOriginalConstructor()
             ->getMock();

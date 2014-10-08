@@ -79,7 +79,11 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['phraseanet-sdk.cache.adapter'] = $app->share(function () use ($app) {
             $config = $app['phraseanet-sdk.cache.config'];
 
-            $backend = $app['phraseanet-sdk.cache.factory']->create($config['type']);
+            $backend = $app['phraseanet-sdk.cache.factory']->create(
+                $config['type'],
+                isset($config['options']['host']) ? $config['options']['host'] : null,
+                isset($config['options']['port']) ? $config['options']['port'] : null
+            );
 
             return new DoctrineCacheAdapter($backend);
         });
@@ -132,7 +136,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 $app['phraseanet-sdk.cache.plugin']
             );
 
-            if (isset($app['profiler']) || $app['phraseanet-sdk.recorder.enabled']) {
+            if (isset($app['profiler']) || $app['recorder.enabled']) {
                 $plugins[] = $app['phraseanet-sdk.guzzle.history-plugin'];
             }
 
@@ -165,7 +169,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
             return $plugin;
         });
 
-        $app['phraseanet-sdk.recorder.enabled'] = false;
+        $app['recorder.enabled'] = false;
 
         if (isset($app['profiler'])) {
             $app['data_collectors']= array_merge($app['data_collectors'], array(
@@ -232,7 +236,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 
     public function boot(SilexApplication $app)
     {
-        if ($app['phraseanet-sdk.recorder.enabled']) {
+        if ($app['recorder.enabled']) {
             $app->finish(function () use ($app) {
                 $app['phraseanet-sdk.recorder']->save();
             });
