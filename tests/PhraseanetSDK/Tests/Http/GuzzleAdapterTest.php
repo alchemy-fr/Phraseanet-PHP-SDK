@@ -189,34 +189,34 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter->call('GET', '/path/to/resource');
     }
 
-    //public function testClientWithCacheDoNotExecuteQueries()
-    //{
-    //    $cache = $this->getMockBuilder('Guzzle\Cache\CacheAdapterInterface')
-    //                  ->disableOriginalConstructor()
-    //                  ->getMock();
-    //
-    //    $cache->expects($this->exactly(3))
-    //          ->method('fetch');
-    //
-    //    $mock = new MockPlugin();
-    //    $response = new Response(200, null, json_encode(array(
-    //        'meta' => array(),
-    //        'response' => array(),
-    //    )));
-    //    $mock->addResponse($response);
-    //    $mock->addResponse($response);
-    //    $mock->addResponse($response);
-    //
-    //    $endpoint = 'http://phraseanet.com/api/v1/';
-    //    $adapter = GuzzleAdapter::create($endpoint);
-    //
-    //    $adapter->getGuzzle()->addSubscriber($mock);
-    //    $adapter->getGuzzle()->addSubscriber(new CachePlugin($cache));
-    //
-    //    $adapter->call('GET', '/url');
-    //    $adapter->call('GET', '/url');
-    //    $adapter->call('GET', '/url');
-    //}
+    public function testClientWithCacheDoNotExecuteQueries()
+    {
+        $cache = $this->getMockBuilder('Guzzle\Cache\CacheAdapterInterface')
+                      ->disableOriginalConstructor()
+                      ->getMock();
+
+        $cache->expects($this->atLeast(3))
+              ->method('fetch');
+
+        $mock = new MockPlugin();
+        $response = new Response(200, null, json_encode(array(
+            'meta' => array(),
+            'response' => array(),
+        )));
+        $mock->addResponse($response);
+        $mock->addResponse($response);
+        $mock->addResponse($response);
+
+        $endpoint = 'http://phraseanet.com/api/v1/';
+        $adapter = GuzzleAdapter::create($endpoint);
+
+        $adapter->getGuzzle()->addSubscriber($mock);
+        $adapter->getGuzzle()->addSubscriber(new CachePlugin($cache));
+
+        $adapter->call('GET', '/url');
+        $adapter->call('GET', '/url');
+        $adapter->call('GET', '/url');
+    }
 }
 
 class TestException extends \Exception implements GuzzleException

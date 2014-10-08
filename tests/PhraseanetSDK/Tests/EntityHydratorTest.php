@@ -157,7 +157,6 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('My Entry subtitle', $entry->getSubtitle());
         $this->assertEquals('My Entry Test', $entry->getTitle());
         $items = $entry->getItems();
-        /* @var $items Doctrine\Common\Collections\ArrayCollection */
         $this->assertTrue($items instanceof ArrayCollection);
         $this->assertEquals(2, $items->count());
         foreach ($items as $item) {

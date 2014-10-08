@@ -15,12 +15,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
     protected function getClient($response, $code = 200, $throwCurlException = false)
     {
         $plugin = new MockPlugin();
-        $plugin->addResponse(new Response(
-                $code
-                , null
-                , $response
-            )
-        );
+        $plugin->addResponse(new Response($code, null, $response));
 
         $clientHttp = new GuzzleClient('http://my.domain.tld/api/v1');
         $clientHttp->getEventDispatcher()->addSubscriber($plugin);
@@ -207,11 +202,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($participant->canSeeOthers());
         $this->assertInternalType('boolean', $participant->canSeeOthers());
         $this->assertNotNull($participant->getUser());
-        /**
-         * @todo check user
-         *
-         *       $this->checkUser($participant->getUser())
-         */
+        $this->checkUser($participant->getUser());
     }
 
     protected function checkRecordStatus($status)
@@ -527,11 +518,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($session->getId());
         $this->assertInternalType('integer', $session->getId());
         $this->assertNotNull($session->getUser());
-        /**
-         * @todo check user
-         *
-         *       $this->checkUser($session->getUser())
-         */
+        $this->checkUser($session->getUser());
     }
 
     protected function checkRecordCaption($caption)
@@ -543,6 +530,13 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $caption->getName());
         $this->assertNotNull($caption->getValue());
         $this->assertInternalType('string', $caption->getValue());
+    }
+
+    protected function checkUser($user)
+    {
+        $this->assertTrue($user instanceof \PhraseanetSDK\Entity\User);
+        $this->assertNotNull($user->getEmail());
+        $this->assertNotNull($user->getLogin());
     }
 
     protected function assertIsCollection($collection)
