@@ -1,5 +1,18 @@
 CHANGELOG
 ---------
+* 0.5.0 (10-08-2014)
+
+  * Add proxies for entities, removing dependencies to entity manager.
+  * Add annotations for mapping entities properties to API response.
+  * Add User entity.
+  * Add support for localized labels.
+  * Add possibility to override can_cache strategy, re-validation strategy, key provider and
+    cache adapter for cache plugin.
+  * Compatible with Phraseanet API version 1.4.
+  * BC Break : Add consistency in entities API. (see UPGRADE.md)
+  * BC Break : Renamed some services in Silex ServiceProvider. (see UPGRADE.md)
+  * Add possibility to fetch extended API response.
+  * Add support for /me route.
 
 * 0.4.5 (05-05-2014)
 
