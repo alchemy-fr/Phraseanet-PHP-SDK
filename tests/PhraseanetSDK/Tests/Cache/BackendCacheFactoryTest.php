@@ -2,9 +2,10 @@
 
 namespace PhraseanetSDK\Tests\Cache;
 
-use PhraseanetSDK\Cache\CacheFactory;
+use PhraseanetSDK\Cache\BackendCacheFactory;
+use PhraseanetSDK\Exception\RuntimeException;
 
-class CacheFactoryTest extends \PHPUnit_Framework_TestCase
+class BackendCacheFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideValidParameters
@@ -17,8 +18,12 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $factory = new CacheFactory();
-        $this->assertInstanceOf($instanceOf, $factory->create($type, $host, $port));
+        $factory = new BackendCacheFactory();
+        try {
+            $this->assertInstanceOf($instanceOf, $factory->create($type, $host, $port));
+        } catch (RuntimeException $e) {
+            $this->assertContains(ucfirst(strtolower($type)), $e->getMessage());
+        }
     }
 
     public function provideValidParameters()
@@ -45,7 +50,7 @@ class CacheFactoryTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $factory = new CacheFactory();
+        $factory = new BackendCacheFactory();
         $factory->create($type, $host, $port);
     }
 

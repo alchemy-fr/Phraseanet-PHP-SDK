@@ -18,7 +18,6 @@ class RevalidationFactoryTest extends \PHPUnit_Framework_TestCase
     public function provideRevalidationNames()
     {
         return array(
-            array(null, 'Guzzle\Plugin\Cache\SkipRevalidation'),
             array('SKIP', 'Guzzle\Plugin\Cache\SkipRevalidation'),
             array('skip', 'Guzzle\Plugin\Cache\SkipRevalidation'),
             array('deny', 'Guzzle\Plugin\Cache\DenyRevalidation'),
@@ -32,6 +31,6 @@ class RevalidationFactoryTest extends \PHPUnit_Framework_TestCase
     public function testInvalidNameThrowsAnException()
     {
         $factory = new RevalidationFactory();
-        $factory->create('baloo');
+        $factory->create('always');
     }
 }

@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class RecordStatus extends AbstractRepository
 {
-
     /**
      * Find All the status attached to the provided record
      *
@@ -36,7 +36,7 @@ class RecordStatus extends AbstractRepository
         }
 
         foreach ($response->getProperty('status') as $statusData) {
-            $statusCollection->add($this->em->hydrateEntity($this->em->getEntity('recordStatus'), $statusData));
+            $statusCollection->add(EntityHydrator::hydrate('recordStatus', $statusData, $this->em));
         }
 
         return $statusCollection;

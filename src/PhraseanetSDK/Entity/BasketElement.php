@@ -12,15 +12,40 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class BasketElement extends AbstractEntity
+class BasketElement
 {
-    protected $basketElementId;
+    /**
+     * @ApiField(bind_to="basket_element_id", type="int")
+     */
+    protected $id;
+    /**
+     * @ApiField(bind_to="order", type="int")
+     */
     protected $order;
+    /**
+     * @ApiField(bind_to="validation_item", type="boolean")
+     */
     protected $validationItem;
+    /**
+     * @ApiField(bind_to="record", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="Record")
+     */
     protected $record;
+    /**
+     * @ApiField(bind_to="validation_choices", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="BasketValidationChoice")
+     */
     protected $validationChoices;
+    /**
+     * @ApiField(bind_to="note", type="int")
+     */
     protected $note;
+    /**
+     * @ApiField(bind_to="agreement", type="boolean")
+     */
     protected $agreement;
 
     /**
@@ -28,14 +53,14 @@ class BasketElement extends AbstractEntity
      *
      * @return integer
      */
-    public function getBasketElementId()
+    public function getId()
     {
-        return $this->basketElementId;
+        return $this->id;
     }
 
-    public function setBasketElementId($basketElementId)
+    public function setId($id)
     {
-        $this->basketElementId = $basketElementId;
+        $this->id = $id;
     }
 
     /**
@@ -98,7 +123,7 @@ class BasketElement extends AbstractEntity
         return $this->validationChoices;
     }
 
-    public function setValidationChoices(ArrayCollection $validationChoices)
+    public function setValidationChoices(ArrayCollection $validationChoices = null)
     {
         $this->validationChoices = $validationChoices;
     }

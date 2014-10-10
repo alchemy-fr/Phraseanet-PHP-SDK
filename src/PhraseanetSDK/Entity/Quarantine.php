@@ -12,18 +12,52 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class Quarantine extends AbstractEntity
+class Quarantine
 {
+    /**
+     *
+     * @ApiField(bind_to="id", type="int")
+     */
     protected $id;
-    protected $quarantineSession;
+    /**
+     * @ApiField(bind_to="quarantine_session", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="QuarantineSession")
+     */
+    protected $session;
+    /**
+     * @ApiField(bind_to="base_id", type="int")
+     */
     protected $baseId;
+    /**
+     * @ApiField(bind_to="original_name", type="string")
+     */
     protected $originalName;
+    /**
+     * @ApiField(bind_to="sha256", type="string")
+     */
     protected $sha256;
+    /**
+     * @ApiField(bind_to="uuid", type="string")
+     */
     protected $uuid;
+    /**
+     * @ApiField(bind_to="forced", type="boolean")
+     */
     protected $forced;
+    /**
+     * @ApiField(bind_to="checks", type="array")
+     */
     protected $checks;
+    /**
+     * @ApiField(bind_to="id", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="id", type="date")
+     */
     protected $updatedOn;
 
     /**
@@ -46,14 +80,14 @@ class Quarantine extends AbstractEntity
      *
      * @return QuarantineSession
      */
-    public function getQuarantineSession()
+    public function getSession()
     {
-        return $this->quarantineSession;
+        return $this->session;
     }
 
-    public function setQuarantineSession(QuarantineSession $session)
+    public function setSession($session)
     {
-        $this->quarantineSession = $session;
+        $this->session = $session;
     }
 
     /**
@@ -156,7 +190,7 @@ class Quarantine extends AbstractEntity
         return $this->createdOn;
     }
 
-    public function setCreatedOn(\DateTime $createdOn)
+    public function setCreatedOn(\DateTime $createdOn = null)
     {
         $this->createdOn = $createdOn;
     }
@@ -171,7 +205,7 @@ class Quarantine extends AbstractEntity
         return $this->updatedOn;
     }
 
-    public function setUpdatedOn(\DateTime $updatedOn)
+    public function setUpdatedOn(\DateTime $updatedOn = null)
     {
         $this->updatedOn = $updatedOn;
     }

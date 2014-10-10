@@ -11,34 +11,41 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Databox extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+
+class Databox
 {
-    /** @var integer */
-    protected $databoxId;
-
-    /** @var string */
+    /**
+     *
+     * @ApiField(bind_to="databox_id", type="int")
+     */
+    protected $id;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
-
-    /** @var string */
+    /**
+     * @ApiField(bind_to="version", type="string")
+     */
     protected $version;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * the databox id
      *
      * @return integer
      */
-    public function getDataboxId()
+    public function getId()
     {
-        return $this->databoxId;
+        return $this->id;
     }
 
-    /**
-     *
-     * @param integer $databoxId
-     */
-    public function setDataboxId($databoxId)
+    public function setId($id)
     {
-        $this->databoxId = $databoxId;
+        $this->id = $id;
     }
 
     /**
@@ -51,10 +58,6 @@ class Databox extends AbstractEntity
         return $this->name;
     }
 
-    /**
-     *
-     * @param string $name
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -70,12 +73,24 @@ class Databox extends AbstractEntity
         return $this->version;
     }
 
-    /**
-     *
-     * @param string $version
-     */
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

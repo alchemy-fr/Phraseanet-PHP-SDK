@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Feed extends AbstractRepository
 {
-
     /**
      * Find a feed by its identifier
      *
@@ -35,7 +35,7 @@ class Feed extends AbstractRepository
             throw new RuntimeException('Missing "feed" property in response content');
         }
 
-        return $this->em->hydrateEntity($this->em->getEntity('feed'), $response->getProperty('feed'));
+        return EntityHydrator::hydrate('feed', $response->getProperty('feed'), $this->em);
     }
 
     /**
@@ -54,12 +54,8 @@ class Feed extends AbstractRepository
 
         $feedCollection = new ArrayCollection();
 
-        foreach ($response->getProperty('feeds') as $feedDatas) {
-            $feedCollection->add(
-                $this->em->hydrateEntity(
-                    $this->em->getEntity('feed'), $feedDatas
-                )
-            );
+        foreach ($response->getProperty('feeds') as $feedData) {
+            $feedCollection->add(EntityHydrator::hydrate('feed', $feedData, $this->em));
         }
 
         return $feedCollection;

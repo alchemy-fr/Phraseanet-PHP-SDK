@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Record extends AbstractRepository
 {
-
     /**
      * Find the record by its id that belongs to the provided databox
      *
@@ -35,7 +35,7 @@ class Record extends AbstractRepository
             throw new RuntimeException('Missing "record" property in response content');
         }
 
-        return $this->em->HydrateEntity($this->em->getEntity('record'), $response->getProperty('record'));
+        return EntityHydrator::hydrate('record', $response->getProperty('record'), $this->em);
     }
 
     /**
@@ -61,7 +61,7 @@ class Record extends AbstractRepository
         $records = new ArrayCollection();
 
         foreach ($response->getProperty('results') as $recordData) {
-            $records->add($this->em->hydrateEntity($this->em->getEntity('record'), $recordData));
+            $records->add(EntityHydrator::hydrate('record', $recordData, $this->em));
         }
 
         return $records;
@@ -76,12 +76,14 @@ class Record extends AbstractRepository
      */
     public function search(array $parameters = array())
     {
-        $response = $this->query('POST', 'records/search/', array(), $parameters);
+        $response = $this->query('POST', 'search/', array(), array_merge(
+            array('search_type' => 0), $parameters
+        ));
 
         if ($response->isEmpty()) {
             throw new RuntimeException('Response content is empty');
         }
 
-        return $this->em->hydrateEntity($this->em->getEntity('query'), $response->getResult());
+        return EntityHydrator::hydrate('query', $response->getResult(), $this->em);
     }
 }

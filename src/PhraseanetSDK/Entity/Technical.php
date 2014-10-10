@@ -11,9 +11,17 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Technical extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+
+class Technical
 {
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $value;
 
     /**

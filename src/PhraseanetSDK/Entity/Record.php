@@ -12,25 +12,99 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\Annotation\ApiObject as ApiObject;
 
-class Record extends AbstractEntity
+/**
+ * @ApiObject(extended="1")
+ */
+class Record
 {
+    /**
+     * @ApiField(bind_to="record_id", type="int")
+     */
     protected $recordId;
+    /**
+     * @ApiField(bind_to="databox_id", type="int")
+     */
     protected $databoxId;
+    /**
+     * @ApiField(bind_to="title", type="string")
+     */
     protected $title;
+    /**
+     * @ApiField(bind_to="mime_type", type="string")
+     */
     protected $mimeType;
+    /**
+     * @ApiField(bind_to="original_name", type="string")
+     */
     protected $originalName;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="collection_id", type="int")
+     */
     protected $collectionId;
+    /**
+     * @ApiField(bind_to="sha256", type="string")
+     */
     protected $sha256;
+    /**
+     * @ApiField(bind_to="thumbnail", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="Subdef")
+     */
     protected $thumbnail;
-    protected $technicalInformations;
+    /**
+     * @ApiField(bind_to="technical_informations", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Technical")
+     */
+    protected $technicalInformation;
+    /**
+     * @ApiField(bind_to="phrasea_type", type="string")
+     */
     protected $phraseaType;
+    /**
+     * @ApiField(bind_to="uuid", type="string")
+     */
     protected $uuid;
-    protected $metadatas;
+    /**
+     * @ApiField(bind_to="metadata", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Metadata")
+     */
+    protected $metadata;
+    /**
+     * @ApiField(bind_to="subdefs", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Subdef")
+     */
     protected $subdefs;
+    /**
+     * @ApiField(bind_to="status", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="RecordStatus")
+     */
+    protected $status;
+    /**
+     * @ApiField(bind_to="caption", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="RecordCaption")
+     */
+    protected $caption;
 
+    /**
+     * Get unique id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getDataboxId().'_'.$this->getRecordId();
+    }
     /**
      * Get the record id
      *
@@ -177,7 +251,7 @@ class Record extends AbstractEntity
         return $this->thumbnail;
     }
 
-    public function setThumbnail(Subdef $thumbnail)
+    public function setThumbnail(Subdef $thumbnail = null)
     {
         $this->thumbnail = $thumbnail;
     }
@@ -217,14 +291,14 @@ class Record extends AbstractEntity
      *
      * @return ArrayCollection
      */
-    public function getTechnicalInformations()
+    public function getTechnicalInformation()
     {
-        return $this->technicalInformations;
+        return $this->technicalInformation;
     }
 
-    public function setTechnicalInformations(ArrayCollection $technicalInformations)
+    public function setTechnicalInformation(ArrayCollection $technicalInformations)
     {
-        $this->technicalInformations = $technicalInformations;
+        $this->technicalInformation = $technicalInformations;
     }
 
     /**
@@ -239,78 +313,44 @@ class Record extends AbstractEntity
      *
      * @throws NotFoundException In case the subdef name could not be found
      */
-    public function getSubdefs($name = null)
+    public function getSubdefs()
     {
-        if (null !== $name) {
-            return $this->em->getRepository('subdef')->findByRecordAndName(
-                $this->getDataboxId(),
-                $this->getRecordId(),
-                $name
-            );
-        }
-
-        return $this->em->getRepository('subdef')->findByRecord(
-            $this->getDataboxId(),
-            $this->getRecordId()
-        );
+        return $this->subdefs;
     }
 
-    /**
-     * Return a collection of PhraseanetSDK\Entity\Subdef for the record
-     *
-     * Precise an array of devices or mime types for the desired sub definitions
-     *
-     * /!\ This method requests the API
-     *
-     * @param  array           $devices The desired devices
-     * @param  array           $mimes   The desired mimes type
-     * @return ArrayCollection
-     *
-     * @throws RuntimeException in case of response not valid
-     */
-    public function getSubdefsByDevicesAndMimeTypes(array $devices, array $mimes)
-    {
-        return $this->em->getRepository('subdef')->findByRecord(
-            $this->getDataboxId(),
-            $this->getRecordId(),
-            $devices,
-            $mimes
-        );
-    }
-
-    /**
-     * Return the record metdatas as a collection of PhraseanetSDK\Entity\Metadatas objects
-     *
-     * /!\ This method requests the API
-     *
-     * @return ArrayCollection
-     */
-    public function getMetadatas()
-    {
-        return $this->em->getRepository('metadatas')->findByRecord($this->getDataboxId(), $this->getRecordId());
-    }
-
-    /**
-     * Get the record caption as collection of PhraseanetSDK\Entity\RecordCaption objects
-     *
-     * /!\ This method requests the API
-     *
-     * @return ArrayCollection
-     */
-    public function getCaption()
-    {
-        return $this->em->getRepository('caption')->findByRecord($this->getDataboxId(), $this->getRecordId());
-    }
-
-    /**
-     * Get the record status as collection of PhraseanetSDK\Entity\RecordStatus objects
-     *
-     * /!\ This method requests the API
-     *
-     * @return ArrayCollection
-     */
     public function getStatus()
     {
-        return $this->em->getRepository('recordStatus')->findByRecord($this->getDataboxId(), $this->getRecordId());
+        return $this->status;
     }
+
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+    }
+
+    public function setMetadata($metadata)
+    {
+        $this->metadata = $metadata;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function setSubdefs($subdefs)
+    {
+        $this->subdefs = $subdefs;
+    }
+
 }

@@ -4,3 +4,6 @@
 /docs/source/API/API/cache
 /docs/build
 .DS_Store
+/proxies
+/cache
+/log

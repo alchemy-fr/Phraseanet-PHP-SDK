@@ -1,8 +1,8 @@
 {
     "meta": {
-        "api_version": "1.2",
+        "api_version": "1.3",
         "request": "GET /api/v1/databoxes/1/collections/",
-        "response_time": "2012-06-29T16:24:51+02:00",
+        "response_time": "2014-10-07T17:11:26+02:00",
         "http_code": 200,
         "error_type": null,
         "error_message": null,
@@ -11,24 +11,114 @@
     },
     "response": {
         "collections": [
-        {
-            "base_id": 1,
-            "collection_id": 1,
-            "name": "test",
-            "record_amount": 245
-        },
-        {
-            "base_id": 2,
-            "collection_id": 2,
-            "name": "BIBOO",
-            "record_amount": 5
-        },
-        {
-            "base_id": 4,
-            "collection_id": 4,
-            "name": "sample",
-            "record_amount": 2
-        }
+            {
+                "base_id": 1,
+                "collection_id": 1,
+                "name": "public",
+                "labels": {
+                    "fr": "public",
+                    "en": "public",
+                    "de": "public",
+                    "nl": "public"
+                },
+                "record_amount": 345
+            },
+            {
+                "base_id": 2,
+                "collection_id": 2,
+                "name": "privée",
+                "labels": {
+                    "fr": "privée",
+                    "en": "privée",
+                    "de": "privée",
+                    "nl": "privée"
+                },
+                "record_amount": 36
+            },
+            {
+                "base_id": 3,
+                "collection_id": 3,
+                "name": "video Sample test file",
+                "labels": {
+                    "fr": "video sample test",
+                    "en": "video Sample test file",
+                    "de": "video Sample test file",
+                    "nl": "video Sample test file"
+                },
+                "record_amount": 1468
+            },
+            {
+                "base_id": 4,
+                "collection_id": 4,
+                "name": "PHRAS-73 FF",
+                "labels": {
+                    "fr": "PHRAS-73 FF",
+                    "en": "PHRAS-73 FF",
+                    "de": "PHRAS-73 FF",
+                    "nl": "PHRAS-73 FF"
+                },
+                "record_amount": 0
+            },
+            {
+                "base_id": 5,
+                "collection_id": 5,
+                "name": "PHRA-132 un Nom de collection très long. c'est qua",
+                "labels": {
+                    "fr": "PHRA-132 un Nom de collection très long. c'est qua",
+                    "en": "PHRA-132 un Nom de collection très long. c'est qua",
+                    "de": "PHRA-132 un Nom de collection très long. c'est qua",
+                    "nl": "PHRA-132 un Nom de collection très long. c'est qua"
+                },
+                "record_amount": 15
+            },
+            {
+                "base_id": 6,
+                "collection_id": 6,
+                "name": "Ma collection privée",
+                "labels": {
+                    "fr": "Ma collection privée",
+                    "en": "Ma collection privée",
+                    "de": "Ma collection privée",
+                    "nl": "Ma collection privée"
+                },
+                "record_amount": 0
+            },
+            {
+                "base_id": 7,
+                "collection_id": 7,
+                "name": "Nouvelle collection (sans droits)",
+                "labels": {
+                    "fr": "Nouvelle collection (sans droits)",
+                    "en": "Nouvelle collection (sans droits)",
+                    "de": "Nouvelle collection (sans droits)",
+                    "nl": "Nouvelle collection (sans droits)"
+                },
+                "record_amount": 0
+            },
+            {
+                "base_id": 8,
+                "collection_id": 8,
+                "name": "Nouvelle collection (avec droits)",
+                "labels": {
+                    "fr": "Nouvelle collection (avec droits)",
+                    "en": "Nouvelle collection (avec droits)",
+                    "de": "Nouvelle collection (avec droits)",
+                    "nl": "Nouvelle collection (avec droits)"
+                },
+                "record_amount": 2
+            },
+            {
+                "base_id": 30,
+                "collection_id": 9,
+                "name": "Corbeille",
+                "labels": {
+                    "fr": "Corbeille",
+                    "en": "Corbeille",
+                    "de": "Corbeille",
+                    "nl": "Corbeille"
+                },
+                "record_amount": 38
+            }
         ]
     }
 }

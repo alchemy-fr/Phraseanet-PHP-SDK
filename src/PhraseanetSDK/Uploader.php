@@ -17,7 +17,7 @@ use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Quarantine;
 
-class Loader
+class Uploader
 {
     /** @var APIGuzzleAdapter */
     private $adapter;
@@ -38,14 +38,14 @@ class Loader
     /**
      * Uploads a file to Phraseanet.
      *
-     * @param string $file The path to the file to upload
+     * @param string                    $file       The path to the file to upload
      * @param integer|DataboxCollection $collection The base_id of the collection or a DataboxCollection object
-     * @param type $behavior Set to 0 to force record and bypass checks, Set to 1 to force quarantine.
-     * @param type $status A binary string to set status bits.
+     * @param type                      $behavior   Set to 0 to force record and bypass checks, Set to 1 to force quarantine.
+     * @param type                      $status     A binary string to set status bits.
      *
      * @return Record|Quarantine
      *
-     * @throws RuntimeException In case an error occured
+     * @throws RuntimeException In case an error occurred
      */
     public function upload($file, $collection, $behavior = null, $status = null)
     {

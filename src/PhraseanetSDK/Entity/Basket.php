@@ -12,22 +12,75 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\Annotation\Id;
 
-class Basket extends AbstractEntity
+class Basket
 {
-    protected $basketId;
+    /**
+     * @ApiField(bind_to="basket_id", type="int")
+     */
+    protected $id;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="description", type="string")
+     */
     protected $description;
-    protected $pusherUsrId;
-    protected $sselId;
+    /**
+     * @ApiField(bind_to="owner", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="User")
+     */
+    protected $owner;
+    /**
+     * @ApiField(bind_to="pusher", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="User")
+     */
+    protected $pusher;
+    /**
+     * @ApiField(bind_to="unread", type="boolean")
+     */
     protected $unread;
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="validation_basket", type="boolean")
+     */
     protected $validationBasket;
+    /**
+     * @ApiField(bind_to="validation_users", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="BasketValidationParticipant")
+     */
     protected $validationUsers;
+    /**
+     * @ApiField(bind_to="expires_on", type="date")
+     */
     protected $expiresOn;
-    protected $validationInfos;
+    /**
+     * @ApiField(bind_to="validation_infos", type="string")
+     */
+    protected $validationInfo;
+    /**
+     * @ApiField(bind_to="validation_confirmed", type="boolean")
+     */
     protected $validationConfirmed;
+    /**
+     * @ApiField(bind_to="validation_initiator_user", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="User")
+     */
+    protected $validationInitiatorUser;
+    /**
+     * @ApiField(bind_to="validation_initiator", type="boolean")
+     */
     protected $validationInitiator;
 
     /**
@@ -35,12 +88,12 @@ class Basket extends AbstractEntity
      *
      * @return integer
      */
-    public function getBasketId()
+    public function getId()
     {
         return $this->id;
     }
 
-    public function setBasketId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -76,19 +129,19 @@ class Basket extends AbstractEntity
     }
 
     /**
-     * The id of the user who created the basket when the current basket
+     * The user who created the basket when the current basket
      * is a validation basket
      *
      * @return integer|null
      */
-    public function getPusherUsrId()
+    public function getPusher()
     {
-        return $this->pusherUsrId;
+        return $this->pusher;
     }
 
-    public function setPusherUsrId($pusherUsrId)
+    public function setPusher($pusher)
     {
-        $this->pusherUsrId = $pusherUsrId;
+        $this->pusher = $pusher;
     }
 
     /**
@@ -162,7 +215,7 @@ class Basket extends AbstractEntity
         return $this->validationUsers;
     }
 
-    public function setValidationUsers(ArrayCollection $validationUsers)
+    public function setValidationUsers(ArrayCollection $validationUsers = null)
     {
         $this->validationUsers = $validationUsers;
     }
@@ -177,25 +230,25 @@ class Basket extends AbstractEntity
         return $this->expiresOn;
     }
 
-    public function setExpiresOn(\DateTime $expiresOn)
+    public function setExpiresOn(\DateTime $expiresOn = null)
     {
         $this->expiresOn = $expiresOn;
     }
 
     /**
-     * Get some informations about the validation, if the basket is a validation
+     * Get some information about the validation, if the basket is a validation
      * basket
      *
      * @return string|null
      */
-    public function getValidationInfos()
+    public function getValidationInfo()
     {
-        return $this->validationInfos;
+        return $this->validationInfo;
     }
 
-    public function setValidationInfos($validationInfos)
+    public function setValidationInfo($validationInfo)
     {
-        $this->validationInfos = $validationInfos;
+        $this->validationInfo = $validationInfo;
     }
 
     /**
@@ -223,8 +276,34 @@ class Basket extends AbstractEntity
         return $this->validationInitiator;
     }
 
-    public function setValidationInitiator($validationInitiator)
+    public function setValidationInitiator($initiator)
     {
-        $this->validationInitiator = $validationInitiator;
+        $this->validationInitiator = $initiator;
+    }
+
+    public function getValidationInitiatorUser()
+    {
+        return $this->validationInitiatorUser;
+    }
+
+    public function setValidationInitiatorUser($validationInitiator)
+    {
+        $this->validationInitiatorUser = $validationInitiator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
     }
 }

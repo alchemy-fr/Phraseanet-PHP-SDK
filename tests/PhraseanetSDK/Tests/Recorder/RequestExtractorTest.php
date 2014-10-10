@@ -9,22 +9,22 @@ class RequestExtractorTest extends \PHPUnit_Framework_TestCase
     public function testExtract()
     {
         $expected = array(
-            'query'       => array('request' => 'query'),
+            'query'       => array('params' => 'value'),
             'post-fields' => array(),
-            'method'      => 'request method',
-            'path'        => 'request path',
+            'method'      => 'POST',
+            'path'        => '/path/to/request',
         );
 
         $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
-        $request->expects($this->once())->method('getMethod')->will($this->returnValue('request method'));
-        $request->expects($this->once())->method('getPath')->will($this->returnValue('/api/v1/request path'));
+        $request->expects($this->once())->method('getMethod')->will($this->returnValue('POST'));
+        $request->expects($this->once())->method('getPath')->will($this->returnValue('/api/v1/path/to/request'));
 
         $query = $this->getMockBuilder('Guzzle\Http\QueryString')
             ->disableOriginalConstructor()
             ->getMock();
         $query->expects($this->once())
             ->method('toArray')
-            ->will($this->returnValue(array('request' => 'query')));
+            ->will($this->returnValue(array('params' => 'value')));
 
         $request->expects($this->once())->method('getQuery')->will($this->returnValue($query));
 

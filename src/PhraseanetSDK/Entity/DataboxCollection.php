@@ -11,12 +11,30 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxCollection extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+
+class DataboxCollection
 {
+    /**
+     * @ApiField(bind_to="base_id", type="int")
+     */
     protected $baseId;
+    /**
+     * @ApiField(bind_to="collection_id", type="int")
+     */
     protected $collectionId;
+    /**
+     * @ApiField(bind_to="name", type="string")
+     */
     protected $name;
+    /**
+     * @ApiField(bind_to="record_amount", type="int")
+     */
     protected $recordAmount;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
      * The collection base id
@@ -70,11 +88,27 @@ class DataboxCollection extends AbstractEntity
      */
     public function getRecordAmount()
     {
-        return $this->record_amount;
+        return $this->recordAmount;
     }
 
-    public function setRecordAmount($record_amount)
+    public function setRecordAmount($recordAmount)
     {
-        $this->record_amount = $record_amount;
+        $this->recordAmount = $recordAmount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

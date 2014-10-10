@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Story extends AbstractRepository
 {
-
     /**
      * Find the story by its id that belongs to the provided databox
      *
@@ -35,7 +35,7 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "story" property in response content');
         }
 
-        return $this->em->HydrateEntity($this->em->getEntity('story'), $response->getProperty('story'));
+        return EntityHydrator::hydrate('story', $response->getProperty('story'), $this->em);
     }
 
     /**
@@ -59,17 +59,9 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "results" property in response content');
         }
 
-        $stories = new ArrayCollection();
+        $query = EntityHydrator::hydrate('query', $response->getResult(), $this->em);
 
-        $results = $response->getProperty('results');
-
-        if (isset($results->stories) && is_array($results->stories)) {
-            foreach ($results->stories as $storyData) {
-                $stories->add($this->em->hydrateEntity($this->em->getEntity('story'), $storyData));
-            }
-        }
-
-        return $stories;
+        return $query->getResults()->getStories();
     }
 
     /**
@@ -89,6 +81,6 @@ class Story extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return $this->em->hydrateEntity($this->em->getEntity('query'), $response->getResult());
+        return EntityHydrator::hydrate('query', $response->getResult(), $this->em);
     }
 }

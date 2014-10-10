@@ -18,22 +18,16 @@ use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
 use Guzzle\Http\Exception\CurlException;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Log\PsrLogAdapter;
-use Guzzle\Plugin\Log\LogPlugin;
-use Guzzle\Plugin\Cache\CachePlugin;
 use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Cache\CacheFactory;
-use PhraseanetSDK\Cache\RevalidationFactory;
-use PhraseanetSDK\Cache\CanCacheStrategy;
-use Psr\Log\LoggerInterface;
 
 class GuzzleAdapter implements GuzzleAdapterInterface
 {
     /** @var ClientInterface */
     private $guzzle;
+    private $extended = false;
 
     public function __construct(ClientInterface $guzzle)
     {
@@ -71,6 +65,27 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     }
 
     /**
+     * Sets extended mode
+     *
+     * Extended mode fetch more data (status, meta, subdefs) in one request
+     * for a record
+     *
+     * @param boolean $extended
+     */
+    public function setExtended($extended)
+    {
+        $this->extended = (boolean) $extended;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExtended()
+    {
+        return $this->extended;
+    }
+
+    /**
      * Performs an HTTP request, returns the body response
      *
      * @param string $method     The method
@@ -88,7 +103,9 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), $headers = array())
     {
         try {
-            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' => 'application/json'), $headers));
+            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' =>
+                $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
+            ), $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
         } catch (CurlException $e) {
@@ -102,24 +119,26 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         return $response->getBody(true);
     }
 
-    public static function create(array $config, array $cache = array(), array $plugins = array())
+    /**
+     * Creates a new instance of GuzzleAdapter
+     *
+     * @param array $config
+     * @param array $plugins
+     *
+     * @return static
+     */
+    public static function create($endpoint, array $plugins = array())
     {
-        $config = static::getConfig($config);
-        $cache = static::getCacheConfig($cache);
-
-        $guzzle = new Guzzle(static::generateUrl($config['url']));
-        $guzzle->setUserAgent(sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION));
-
-        if (null !== $config['logger']) {
-            $guzzle->addSubscriber(new LogPlugin(new PsrLogAdapter($config['logger'])));
+        if (!is_string($endpoint)) {
+            throw new InvalidArgumentException('API url endpoint must be a valid url');
+        }
+        // test if url already end with API_MOUNT_POINT
+        if (ApplicationInterface::API_MOUNT_POINT !== substr(trim($endpoint, '/'), -strlen(ApplicationInterface::API_MOUNT_POINT))) {
+            $endpoint = sprintf('%s%s/', trim($endpoint, '/'), ApplicationInterface::API_MOUNT_POINT);
         }
 
-        $guzzle->addSubscriber(new CachePlugin(array(
-            'adapter'      => static::createCacheAdapter($cache, $config['logger']),
-            'can_cache'    => $cache['can-cache-strategy'],
-            'default_ttl'  => $cache['ttl'],
-            'revalidation' => $cache['revalidation-factory']->create($cache['revalidate']),
-        )));
+        $guzzle = new Guzzle($endpoint);
+        $guzzle->setUserAgent(sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION));
 
         foreach ($plugins as $plugin) {
             $guzzle->addSubscriber($plugin);
@@ -144,78 +163,5 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         } elseif (0 < count($postFields)) {
             throw new InvalidArgumentException('Can not add post fields to GET request');
         }
-    }
-
-    private static function createCacheAdapter($cache, LoggerInterface $logger = null)
-    {
-        try {
-            $cacheAdapter = $cache['factory']->createGuzzleCacheAdapter($cache['type'], $cache['host'], $cache['port']);
-            if (isset($logger)) {
-                $logger->debug(sprintf('Using cache adapter %s', $cache['type']));
-            }
-        } catch (RuntimeException $e) {
-            if (isset($logger)) {
-                $logger->error(sprintf('Unable to create cache adapter %s', $cache['type']));
-            }
-            $cacheAdapter = $cache['factory']->createGuzzleCacheAdapter('array');
-        }
-
-        return $cacheAdapter;
-    }
-
-    private static function getConfig(array $config)
-    {
-        $config = array_replace(array(
-            'client-id' => null,
-            'secret'    => null,
-            'url'       => null,
-            'logger'    => null,
-        ), $config);
-
-        foreach (array('client-id', 'secret', 'url') as $key) {
-            if (null === $config[$key]) {
-                throw new InvalidArgumentException(sprintf('Missing parameter %s', $key));
-            }
-        }
-
-        return $config;
-    }
-
-    private static function getCacheConfig(array $cache)
-    {
-        $cache = array_replace(array(
-            'type' => 'array',
-            'host' => null,
-            'port' => null,
-            'ttl'  => 300,
-            'revalidate' => 'skip',
-        ), $cache);
-
-        if (!isset($cache['factory'])) {
-            $cache['factory'] = new CacheFactory();
-        }
-
-        if (!isset($cache['revalidation-factory'])) {
-            $cache['revalidation-factory'] = new RevalidationFactory();
-        }
-        if (!isset($cache['can-cache-strategy'])) {
-            $cache['can-cache-strategy'] = new CanCacheStrategy();
-        }
-
-        return $cache;
-    }
-
-    private static function generateUrl($url)
-    {
-        $end = substr($url, -7);
-
-        if ('api/v1/' === $end) {
-            return $url;
-        }
-        if ('/api/v1' === $end) {
-            return $url . '/';
-        }
-
-        return rtrim($url, '/') . ApplicationInterface::API_MOUNT_POINT;
     }
 }

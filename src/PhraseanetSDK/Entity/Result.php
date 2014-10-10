@@ -12,10 +12,20 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class Result extends AbstractEntity
+class Result
 {
+    /**
+     * @ApiField(bind_to="records", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Record")
+     */
     protected $records;
+    /**
+     * @ApiField(bind_to="stories", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Story")
+     */
     protected $stories;
 
     public function getRecords()

@@ -1,8 +1,8 @@
 {
     "meta": {
-        "api_version": "1.2",
+        "api_version": "1.3",
         "request": "GET /api/v1/databoxes/1/status/",
-        "response_time": "2012-06-29T16:22:52+02:00",
+        "response_time": "2014-10-07T17:12:07+02:00",
         "http_code": 200,
         "error_type": null,
         "error_message": null,
@@ -11,33 +11,36 @@
     },
     "response": {
         "status": [
-        {
-            "bit": 4,
-            "label_on": "online_on",
-            "label_off": "online_off",
-            "img_on": "/custom/status/localhost-3306-db_37-stat_4_1.gif",
-            "img_off": "/custom/status/localhost-3306-db_37-stat_4_0.gif",
-            "searchable": false,
-            "printable": false
-        },
-        {
-            "bit": 5,
-            "label_on": "validated_ko",
-            "label_off": "validated_ok",
-            "img_on": "/custom/status/localhost-3306-db_37-stat_5_1.gif",
-            "img_off": "/custom/status/localhost-3306-db_37-stat_5_0.gif",
-            "searchable": false,
-            "printable": false
-        },
-        {
-            "bit": 6,
-            "label_on": "not_sell",
-            "label_off": "sell",
-            "img_on": "",
-            "img_off": "",
-            "searchable": false,
-            "printable": false
-        }
+            {
+                "bit": 4,
+                "label_on": "Status 4 On",
+                "label_off": "status 4 Off",
+                "labels": {
+                    "en": "Status 4 On",
+                    "fr": "Status 4 On",
+                    "de": null,
+                    "nl": null
+                },
+                "img_on": "/custom/status/c8c2998de9265bba47c6ce5128dc05f1-stat_4_1.gif?etag=f69efd68d36b3d660af2aec7791ce012",
+                "img_off": "/custom/status/c8c2998de9265bba47c6ce5128dc05f1-stat_4_0.gif?etag=0f1d5471efe8b6946142de731fc81700",
+                "searchable": false,
+                "printable": false
+            },
+            {
+                "bit": 5,
+                "label_on": "Droits expirés",
+                "label_off": "Droits valides",
+                "labels": {
+                    "en": "Droits expirés",
+                    "fr": "Droits expirés",
+                    "de": null,
+                    "nl": null
+                },
+                "img_on": "/custom/status/c8c2998de9265bba47c6ce5128dc05f1-stat_5_1.gif?etag=ef20ea7d49beaf22613bcdf3196bf82d",
+                "img_off": "/custom/status/c8c2998de9265bba47c6ce5128dc05f1-stat_5_0.gif?etag=4a9bf16addc651ca248aa9d5230f3d21",
+                "searchable": false,
+                "printable": true
+            }
         ]
     }
 }

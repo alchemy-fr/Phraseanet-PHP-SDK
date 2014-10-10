@@ -11,12 +11,20 @@
 
 namespace PhraseanetSDK\Entity;
 
-class FeedEntryItem extends AbstractEntity
-{
-    /** @var integer */
-    protected $itemId;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-    /** @var Record */
+class FeedEntryItem
+{
+    /**
+     *
+     * @ApiField(bind_to="item_id", type="int")
+     */
+    protected $id;
+    /**
+     * @ApiField(bind_to="record", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="Record")
+     */
     protected $record;
 
     /**
@@ -24,18 +32,14 @@ class FeedEntryItem extends AbstractEntity
      *
      * @return integer
      */
-    public function getItemId()
+    public function getId()
     {
-        return $this->itemId;
+        return $this->id;
     }
 
-    /**
-     *
-     * @param integer $id
-     */
-    public function setItemId($id)
+    public function setId($id)
     {
-        $this->itemId = $id;
+        $this->id = $id;
     }
 
     /**
@@ -48,10 +52,6 @@ class FeedEntryItem extends AbstractEntity
         return $this->record;
     }
 
-    /**
-     *
-     * @param Record $record
-     */
     public function setRecord(Record $record)
     {
         $this->record = $record;

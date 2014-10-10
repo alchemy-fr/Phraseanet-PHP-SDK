@@ -19,7 +19,7 @@ use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Http\APIResponse;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 
-abstract class AbstractRepository implements RepositoryInterface
+abstract class AbstractRepository
 {
     /** @var EntityManager */
     protected $em;
@@ -43,9 +43,11 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Query the API
      *
-     * @param  string                $method HTTP method type (POST, GET ...)
-     * @param  string                $path   The requested path (/path/to/ressource/1)
-     * @param  array                 $params An array of query parameters
+     * @param string $method     HTTP method type (POST, GET ...)
+     * @param string $path       The requested path (/path/to/ressource/1)
+     * @param array  $query      An array of query parameters
+     * @param array  $postFields An array of request parameters
+     *
      * @return APIResponse
      * @throws NotFoundException
      * @throws UnauthorizedException

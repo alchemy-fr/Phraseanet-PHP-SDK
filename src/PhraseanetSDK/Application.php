@@ -36,11 +36,11 @@ class Application implements ApplicationInterface
     /** @var OAuth2Connector */
     private $connector;
 
-    /** @var APIGuzzleAdapter */
-    private $APIAdapter = array();
+    /** @var APIGuzzleAdapter[] */
+    private $adapters = array();
 
     /** @var array An array of loaders */
-    private $loaders = array();
+    private $uploaders = array();
 
     public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
     {
@@ -61,23 +61,26 @@ class Application implements ApplicationInterface
         return $this->connector = new OAuth2Connector($this->adapter, $this->clientId, $this->secret);
     }
 
-    public function getLoader($token)
+    /**
+     * {@inheritdoc}
+     */
+    public function getUploader($token)
     {
         if ('' === trim($token)) {
             throw new InvalidArgumentException('Token can not be empty.');
         }
 
-        if (isset($this->loaders[$token])) {
-            return $this->loaders[$token];
+        if (isset($this->uploaders[$token])) {
+            return $this->uploaders[$token];
         }
 
-        return $this->loaders[$token] = new Loader($this->getAPIGuzzleAdapter($token), $this->getEntityManager($token));
+        return $this->uploaders[$token] = new Uploader($this->getAdapterByToken($token), $this->getEntityManager($token));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getEntityManager($token)
+    public function getEntityManager($token, array $options = array())
     {
         if ('' === trim($token)) {
             throw new InvalidArgumentException('Token can not be empty.');
@@ -87,7 +90,7 @@ class Application implements ApplicationInterface
             return $this->ems[$token];
         }
 
-        return $this->ems[$token] = new EntityManager($this->getAPIGuzzleAdapter($token));
+        return $this->ems[$token] = new EntityManager($this->getAdapterByToken($token), $options);
     }
 
     /**
@@ -103,7 +106,7 @@ class Application implements ApplicationInterface
             return $this->monitors[$token];
         }
 
-        return $this->monitors[$token] = new Monitor($this->getAPIGuzzleAdapter($token));
+        return $this->monitors[$token] = new Monitor($this->getAdapterByToken($token));
     }
 
     /**
@@ -119,33 +122,58 @@ class Application implements ApplicationInterface
     /**
      * Creates the application.
      *
-     * @param array $config
-     * @param array $cache
-     * @param array $plugins
+     * @param GuzzleAdapter $adapter
      *
      * @return Application
      *
-     * @throws InvalidArgumentException In case a parameter is missing
+     * @throws InvalidArgumentException In case a required parameter is missing
      */
-    public static function create(array $config, array $cache = array(), array $plugins = array())
+    public static function create(array $config, GuzzleAdapter $adapter = null)
     {
+        foreach (array('client-id', 'secret') as $key) {
+            if (!isset($config[$key]) || !is_string($config[$key])) {
+                throw new InvalidArgumentException(sprintf('Missing or invalid parameter "%s"', $key));
+            }
+        }
+
+        if (null === $adapter) {
+            if (!isset($config['url']) || !is_string($config['url'])) {
+                throw new InvalidArgumentException(sprintf('Missing or invalid parameter "url"'));
+            }
+
+            $adapter = GuzzleAdapter::create($config['url']);
+        }
+
         return new static(
-            GuzzleAdapter::create($config, $cache, $plugins),
+            $adapter,
             $config['client-id'],
             $config['secret']
         );
     }
 
-    private function getAPIGuzzleAdapter($token)
+    /**
+     * Activate extended graph object by adding required accept headers.
+     * This results in bigger response message but less requests to get
+     * relation of queried object.
+     *
+     * @param $mode
+     */
+    public function setExtendedMode($mode)
     {
-        if (!isset($this->APIAdapter[$token])) {
-            $this->APIAdapter[$token] = new APIGuzzleAdapter(
+        $this->adapter->setExtended($mode);
+    }
+
+    private function getAdapterByToken($token)
+    {
+        if (!isset($this->adapters[$token])) {
+            $this->adapters[$token] = new APIGuzzleAdapter(
                 new ConnectedGuzzleAdapter(
-                    $token, $this->adapter
+                    $token,
+                    $this->adapter
                 )
             );
         }
 
-        return $this->APIAdapter[$token];
+        return $this->adapters[$token];
     }
 }

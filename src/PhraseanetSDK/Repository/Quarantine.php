@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class Quarantine extends AbstractRepository
 {
-
     /**
      * Find a list of quarantine items stating at $offsetStart with
      * $perPage items number
@@ -40,7 +40,7 @@ class Quarantine extends AbstractRepository
         $quarantineItems = new ArrayCollection();
 
         foreach ($response->getProperty('quarantine_items') as $quarantineData) {
-            $quarantineItems->add($this->em->hydrateEntity($this->em->getEntity('quarantine'), $quarantineData));
+            $quarantineItems->add(EntityHydrator::hydrate('quarantine', $quarantineData, $this->em));
         }
 
         return $quarantineItems;
@@ -61,6 +61,6 @@ class Quarantine extends AbstractRepository
             throw new RuntimeException('Missing "quarantine_item" property in response content');
         }
 
-        return $this->em->hydrateEntity($this->em->getEntity('quarantine'), $response->getProperty('quarantine_item'));
+        return EntityHydrator::hydrate('quarantine', $response->getProperty('quarantine_item'), $this->em);
     }
 }

@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class BasketElement extends AbstractRepository
 {
-
     /**
      * Find all basket elements in the provided basket id
      *
@@ -34,8 +34,8 @@ class BasketElement extends AbstractRepository
 
         $basketElements = new ArrayCollection();
 
-        foreach ($response->getProperty('basket_elements') as $basketElementDatas) {
-            $basketElements->add($this->em->hydrateEntity($this->em->getEntity('basketElement'), $basketElementDatas));
+        foreach ($response->getProperty('basket_elements') as $basketElementData) {
+            $basketElements->add(EntityHydrator::hydrate('basketElement', $basketElementData, $this->em));
         }
 
         return $basketElements;

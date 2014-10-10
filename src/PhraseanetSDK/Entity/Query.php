@@ -12,28 +12,51 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class Query extends AbstractEntity
+class Query
 {
-    protected $offsetStart;
-    protected $perPage;
-    protected $availableResults;
-    protected $totalResults;
-    protected $error;
-    protected $warning;
-    protected $queryTime;
-    protected $searchIndexes;
-    protected $query;
-
     /**
-     *
-     * @var Doctrine\Common\Collection\ArrayCollection
+     * @ApiField(bind_to="offset_start", type="int")
+     */
+    protected $offsetStart;
+    /**
+     * @ApiField(bind_to="per_page", type="int")
+     */
+    protected $perPage;
+    /**
+     * @ApiField(bind_to="total_results", type="int")
+     */
+    protected $totalResults;
+    /**
+     * @ApiField(bind_to="error", type="string")
+     */
+    protected $error;
+    /**
+     * @ApiField(bind_to="warning", type="string")
+     */
+    protected $warning;
+    /**
+     * @ApiField(bind_to="query_time", type="float")
+     */
+    protected $queryTime;
+    /**
+     * @ApiField(bind_to="search_indexes", type="string")
+     */
+    protected $searchIndexes;
+    /**
+     * @ApiField(bind_to="query", type="string")
+     */
+    protected $query;
+    /**
+     * @ApiField(bind_to="suggestions", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="QuerySuggestion")
      */
     protected $suggestions;
-
     /**
-     *
-     * @var Doctrine\Common\Collection\ArrayCollection
+     * @ApiField(bind_to="results", type="relation")
+     * @ApiRelation(type="one_to_one", target_entity="Result")
      */
     protected $results;
 
@@ -65,22 +88,6 @@ class Query extends AbstractEntity
     public function setPerPage($perPage)
     {
         $this->perPage = $perPage;
-    }
-
-    /**
-     * Return the available results its depens of the search engine used
-     * on the requested instance
-     *
-     * @return integer
-     */
-    public function getAvailableResults()
-    {
-        return $this->availableResults;
-    }
-
-    public function setAvailableResults($availableResults)
-    {
-        $this->availableResults = $availableResults;
     }
 
     /**
@@ -174,7 +181,7 @@ class Query extends AbstractEntity
     }
 
     /**
-     * Get query suggestions as a collection of PhraseanetSDK\Entity\QuerySuggestion
+     * Get query suggestions as a collection of QuerySuggestion
      * objects
      *
      * @return ArrayCollection
@@ -190,17 +197,12 @@ class Query extends AbstractEntity
     }
 
     /**
-     * Get result as a collection of PhraseanetSDK\Entity\Record objects
      *
-     * @return ArrayCollection
+     * @return Result
      */
-    public function getResults($type='record')
+    public function getResults()
     {
-        if ('record' === $type) {
-           return $this->results->getRecords();
-        }
-
-        return $this->results->getStories();
+        return $this->results;
     }
 
     public function setResults(Result $results)

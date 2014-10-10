@@ -11,18 +11,45 @@
 
 namespace PhraseanetSDK\Entity;
 
-class DataboxStatus extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+
+class DataboxStatus
 {
+    /**
+     * @ApiField(bind_to="bit", type="int")
+     */
     protected $bit;
+    /**
+     * @ApiField(bind_to="label_on", type="string")
+     */
     protected $labelOn;
+    /**
+     * @ApiField(bind_to="label_off", type="string")
+     */
     protected $labelOff;
+    /**
+     * @ApiField(bind_to="img_on", type="string")
+     */
     protected $imgOn;
+    /**
+     * @ApiField(bind_to="img_off", type="string")
+     */
     protected $imgOff;
+    /**
+     * @ApiField(bind_to="searchable", type="boolean")
+     */
     protected $searchable;
+    /**
+     * @ApiField(bind_to="printable", type="boolean")
+     */
     protected $printable;
+    /**
+     * @ApiField(bind_to="labels", type="array")
+     */
+    protected $labels;
 
     /**
-     * get the status bit
+     * Get the status bit
      *
      * @return integer
      */
@@ -52,7 +79,7 @@ class DataboxStatus extends AbstractEntity
     }
 
     /**
-     * get the label status for the OFF status state
+     * Get the label status for the OFF status state
      *
      * @return string
      */
@@ -124,5 +151,21 @@ class DataboxStatus extends AbstractEntity
     public function setPrintable($printable)
     {
         $this->printable = $printable;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
     }
 }

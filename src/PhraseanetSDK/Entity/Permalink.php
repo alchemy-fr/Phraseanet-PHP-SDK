@@ -11,14 +11,38 @@
 
 namespace PhraseanetSDK\Entity;
 
-class Permalink extends AbstractEntity
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+
+class Permalink
 {
+    /**
+     *
+     * @ApiField(bind_to="id", type="int")
+     */
     protected $id;
+    /**
+     * @ApiField(bind_to="is_activated", type="boolean")
+     */
     protected $isActivated;
+    /**
+     * @ApiField(bind_to="label", type="string")
+     */
     protected $label;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="page_url", type="string")
+     */
     protected $pageUrl;
+    /**
+     * @ApiField(bind_to="url", type="string")
+     */
     protected $url;
 
     /**

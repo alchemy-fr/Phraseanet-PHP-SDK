@@ -1,6 +1,6 @@
 <?php
 
-namespace PhraseanetSDK\Tests\Entity;
+namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\Entity\Feed;
 use PhraseanetSDK\Entity\FeedEntry;
@@ -8,13 +8,12 @@ use PhraseanetSDK\Entity\FeedEntryItem;
 use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Subdef;
 use PhraseanetSDK\Entity\Permalink;
-use PhraseanetSDK\Entity\EntityHydrator;
+use PhraseanetSDK\EntityHydrator;
 use PhraseanetSDK\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class EntityHydratorTest extends \PHPUnit_Framework_TestCase
 {
-
     private function getOneFeed()
     {
         $json = '{
@@ -48,7 +47,7 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
                             "mime_type": "image/jpeg",
                             "title": "eos53_04hdr.jpg",
                             "original_name": "eos53_04hdr.jpg",
-                            "last_modification": "2011-10-20T13:00:04+02:00",
+                            "updated_on": "2011-10-20T13:00:04+02:00",
                             "created_on": "2011-10-20T12:59:54+02:00",
                             "collection_id": 1,
                             "sha256": "694dbf5bf78009d5f0f16a8505ea71612f6256e5892fa441064b24cc664bf3cd",
@@ -68,11 +67,16 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
                                 "player_type": "IMAGE",
                                 "mime_type": "image/jpeg"
                             },
-                            "technical_informations": {
-                                "bits": "8",
-                                "channels": "3",
-                                "Orientation": "1"
-                            },
+                            "technical_informations": [{
+                                "name" : "bits",
+                                "value": "8"
+                            }, {
+                                "name" : "Orientation",
+                                "value": "1"
+                            }, {
+                                "name" : "channels",
+                                "value": "3"
+                            }],
                             "phrasea_type": "image",
                             "uuid": "7c6ef16c-52d4-4fda-aaf9-bd73c4e38205"
                         }
@@ -85,7 +89,7 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
                             "mime_type": "image/jpeg",
                             "title": "eos53_7267_magg_meno.jpg",
                             "original_name": "eos53_7267_magg_meno.jpg",
-                            "last_modification": "2011-10-20T13:00:02+02:00",
+                            "updated_on": "2011-10-20T13:00:02+02:00",
                             "created_on": "2011-10-20T12:59:56+02:00",
                             "collection_id": 1,
                             "sha256": "958d662a0833a0a1bc0007def0cc9007246a0a53985352e0f7325e45b00a5783",
@@ -105,11 +109,16 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
                                 "player_type": "IMAGE",
                                 "mime_type": "image/jpeg"
                             },
-                            "technical_informations": {
-                                "bits": "8",
-                                "channels": "3",
-                                "Orientation": "1"
-                            },
+                            "technical_informations": [{
+                                "name" : "bits",
+                                "value": "8"
+                            }, {
+                                "name" : "Orientation",
+                                "value": "1"
+                            }, {
+                                "name" : "channels",
+                                "value": "3"
+                            }],
                             "phrasea_type": "image",
                             "uuid": "383a153b-f2e5-44a4-a71e-7d2c63a129d3"
                         }
@@ -128,8 +137,7 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
 
         $em = new EntityManager($client);
 
-        $feed = new Feed($em);
-        $feed = EntityHydrator::hydrate($feed, $this->getOneFeed(), $em);
+        $feed = EntityHydrator::hydrate('feed', $this->getOneFeed(), $em);
 
         $this->assertEquals(3, $feed->getId());
         $this->assertEquals('hellow world', $feed->getTitle());
@@ -139,9 +147,7 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getCreatedOn()->format(\DateTime::ATOM));
         $this->assertEquals('2011-07-20T18:45:20+02:00', $feed->getUpdatedOn()->format(\DateTime::ATOM));
 
-        $entry = new FeedEntry($em);
-
-        $entry = EntityHydrator::hydrate($entry, $this->getOneFeedEntry(), $em);
+        $entry = EntityHydrator::hydrate('feedEntry', $this->getOneFeedEntry(), $em);
 
         /* @var $entry \PhraseanetSDK\Entity\Entry */
         $this->assertEquals('legoff@alchemy.fr', $entry->getAuthorEmail());
@@ -151,7 +157,6 @@ class EntityHydratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('My Entry subtitle', $entry->getSubtitle());
         $this->assertEquals('My Entry Test', $entry->getTitle());
         $items = $entry->getItems();
-        /* @var $items Doctrine\Common\Collections\ArrayCollection */
         $this->assertTrue($items instanceof ArrayCollection);
         $this->assertEquals(2, $items->count());
         foreach ($items as $item) {

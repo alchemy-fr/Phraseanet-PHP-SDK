@@ -13,7 +13,7 @@ class DocumentStructureTest extends RepositoryTestCase
         $databoxMetadatasRepository = new DataboxDocumentStructure(new EntityManager($client));
         $databoxMetadatas = $databoxMetadatasRepository->findByDatabox(1);
 
-        $this->assertEquals(27, $databoxMetadatas->count());
+        $this->assertEquals(33, $databoxMetadatas->count());
 
         foreach ($databoxMetadatas as $metadatas) {
             $this->checkDataboxStructure($metadatas);

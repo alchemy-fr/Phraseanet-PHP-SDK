@@ -1,8 +1,8 @@
 {
     "meta": {
-        "api_version": "1.2",
+        "api_version": "1.3",
         "request": "GET /api/v1/records/1/638/",
-        "response_time": "2012-06-29T16:01:59+02:00",
+        "response_time": "2014-10-07T17:22:41+02:00",
         "http_code": 200,
         "error_type": null,
         "error_message": null,
@@ -13,97 +13,26 @@
         "record": {
             "databox_id": 1,
             "record_id": 638,
-            "mime_type": "image/jpeg",
-            "title": "0186.JPG",
-            "original_name": "0186.JPG",
-            "updated-on": "2012-06-28T17:19:01+02:00",
-            "created_on": "2012-06-22T21:21:15+02:00",
-            "collection_id": 1,
-            "sha256": "8ed4c201b580dddb41549b9fc70a945f053421a4bfddd6a229dc475dfdad9363",
-            "thumbnail": {
-                "name": "thumbnail",
-                "permalink": {
-                    "created_on": "2012-06-25T18:05:20+02:00",
-                    "id": 2022,
-                    "is_activated": true,
-                    "label": "0186JPG",
-                    "updated_on": "2012-06-25T18:05:20+02:00",
-                    "page_url": "http://dev.phrasea.net/permalink/v1/0186JPG/1/638/6mQtqoyh/thumbnail/view/",
-                    "url": "http://dev.phrasea.net/permalink/v1/0186JPG/1/638/6mQtqoyh/thumbnail/"
-                },
-                "height": 150,
-                "width": 100,
-                "filesize": 2188,
-                "devices": [
-                "screen"
-                ],
-                "player_type": "IMAGE",
-                "mime_type": "image/jpeg"
-            },
+            "mime_type": "application/octet-stream",
+            "title": "samplefiletest/ffmpeg-bugs/roundup/issue591/02785736.mxf - 02785736",
+            "original_name": "02785736.mxf",
+            "updated_on": "2014-06-23T21:47:45+02:00",
+            "created_on": "2014-06-23T21:47:45+02:00",
+            "collection_id": 3,
+            "sha256": "a7f33964749bd7b920e852b48feb91759531eb7f9141ac07863d883ef5487339",
+            "thumbnail": null,
             "technical_informations": [
-            {
-                "name": "Aperture",
-                "value": 9
-            },
-            {
-                "name": "CameraModel",
-                "value": "NIKON D700"
-            },
-            {
-                "name": "Channels",
-                "value": 3
-            },
-            {
-                "name": "ColorDepth",
-                "value": 8
-            },
-            {
-                "name": "ColorSpace",
-                "value": "RGB"
-            },
-            {
-                "name": "FileSize",
-                "value": 998380
-            },
-            {
-                "name": "FlashFired",
-                "value": 0
-            },
-            {
-                "name": "FocalLength",
-                "value": 50
-            },
-            {
-                "name": "Height",
-                "value": 4256
-            },
-            {
-                "name": "HyperfocalDistance",
-                "value": 9.2450032704205
-            },
-            {
-                "name": "ISO",
-                "value": 100
-            },
-            {
-                "name": "LightValue",
-                "value": 14.305634287547
-            },
-            {
-                "name": "MimeType",
-                "value": "image/jpeg"
-            },
-            {
-                "name": "ShutterSpeed",
-                "value": 0.004
-            },
-            {
-                "name": "Width",
-                "value": 2832
-            }
+                {
+                    "name": "FileSize",
+                    "value": 2179119
+                },
+                {
+                    "name": "MimeType",
+                    "value": "application/octet-stream"
+                }
             ],
-            "phrasea_type": "image",
-            "uuid": "3b7ef6cc-4f62-48fc-aae2-67328c8c7cb0"
+            "phrasea_type": "unknown",
+            "uuid": "9528f1b7-4a1f-40e4-bdf0-46bfaf93bff2"
         }
     }
 }

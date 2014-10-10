@@ -14,23 +14,23 @@ namespace PhraseanetSDK;
 interface ApplicationInterface
 {
     /** @var string Phraseanet API mount point */
-    const API_MOUNT_POINT = '/api/v1/';
+    const API_MOUNT_POINT = '/api/v1';
 
     /** @var string PHP SDK user agent */
     const USER_AGENT = 'Phraseanet SDK';
 
     /** @var string SDK version */
-    const VERSION = '0.5.x-dev';
+    const VERSION = '0.5';
 
     /**
-     * Return the OAuth2Connector
+     * Return an OAuth2Connector
      *
      * @return OAuth2Connector
      */
     public function getOauth2Connector();
 
     /**
-     * Returns the entity manager given a token
+     * Returns a entity manager given a token
      *
      * @param string $token
      *
@@ -39,11 +39,20 @@ interface ApplicationInterface
     public function getEntityManager($token);
 
     /**
-     * Returns a monitor instance
+     * Returns a monitor instance given a token
      *
      * @param string $token
      *
      * @return Monitor
      */
     public function getMonitor($token);
+
+    /**
+     * Returns an uploader instance given a token
+     *
+     * @param string $token
+     *
+     * @return Uploader
+     */
+    public function getUploader($token);
 }

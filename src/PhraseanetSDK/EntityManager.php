@@ -11,24 +11,91 @@
 
 namespace PhraseanetSDK;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\FileCacheReader;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
-use PhraseanetSDK\Repository\Factory as RepoFactory;
-use PhraseanetSDK\Entity\Factory as EntityFactory;
-use PhraseanetSDK\Entity\EntityHydrator;
-use PhraseanetSDK\Entity\EntityInterface;
+use ProxyManager\Configuration as ProxyConfig;
+use ProxyManager\Factory\LazyLoadingGhostFactory;
+use Psr\Log\LoggerInterface;
 
 class EntityManager
 {
     private $adapter;
-    private $repositories;
+    private $annotationReader;
+    private $proxyFactory;
+    private $repositories = array();
+    private $virtualProxies = array();
 
     /**
-     *
      * @param APIGuzzleAdapter $adapter
      */
-    public function __construct(APIGuzzleAdapter $adapter)
+    public function __construct(APIGuzzleAdapter $adapter, array $options = array())
     {
         $this->adapter = $adapter;
+        self::registerAnnotations();
+
+        $debug = isset($options['debug']) && !!$options['debug'];
+        $annotationsPath = isset($options['annotation.path']) ? $options['annotation.path'] : __DIR__.'/../../cache/annotations';
+        $proxyPath = isset($options['proxy.path']) ? $options['proxy.path'] : __DIR__ . '/../../proxies';
+
+        $logger = (isset($options['logger']) && $options['logger'] instanceof LoggerInterface) ? $options['logger'] : null;
+
+        if (!$logger && $debug) {
+            $logger = new Logger('phraseanet-php-sdk');
+            $logger->pushHandler(new StreamHandler(__DIR__ . '/../../log/sdk.log'));
+        }
+
+        $this->annotationReader = new FileCacheReader(
+            new AnnotationReader(),
+            $annotationsPath,
+            $debug
+        );
+
+        $config = new ProxyConfig();
+        $config->setProxiesTargetDir($proxyPath);
+
+        spl_autoload_register($config->getProxyAutoloader());
+
+        $this->proxyFactory = new LazyLoadingGhostFactory($config);
+
+        $this->logger = $logger;
+    }
+
+    /**
+     * @return Logger|null
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @return FileCacheReader
+     */
+    public function getAnnotationReader()
+    {
+        return $this->annotationReader;
+    }
+
+    /**
+     * @return LazyLoadingGhostFactory
+     */
+    public function getProxyFactory()
+    {
+        return $this->proxyFactory;
+    }
+
+    /**
+     * Return the client attached to this entity manager
+     *
+     * @return APIGuzzleAdapter
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
     }
 
     /**
@@ -43,42 +110,50 @@ class EntityManager
             return $this->repositories[$name];
         }
 
-        $this->repositories[$name] = RepoFactory::build($name, $this);
+        $className = ucfirst($name);
+        $objectName = sprintf('\\PhraseanetSDK\\Repository\\%s', $className);
 
-        return $this->repositories[$name];
+        if (!class_exists($objectName)) {
+            throw new Exception\InvalidArgumentException(
+                sprintf('Class %s does not exists', $objectName)
+            );
+        }
+
+        return $this->repositories[$name] = new $objectName($this);
     }
 
     /**
-     * Return a new entity by its name
+     * Return virtual proxy for given entity
      *
-     * @param  string          $name The name of the entity
-     * @return EntityInterface
+     * @param $name
+     *
+     * @return mixed
      */
-    public function getEntity($name)
+    public function getVirtualProxy($name)
     {
-        return EntityFactory::build($name, $this);
+        if (isset($this->virtualProxies[$name])) {
+            return $this->virtualProxies[$name];
+        }
+
+        $className = ucfirst($name);
+        $objectName = sprintf('\\PhraseanetSDK\\VirtualProxy\\%s', $className);
+
+        if (!class_exists($objectName)) {
+            throw new Exception\InvalidArgumentException(
+                sprintf('Class %s does not exists', $objectName)
+            );
+        }
+
+        return $this->virtualProxies[$name] = new $objectName($this);
     }
 
     /**
-     * Hydrates an entity with datas
-     *
-     * @param EntityInterface $entity
-     * @param \stdClass       $datas
-     *
-     * @return EntityInterface
+     * Register entities annotations
      */
-    public function HydrateEntity(EntityInterface $entity, \stdClass $datas)
+    private static function registerAnnotations()
     {
-        return EntityHydrator::hydrate($entity, $datas, $this);
-    }
-
-    /**
-     * Return the client attached to this entity manager
-     *
-     * @return APIGuzzleAdapter
-     */
-    public function getAdapter()
-    {
-        return $this->adapter;
+        AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiField.php');
+        AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiObject.php');
+        AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiRelation.php');
     }
 }

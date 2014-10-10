@@ -15,8 +15,8 @@ interface GuzzleAdapterInterface
      *
      * @param string $method
      * @param string $path
-     * @param array $query
-     * @param array $postFields
+     * @param array  $query
+     * @param array  $postFields
      *
      * @return string
      */

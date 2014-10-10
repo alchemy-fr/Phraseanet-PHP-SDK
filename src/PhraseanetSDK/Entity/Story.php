@@ -12,18 +12,59 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class Story extends AbstractEntity
+class Story
 {
+    /**
+     * @ApiField(bind_to="story_id", type="int")
+     */
     protected $storyId;
+    /**
+     * @ApiField(bind_to="databox_id", type="int")
+     */
     protected $databoxId;
+    /**
+     * @ApiField(bind_to="updated_on", type="date")
+     */
     protected $updatedOn;
+    /**
+     * @ApiField(bind_to="created_on", type="date")
+     */
     protected $createdOn;
+    /**
+     * @ApiField(bind_to="collection_id", type="int")
+     */
     protected $collectionId;
+    /**
+     * @ApiField(bind_to="uuid", type="string")
+     */
     protected $uuid;
+    /**
+     * @ApiField(bind_to="thumbnail")
+     * @ApiRelation(type="one_to_one", target_entity="Subdef")
+     */
     protected $thumbnail;
+    /**
+     * @ApiField(bind_to="records", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="Record")
+     */
     protected $records;
-    protected $metadatas;
+    /**
+     * @ApiField(bind_to="metadatas", type="array")
+     */
+    protected $metadata;
+
+    /**
+     * Get unique id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->getDataboxId().'_'.$this->getStoryId();
+    }
 
     /**
      * Get the record id
@@ -135,27 +176,13 @@ class Story extends AbstractEntity
         $this->records = $records;
     }
 
-    public function getMetadatas()
+    public function getMetadata()
     {
-        return $this->metadatas;
+        return $this->metadata;
     }
 
-    public function setMetadatas(ArrayCollection $metadatas)
+    public function setMetadata(ArrayCollection $metadata)
     {
-        $this->metadatas = $metadatas;
-    }
-
-    public function getSubdefs($name = null)
-    {
-        if (null !== $name) {
-            return $this->em->getRepository('subdef')->findByRecordAndName($this->getDataboxId(), $this->getStoryId(), $name);
-        }
-
-        return $this->em->getRepository('subdef')->findByRecord($this->getDataboxId(), $this->getStoryId());
-    }
-
-    public function getCaption()
-    {
-        return $this->em->getRepository('caption')->findByRecord($this->getDataboxId(), $this->getStoryId());
+        $this->metadata = $metadata;
     }
 }

@@ -14,14 +14,10 @@ namespace PhraseanetSDK\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\MemcacheCache;
 use Doctrine\Common\Cache\MemcachedCache;
-use Guzzle\Cache\DoctrineCacheAdapter;
 use PhraseanetSDK\Exception\RuntimeException;
 
-class CacheFactory implements CacheFactoryInterface
+class BackendCacheFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function create($type, $host = null, $port = null)
     {
         $host = $host ? $host : '127.0.0.1';
@@ -45,14 +41,6 @@ class CacheFactory implements CacheFactoryInterface
         $cache->setNamespace(md5(__DIR__));
 
         return $cache;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createGuzzleCacheAdapter($type, $host = null, $port = null)
-    {
-        return new DoctrineCacheAdapter($this->create($type, $host, $port));
     }
 
     private function createArray()

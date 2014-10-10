@@ -12,7 +12,7 @@ The recommended way to install Phraseanet PHP SDK is [through composer](http://g
 ```JSON
 {
     "require": {
-        "phraseanet/php-sdk": "0.3.*"
+        "phraseanet/php-sdk": "0.5.*"
     }
 }
 ```
@@ -88,7 +88,10 @@ $query = $em->getRepository('Record')->search(array(
 echo $query->getTotalResults() . " items found in " . $query->getQueryTime() . " seconds\n";
 
 foreach($query->getResults() as $record) {
-    echo "Sub definition " . $subdef->getName() . " has URL " . $subdef->getPermalink()->getUrl() . "\n";
+    echo "Record " . $record->getTitle() . "\n".
+    foreach ($record->getSubdefs() as $subdef) {
+        echo "subdef ". $subdef->getName() ." has URL " . $subdef->getPermalink()->getUrl() . "\n";
+    }
 }
 ```
 
@@ -126,18 +129,63 @@ Behavior can be either :
 
 ## Configuration
 
+### Extended API Response format
+
+The Phraseanet API can provide extended Response format for Record Object.
+
+In this case all relations to Record object (permalink, sub-definitions, caption, status)
+are included in the response.
+
+The result is that with this feature you need only one request to populate a whole Record object 
+instead of five.
+
+The time to hydrate record object is slightly higher but is ridiculously tiny compared to
+the time spent over HTTP protocol to fetch relations data.
+
+```php
+$app = PhraseanetSDK\Application::create(array(
+    'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
+    'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
+    'url'       => 'https://your.phraseanet-install.com/'
+));
+
+$token = '899ee278736b2an6bs786e541ajk8';
+
+// activate globally
+$app->getAdapter()->setExtended(true);
+
+// activate for current entity manager
+$em = $app->getEntityManager($token);
+$em->getAdapter()->setExtended(true);
+```
+
 ### Log
 
 Request can be logged for monitor or debug purpose by setting a PSR Logger in
-the configuration.
+the configuration. See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
+
+See http://guzzle3.readthedocs.org/plugins/log-plugin.html for log plugin configuration
 
 ```php
-$client = Client::create(array(
+use Psr\Log\LoggerInterface;
+
+class QueryLogger extends LoggerInterface
+{
+    ...
+}
+```
+
+```php
+use PhraseanetSDK\Application;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Plugin\Log\LogPlugin;
+
+
+$client = Application::create(array(
     'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
     'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
-    'url'       => 'https://your.phraseanet-install.com/',
-    'logger'    => $logger,
-));
+    'url'       => 'https://your.phraseanet-install.com/'
+), array(new LogPlugin(new PsrLogAdapter(new QueryLogger())));
 ```
 
 ### Cache
@@ -145,24 +193,30 @@ $client = Client::create(array(
 For performance, it is strongly recommended to use a cache system. This can be
 easily done using the following configuration.
 
+See http://guzzle3.readthedocs.org/plugins/cache-plugin.html for cache plugin configuration.
+
 ```php
-$client = Client::create(
+use PhraseanetSDK\Application;
+use Doctrine\Common\Cache\FilesystemCache;
+use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Plugin\Cache\CachePlugin;
+use Guzzle\Plugin\Cache\DefaultCacheStorage;
+
+$cachePlugin = new CachePlugin(array(
+    'storage' => new DefaultCacheStorage(
+        new DoctrineCacheAdapter(
+            new FilesystemCache('/path/to/cache/files')
+        )
+    )
+));
+
+$client = Application::create(
     array(
         'client-id' => '409ee2762ff49ce936b2ca6e5413607a',
         'secret'    => 'f53ea9b0da92e45f9bbba67439654ac3',
         'url'       => 'https://your.phraseanet-install.com/',
-    ), array(
-        'type'       => 'memcached', // cache type
-        'host'       => '127.0.0.1', // cache server host
-        'port'       => 11211,       // cache server port
-        'ttl'        => 300,         // cache ttl in seconds
-    )
-));
+    ), array($cachePlugin));
 ```
-
-Cache parameters can be configured as follow :
-
- - type : either `array`, `memcache` or `memcached`.
 
 ## Silex Provider
 
@@ -174,32 +228,40 @@ package.
 ```php
 $app = new Silex\Application();
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.config' => array(
-        'client-id' => $clientId,
-        'secret'    => $secret,
-        'url'       => $url,
+    // required
+    'sdk.config' => array(
+        'client-id' => $clientId, // Your client id
+        'secret'    => $secret, // You client secret
+        'url'       => $url, // The ur of the phraseanet instance where you have created your application
     ),
-));
-```
-
-### Configure cache and log
-
-```php
-$app = new Silex\Application();
-
-$app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.config' => array(
-        'client-id' => $clientId,
-        'secret'    => $secret,
-        'url'       => $url,
-        'logger'    => $logger,
+    // optional
+    'cache.config' => array(
+        'type' => 'array', // can be 'array', 'memcache' or 'memcached'. Default value is 'array'.
+        // options for memcache(d) cache type
+        'options' => array(
+            'host' => '127.0.0.1',
+            'port' => '11211'
+        )
+        'ttl'  => '3600', // cache TTL in seconds. Default value is '3600'.
+        'revalidation' => null, // cache re-validation strategy can be null, 'skip' or 'deny' or an object that implements 'Guzzle\Plugin\Cache\RevalidationInterface'
+                                // Default value is null.
+                                // skip : never performs cache re-validation and just assumes the request is still ok
+                                // deny : never performs cache re-validation and just assumes the request is invalid
+                                // The default strategy if null is provided is to follow HTTP RFC. see https://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-26
+                                // and https://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-26
+        'can_cache' => null,    // can cache strategy can be null or an object that implements 'Guzzle\Plugin\Cache\CanCacheStrategyInterface'
+        'key_provider' => null, // key provider strategy can be null or an object that implements 'Guzzle\Plugin\Cache\CacheKeyProviderInterface'
     ),
-    'phraseanet-sdk.cache.config' = array(
-        'type' => 'memcached',
-        'host' => 'localhost',
-        'port' => 11211,
-        'ttl'  => 300,
-    ),
+    'recorder.enabled' => false, // Enabled recorder
+    'recorder.config' => array(
+        'type' => 'file', // specified type of storage can be 'file', 'memcache' or 'memcached'. Default value is file
+        'options' => array(
+            'file' => '/path/to/file', // specified path to the file to write data, if specified type is file
+            'host' => '127.0.0.1', // specified host to the memcache(d) server , if specified type is memcache or memcached
+            'port' => '33', // specified port to the memcache(d) server, if specified type is memcache or memcached
+        ),
+        'limit' => 1000, // specified limit of request to store
+    )
 ));
 ```
 
@@ -213,13 +275,13 @@ following code :
 ```php
 $app = new Silex\Application();
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.config' => array(
+    'sdk.config' => array(
         'client-id' => $clientId,
         'secret'    => $secret,
         'url'       => $url,
     ),
-    'phraseanet-sdk.recorder.enabled' => true,
-    'phraseanet-sdk.recorder.config' => array(
+    'recorder.enabled' => true,
+    'recorder.config' => array(
         'type' => 'memcached',
         'options' => array(
             'host' => 'localhost',
@@ -236,10 +298,11 @@ configuration should look like :
 ```php
 $app = new Silex\Application();
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.recorder.config' => array(
+    'recorder.config' => array(
         'type' => 'memcached',
         'options' => array(
-            'file' => '/path/to/logfile.json',
+            'host' => '127.0.0.1', 
+            'port' => '/path/to/file',
         ),
         'limit' => 5000 // record up to 5000 requests
     ),
@@ -256,21 +319,17 @@ $player->play();
 ```
 
 Please note that, in order to play request without using cache (to warm it for
-example), you must use the `deny` cache revalidation strategy :
+example), you must use the `deny` cache re-validation strategy :
 
 ```php
 $app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.config' => array(
+    'sdk.config' => array(
         'client-id' => $clientId,
         'secret' => $secret,
         'url' => $url,
     ),
-    'phraseanet-sdk.cache.config' = array(
-        'type' => 'memcached',
-        'host' => 'localhost',
-        'port' => 11211,
-        'ttl'  => 300,
-        'revalidate' => 'deny',  // important
+    'cache.config' = array(
+        'revalidation' => 'deny',  // important
     )
 ));
 ```

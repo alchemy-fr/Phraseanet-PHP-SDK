@@ -9,8 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\Entity;
+namespace PhraseanetSDK\Annotation;
 
-class StoryMetadataBag extends AbstractEntity
+/** @Annotation */
+class ApiRelation
 {
+    const ONE_TO_ONE = 'one_to_one';
+    const ONE_TO_MANY = 'one_to_many';
+
+    public $type;
+    public $target_entity;
 }

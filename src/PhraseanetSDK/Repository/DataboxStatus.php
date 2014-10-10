@@ -13,10 +13,10 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\EntityHydrator;
 
 class DataboxStatus extends AbstractRepository
 {
-
     /**
      * The status of the desired databox
      *
@@ -34,8 +34,8 @@ class DataboxStatus extends AbstractRepository
 
         $databoxStatusCollection = new ArrayCollection();
 
-        foreach ($response->getProperty('status') as $databoxStatusDatas) {
-            $databoxStatusCollection->add($this->em->hydrateEntity($this->em->getEntity('databoxStatus'), $databoxStatusDatas));
+        foreach ($response->getProperty('status') as $databoxStatusData) {
+            $databoxStatusCollection->add(EntityHydrator::hydrate('databoxStatus', $databoxStatusData, $this->em));
         }
 
         return $databoxStatusCollection;

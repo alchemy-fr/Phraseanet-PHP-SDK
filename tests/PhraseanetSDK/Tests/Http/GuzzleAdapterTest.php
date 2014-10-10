@@ -2,17 +2,19 @@
 
 namespace PhraseanetSDK\Tests\Http;
 
+use Guzzle\Plugin\Cache\CachePlugin;
 use PhraseanetSDK\Http\GuzzleAdapter;
 use Guzzle\Http\Exception\CurlException;
 use Guzzle\Common\Exception\GuzzleException;
 use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponseException;
+use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Mock\MockPlugin;
 
 class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetters()
     {
         $baseUrl = 'http://phraseanet.com/api/v1/';
-
         $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
         $guzzle->expects($this->any())
             ->method('getBaseUrl')
@@ -21,6 +23,17 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter = new GuzzleAdapter($guzzle);
         $this->assertSame($guzzle, $adapter->getGuzzle());
         $this->assertSame($baseUrl, $adapter->getBaseUrl());
+    }
+
+    public function testCreate()
+    {
+        $endpoint = 'http://phraseanet.com/api/v1/';
+        $adapter = GuzzleAdapter::create($endpoint);
+        $this->assertEquals($endpoint, $adapter->getBaseUrl());
+
+        $endpoint = 'http://phraseanet.com';
+        $adapter = GuzzleAdapter::create($endpoint);
+        $this->assertEquals($endpoint.'/api/v1/', $adapter->getBaseUrl());
     }
 
     public function testSetUserAgent()
@@ -174,6 +187,35 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('PhraseanetSDK\Exception\RuntimeException');
         $adapter->call('GET', '/path/to/resource');
+    }
+
+    public function testClientWithCacheDoNotExecuteQueries()
+    {
+        $cache = $this->getMockBuilder('Guzzle\Cache\CacheAdapterInterface')
+                      ->disableOriginalConstructor()
+                      ->getMock();
+
+        $cache->expects($this->atLeast(3))
+              ->method('fetch');
+
+        $mock = new MockPlugin();
+        $response = new Response(200, null, json_encode(array(
+            'meta' => array(),
+            'response' => array(),
+        )));
+        $mock->addResponse($response);
+        $mock->addResponse($response);
+        $mock->addResponse($response);
+
+        $endpoint = 'http://phraseanet.com/api/v1/';
+        $adapter = GuzzleAdapter::create($endpoint);
+
+        $adapter->getGuzzle()->addSubscriber($mock);
+        $adapter->getGuzzle()->addSubscriber(new CachePlugin($cache));
+
+        $adapter->call('GET', '/url');
+        $adapter->call('GET', '/url');
+        $adapter->call('GET', '/url');
     }
 }
 

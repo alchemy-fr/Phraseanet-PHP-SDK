@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\Entity;
+namespace PhraseanetSDK\Annotation;
 
-interface EntityInterface
+/** @Annotation */
+class ApiObject
 {
+    public $extended = false;
 }
