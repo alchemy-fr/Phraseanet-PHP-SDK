@@ -100,9 +100,9 @@ foreach($query->getResults() as $record) {
 The Loader is used to upload files to Phraseanet.
 
 ```php
-$loader = $app->getLoader($token);
+$uploader = $app->getUploader($token);
 
-$result = $loader->upload('/path/to/file.jpg', $base_id);
+$result = $uploader->upload('/path/to/file.jpg', $base_id);
 
 if ($result instanceof PhraseanetSDK\Entity\Record) {
     // record has been created
@@ -131,7 +131,7 @@ Behavior can be either :
 
 ### Extended API Response format
 
-The Phraseanet API can provide extended Response format for Record Object.
+The Phraseanet API (v1.4.1) can provide extended Response format for Record Object.
 
 In this case all relations to Record object (permalink, sub-definitions, caption, status)
 are included in the response.
