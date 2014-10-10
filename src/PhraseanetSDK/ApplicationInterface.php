@@ -20,7 +20,7 @@ interface ApplicationInterface
     const USER_AGENT = 'Phraseanet SDK';
 
     /** @var string SDK version */
-    const VERSION = '0.5';
+    const VERSION = '0.6.x-dev';
 
     /**
      * Return an OAuth2Connector
