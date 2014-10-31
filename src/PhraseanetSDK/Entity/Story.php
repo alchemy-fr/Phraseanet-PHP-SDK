@@ -42,7 +42,7 @@ class Story
      */
     protected $uuid;
     /**
-     * @ApiField(bind_to="thumbnail")
+     * @ApiField(bind_to="thumbnail", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="Subdef")
      */
     protected $thumbnail;
@@ -55,6 +55,16 @@ class Story
      * @ApiField(bind_to="metadatas", type="array")
      */
     protected $metadata;
+    /**
+     * @ApiField(bind_to="status", type="relation", virtual="1")
+     * @ApiRelation(type="one_to_many", target_entity="RecordStatus")
+     */
+    protected $status;
+    /**
+     * @ApiField(bind_to="caption", type="relation", virtual="1")
+     * @ApiRelation(type="one_to_many", target_entity="RecordCaption")
+     */
+    protected $caption;
 
     /**
      * Get unique id
@@ -184,5 +194,25 @@ class Story
     public function setMetadata(ArrayCollection $metadata)
     {
         $this->metadata = $metadata;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus(ArrayCollection $status)
+    {
+        $this->status = $status;
+    }
+
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    public function setCaption(ArrayCollection $caption)
+    {
+        $this->caption = $caption;
     }
 }
