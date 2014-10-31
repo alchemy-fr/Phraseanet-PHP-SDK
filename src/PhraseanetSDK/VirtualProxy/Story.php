@@ -23,17 +23,22 @@ class Story
     }
 
     /**
-     * Return the record sub definition as a collection of PhraseanetSDK\Entity\Subdef objects
+     * Get the story caption as collection of PhraseanetSDK\Entity\RecordCaption objects
      *
      * @return ArrayCollection
      */
-    public function getSubdefs(\PhraseanetSDK\Entity\Story $story)
-    {
-        return $this->em->getRepository('record')->findById($story->getDataboxId(), $story->getStoryId());
-    }
-
     public function getCaption(\PhraseanetSDK\Entity\Story $story)
     {
-        return $this->em->getRepository('caption')->findByStory($story->getDataboxId(), $story->getStoryId());
+        return $this->em->getRepository('caption')->findByRecord($story->getDataboxId(), $story->getStoryId());
+    }
+
+    /**
+     * Get the story status as collection of PhraseanetSDK\Entity\RecordStatus objects
+     *
+     * @return ArrayCollection
+     */
+    public function getStatus(\PhraseanetSDK\Entity\Story $story)
+    {
+        return $this->em->getRepository('recordStatus')->findByRecord($story->getDataboxId(), $story->getStoryId());
     }
 }
