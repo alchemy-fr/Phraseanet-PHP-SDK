@@ -111,7 +111,10 @@ class Story
         return $this->thumbnail;
     }
 
-    public function setThumbnail(Subdef $thumbnail)
+    /**
+     * Thumbnail can be null for stories, if no representative image is set.
+     */
+    public function setThumbnail(Subdef $thumbnail = null)
     {
         $this->thumbnail = $thumbnail;
     }
