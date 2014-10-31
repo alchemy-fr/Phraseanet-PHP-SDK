@@ -1,5 +1,11 @@
 CHANGELOG
 ---------
+* 0.6.0 (10-31-2014)
+
+  * Fix thumbnail property for story was not properly populated.
+  * Add getStatus method for stories.
+  * Add getCaption method for stories.
+
 * 0.5.0 (10-08-2014)
 
   * Add proxies for entities, removing dependencies to entity manager.
