@@ -29,7 +29,7 @@ class Record
      */
     public function getSubdefs(\PhraseanetSDK\Entity\Record $record)
     {
-        return $this->em->getRepository('record')->findById($record->getDataboxId(), $record->getRecordId());
+        return $this->em->getRepository('subdef')->findByRecord($record->getDataboxId(), $record->getRecordId());
     }
 
     /**
