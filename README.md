@@ -12,7 +12,7 @@ The recommended way to install Phraseanet PHP SDK is [through composer](http://g
 ```JSON
 {
     "require": {
-        "phraseanet/php-sdk": "0.5.*"
+        "phraseanet/php-sdk": "~0.6.0"
     }
 }
 ```

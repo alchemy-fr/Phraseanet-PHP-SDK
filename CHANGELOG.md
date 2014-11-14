@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+* 0.6.1 (11-14-2014)
+  * Fix getSubdefs method for record.
+    
 * 0.6.0 (10-31-2014)
 
   * Fix thumbnail property for story was not properly populated.
