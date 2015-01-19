@@ -12,11 +12,12 @@
 namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\Id as Id;
 
 class Permalink
 {
     /**
-     *
+     * @Id
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;

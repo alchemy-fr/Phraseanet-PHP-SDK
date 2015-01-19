@@ -155,5 +155,6 @@ class EntityManager
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiField.php');
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiObject.php');
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiRelation.php');
+        AnnotationRegistry::registerFile(__DIR__.'/Annotation/Id.php');
     }
 }

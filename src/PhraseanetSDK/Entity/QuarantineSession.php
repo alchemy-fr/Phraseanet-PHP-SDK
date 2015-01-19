@@ -13,11 +13,12 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\Annotation\Id as Id;
 
 class QuarantineSession
 {
     /**
-     *
+     * @Id
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
