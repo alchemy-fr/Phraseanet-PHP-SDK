@@ -28,7 +28,6 @@ class BasketTest extends RepositoryTestCase
         $client = $this->getClient($this->getSampleResponse('empty'));
         $basketRepository = new Basket(new EntityManager($client));
         $basketRepository->findByRecord(1, 1);
-
     }
 
     public function testFindAll()

@@ -38,5 +38,4 @@ class MetadataTest extends RepositoryTestCase
         $metaRepository = new Metadata(new EntityManager($client));
         $metaRepository->findByRecord(1, 1);
     }
-
 }

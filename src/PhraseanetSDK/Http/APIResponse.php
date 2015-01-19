@@ -29,7 +29,7 @@ class APIResponse
      */
     public function __construct(\stdClass $response)
     {
-        if ( ! isset($response->meta) || ! isset($response->response)) {
+        if (! isset($response->meta) || ! isset($response->response)) {
             throw new InvalidArgumentException('The API json response is malformed');
         }
 

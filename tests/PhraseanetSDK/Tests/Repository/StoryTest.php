@@ -36,5 +36,4 @@ class StoryTest extends RepositoryTestCase
         $story = $storyRepo->findById(1, 1);
         $this->checkStory($story);
     }
-
 }

@@ -71,6 +71,6 @@ abstract class AbstractRepository
             }
         }
 
-         return $response;
+        return $response;
     }
 }

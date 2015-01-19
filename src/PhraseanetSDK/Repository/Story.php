@@ -52,7 +52,7 @@ class Story extends AbstractRepository
             'query'        => 'all',
             'search_type'  => 1,
             'offset_start' => (int) $offsetStart,
-            'per_page'     => (int) $perPage
+            'per_page'     => (int) $perPage,
         ));
 
         if (true !== $response->hasProperty('results')) {

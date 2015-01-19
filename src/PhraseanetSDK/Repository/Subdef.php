@@ -32,11 +32,11 @@ class Subdef extends AbstractRepository
     {
         $parameters = array();
 
-        if ( ! ! count($devices)) {
+        if (! ! count($devices)) {
             $parameters['devices'] = $devices;
         }
 
-        if ( ! ! count($mimes)) {
+        if (! ! count($mimes)) {
             $parameters['mimes'] = $mimes;
         }
 

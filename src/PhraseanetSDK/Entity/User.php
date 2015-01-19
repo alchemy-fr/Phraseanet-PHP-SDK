@@ -369,5 +369,4 @@ class User
     {
         $this->zipCode = $zipCode;
     }
-
 }

@@ -67,5 +67,4 @@ class FeedTest extends RepositoryTestCase
         $feedRepository = new Feed(new EntityManager($client));
         $feedRepository->findAll();
     }
-
 }

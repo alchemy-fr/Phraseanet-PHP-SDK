@@ -37,5 +37,4 @@ class DataboxCollectionTest extends RepositoryTestCase
         $collectionRepository = new DataboxCollection(new EntityManager($client));
         $collectionRepository->findByDatabox(1);
     }
-
 }

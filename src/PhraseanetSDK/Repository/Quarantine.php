@@ -30,7 +30,7 @@ class Quarantine extends AbstractRepository
     {
         $response = $this->query('GET', 'quarantine/list/', array(
             'offset_start' => $offsetStart,
-            'per_page'     => $perPage
+            'per_page'     => $perPage,
             ));
 
         if (true !== $response->hasProperty('quarantine_items')) {

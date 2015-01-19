@@ -39,13 +39,13 @@ class EntityManager
 
         $debug = isset($options['debug']) && !!$options['debug'];
         $annotationsPath = isset($options['annotation.path']) ? $options['annotation.path'] : __DIR__.'/../../cache/annotations';
-        $proxyPath = isset($options['proxy.path']) ? $options['proxy.path'] : __DIR__ . '/../../proxies';
+        $proxyPath = isset($options['proxy.path']) ? $options['proxy.path'] : __DIR__.'/../../proxies';
 
         $logger = (isset($options['logger']) && $options['logger'] instanceof LoggerInterface) ? $options['logger'] : null;
 
         if (!$logger && $debug) {
             $logger = new Logger('phraseanet-php-sdk');
-            $logger->pushHandler(new StreamHandler(__DIR__ . '/../../log/sdk.log'));
+            $logger->pushHandler(new StreamHandler(__DIR__.'/../../log/sdk.log'));
         }
 
         $this->annotationReader = new FileCacheReader(

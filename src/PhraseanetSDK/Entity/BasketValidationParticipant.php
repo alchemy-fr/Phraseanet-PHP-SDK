@@ -89,9 +89,9 @@ class BasketValidationParticipant
      * @return Boolean
      */
     public function canSeeOthers()
-{
-    return $this->canSeeOthers;
-}
+    {
+        return $this->canSeeOthers;
+    }
 
     public function setCanSeeOthers($canSeeOthers)
     {

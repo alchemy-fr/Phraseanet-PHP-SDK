@@ -39,5 +39,4 @@ class DocumentStructureTest extends RepositoryTestCase
         $collectionRepository = new DataboxDocumentStructure(new EntityManager($client));
         $collectionRepository->findByDatabox(1);
     }
-
 }

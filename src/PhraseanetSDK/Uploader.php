@@ -60,7 +60,7 @@ class Uploader
         }
 
         $response = $this->adapter->call('POST', 'records/add/', array(), $postFields, array(
-            'file' => $file
+            'file' => $file,
         ));
 
         switch ((int) $response->getResult()->entity) {

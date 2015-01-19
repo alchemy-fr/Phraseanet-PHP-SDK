@@ -45,7 +45,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 array(
                     'type' => 'file',
                     'options' => array(
-                        'file' => realpath(__DIR__ . '/../..') . '/phraseanet.recorder.json',
+                        'file' => realpath(__DIR__.'/../..').'/phraseanet.recorder.json',
                     ),
                     'limit' => 1000,
                 ), $app['recorder.config']
@@ -57,7 +57,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 array(
                     'client-id' => null,
                     'secret'    => null,
-                    'url'       => null
+                    'url'       => null,
                 ),
                 $app['sdk.config']
             );
@@ -98,7 +98,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 return $config['revalidation'];
             }
 
-            return null;
+            return;
         });
 
         $app['phraseanet-sdk.cache.can_cache'] = $app->share(function (SilexApplication $app) {
@@ -133,7 +133,7 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 
         $app['phraseanet-sdk.guzzle.plugins'] = $app->share(function ($app) {
             $plugins = array(
-                $app['phraseanet-sdk.cache.plugin']
+                $app['phraseanet-sdk.cache.plugin'],
             );
 
             if (isset($app['profiler']) || $app['recorder.enabled']) {
@@ -172,16 +172,16 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         $app['recorder.enabled'] = false;
 
         if (isset($app['profiler'])) {
-            $app['data_collectors']= array_merge($app['data_collectors'], array(
+            $app['data_collectors'] = array_merge($app['data_collectors'], array(
                 'phraseanet-sdk' => $app->share(function ($app) {
                     return new PhraseanetSDKDataCollector($app['phraseanet-sdk.guzzle.history-plugin']);
                 }),
             ));
             $app['data_collector.templates'] = array_merge($app['data_collector.templates'], array(
-                array('phrasea-sdk', '@PhraseanetSDK/Collector/phraseanet-sdk.html.twig')
+                array('phrasea-sdk', '@PhraseanetSDK/Collector/phraseanet-sdk.html.twig'),
             ));
 
-            $app['phraseanet-sdk.profiler.templates_path'] = __DIR__ . '/Profiler/resources/views';
+            $app['phraseanet-sdk.profiler.templates_path'] = __DIR__.'/Profiler/resources/views';
 
             $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function ($loader, $app) {
                 $loader->addPath($app['phraseanet-sdk.profiler.templates_path'], 'PhraseanetSDK');

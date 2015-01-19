@@ -157,6 +157,6 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
     private function getFixture($name)
     {
-        return new APIResponse(json_decode(file_get_contents(__DIR__ . '/../../resources/response_samples/monitor/'.$name.'.json')));
+        return new APIResponse(json_decode(file_get_contents(__DIR__.'/../../resources/response_samples/monitor/'.$name.'.json')));
     }
 }

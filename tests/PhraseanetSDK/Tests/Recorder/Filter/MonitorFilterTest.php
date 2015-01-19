@@ -10,16 +10,16 @@ class MonitorFilterTest extends \PHPUnit_Framework_TestCase
     {
         $data = array(
             array(
-                'path' => '/api/v1/records/search/'
+                'path' => '/api/v1/records/search/',
             ),
             array(
-                'path' => '/api/v1/monitor/scheduler/'
+                'path' => '/api/v1/monitor/scheduler/',
             ),
             array(
-                'path' => '/api/v1/monitor/tasks/'
+                'path' => '/api/v1/monitor/tasks/',
             ),
             array(
-                'path' => '/api/v1/search/'
+                'path' => '/api/v1/search/',
             ),
         );
 
@@ -28,10 +28,10 @@ class MonitorFilterTest extends \PHPUnit_Framework_TestCase
 
         $expected = array(
             array(
-                'path' => '/api/v1/records/search/'
+                'path' => '/api/v1/records/search/',
             ),
             array(
-                'path' => '/api/v1/search/'
+                'path' => '/api/v1/search/',
             ),
         );
 

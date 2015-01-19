@@ -28,8 +28,8 @@ class StorageFactoryTest extends \PHPUnit_Framework_TestCase
     public function provideCacheConfigs()
     {
         return array(
-            array('file', array('file' => __DIR__ . '/here-test.json'), 'PhraseanetSDK\Recorder\Storage\FilesystemStorage', null),
-            array('FILE', array('file' => __DIR__ . '/here-test.json'), 'PhraseanetSDK\Recorder\Storage\FilesystemStorage', null),
+            array('file', array('file' => __DIR__.'/here-test.json'), 'PhraseanetSDK\Recorder\Storage\FilesystemStorage', null),
+            array('FILE', array('file' => __DIR__.'/here-test.json'), 'PhraseanetSDK\Recorder\Storage\FilesystemStorage', null),
             array('memcache', array(), 'PhraseanetSDK\Recorder\Storage\MemcacheStorage', 'Memcache'),
             array('MEMCACHE', array(), 'PhraseanetSDK\Recorder\Storage\MemcacheStorage', 'Memcache'),
             array('memcached', array(), 'PhraseanetSDK\Recorder\Storage\MemcachedStorage', 'Memcached'),

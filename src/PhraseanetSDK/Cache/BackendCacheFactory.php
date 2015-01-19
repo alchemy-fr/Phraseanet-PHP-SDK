@@ -51,7 +51,7 @@ class BackendCacheFactory
     private function createMemcache($host, $port)
     {
         $memcache = new \Memcache();
-        $memcache->addServer($host,$port);
+        $memcache->addServer($host, $port);
 
         $key = sprintf("%s:%s", $host, $port);
         $stats = @$memcache->getExtendedStats();
@@ -69,7 +69,7 @@ class BackendCacheFactory
     private function createMemcached($host, $port)
     {
         $memcached = new \Memcached();
-        $memcached->addServer($host,$port);
+        $memcached->addServer($host, $port);
 
         $key = sprintf("%s:%s", $host, $port);
         $stats = @$memcached->getStats();

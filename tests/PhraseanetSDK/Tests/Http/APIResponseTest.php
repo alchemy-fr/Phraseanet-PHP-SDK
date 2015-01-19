@@ -81,7 +81,7 @@ class APIResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testIsEmpty()
     {
-       $response = new APIResponse(json_decode($this->getSampleResponse("empty")));
+        $response = new APIResponse(json_decode($this->getSampleResponse("empty")));
         $this->assertTrue($response->isEmpty());
     }
 
@@ -99,6 +99,6 @@ class APIResponseTest extends \PHPUnit_Framework_TestCase
 
     private function getSampleResponse($filename)
     {
-        return file_get_contents(__DIR__ . '/../../../resources/response_samples/' . $filename . '.json');
+        return file_get_contents(__DIR__.'/../../../resources/response_samples/'.$filename.'.json');
     }
 }

@@ -25,6 +25,5 @@ class User extends AbstractRepository
         }
 
         return EntityHydrator::hydrate('user', $response->getProperty('user'), $this->em);
-
     }
 }

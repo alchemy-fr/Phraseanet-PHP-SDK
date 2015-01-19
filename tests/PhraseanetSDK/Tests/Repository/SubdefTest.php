@@ -90,7 +90,7 @@ class SubdefTest extends RepositoryTestCase
             array('thumbnail'),
             array('document'),
             array('thumbnail_mobile'),
-            array('preview_mobile')
+            array('preview_mobile'),
         );
     }
 }

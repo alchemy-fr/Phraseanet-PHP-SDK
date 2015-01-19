@@ -103,8 +103,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), $headers = array())
     {
         try {
-            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' =>
-                $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
+            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json',
             ), $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();

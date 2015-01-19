@@ -28,7 +28,7 @@ class Feed extends AbstractRepository
     {
         $response = $this->query('GET', sprintf('feeds/%d/content/', $id), array(
             'offset_start' => 0,
-            'per_page'     => 0
+            'per_page'     => 0,
             ));
 
         if (true !== $response->hasProperty('feed')) {

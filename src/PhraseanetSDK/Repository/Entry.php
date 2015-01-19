@@ -48,7 +48,7 @@ class Entry extends AbstractRepository
     {
         $response = $this->query('GET', sprintf('feeds/%d/content/', $feedId), array(
             'offset_start' => $offsetStart,
-            'per_page'     => $perPage
+            'per_page'     => $perPage,
         ));
 
         if (true !== $response->hasProperty('entries')) {
@@ -81,7 +81,7 @@ class Entry extends AbstractRepository
         $response = $this->query('GET', 'feeds/content/', array(
             'offset_start' => $offsetStart,
             'per_page'     => $perPage,
-            'feeds'        => $feeds
+            'feeds'        => $feeds,
             ));
 
         if (true !== $response->hasProperty('entries')) {

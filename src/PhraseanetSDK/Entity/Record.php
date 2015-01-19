@@ -304,8 +304,6 @@ class Record
     /**
      * Return a collection of PhraseanetSDK\Entity\Subdef for the record
      *
-     * Precise a name to get the desired subdef identified by its name
-     *
      * /!\ This method requests the API
      *
      * @param  string|null            $name The desired subdef name
@@ -352,5 +350,4 @@ class Record
     {
         $this->subdefs = $subdefs;
     }
-
 }

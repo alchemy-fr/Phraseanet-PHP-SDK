@@ -53,7 +53,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             'response' => array(
                 'entity' => '0',
                 'url'    => '/records/1/42/',
-            )
+            ),
         ))));
 
         $quarantineResponse = new APIResponse(json_decode(json_encode(array(
@@ -61,7 +61,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             'response' => array(
                 'entity' => '1',
                 'url'    => '/quarantine/item/42/',
-            )
+            ),
         ))));
 
         $record = $this->getMockBuilder('PhraseanetSDK\Entity\Record')

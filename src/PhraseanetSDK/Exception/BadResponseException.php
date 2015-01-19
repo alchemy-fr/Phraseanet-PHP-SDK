@@ -74,7 +74,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
         return $this;
     }
 
-        /**
+    /**
      * Checks if HTTP Status code is a Client Error (4xx)
      *
      * @return bool

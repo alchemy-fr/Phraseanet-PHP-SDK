@@ -31,7 +31,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function getSampleResponse($filename)
     {
-        $filename = __DIR__ . '/../../../resources/response_samples/' . $filename . '.json';
+        $filename = __DIR__.'/../../../resources/response_samples/'.$filename.'.json';
 
         return file_get_contents($filename);
     }

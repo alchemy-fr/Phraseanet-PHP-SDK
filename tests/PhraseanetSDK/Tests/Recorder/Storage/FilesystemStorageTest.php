@@ -10,7 +10,7 @@ class FilesystemStorageTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->file = __DIR__ . '/filesystem-test.json';
+        $this->file = __DIR__.'/filesystem-test.json';
     }
 
     public function tearDown()

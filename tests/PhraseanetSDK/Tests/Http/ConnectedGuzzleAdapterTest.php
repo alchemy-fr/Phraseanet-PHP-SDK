@@ -11,7 +11,7 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testCall($method, $path, $query, $postFields, $token, $files)
     {
-        $response = mt_rand() . 'response';
+        $response = mt_rand().'response';
 
         $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
