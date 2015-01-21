@@ -12,10 +12,12 @@
 namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\Id as Id;
 
 class DataboxTermsOfUse
 {
     /**
+     * @Id
      * @ApiField(bind_to="locale", type="string")
      */
     protected $locale;

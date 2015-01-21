@@ -12,11 +12,12 @@
 namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\Id as Id;
 
 class Databox
 {
     /**
-     *
+     * @Id
      * @ApiField(bind_to="databox_id", type="int")
      */
     protected $id;

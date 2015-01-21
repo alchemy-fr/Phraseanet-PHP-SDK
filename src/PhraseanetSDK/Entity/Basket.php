@@ -14,11 +14,12 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\Id;
+use PhraseanetSDK\Annotation\Id as Id;
 
 class Basket
 {
     /**
+     * @Id
      * @ApiField(bind_to="basket_id", type="int")
      */
     protected $id;

@@ -21,6 +21,11 @@ use Psr\Log\LogLevel;
 
 class EntityHydrator
 {
+    // Keep field tagged with @id annotation
+    // ['{EntityClassName}' => '{FieldName}']
+    // This avoid a lot of annotation parsing
+    private static $ids = array();
+
     /**
      * Hydrate an entity object from  a source
      *
@@ -163,6 +168,7 @@ class EntityHydrator
             if (!class_exists($subEntityClassName)) {
                 throw new InvalidArgumentException(sprintf('Mapping error in annotation @ApiRelation for property "target_entity" declared for %s->%s class property, entity %s not found', $entityClassName, $propertyName, $subEntityClassName));
             }
+
             if (!in_array($apiRelationType, array(ApiRelation::ONE_TO_ONE, ApiRelation::ONE_TO_MANY))) {
                 self::log($logger, LogLevel::DEBUG, sprintf('Unknown type property "%s" in annotation @ApiRelationField declared for "%s->%s" class property', $apiRelationType, $entityClassName, $propertyName));
 
@@ -185,9 +191,33 @@ class EntityHydrator
 
                     continue;
                 }
+
+                // Get Id field name for sub entity
+                if (!isset(self::$ids[$subEntityClassName])) {
+                    $reflectionSubClass = new \ReflectionClass($subEntityClassName);
+                    $reflectionSubClassProperties = $reflectionSubClass->getProperties();
+
+                    foreach($reflectionSubClassProperties as $subClassProperty) {
+                        if (null !== $idAnnotation = $annotationReader->getPropertyAnnotation($subClassProperty, 'PhraseanetSDK\Annotation\Id')) {
+                            self::$ids[$subEntityClassName] = $subClassProperty->getName();
+                            break;
+                        }
+                    }
+
+                    if (null === $idAnnotation) {
+                        self::$ids[$subEntityClassName] = false;
+                    }
+                }
+
+
                 $collectionData = new ArrayCollection();
+
                 foreach ($dataValue as $subValue) {
-                    $collectionData->add(self::hydrate($apiRelationTargetEntity, $subValue, $em));
+                    if (false !== ($idPropertyName = self::$ids[$subEntityClassName]) && isset($subValue->{$idPropertyName})) {
+                        $collectionData->set($subValue->{$idPropertyName}, self::hydrate($apiRelationTargetEntity, $subValue, $em));
+                    } else {
+                        $collectionData->add(self::hydrate($apiRelationTargetEntity, $subValue, $em));
+                    }
                 }
                 $dataMapping[$propertyName] = $collectionData;
 

@@ -12,11 +12,12 @@
 namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
+use PhraseanetSDK\Annotation\Id as Id;
 
 class Metadata
 {
     /**
-     *
+     * @Id
      * @ApiField(bind_to="meta_id", type="int")
      */
     protected $id;
