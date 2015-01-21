@@ -15,71 +15,110 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use PhraseanetSDK\Annotation\ApiObject as ApiObject;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Basket
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="basket_id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="name", type="string")
      */
     protected $name;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="description", type="string")
      */
     protected $description;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\User")
      * @ApiField(bind_to="owner", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="User")
      */
     protected $owner;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\User")
      * @ApiField(bind_to="pusher", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="User")
      */
     protected $pusher;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="unread", type="boolean")
      */
     protected $unread;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="validation_basket", type="boolean")
      */
     protected $validationBasket;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\BasketValidationParticipant>")
      * @ApiField(bind_to="validation_users", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="BasketValidationParticipant")
      */
     protected $validationUsers;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="expires_on", type="date")
      */
     protected $expiresOn;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="validation_infos", type="string")
      */
     protected $validationInfo;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="validation_confirmed", type="boolean")
      */
     protected $validationConfirmed;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\User")
      * @ApiField(bind_to="validation_initiator_user", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="User")
      */
     protected $validationInitiatorUser;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="validation_initiator", type="boolean")
      */
     protected $validationInitiator;

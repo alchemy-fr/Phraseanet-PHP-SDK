@@ -14,15 +14,27 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Result
 {
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\Record>")
      * @ApiField(bind_to="records", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Record")
      */
     protected $records;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\Story>")
      * @ApiField(bind_to="stories", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Story")
      */

@@ -13,22 +13,38 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class BasketValidationChoice
 {
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="agreement", type="boolean")
      */
     protected $agreement;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="note", type="int")
      */
     protected $note;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\BasketValidationParticipant")
      * @ApiField(bind_to="validation_user", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="BasketValidationParticipant")
      */

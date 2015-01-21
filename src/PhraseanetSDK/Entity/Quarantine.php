@@ -15,48 +15,76 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Quarantine
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\QuarantineSession")
      * @ApiField(bind_to="quarantine_session", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="QuarantineSession")
      */
     protected $session;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="base_id", type="int")
      */
     protected $baseId;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="original_name", type="string")
      */
     protected $originalName;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="sha256", type="string")
      */
     protected $sha256;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="uuid", type="string")
      */
     protected $uuid;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="forced", type="boolean")
      */
     protected $forced;
     /**
+     * @Expose
+     * @Type("array<string, string>")
      * @ApiField(bind_to="checks", type="array")
      */
     protected $checks;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="id", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="id", type="date")
      */
     protected $updatedOn;

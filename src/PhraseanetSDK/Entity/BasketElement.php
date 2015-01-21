@@ -15,37 +15,59 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class BasketElement
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="basket_element_id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="order", type="int")
      */
     protected $order;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="validation_item", type="boolean")
      */
     protected $validationItem;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\Record")
      * @ApiField(bind_to="record", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="Record")
      */
     protected $record;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\BasketValidationChoice>")
      * @ApiField(bind_to="validation_choices", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="BasketValidationChoice")
      */
     protected $validationChoices;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="note", type="int")
      */
     protected $note;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="agreement", type="boolean")
      */
     protected $agreement;

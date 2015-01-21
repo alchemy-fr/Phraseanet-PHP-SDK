@@ -15,95 +15,140 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\ApiObject as ApiObject;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
 
 /**
  * @ApiObject(extended="1")
+ * @ExclusionPolicy("all")
  */
 class Record
 {
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="record_id", type="int")
      */
     protected $recordId;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="databox_id", type="int")
      */
     protected $databoxId;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="title", type="string")
      */
     protected $title;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="mime_type", type="string")
      */
     protected $mimeType;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="original_name", type="string")
      */
     protected $originalName;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="collection_id", type="int")
      */
     protected $collectionId;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="sha256", type="string")
      */
     protected $sha256;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\Subdef")
      * @ApiField(bind_to="thumbnail", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="Subdef")
      */
     protected $thumbnail;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\Technical>")
      * @ApiField(bind_to="technical_informations", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Technical")
      */
     protected $technicalInformation;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="phrasea_type", type="string")
      */
     protected $phraseaType;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="uuid", type="string")
      */
     protected $uuid;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\Metadata>")
      * @ApiField(bind_to="metadata", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Metadata")
      */
     protected $metadata;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\Subdef>")
      * @ApiField(bind_to="subdefs", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Subdef")
      */
     protected $subdefs;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\RecordStatus>")
      * @ApiField(bind_to="status", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="RecordStatus")
      */
     protected $status;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\RecordCaption>")
      * @ApiField(bind_to="caption", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="RecordCaption")
      */
     protected $caption;
 
     /**
+     * @VirtualProperty
+     * @SerializedName("id")
+     *
      * Get unique id
      *
      * @return string
      */
     public function getId()
     {
-        return $this->getDataboxId().'_'.$this->getRecordId();
+        if ($this->getDataboxId() && $this->getRecordId()) {
+            return $this->getDataboxId().'_'.$this->getRecordId();
+        }
     }
     /**
      * Get the record id

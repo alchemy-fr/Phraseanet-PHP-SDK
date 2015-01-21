@@ -13,91 +13,140 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class User
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="email", type="string")
      */
     protected $email;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="login", type="string")
      */
     protected $login;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="first_name", type="string")
      */
     protected $firstName;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="last_name", type="string")
      */
     protected $lastName;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="display_name", type="string")
      */
     protected $displayName;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="gender", type="string")
      */
     protected $gender;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="address", type="string")
      */
     protected $address;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="zip_code", type="string")
      */
     protected $zipCode;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="city", type="string")
      */
     protected $city;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="country", type="string")
      */
     protected $country;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="phone", type="string")
      */
     protected $phone;
     /**
+     * @Expose
      * @ApiField(bind_to="fax", type="string")
      */
     protected $fax;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="job", type="string")
      */
     protected $job;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="position", type="string")
      */
     protected $position;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="company", type="string")
      */
     protected $company;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="geoname_id", type="int")
      */
     protected $geonameId;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="locale", type="string")
      */
     protected $locale;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="last_connection", type="date")
      */
     protected $lastConnection;

@@ -15,55 +15,87 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class FeedEntry
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="feed_id", type="int")
      */
     protected $feedId;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="feed_title", type="string")
      */
     protected $feedTitle;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="feed_url", type="string")
      */
     protected $feedUrl;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="url", type="string")
      */
     protected $url;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="author_email", type="string")
      */
     protected $authorEmail;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="author_name", type="string")
      */
     protected $authorName;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="title", type="string")
      */
     protected $title;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="subtitle", type="string")
      */
     protected $subtitle;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\FeedEntryItem>")
      * @ApiField(bind_to="items", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="FeedEntryItem")
      */
