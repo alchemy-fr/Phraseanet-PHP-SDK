@@ -13,35 +13,57 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Permalink
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="is_activated", type="boolean")
      */
     protected $isActivated;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="label", type="string")
      */
     protected $label;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="page_url", type="string")
      */
     protected $pageUrl;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="url", type="string")
      */
     protected $url;

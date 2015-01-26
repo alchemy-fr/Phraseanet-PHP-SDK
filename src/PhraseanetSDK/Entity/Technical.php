@@ -12,14 +12,26 @@
 namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Technical
 {
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="name", type="string")
      */
     protected $name;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="name", type="string")
      */
     protected $value;

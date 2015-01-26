@@ -13,59 +13,92 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class DataboxDocumentStructure
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="namespace", type="string")
      */
     protected $namespace;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="source", type="string")
      */
     protected $source;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="tagname", type="string")
      */
     protected $tagName;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="name", type="string")
      */
     protected $name;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="separator", type="string")
      */
     protected $separator;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="thesaurus_branch", type="string")
      */
     protected $thesaurusBranch;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="type", type="string")
      */
     protected $type;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="indexable", type="boolean")
      */
     protected $searchable;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="multivalue", type="boolean")
      */
     protected $multivalued;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="readonly", type="boolean")
      */
     protected $readonly;
     /**
+     * @Expose
      * @ApiField(bind_to="required", type="boolean")
      */
     protected $required;
     /**
+     * @Expose
+     * @Type("array<string, string>")
      * @ApiField(bind_to="labels", type="array")
      */
     protected $labels;

@@ -12,18 +12,32 @@
 namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class QuerySuggestion
 {
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="value", type="string")
      */
     protected $value;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="current", type="string")
      */
     protected $current;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="hits", type="int")
      */
     protected $hits;

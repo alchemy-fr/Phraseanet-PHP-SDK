@@ -14,53 +14,83 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Story
 {
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="story_id", type="int")
      */
     protected $storyId;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="databox_id", type="int")
      */
     protected $databoxId;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="collection_id", type="int")
      */
     protected $collectionId;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="uuid", type="string")
      */
     protected $uuid;
     /**
+     * @Expose
+     * @Type("PhraseanetSDK\Entity\Subdef")
      * @ApiField(bind_to="thumbnail", type="relation")
      * @ApiRelation(type="one_to_one", target_entity="Subdef")
      */
     protected $thumbnail;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\Record>")
      * @ApiField(bind_to="records", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="Record")
      */
     protected $records;
     /**
+     * @Expose
+     * @Type("array<string, string>")
      * @ApiField(bind_to="metadatas", type="array")
      */
     protected $metadata;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\RecordStatus>")
      * @ApiField(bind_to="status", type="relation", virtual="1")
      * @ApiRelation(type="one_to_many", target_entity="RecordStatus")
      */
     protected $status;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\RecordCaption>")
      * @ApiField(bind_to="caption", type="relation", virtual="1")
      * @ApiRelation(type="one_to_many", target_entity="RecordCaption")
      */

@@ -15,52 +15,82 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class Feed
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="id", type="int")
      */
     protected $id;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="title", type="string")
      */
     protected $title;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="icon", type="string")
      */
     protected $icon;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="subtitle", type="string")
      */
     protected $subTitle;
     /**
+     * @Expose
+     * @Type("integer")
      * @ApiField(bind_to="total_entries", type="int")
      */
     protected $totalEntries;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="created_on", type="date")
      */
     protected $createdOn;
     /**
+     * @Expose
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @ApiField(bind_to="updated_on", type="date")
      */
     protected $updatedOn;
     /**
+     * @Expose
+     * @Type("ArrayCollection<PhraseanetSDK\Entity\FeedEntry>")
      * @ApiField(bind_to="entries", type="relation", virtual="1")
      * @ApiRelation(type="one_to_many", target_entity="FeedEntry")
      */
     protected $entries;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="public", type="boolean")
      */
     protected $public;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="readonly", type="boolean")
      */
     protected $readonly;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="deletable", type="boolean")
      */
     protected $deletable;

@@ -14,24 +14,25 @@ namespace PhraseanetSDK;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\FileCacheReader;
+use JMS\Serializer\DeserializationContext;
+use JMS\Serializer\SerializationContext;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use ProxyManager\Configuration as ProxyConfig;
 use ProxyManager\Factory\LazyLoadingGhostFactory;
 use Psr\Log\LoggerInterface;
+use JMS\Serializer\SerializerBuilder;
 
 class EntityManager
 {
     private $adapter;
+    private $serializer;
     private $annotationReader;
     private $proxyFactory;
     private $repositories = array();
     private $virtualProxies = array();
 
-    /**
-     * @param APIGuzzleAdapter $adapter
-     */
     public function __construct(APIGuzzleAdapter $adapter, array $options = array())
     {
         $this->adapter = $adapter;
@@ -39,6 +40,7 @@ class EntityManager
 
         $debug = isset($options['debug']) && !!$options['debug'];
         $annotationsPath = isset($options['annotation.path']) ? $options['annotation.path'] : __DIR__.'/../../cache/annotations';
+        $serializerPath = isset($options['serializer.path']) ? $options['serializer.path'] : __DIR__.'/../../cache/serializer';
         $proxyPath = isset($options['proxy.path']) ? $options['proxy.path'] : __DIR__.'/../../proxies';
 
         $logger = (isset($options['logger']) && $options['logger'] instanceof LoggerInterface) ? $options['logger'] : null;
@@ -62,6 +64,17 @@ class EntityManager
         $this->proxyFactory = new LazyLoadingGhostFactory($config);
 
         $this->logger = $logger;
+
+        $this->serializer = $serializer = SerializerBuilder::create()
+            ->setCacheDir($serializerPath)
+            ->setAnnotationReader($this->annotationReader)
+            ->setDebug($debug)
+            ->build();
+    }
+
+    public function getSerializer()
+    {
+        return $this->serializer;
     }
 
     /**
@@ -148,6 +161,34 @@ class EntityManager
     }
 
     /**
+     * Return serialized entity
+     *
+     * @param                      $entity
+     * @param                      $format
+     * @param SerializationContext $context
+     *
+     * @return string
+     */
+    public function serialize($entity, $format, SerializationContext $context = null)
+    {
+        return $this->serializer->serialize($entity, $format, $context);
+    }
+
+    /**
+     * Return de-serialized entity
+     *
+     * @param                        $data
+     * @param                        $type
+     * @param DeserializationContext $context
+     *
+     * @return mixed
+     */
+    public function deserialize($data, $type, DeserializationContext $context = null)
+    {
+        return $this->serializer->deserialize($data, $type, $context);
+    }
+
+    /**
      * Register entities annotations
      */
     private static function registerAnnotations()
@@ -156,5 +197,6 @@ class EntityManager
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiObject.php');
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiRelation.php');
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/Id.php');
+        AnnotationRegistry::registerAutoloadNamespace('JMS\Serializer\Annotation',__DIR__.'/../../vendor/jms/serializer/src');
     }
 }

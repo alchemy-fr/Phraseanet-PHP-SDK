@@ -13,39 +13,63 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\Id as Id;
+use JMS\Serializer\Annotation\Expose as Expose;
+use JMS\Serializer\Annotation\VirtualProperty as VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName as SerializedName;
+use JMS\Serializer\Annotation\Type as Type;
+use JMS\Serializer\Annotation\ExclusionPolicy as ExclusionPolicy;
 
+/**
+ * @ExclusionPolicy("all")
+ */
 class DataboxStatus
 {
     /**
+     * @Expose
      * @Id
+     * @Type("integer")
      * @ApiField(bind_to="bit", type="int")
      */
     protected $bit;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="label_on", type="string")
      */
     protected $labelOn;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="label_off", type="string")
      */
     protected $labelOff;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="img_on", type="string")
      */
     protected $imgOn;
     /**
+     * @Expose
+     * @Type("string")
      * @ApiField(bind_to="img_off", type="string")
      */
     protected $imgOff;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="searchable", type="boolean")
      */
     protected $searchable;
     /**
+     * @Expose
+     * @Type("boolean")
      * @ApiField(bind_to="printable", type="boolean")
      */
     protected $printable;
     /**
+     * @Expose
+     * @Type("array<string, string>")
      * @ApiField(bind_to="labels", type="array")
      */
     protected $labels;
