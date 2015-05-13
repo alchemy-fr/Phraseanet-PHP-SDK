@@ -25,7 +25,7 @@
         "doctrine/annotations"    : "~1.0",
         "guzzle/guzzle"           : "~3.0",
         "monolog/monolog"         : "~1.0",
-        "ocramius/proxy-manager"  : "0.5.*"
+        "ocramius/proxy-manager"  : "~1.0"
     },
     "require-dev": {
         "sami/sami"               : "~1.0",
