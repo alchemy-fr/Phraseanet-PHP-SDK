@@ -11,6 +11,8 @@
 
 namespace PhraseanetSDK\VirtualProxy;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Entity\RecordCaption;
 use PhraseanetSDK\EntityManager;
 
 class Story

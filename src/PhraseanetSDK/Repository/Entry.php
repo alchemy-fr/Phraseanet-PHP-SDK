@@ -82,7 +82,7 @@ class Entry extends AbstractRepository
             'offset_start' => $offsetStart,
             'per_page'     => $perPage,
             'feeds'        => $feeds,
-            ));
+        ));
 
         if (true !== $response->hasProperty('entries')) {
             throw new RuntimeException('Missing "entries" property in response content');

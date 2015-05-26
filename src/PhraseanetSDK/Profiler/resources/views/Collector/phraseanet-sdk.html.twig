@@ -30,6 +30,10 @@
                 <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
             {% endif %}
         </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Cache hit ratio</b>
+            <span>{{ '%0.0f'|format(collector.cacheHitRatio) }} %</span>
+        </div>
     {% endset %}
 
     {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': 'phrasea-sdk' } %}
@@ -225,7 +229,7 @@
                 font-weight: bold;
             }
 
-            div.phraseanet-sdk div.request pre, div.phraseanet-sdk div.request code {
+            /*div.phraseanet-sdk div.request pre, div.phraseanet-sdk div.request code {
                 color: #333;
                 font-size: 13px;
                 font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
@@ -248,7 +252,7 @@
 
             div.phraseanet-sdk div.request pre.prettyprint {
                 margin-bottom: 20px;
-            }
+            }*/
 
             /* Bootstrap progress bar */
             .progress {
