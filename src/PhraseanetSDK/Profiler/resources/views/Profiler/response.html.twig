@@ -25,6 +25,34 @@
         </tbody>
     </table>
 
+    {% if phraseanet is defined and phraseanet | length > 0 %}
+    <h5>Phraseanet Metadata</h5>
+    <table>
+        <tbody>
+        {% for key,value in phraseanet.metadata %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ value|join('<strong>, </strong>') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if phraseanet.pagination is defined %}
+    <h5>Phraseanet Results</h5>
+    <table>
+        <tbody>
+        {% for key,value in phraseanet.pagination %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ value|join('<strong>, </strong>') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+
     <h5>Content</h5>
-    <pre class="prettyprint linenums"><code class="language-javascript  ">{{ responseContent|nl2br }}</code></pre>
+    {{ dump(responseContent) }}
 </div>
