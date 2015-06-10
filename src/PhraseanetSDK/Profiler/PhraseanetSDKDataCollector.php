@@ -22,15 +22,9 @@ class PhraseanetSDKDataCollector extends DataCollector
      */
     private $profiler;
 
-    /**
-     * @var bool
-     */
-    private $truncateResponse;
-
-    public function __construct(HistoryPlugin $profiler, $truncateResponse = true)
+    public function __construct(HistoryPlugin $profiler)
     {
         $this->profiler = $profiler;
-        $this->truncateResponse = (bool)$truncateResponse;
     }
 
     /**
@@ -55,7 +49,6 @@ class PhraseanetSDKDataCollector extends DataCollector
             if ($request instanceof EntityEnclosingRequestInterface) {
                 $requestContent = (string) $request->getBody();
             }
-            $responseContent = $this->prettifyResponse($response->getBody(true));
 
             $time = array(
                 'total' => $response->getInfo('total_time'),
@@ -84,7 +77,7 @@ class PhraseanetSDKDataCollector extends DataCollector
                 'request' => $this->sanitizeRequest($request),
                 'requestContent' => $requestContent,
                 'response' => $this->sanitizeResponse($response),
-                'responseContent' => json_decode($responseContent),
+                'responseContent' => json_decode($response->getBody(true)),
                 'time' => $time,
                 'error' => $error,
                 'phraseanet' => $this->parsePhraseanetResponse($response)
@@ -180,34 +173,6 @@ class PhraseanetSDKDataCollector extends DataCollector
             'reasonPhrase' => $response->getReasonPhrase(),
             'headers'      => $response->getHeaders()->toArray(),
         );
-    }
-
-    private function prettifyResponse($body)
-    {
-        if (!defined('JSON_PRETTY_PRINT')) {
-            return $this->limitLength($body);
-        }
-
-        $data = @json_decode($body);
-
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            return $this->limitLength($body);
-        }
-
-        return $this->limitLength(json_encode($data, JSON_PRETTY_PRINT));
-    }
-
-    private function limitLength($string, $length = 600)
-    {
-        if ($this->truncateResponse === false) {
-            return $string;
-        }
-
-        if (strlen($string)) {
-            return substr($string, 0, $length)."\n\n truncated response\n";
-        } else {
-            return $string;
-        }
     }
 
     private function parsePhraseanetResponse($response)
