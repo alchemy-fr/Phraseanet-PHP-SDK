@@ -17,11 +17,20 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
  */
 class PhraseanetSDKDataCollector extends DataCollector
 {
+    /**
+     * @var HistoryPlugin
+     */
     private $profiler;
 
-    public function __construct(HistoryPlugin $profiler)
+    /**
+     * @var bool
+     */
+    private $truncateResponse;
+
+    public function __construct(HistoryPlugin $profiler, $truncateResponse = true)
     {
         $this->profiler = $profiler;
+        $this->truncateResponse = (bool)$truncateResponse;
     }
 
     /**
@@ -31,6 +40,7 @@ class PhraseanetSDKDataCollector extends DataCollector
     {
         $this->data = array(
             'calls'       => array(),
+            'cache_hits'  => 0,
             'error_count' => 0,
             'methods'     => array(),
             'total_time'  => 0,
@@ -52,6 +62,7 @@ class PhraseanetSDKDataCollector extends DataCollector
                 'connection' => $response->getInfo('connect_time'),
             );
 
+
             $this->data['total_time'] += $response->getInfo('total_time');
 
             if (!isset($this->data['methods'][$request->getMethod()])) {
@@ -65,13 +76,18 @@ class PhraseanetSDKDataCollector extends DataCollector
                 $error = true;
             }
 
+            if (substr($response->getHeaders()->get('X-Cache', ''), 0, 3) == 'HIT') {
+                $this->data['cache_hits'] += 1;
+            }
+
             $this->data['calls'][] = array(
                 'request' => $this->sanitizeRequest($request),
                 'requestContent' => $requestContent,
                 'response' => $this->sanitizeResponse($response),
-                'responseContent' => $responseContent,
+                'responseContent' => json_decode($responseContent),
                 'time' => $time,
                 'error' => $error,
+                'phraseanet' => $this->parsePhraseanetResponse($response)
             );
         }
     }
@@ -106,6 +122,20 @@ class PhraseanetSDKDataCollector extends DataCollector
     public function getTotalTime()
     {
         return isset($this->data['total_time']) ? $this->data['total_time'] : 0;
+    }
+
+    /**
+     * @return int|void
+     */
+    public function getCacheHitRatio()
+    {
+        $totalCalls = count($this->getCalls());
+
+        if (! isset($this->data['cache_hits']) || $totalCalls == 0) {
+            return 0;
+        }
+
+        return $this->data['cache_hits'] * 100 / $totalCalls;
     }
 
     /**
@@ -169,10 +199,45 @@ class PhraseanetSDKDataCollector extends DataCollector
 
     private function limitLength($string, $length = 600)
     {
+        if ($this->truncateResponse === false) {
+            return $string;
+        }
+
         if (strlen($string)) {
             return substr($string, 0, $length)."\n\n truncated response\n";
         } else {
             return $string;
         }
+    }
+
+    private function parsePhraseanetResponse($response)
+    {
+        if ($response->getStatusCode() !== 200) {
+            return array();
+        }
+
+        $body = $response->getBody(true);
+        $data = json_decode($body, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return array();
+        }
+
+        $parsed = array(
+            'metadata' => $data['meta']
+        );
+
+        if (isset($data['response']['offset_start'])) {
+            $pagination = array(
+                'Offset' => $data['response']['offset_start'],
+                'Page size' => $data['response']['per_page'],
+                'Page max size' => isset($data['response']['available_results']) ? $data['response']['available_results'] : '-',
+                'Total results' => isset($data['response']['total_results']) ? $data['response']['total_results'] : '-'
+            );
+
+            $parsed['pagination'] = $pagination;
+        }
+
+        return $parsed;
     }
 }
