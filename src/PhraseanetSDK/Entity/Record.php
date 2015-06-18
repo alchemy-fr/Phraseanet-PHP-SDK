@@ -54,6 +54,10 @@ class Record
      */
     protected $collectionId;
     /**
+     * @ApiField(bind_to="base_id", type="int")
+     */
+    protected $baseId;
+    /**
      * @ApiField(bind_to="sha256", type="string")
      */
     protected $sha256;
@@ -133,6 +137,21 @@ class Record
     public function setDataboxId($databoxId)
     {
         $this->databoxId = $databoxId;
+    }
+
+    /**
+     * Get the base id.
+     *
+     * @return integer
+     */
+    public function getBaseId()
+    {
+        return $this->baseId;
+    }
+
+    public function setBaseId($baseId)
+    {
+        $this->baseId = $baseId;
     }
 
     /**
