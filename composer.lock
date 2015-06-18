@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b2a2edc5eca6e73174189bcbcb3b6781",
+    "hash": "a8efcc846ac4420d00f9a5ef41a93586",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1934,23 +1934,23 @@
         },
         {
             "name": "silex/web-profiler",
-            "version": "v1.0.7",
+            "version": "v1.0.3",
             "target-dir": "Silex/Provider",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex-WebProfiler.git",
-                "reference": "2afc6ba14f345d0a2ef70fe656e8a59ff52beb49"
+                "reference": "8c62046a16a7b8f229aff9147f842956a1e48a14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex-WebProfiler/zipball/2afc6ba14f345d0a2ef70fe656e8a59ff52beb49",
-                "reference": "2afc6ba14f345d0a2ef70fe656e8a59ff52beb49",
+                "url": "https://api.github.com/repos/silexphp/Silex-WebProfiler/zipball/8c62046a16a7b8f229aff9147f842956a1e48a14",
+                "reference": "8c62046a16a7b8f229aff9147f842956a1e48a14",
                 "shasum": ""
             },
             "require": {
-                "silex/silex": "~1.1",
+                "silex/silex": "~1.0",
                 "symfony/stopwatch": "~2.2",
-                "symfony/web-profiler-bundle": "~2.4"
+                "symfony/web-profiler-bundle": "~2.2"
             },
             "type": "library",
             "extra": {
@@ -1970,12 +1970,14 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "A WebProfiler for Silex",
             "homepage": "http://silex.sensiolabs.org/",
-            "time": "2015-06-04 14:27:33"
+            "time": "2014-06-04 21:14:30"
         },
         {
             "name": "symfony/console",
