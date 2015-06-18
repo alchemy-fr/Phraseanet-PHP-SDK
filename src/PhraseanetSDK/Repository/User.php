@@ -16,14 +16,37 @@ use PhraseanetSDK\EntityHydrator;
 
 class User extends AbstractRepository
 {
+    /**
+     * @return \PhraseanetSDK\Entity\User
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     * @deprecated Use User::me() instead
+     */
     public function findMe()
+    {
+        return $this->me();
+    }
+
+    /**
+     * @return \PhraseanetSDK\Entity\User
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function me()
     {
         $response = $this->query('GET', 'me');
 
-        if (true !== $response->hasProperty('user')) {
+        if (! $response->hasProperty('user')) {
             throw new RuntimeException('Missing "user" property in response content');
         }
 
-        return EntityHydrator::hydrate('user', $response->getProperty('user'), $this->em);
+        /** @var \PhraseanetSDK\Entity\User $user */
+        $user = EntityHydrator::hydrate('user', $response->getProperty('user'), $this->em);
+
+        if ($response->hasProperty('collections')) {
+            $user->setCollectionRights($response->getProperty('collections'));
+        }
+
+        return $user;
     }
 }

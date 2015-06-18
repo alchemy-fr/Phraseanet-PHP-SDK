@@ -28,6 +28,9 @@ class Result
      */
     protected $stories;
 
+    /**
+     * @return ArrayCollection
+     */
     public function getRecords()
     {
         return $this->records;
@@ -38,6 +41,9 @@ class Result
         $this->records = $records;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getStories()
     {
         return $this->stories;

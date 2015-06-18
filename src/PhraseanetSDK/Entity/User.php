@@ -103,6 +103,16 @@ class User
     protected $lastConnection;
 
     /**
+     * @var array
+     */
+    protected $collectionRights = array();
+
+    /**
+     * @var bool
+     */
+    protected $hasCollectionRights = false;
+
+    /**
      * @return mixed
      */
     public function getAddress()
@@ -370,5 +380,30 @@ class User
     public function setZipCode($zipCode)
     {
         $this->zipCode = $zipCode;
+    }
+
+    /**
+     * @param array $collectionRights
+     */
+    public function setCollectionRights(array $collectionRights)
+    {
+        $this->collectionRights = $collectionRights;
+        $this->hasCollectionRights = true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCollectionRights()
+    {
+        return $this->collectionRights;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCollectionRights()
+    {
+        return $this->hasCollectionRights;
     }
 }

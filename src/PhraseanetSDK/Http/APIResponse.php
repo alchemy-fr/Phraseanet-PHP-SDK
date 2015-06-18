@@ -29,7 +29,7 @@ class APIResponse
      */
     public function __construct(\stdClass $response)
     {
-        if (! isset($response->meta) || ! isset($response->response)) {
+        if (!isset($response->meta) || !isset($response->response)) {
             throw new InvalidArgumentException('The API json response is malformed');
         }
 
@@ -54,7 +54,7 @@ class APIResponse
      */
     public function getStatusCode()
     {
-        return (int) $this->meta->http_code;
+        return (int)$this->meta->http_code;
     }
 
     /**
@@ -168,7 +168,7 @@ class APIResponse
      *
      * @param string $property The property name
      *
-     * @return Boolean
+     * @return \stdClass|null
      */
     public function getProperty($property)
     {
