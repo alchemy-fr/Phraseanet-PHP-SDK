@@ -30,7 +30,7 @@
     "require-dev": {
         "sami/sami"               : "~1.0",
         "silex/silex"             : "~1.0",
-        "silex/web-profiler"      : "~1.0",
+        "silex/web-profiler"      : "1.0.3",
         "symfony/console"         : "~2.0",
         "phpunit/phpunit"         : "~4.0"
     },
