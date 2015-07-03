@@ -34,7 +34,7 @@ class User extends AbstractRepository
      */
     public function me()
     {
-        $response = $this->query('GET', 'me');
+        $response = $this->query('GET', 'me/');
 
         if (! $response->hasProperty('user')) {
             throw new RuntimeException('Missing "user" property in response content');
@@ -48,5 +48,42 @@ class User extends AbstractRepository
         }
 
         return $user;
+    }
+
+    /**
+     * @param $emailAddress
+     * @return string
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function requestPasswordReset($emailAddress)
+    {
+        $response = $this->query('POST', 'accounts/reset-password/' . $emailAddress . '/');
+
+        if (! $response->hasProperty('reset_token')) {
+            throw new RuntimeException('Missing "token" property in response content');
+        }
+
+        return (string) $response->getProperty('reset_token');
+    }
+
+    /**
+     * @param $token
+     * @param $password
+     * @return bool
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function resetPassword($token, $password)
+    {
+        $response = $this->query('POST', 'accounts/update-password/' . $token . '/', array(), array(
+           'password' => $password
+        ));
+
+        if (! $response->hasProperty('success')) {
+            throw new RuntimeException('Missing "success" property in response content');
+        }
+
+        return (bool) $response->getProperty('success');
     }
 }
