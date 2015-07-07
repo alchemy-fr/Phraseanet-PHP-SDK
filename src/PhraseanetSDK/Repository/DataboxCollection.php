@@ -40,4 +40,23 @@ class DataboxCollection extends AbstractRepository
 
         return $databoxCollections;
     }
+
+    /**
+     * Finds a collection in all available databoxes
+     *
+     * @param integer $baseId The base ID of the collection
+     * @return \ProxyManager\Proxy\GhostObjectInterface
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function find($baseId)
+    {
+        $response = $this->query('GET', sprintf('collections/%d/', $baseId));
+
+        if ($response->hasProperty(('collection')) !== true) {
+            throw new RuntimeException('Missing "collection" property in response content');
+        }
+
+        return EntityHydrator::hydrate('databoxCollection', $response->getProperty('collection'), $this->em);
+    }
 }
