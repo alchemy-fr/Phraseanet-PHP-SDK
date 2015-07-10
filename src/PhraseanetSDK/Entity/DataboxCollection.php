@@ -37,6 +37,10 @@ class DataboxCollection
      * @ApiField(bind_to="labels", type="array")
      */
     protected $labels;
+    /**
+     * @var int
+     */
+    protected $databox_id;
 
     /**
      * The collection base id
@@ -51,6 +55,21 @@ class DataboxCollection
     public function setBaseId($baseId)
     {
         $this->baseId = $baseId;
+    }
+
+    /**
+     * The databox id
+     *
+     * @return integer
+     */
+    public function getDataboxId()
+    {
+        return $this->databox_id;
+    }
+
+    public function setDataboxId($databoxId)
+    {
+        $this->databox_id = $databoxId;
     }
 
     /**
@@ -84,7 +103,7 @@ class DataboxCollection
     }
 
     /**
-     * The total record in the collection
+     * The total count of records in the collection
      *
      * @return integer
      */
