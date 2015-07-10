@@ -34,8 +34,8 @@ class DataboxCollection extends AbstractRepository
 
         $databoxCollections = new ArrayCollection();
 
-        foreach ($response->getProperty('collections') as $databoxCollectionDatas) {
-            $databoxCollections->add(EntityHydrator::hydrate('databoxCollection', $databoxCollectionDatas, $this->em));
+        foreach ($response->getProperty('collections') as $databoxCollectionData) {
+            $databoxCollections->add($this->hydrateCollection($databoxCollectionData, $databoxId));
         }
 
         return $databoxCollections;
@@ -57,6 +57,21 @@ class DataboxCollection extends AbstractRepository
             throw new RuntimeException('Missing "collection" property in response content');
         }
 
-        return EntityHydrator::hydrate('databoxCollection', $response->getProperty('collection'), $this->em);
+        return $this->hydrateCollection($response->getProperty('collection'), null);
+    }
+
+    private function hydrateCollection($collectionData, $databoxId = null)
+    {
+        /** @var \PhraseanetSDK\Entity\DataboxCollection $collection */
+        $collection = EntityHydrator::hydrate('databoxCollection', $collectionData, $this->em);
+
+        if (isset($collectionData->databox_id)) {
+            $collection->setDataboxId($collectionData->databox_id);
+        }
+        elseif ($databoxId !== null) {
+            $collection->setDataboxId($databoxId);
+        }
+
+        return $collection;
     }
 }
