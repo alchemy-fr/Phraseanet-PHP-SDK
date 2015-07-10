@@ -67,8 +67,7 @@ class DataboxCollection extends AbstractRepository
 
         if (isset($collectionData->databox_id)) {
             $collection->setDataboxId($collectionData->databox_id);
-        }
-        elseif ($databoxId !== null) {
+        } elseif ($databoxId !== null) {
             $collection->setDataboxId($databoxId);
         }
 
