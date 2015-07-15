@@ -117,4 +117,21 @@ class User extends AbstractRepository
 
         return (string) $response->getProperty('token');
     }
+
+    /**
+     * @param $token
+     * @return bool
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function unlockAccount($token)
+    {
+        $response = $this->query('POST', 'accounts/unlock/' . $token . '/', array(), array());
+
+        if (! $response->hasProperty('success')) {
+            throw new \RuntimeException('Missing "success" property in response content');
+        }
+
+        return (bool) $response->getProperty('success');
+    }
 }
