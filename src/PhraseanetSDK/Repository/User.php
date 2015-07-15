@@ -96,7 +96,7 @@ class User extends AbstractRepository
      */
     public function createUser(\PhraseanetSDK\Entity\User $user, $password)
     {
-        $response = $this->query('POST', 'accounts/access-demand', array(), array(
+        $response = $this->query('POST', 'accounts/access-demand/', array(), array(
             'email' => $user->getEmail(),
             'password' => $password,
             'gender' => $user->getGender(),
@@ -105,7 +105,7 @@ class User extends AbstractRepository
             'address' => $user->getCity(),
             'tel' => $user->getPhone(),
             'company' => $user->getCompany()
-        ));
+        ), array('Content-Type' => 'application/json'));
 
         if (! $response->hasProperty('user')) {
             throw new \RuntimeException('Missing "user" property in response content');

@@ -100,11 +100,12 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * @throws BadResponseException
      * @throws RuntimeException
      */
-    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), $headers = array())
+    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), array $headers = array())
     {
         try {
-            $request = $this->guzzle->createRequest($method, $path, array_merge(array('accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json',
-            ), $headers));
+            $acceptHeader = array('Accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json');
+
+            $request = $this->guzzle->createRequest($method, $path, array_merge($acceptHeader, $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
         } catch (CurlException $e) {
@@ -153,6 +154,13 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         }
 
         if ($request instanceof EntityEnclosingRequestInterface) {
+            if ($request->getHeader('Content-Type') == 'application/json') {
+                $request->getHeaders()->offsetUnset('Content-Type');
+                $request->setBody(json_encode($postFields));
+
+                return;
+            }
+
             foreach ($postFields as $name => $value) {
                 $request->getPostFields()->add($name, $value);
             }
