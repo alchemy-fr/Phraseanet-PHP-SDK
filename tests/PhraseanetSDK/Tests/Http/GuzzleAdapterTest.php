@@ -91,7 +91,7 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
         $guzzle->expects($this->once())
             ->method('createRequest')
-            ->with($method, $path, array('accept' => 'application/json'))
+            ->with($method, $path, array('Accept' => 'application/json'))
             ->will($this->returnValue($request));
 
         $adapter = new GuzzleAdapter($guzzle);
