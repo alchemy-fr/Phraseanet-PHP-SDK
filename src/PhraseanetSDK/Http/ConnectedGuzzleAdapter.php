@@ -40,12 +40,12 @@ class ConnectedGuzzleAdapter implements GuzzleAdapterInterface
         return $this->adapter->getGuzzle();
     }
 
-    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array())
+    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), array $headers = array())
     {
         $query = array_replace($query, array(
             'oauth_token' => $this->token,
         ));
 
-        return $this->adapter->call($method, $path, $query, $postFields, $files);
+        return $this->adapter->call($method, $path, $query, $postFields, $files, $headers);
     }
 }

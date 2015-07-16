@@ -36,7 +36,7 @@ class User extends AbstractRepository
     {
         $response = $this->query('GET', 'me/');
 
-        if (! $response->hasProperty('user')) {
+        if (!$response->hasProperty('user')) {
             throw new RuntimeException('Missing "user" property in response content');
         }
 
@@ -60,11 +60,11 @@ class User extends AbstractRepository
     {
         $response = $this->query('POST', 'accounts/reset-password/' . $emailAddress . '/');
 
-        if (! $response->hasProperty('reset_token')) {
+        if (!$response->hasProperty('reset_token')) {
             throw new RuntimeException('Missing "token" property in response content');
         }
 
-        return (string) $response->getProperty('reset_token');
+        return (string)$response->getProperty('reset_token');
     }
 
     /**
@@ -77,11 +77,59 @@ class User extends AbstractRepository
     public function resetPassword($token, $password)
     {
         $response = $this->query('POST', 'accounts/update-password/' . $token . '/', array(), array(
-           'password' => $password
+            'password' => $password
         ));
 
-        if (! $response->hasProperty('success')) {
+        if (!$response->hasProperty('success')) {
             throw new RuntimeException('Missing "success" property in response content');
+        }
+
+        return (bool)$response->getProperty('success');
+    }
+
+    /**
+     * @param \PhraseanetSDK\Entity\User $user
+     * @param $password
+     * @return string
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function createUser(\PhraseanetSDK\Entity\User $user, $password)
+    {
+        $response = $this->query('POST', 'accounts/access-demand/', array(), array(
+            'email' => $user->getEmail(),
+            'password' => $password,
+            'gender' => $user->getGender(),
+            'firstname' => $user->getFirstName(),
+            'lastname' => $user->getLastName(),
+            'address' => $user->getCity(),
+            'tel' => $user->getPhone(),
+            'company' => $user->getCompany()
+        ), array('Content-Type' => 'application/json'));
+
+        if (! $response->hasProperty('user')) {
+            throw new \RuntimeException('Missing "user" property in response content');
+        }
+
+        if (! $response->hasProperty('token')) {
+            throw new \RuntimeException('Missing "token" property in response content');
+        }
+
+        return (string) $response->getProperty('token');
+    }
+
+    /**
+     * @param $token
+     * @return bool
+     * @throws \PhraseanetSDK\Exception\NotFoundException
+     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     */
+    public function unlockAccount($token)
+    {
+        $response = $this->query('POST', 'accounts/unlock/' . $token . '/', array(), array());
+
+        if (! $response->hasProperty('success')) {
+            throw new \RuntimeException('Missing "success" property in response content');
         }
 
         return (bool) $response->getProperty('success');

@@ -43,20 +43,20 @@ abstract class AbstractRepository
     /**
      * Query the API
      *
-     * @param string $method     HTTP method type (POST, GET ...)
-     * @param string $path       The requested path (/path/to/ressource/1)
-     * @param array  $query      An array of query parameters
-     * @param array  $postFields An array of request parameters
+     * @param string $method HTTP method type (POST, GET ...)
+     * @param string $path The requested path (/path/to/ressource/1)
+     * @param array $query An array of query parameters
+     * @param array $postFields An array of request parameters
+     * @param array $headers
      *
      * @return APIResponse
      * @throws NotFoundException
      * @throws UnauthorizedException
-     * @throws RuntimeException
      */
-    protected function query($method, $path, $query = array(), $postFields = array())
+    protected function query($method, $path, $query = array(), $postFields = array(), array $headers = array())
     {
         try {
-            $response = $this->getAdapter()->call($method, $path, $query, $postFields);
+            $response = $this->getAdapter()->call($method, $path, $query, $postFields, array(), $headers);
         } catch (BadResponseException $e) {
             $statusCode = $e->getStatusCode();
             switch ($statusCode) {

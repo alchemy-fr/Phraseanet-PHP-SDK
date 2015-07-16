@@ -19,9 +19,9 @@ class APIGuzzleAdapter implements GuzzleAdapterInterface
         return $this->adapter->getGuzzle();
     }
 
-    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array())
+    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), array $headers = array())
     {
-        $json = @json_decode($this->adapter->call($method, $path, $query, $postFields, $files));
+        $json = @json_decode($this->adapter->call($method, $path, $query, $postFields, $files, $headers));
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new RuntimeException(

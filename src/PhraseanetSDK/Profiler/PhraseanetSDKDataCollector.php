@@ -73,11 +73,17 @@ class PhraseanetSDKDataCollector extends DataCollector
                 $this->data['cache_hits'] += 1;
             }
 
+            $decodedBody = json_decode($response->getBody(true));
+
+            if (! $decodedBody) {
+                $decodedBody = $response->getBody('true');
+            }
+
             $this->data['calls'][] = array(
                 'request' => $this->sanitizeRequest($request),
                 'requestContent' => $requestContent,
                 'response' => $this->sanitizeResponse($response),
-                'responseContent' => json_decode($response->getBody(true)),
+                'responseContent' => $decodedBody,
                 'time' => $time,
                 'error' => $error,
                 'phraseanet' => $this->parsePhraseanetResponse($response)
