@@ -102,9 +102,11 @@ class User extends AbstractRepository
             'gender' => $user->getGender(),
             'firstname' => $user->getFirstName(),
             'lastname' => $user->getLastName(),
-            'address' => $user->getCity(),
+            'city' => $user->getCity(),
             'tel' => $user->getPhone(),
-            'company' => $user->getCompany()
+            'company' => $user->getCompany(),
+            'job' => $user->getJob(),
+            'notifications' => false
         ), array('Content-Type' => 'application/json'));
 
         if (! $response->hasProperty('user')) {
