@@ -11,8 +11,8 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\Exception\RuntimeException;
 
 class User extends AbstractRepository
 {
@@ -90,13 +90,14 @@ class User extends AbstractRepository
     /**
      * @param \PhraseanetSDK\Entity\User $user
      * @param $password
+     * @param int[] $collections
      * @return string
      * @throws \PhraseanetSDK\Exception\NotFoundException
      * @throws \PhraseanetSDK\Exception\UnauthorizedException
      */
-    public function createUser(\PhraseanetSDK\Entity\User $user, $password)
+    public function createUser(\PhraseanetSDK\Entity\User $user, $password, array $collections = null)
     {
-        $response = $this->query('POST', 'accounts/access-demand/', array(), array(
+        $data = array(
             'email' => $user->getEmail(),
             'password' => $password,
             'gender' => $user->getGender(),
@@ -107,17 +108,24 @@ class User extends AbstractRepository
             'company' => $user->getCompany(),
             'job' => $user->getJob(),
             'notifications' => false
-        ), array('Content-Type' => 'application/json'));
+        );
 
-        if (! $response->hasProperty('user')) {
+        if ($collections !== null) {
+            $data['collections'] = $collections;
+        }
+
+        $response = $this->query('POST', 'accounts/access-demand/', array(), $data,
+            array('Content-Type' => 'application/json'));
+
+        if (!$response->hasProperty('user')) {
             throw new \RuntimeException('Missing "user" property in response content');
         }
 
-        if (! $response->hasProperty('token')) {
+        if (!$response->hasProperty('token')) {
             throw new \RuntimeException('Missing "token" property in response content');
         }
 
-        return (string) $response->getProperty('token');
+        return (string)$response->getProperty('token');
     }
 
     /**
@@ -130,10 +138,10 @@ class User extends AbstractRepository
     {
         $response = $this->query('POST', 'accounts/unlock/' . $token . '/', array(), array());
 
-        if (! $response->hasProperty('success')) {
+        if (!$response->hasProperty('success')) {
             throw new \RuntimeException('Missing "success" property in response content');
         }
 
-        return (bool) $response->getProperty('success');
+        return (bool)$response->getProperty('success');
     }
 }
