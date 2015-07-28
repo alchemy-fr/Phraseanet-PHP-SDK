@@ -87,6 +87,23 @@ class User extends AbstractRepository
         return (bool)$response->getProperty('success');
     }
 
+    public function updatePassword(\PhraseanetSDK\Entity\User $user, $currentPassword, $newPassword)
+    {
+        $response = $this->query('POST', 'accounts/change-password/' . $user->getEmail() . '/', array(), array(
+            'oldPassword' => $currentPassword,
+            'password' => array(
+                'password' => $newPassword,
+                'confirm' => $newPassword
+            )
+        ));
+
+        if (!$response->hasProperty('success')) {
+            throw new RuntimeException('Missing "success" property in response content');
+        }
+
+        return (bool)$response->getProperty('success');
+    }
+
     /**
      * @param \PhraseanetSDK\Entity\User $user
      * @param $password
@@ -144,6 +161,10 @@ class User extends AbstractRepository
 
         $response = $this->query('POST', 'accounts/update-account/' . $user->getEmail(), array(), $data,
             array('Content-Type' => 'application/json'));
+
+        if (!$response->hasProperty('success')) {
+            throw new RuntimeException('Missing "success" property in response content');
+        }
 
         return (bool)$response->getProperty('success');
     }
