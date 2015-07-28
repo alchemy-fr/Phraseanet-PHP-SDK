@@ -128,6 +128,26 @@ class User extends AbstractRepository
         return (string)$response->getProperty('token');
     }
 
+    public function updateUser(\PhraseanetSDK\Entity\User $user)
+    {
+        $data = array(
+            'email' => $user->getEmail(),
+            'gender' => $user->getGender(),
+            'firstname' => $user->getFirstName(),
+            'lastname' => $user->getLastName(),
+            'city' => $user->getCity(),
+            'tel' => $user->getPhone(),
+            'company' => $user->getCompany(),
+            'job' => $user->getJob(),
+            'notifications' => false
+        );
+
+        $response = $this->query('POST', 'accounts/update-account/' . $user->getEmail(), array(), $data,
+            array('Content-Type' => 'application/json'));
+
+        return (bool)$response->getProperty('success');
+    }
+
     /**
      * @param $token
      * @return bool
