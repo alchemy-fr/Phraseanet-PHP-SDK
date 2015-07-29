@@ -113,6 +113,16 @@ class User
     protected $hasCollectionRights = false;
 
     /**
+     * @var array
+     */
+    protected $collectionDemands = array();
+
+    /**
+     * @var bool
+     */
+    protected $hasCollectionDemands = false;
+
+    /**
      * @return mixed
      */
     public function getAddress()
@@ -405,5 +415,31 @@ class User
     public function hasCollectionRights()
     {
         return $this->hasCollectionRights;
+    }
+
+
+    /**
+     * @param array $collectionDemands
+     */
+    public function setCollectionDemands(array $collectionDemands)
+    {
+        $this->collectionDemands = $collectionDemands;
+        $this->hasCollectionDemands = true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCollectionDemands()
+    {
+        return $this->collectionDemands;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCollectionDemands()
+    {
+        return $this->hasCollectionDemands;
     }
 }

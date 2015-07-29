@@ -47,7 +47,24 @@ class User extends AbstractRepository
             $user->setCollectionRights($response->getProperty('collections'));
         }
 
+        if ($response->hasProperty('demands')) {
+            $user->setCollectionDemands($response->getProperty('demands'));
+        }
+
         return $user;
+    }
+
+    public function requestCollections(array $collections)
+    {
+        $response = $this->query('POST', 'me/request-collections/', array(), $collections, array(
+            'Content-Type' => 'application/json'
+        ));
+
+        if (!$response->hasProperty('demands')) {
+            throw new RuntimeException('Missing "demands" property in response content');
+        }
+
+        return $response->getProperty('demands');
     }
 
     /**
