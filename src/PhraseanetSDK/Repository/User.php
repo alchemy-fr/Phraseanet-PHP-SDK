@@ -186,6 +186,11 @@ class User extends AbstractRepository
         return (bool)$response->getProperty('success');
     }
 
+    public function deleteAccount()
+    {
+        $this->query('DELETE', 'me/');
+    }
+
     /**
      * @param $token
      * @return bool
