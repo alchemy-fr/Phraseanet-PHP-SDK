@@ -11,11 +11,11 @@
 
 namespace PhraseanetSDK;
 
-use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Entity\DataboxCollection;
-use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Quarantine;
+use PhraseanetSDK\Entity\Record;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 
 class Uploader
 {
@@ -26,8 +26,8 @@ class Uploader
     private $em;
 
     /**
-     *
      * @param APIGuzzleAdapter $adapter
+     * @param EntityManager $em
      */
     public function __construct(APIGuzzleAdapter $adapter, EntityManager $em)
     {
@@ -38,10 +38,10 @@ class Uploader
     /**
      * Uploads a file to Phraseanet.
      *
-     * @param string                    $file       The path to the file to upload
+     * @param string $file The path to the file to upload
      * @param integer|DataboxCollection $collection The base_id of the collection or a DataboxCollection object
-     * @param type                      $behavior   Set to 0 to force record and bypass checks, Set to 1 to force quarantine.
-     * @param type                      $status     A binary string to set status bits.
+     * @param int|null $behavior Set to 0 to force record and bypass checks, Set to 1 to force quarantine.
+     * @param int|null $status A binary string to set status bits.
      *
      * @return Record|Quarantine
      *
@@ -52,9 +52,11 @@ class Uploader
         $postFields = array(
             'base_id' => $collection instanceof DataboxCollection ? $collection->getBaseId() : $collection,
         );
+
         if (null !== $behavior) {
             $postFields['forceBehavior'] = $behavior;
         }
+
         if (null !== $status) {
             $postFields['status'] = $status;
         }
@@ -63,10 +65,10 @@ class Uploader
             'file' => $file,
         ));
 
-        switch ((int) $response->getResult()->entity) {
+        switch ((int)$response->getResult()->entity) {
             case 0:
                 $matches = array();
-                preg_match('/\/records\/(\d+)\/(\d+)\//',  $response->getResult()->url, $matches);
+                preg_match('/\/records\/(\d+)\/(\d+)\//', $response->getResult()->url, $matches);
                 if (3 !== count($matches)) {
                     throw new RuntimeException('Unable to find the record item back');
                 }
@@ -74,7 +76,7 @@ class Uploader
                 return $this->em->getRepository('record')->findById($matches[1], $matches[2]);
             case 1:
                 $matches = array();
-                preg_match('/quarantine\/item\/(\d+)\//',  $response->getResult()->url, $matches);
+                preg_match('/quarantine\/item\/(\d+)\//', $response->getResult()->url, $matches);
                 if (2 !== count($matches)) {
                     throw new RuntimeException('Unable to find the quarantine item back');
                 }
