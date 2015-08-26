@@ -308,7 +308,7 @@ class Record
     /**
      * Get a collection of Phraseanet\Entity\Technical data objects
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|Technical[]
      */
     public function getTechnicalInformation()
     {
@@ -323,28 +323,32 @@ class Record
     /**
      * Return a collection of PhraseanetSDK\Entity\Subdef for the record
      *
-     * /!\ This method requests the API
-     *
-     * @param  string|null            $name The desired subdef name
-     * @return ArrayCollection|Subdef
-     *
-     * @throws NotFoundException In case the subdef name could not be found
+     * @return ArrayCollection|Subdef[]
      */
     public function getSubdefs()
     {
         return $this->subdefs;
     }
 
+    /**
+     * @return RecordStatus[]|ArrayCollection
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
+    /**
+     * @return RecordCaption[]|ArrayCollection
+     */
     public function getCaption()
     {
         return $this->caption;
     }
 
+    /**
+     * @return Metadata[]|ArrayCollection
+     */
     public function getMetadata()
     {
         return $this->metadata;

@@ -106,6 +106,9 @@ class Story
         $this->databoxId = $databoxId;
     }
 
+    /**
+     * @return null|Subdef
+     */
     public function getThumbnail()
     {
         return $this->thumbnail;
@@ -179,6 +182,9 @@ class Story
         $this->uuid = $uuid;
     }
 
+    /**
+     * @return Record[]|ArrayCollection
+     */
     public function getRecords()
     {
         return $this->records;
@@ -189,6 +195,9 @@ class Story
         $this->records = $records;
     }
 
+    /**
+     * @return Metadata[]|ArrayCollection
+     */
     public function getMetadata()
     {
         return $this->metadata;
@@ -199,6 +208,9 @@ class Story
         $this->metadata = $metadata;
     }
 
+    /**
+     * @return RecordStatus[]|ArrayCollection
+     */
     public function getStatus()
     {
         return $this->status;
@@ -209,6 +221,9 @@ class Story
         $this->status = $status;
     }
 
+    /**
+     * @return RecordCaption[]|ArrayCollection
+     */
     public function getCaption()
     {
         return $this->caption;
