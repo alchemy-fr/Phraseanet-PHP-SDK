@@ -178,7 +178,7 @@ class FeedEntry
      * Get the items associated to the feed entry as a collection of
      * PhraseanetSDK\Entity\FeedEntryItem object
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|FeedEntryItem[]
      */
     public function getItems()
     {
