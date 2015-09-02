@@ -13,7 +13,7 @@ class MemcacheStorageTest extends \PHPUnit_Framework_TestCase
             ->getmock();
     }
 
-    public function testFetchReturnsEMptyArrayIfNotFound()
+    public function testFetchReturnsEmptyArrayIfNotFound()
     {
         if ( ! extension_loaded('memcache')) {
             $this->markTestSkipped('The ' . __CLASS__ .' requires the use of memcache');

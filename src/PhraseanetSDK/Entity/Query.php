@@ -50,6 +50,11 @@ class Query
      */
     protected $query;
     /**
+     * @ApiField(bind_to="facets", type="relation")
+     * @ApiRelation(type="one_to_many", target_entity="QueryFacet")
+     */
+    protected $facets;
+    /**
      * @ApiField(bind_to="suggestions", type="relation")
      * @ApiRelation(type="one_to_many", target_entity="QuerySuggestion")
      */
@@ -194,6 +199,19 @@ class Query
     public function setSuggestions(ArrayCollection $suggestions)
     {
         $this->suggestions = $suggestions;
+    }
+
+    /**
+     * @return ArrayCollection|QueryFacet[]
+     */
+    public function getFacets()
+    {
+        return $this->facets;
+    }
+
+    public function setFacets(ArrayCollection $facets)
+    {
+        $this->facets = $facets;
     }
 
     /**
