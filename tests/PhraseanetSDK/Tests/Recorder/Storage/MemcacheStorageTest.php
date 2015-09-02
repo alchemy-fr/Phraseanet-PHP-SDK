@@ -15,6 +15,10 @@ class MemcacheStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testFetchReturnsEMptyArrayIfNotFound()
     {
+        if ( ! extension_loaded('memcache')) {
+            $this->markTestSkipped('The ' . __CLASS__ .' requires the use of memcache');
+        }
+
         $cache = $this->getDoctrineCacheMock();
         $cache->expects($this->once())
             ->method('fetch')
@@ -26,6 +30,10 @@ class MemcacheStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testFetch()
     {
+        if ( ! extension_loaded('memcache')) {
+            $this->markTestSkipped('The ' . __CLASS__ .' requires the use of memcache');
+        }
+
         $result = array('hello' => 'world');
         $cache = $this->getDoctrineCacheMock();
         $cache->expects($this->once())
@@ -38,6 +46,10 @@ class MemcacheStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testSave()
     {
+        if ( ! extension_loaded('memcache')) {
+            $this->markTestSkipped('The ' . __CLASS__ .' requires the use of memcache');
+        }
+
         $data = array('hello' => 'world');
         $cache = $this->getDoctrineCacheMock();
         $cache->expects($this->once())
