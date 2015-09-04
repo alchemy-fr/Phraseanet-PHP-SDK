@@ -209,7 +209,7 @@ class Query
         return $this->facets;
     }
 
-    public function setFacets(ArrayCollection $facets)
+    public function setFacets(ArrayCollection $facets = null)
     {
         $this->facets = $facets;
     }

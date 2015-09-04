@@ -57,10 +57,14 @@ class QueryFacet
     }
 
     /**
-     * @param ArrayCollection $values
+     * @param ArrayCollection|QueryFacetValue[] $values
      */
-    public function setValues(ArrayCollection $values)
+    public function setValues($values)
     {
+        if (is_array($values)) {
+            $values = new ArrayCollection($values);
+        }
+
         $this->values = $values;
     }
 }
