@@ -11,18 +11,45 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-
 class Technical
 {
+
+    public static function fromList(array $values)
+    {
+        $technical = array();
+
+        foreach ($values as $value) {
+            $technical[] = self::fromValue($value);
+        }
+
+        return $technical;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="name", type="string")
+     * @var \stdClass
      */
-    protected $name;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="name", type="string")
+     * @param \stdClass $source
      */
-    protected $value;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
 
     /**
      * Get the technical information name
@@ -31,12 +58,7 @@ class Technical
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -46,11 +68,6 @@ class Technical
      */
     public function getValue()
     {
-        return $this->value;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
+        return $this->source->value;
     }
 }

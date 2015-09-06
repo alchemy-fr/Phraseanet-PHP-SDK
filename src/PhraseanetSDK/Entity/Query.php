@@ -17,53 +17,43 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
 class Query
 {
+
     /**
-     * @ApiField(bind_to="offset_start", type="int")
+     * @param \stdClass $value
+     * @return Query
      */
-    protected $offsetStart;
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="per_page", type="int")
+     * @var \stdClass
      */
-    protected $perPage;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="total_results", type="int")
-     */
-    protected $totalResults;
-    /**
-     * @ApiField(bind_to="error", type="string")
-     */
-    protected $error;
-    /**
-     * @ApiField(bind_to="warning", type="string")
-     */
-    protected $warning;
-    /**
-     * @ApiField(bind_to="query_time", type="float")
-     */
-    protected $queryTime;
-    /**
-     * @ApiField(bind_to="search_indexes", type="string")
-     */
-    protected $searchIndexes;
-    /**
-     * @ApiField(bind_to="query", type="string")
-     */
-    protected $query;
-    /**
-     * @ApiField(bind_to="facets", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="QueryFacet")
+     * @var QueryFacet[]|ArrayCollection
      */
     protected $facets;
+
     /**
-     * @ApiField(bind_to="suggestions", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="QuerySuggestion")
+     * @var QuerySuggestion[]|ArrayCollection
      */
     protected $suggestions;
+
     /**
-     * @ApiField(bind_to="results", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Result")
+     * @var Result|null
      */
     protected $results;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The offset start
@@ -72,12 +62,7 @@ class Query
      */
     public function getOffsetStart()
     {
-        return $this->offsetStart;
-    }
-
-    public function setOffsetStart($offsetStart)
-    {
-        $this->offsetStart = $offsetStart;
+        return $this->source->offset_start;
     }
 
     /**
@@ -87,12 +72,7 @@ class Query
      */
     public function getPerPage()
     {
-        return $this->perPage;
-    }
-
-    public function setPerPage($perPage)
-    {
-        $this->perPage = $perPage;
+        return $this->source->per_page;
     }
 
     /**
@@ -102,12 +82,7 @@ class Query
      */
     public function getTotalResults()
     {
-        return $this->totalResults;
-    }
-
-    public function setTotalResults($totalResults)
-    {
-        $this->totalResults = $totalResults;
+        return $this->source->total_results;
     }
 
     /**
@@ -117,12 +92,7 @@ class Query
      */
     public function getError()
     {
-        return $this->error;
-    }
-
-    public function setError($error)
-    {
-        $this->error = $error;
+        return $this->source->error;
     }
 
     /**
@@ -132,12 +102,7 @@ class Query
      */
     public function getWarning()
     {
-        return $this->warning;
-    }
-
-    public function setWarning($warning)
-    {
-        $this->warning = $warning;
+        return $this->source->warning;
     }
 
     /**
@@ -147,12 +112,7 @@ class Query
      */
     public function getQueryTime()
     {
-        return $this->queryTime;
-    }
-
-    public function setQueryTime($queryTime)
-    {
-        $this->queryTime = $queryTime;
+        return $this->source->query_time;
     }
 
     /**
@@ -162,12 +122,7 @@ class Query
      */
     public function getSearchIndexes()
     {
-        return $this->searchIndexes;
-    }
-
-    public function setSearchIndexes($searchIndexes)
-    {
-        $this->searchIndexes = $searchIndexes;
+        return $this->source->search_indexes;
     }
 
     /**
@@ -177,12 +132,7 @@ class Query
      */
     public function getQuery()
     {
-        return $this->query;
-    }
-
-    public function setQuery($query)
-    {
-        $this->query = $query;
+        return $this->source->query;
     }
 
     /**
@@ -193,12 +143,13 @@ class Query
      */
     public function getSuggestions()
     {
-        return $this->suggestions;
-    }
+        if (! isset($this->source->suggestions)) {
+            $this->suggestions = new ArrayCollection();
+        }
 
-    public function setSuggestions(ArrayCollection $suggestions)
-    {
-        $this->suggestions = $suggestions;
+        return $this->suggestions ?: $this->suggestions = new ArrayCollection(QuerySuggestion::fromList(
+            $this->source->suggestions
+        ));
     }
 
     /**
@@ -206,12 +157,11 @@ class Query
      */
     public function getFacets()
     {
-        return $this->facets;
-    }
+        if (! isset($this->source->facets)) {
+            $this->facets = new ArrayCollection();
+        }
 
-    public function setFacets(ArrayCollection $facets = null)
-    {
-        $this->facets = $facets;
+        return $this->facets ?: $this->facets = new ArrayCollection(QueryFacet::fromList($this->source->facets));
     }
 
     /**
@@ -220,11 +170,10 @@ class Query
      */
     public function getResults()
     {
-        return $this->results;
-    }
+        if (! isset($this->source->results)) {
+            return null;
+        }
 
-    public function setResults(Result $results)
-    {
-        $this->results = $results;
+        return $this->results ?: $this->results = Result::fromValue($this->source->results);
     }
 }

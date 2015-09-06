@@ -35,7 +35,7 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "story" property in response content');
         }
 
-        return EntityHydrator::hydrate('story', $response->getProperty('story'), $this->em);
+        return \PhraseanetSDK\Entity\Story::fromValue($response->getProperty('story'));
     }
 
     /**

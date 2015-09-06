@@ -33,12 +33,8 @@ class Metadata extends AbstractRepository
             throw new RuntimeException('Missing "record_metadatas" property in response content');
         }
 
-        $metaCollection = new ArrayCollection();
-
-        foreach ($response->getProperty('record_metadatas') as $feedData) {
-            $metaCollection->add(EntityHydrator::hydrate('metadata', $feedData, $this->em));
-        }
-
-        return $metaCollection;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Metadata::fromList(
+            $response->getProperty('record_metadatas')
+        ));
     }
 }

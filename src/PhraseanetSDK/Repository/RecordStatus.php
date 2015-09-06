@@ -29,16 +29,10 @@ class RecordStatus extends AbstractRepository
     {
         $response = $this->query('GET', sprintf('records/%d/%d/status/', $databoxId, $recordId));
 
-        $statusCollection = new ArrayCollection();
-
         if (true !== $response->hasProperty('status')) {
             throw new RuntimeException('Missing "status" property in response content');
         }
 
-        foreach ($response->getProperty('status') as $statusData) {
-            $statusCollection->add(EntityHydrator::hydrate('recordStatus', $statusData, $this->em));
-        }
-
-        return $statusCollection;
+        return new ArrayCollection(\PhraseanetSDK\Entity\RecordStatus::fromList($response->getProperty('status')));
     }
 }

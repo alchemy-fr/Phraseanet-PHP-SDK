@@ -11,9 +11,9 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\Entity\Query;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
 
 class Record extends AbstractRepository
 {
@@ -35,7 +35,7 @@ class Record extends AbstractRepository
             throw new RuntimeException('Missing "record" property in response content');
         }
 
-        return EntityHydrator::hydrate('record', $response->getProperty('record'), $this->em);
+        return \PhraseanetSDK\Entity\Record::fromValue($response->getProperty('record'));
     }
 
     /**
@@ -58,13 +58,9 @@ class Record extends AbstractRepository
             throw new RuntimeException('Missing "results" property in response content');
         }
 
-        $records = new ArrayCollection();
-
-        foreach ($response->getProperty('results') as $recordData) {
-            $records->add(EntityHydrator::hydrate('record', $recordData, $this->em));
-        }
-
-        return $records;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Record::fromList(
+            $response->getProperty('results')
+        ));
     }
 
     /**
@@ -84,6 +80,6 @@ class Record extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return EntityHydrator::hydrate('query', $response->getResult(), $this->em);
+        return Query::fromValue($response->getResult());
     }
 }

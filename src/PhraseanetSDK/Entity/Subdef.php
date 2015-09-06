@@ -17,37 +17,52 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class Subdef
 {
-    /**
-     * @Id
-     * @ApiField(bind_to="name", type="string")
-     */
-    protected $name;
-    /**
-     * @ApiField(bind_to="height", type="int")
-     */
-    protected $height;
-    /**
-     * @ApiField(bind_to="width", type="int")
-     */
-    protected $width;
-    /**
-     * @ApiField(bind_to="filesize", type="int")
-     */
-    protected $fileSize;
-    /**
-     * @ApiField(bind_to="player_type", type="string")
-     */
-    protected $playerType;
-    /**
-     * @ApiField(bind_to="mime_type", type="string")
-     */
-    protected $mimeType;
+
+    public static function fromList(array $values)
+    {
+        $subdefs = array();
+
+        foreach ($values as $value) {
+            if ($value == null) {
+                continue;
+            }
+
+            $subdefs[] = self::fromValue($value);
+        }
+
+        return $subdefs;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
 
     /**
-     * @ApiField(bind_to="permalink", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Permalink")
+     * @var \stdClass
+     */
+    protected $source;
+
+    /**
+     * @var Permalink
      */
     protected $permalink;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
 
     /**
      * Get subdef name
@@ -56,12 +71,7 @@ class Subdef
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -71,12 +81,7 @@ class Subdef
      */
     public function getHeight()
     {
-        return $this->height;
-    }
-
-    public function setHeight($height)
-    {
-        $this->height = $height;
+        return $this->source->height;
     }
 
     /**
@@ -86,12 +91,7 @@ class Subdef
      */
     public function getWidth()
     {
-        return $this->width;
-    }
-
-    public function setWidth($width)
-    {
-        $this->width = $width;
+        return $this->source->width;
     }
 
     /**
@@ -101,12 +101,7 @@ class Subdef
      */
     public function getFileSize()
     {
-        return $this->fileSize;
-    }
-
-    public function setFileSize($fileSize)
-    {
-        $this->fileSize = $fileSize;
+        return $this->source->filesize;
     }
 
     /**
@@ -116,12 +111,7 @@ class Subdef
      */
     public function getPlayerType()
     {
-        return $this->playerType;
-    }
-
-    public function setPlayerType($playerType)
-    {
-        $this->playerType = $playerType;
+        return $this->source->player_type;
     }
 
     /**
@@ -131,12 +121,7 @@ class Subdef
      */
     public function getMimeType()
     {
-        return $this->mimeType;
-    }
-
-    public function setMimeType($mimetype)
-    {
-        $this->mimeType = $mimetype;
+        return $this->source->mime_type;
     }
 
     /**
@@ -146,11 +131,6 @@ class Subdef
      */
     public function getPermalink()
     {
-        return $this->permalink;
-    }
-
-    public function setPermalink(Permalink $permalink)
-    {
-        $this->permalink = $permalink;
+        return $this->permalink ?: $this->permalink = Permalink::fromValue($this->source->permalink);
     }
 }

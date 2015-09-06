@@ -11,40 +11,33 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\Id as Id;
-
 class Permalink
 {
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="id", type="int")
+     * @var \stdClass
      */
-    protected $id;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="is_activated", type="boolean")
-     */
-    protected $isActivated;
-    /**
-     * @ApiField(bind_to="label", type="string")
-     */
-    protected $label;
-    /**
-     * @ApiField(bind_to="updated_on", type="date")
-     */
-    protected $updatedOn;
-    /**
-     * @ApiField(bind_to="created_on", type="date")
+     * @var \DateTimeInterface
      */
     protected $createdOn;
+
     /**
-     * @ApiField(bind_to="page_url", type="string")
+     * @var \DateTimeInterface
      */
-    protected $pageUrl;
-    /**
-     * @ApiField(bind_to="url", type="string")
-     */
-    protected $url;
+    protected $updatedOn;
+
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the permalink id
@@ -53,12 +46,7 @@ class Permalink
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->id;
     }
 
     /**
@@ -68,12 +56,7 @@ class Permalink
      */
     public function isActivated()
     {
-        return $this->isActivated;
-    }
-
-    public function setIsActivated($isActivated)
-    {
-        $this->isActivated = $isActivated;
+        return $this->source->is_activated;
     }
 
     /**
@@ -83,12 +66,7 @@ class Permalink
      */
     public function getLabel()
     {
-        return $this->label;
-    }
-
-    public function setLabel($label)
-    {
-        $this->label = $label;
+        return $this->source->label;
     }
 
     /**
@@ -98,12 +76,7 @@ class Permalink
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -113,12 +86,7 @@ class Permalink
      */
     public function getCreatedOn()
     {
-        return $this->createdOn;
-    }
-
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
     }
 
     /**
@@ -128,12 +96,7 @@ class Permalink
      */
     public function getPageUrl()
     {
-        return $this->pageUrl;
-    }
-
-    public function setPageUrl($pageUrl)
-    {
-        $this->pageUrl = $pageUrl;
+        return $this->source->page_url;
     }
 
     /**
@@ -143,11 +106,6 @@ class Permalink
      */
     public function getUrl()
     {
-        return $this->url;
-    }
-
-    public function setUrl($url)
-    {
-        $this->url = $url;
+        return $this->source->url;
     }
 }

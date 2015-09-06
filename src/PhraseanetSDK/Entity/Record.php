@@ -12,93 +12,85 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\ApiObject as ApiObject;
 
-/**
- * @ApiObject(extended="1")
- */
 class Record
 {
     /**
-     * @ApiField(bind_to="record_id", type="int")
+     * @param \stdClass[] $values
+     * @return Record[]
      */
-    protected $recordId;
+    public static function fromList(array $values)
+    {
+        $records = array();
+
+        foreach ($values as $value) {
+            $records[] = self::fromValue($value);
+        }
+
+        return $records;
+    }
+
     /**
-     * @ApiField(bind_to="databox_id", type="int")
+     * @param \stdClass $value
+     * @return Record
      */
-    protected $databoxId;
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="title", type="string")
+     * @var \stdClass
      */
-    protected $title;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="mime_type", type="string")
-     */
-    protected $mimeType;
-    /**
-     * @ApiField(bind_to="original_name", type="string")
-     */
-    protected $originalName;
-    /**
-     * @ApiField(bind_to="updated_on", type="date")
+     * @var \DateTimeInterface
      */
     protected $updatedOn;
+
     /**
-     * @ApiField(bind_to="created_on", type="date")
+     * @var \DateTimeInterface
      */
     protected $createdOn;
+
     /**
-     * @ApiField(bind_to="collection_id", type="int")
-     */
-    protected $collectionId;
-    /**
-     * @ApiField(bind_to="base_id", type="int")
-     */
-    protected $baseId;
-    /**
-     * @ApiField(bind_to="sha256", type="string")
-     */
-    protected $sha256;
-    /**
-     * @ApiField(bind_to="thumbnail", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Subdef")
+     * @var Subdef
      */
     protected $thumbnail;
+
     /**
-     * @ApiField(bind_to="technical_informations", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Technical")
+     * @var Technical[]
      */
     protected $technicalInformation;
+
     /**
-     * @ApiField(bind_to="phrasea_type", type="string")
-     */
-    protected $phraseaType;
-    /**
-     * @ApiField(bind_to="uuid", type="string")
-     */
-    protected $uuid;
-    /**
-     * @ApiField(bind_to="metadata", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Metadata")
+     * @var Metadata[]
      */
     protected $metadata;
+
     /**
-     * @ApiField(bind_to="subdefs", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Subdef")
+     * @var Subdef[]
      */
     protected $subdefs;
+
     /**
-     * @ApiField(bind_to="status", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="RecordStatus")
+     * @var RecordStatus[]
      */
     protected $status;
+
     /**
-     * @ApiField(bind_to="caption", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="RecordCaption")
+     * @var RecordCaption[]
      */
     protected $caption;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get unique id
@@ -107,8 +99,9 @@ class Record
      */
     public function getId()
     {
-        return $this->getDataboxId().'_'.$this->getRecordId();
+        return $this->getDataboxId() . '_' . $this->getRecordId();
     }
+
     /**
      * Get the record id
      *
@@ -116,12 +109,7 @@ class Record
      */
     public function getRecordId()
     {
-        return $this->recordId;
-    }
-
-    public function setRecordId($recordId)
-    {
-        $this->recordId = $recordId;
+        return $this->source->record_id;
     }
 
     /**
@@ -131,12 +119,7 @@ class Record
      */
     public function getDataboxId()
     {
-        return $this->databoxId;
-    }
-
-    public function setDataboxId($databoxId)
-    {
-        $this->databoxId = $databoxId;
+        return $this->source->databox_id;
     }
 
     /**
@@ -146,12 +129,7 @@ class Record
      */
     public function getBaseId()
     {
-        return $this->baseId;
-    }
-
-    public function setBaseId($baseId)
-    {
-        $this->baseId = $baseId;
+        return $this->source->base_id;
     }
 
     /**
@@ -161,12 +139,7 @@ class Record
      */
     public function getTitle()
     {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
+        return $this->source->title;
     }
 
     /**
@@ -176,12 +149,7 @@ class Record
      */
     public function getMimeType()
     {
-        return $this->mimeType;
-    }
-
-    public function setMimeType($mimeType)
-    {
-        $this->mimeType = $mimeType;
+        return $this->source->mime_type;
     }
 
     /**
@@ -191,12 +159,7 @@ class Record
      */
     public function getOriginalName()
     {
-        return $this->originalName;
-    }
-
-    public function setOriginalName($originalName)
-    {
-        $this->originalName = $originalName;
+        return $this->source->original_name;
     }
 
     /**
@@ -206,12 +169,7 @@ class Record
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -221,12 +179,7 @@ class Record
      */
     public function getCreatedOn()
     {
-        return $this->createdOn;
-    }
-
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
     }
 
     /**
@@ -236,12 +189,7 @@ class Record
      */
     public function getCollectionId()
     {
-        return $this->collectionId;
-    }
-
-    public function setCollectionId($collectionId)
-    {
-        $this->collectionId = $collectionId;
+        return $this->source->collection_id;
     }
 
     /**
@@ -251,12 +199,7 @@ class Record
      */
     public function getSha256()
     {
-        return $this->sha256;
-    }
-
-    public function setSha256($sha256)
-    {
-        $this->sha256 = $sha256;
+        return $this->source->sha256;
     }
 
     /**
@@ -267,12 +210,11 @@ class Record
      */
     public function getThumbnail()
     {
-        return $this->thumbnail;
-    }
+        if (! isset($this->source->thumbnail)) {
+            return null;
+        }
 
-    public function setThumbnail(Subdef $thumbnail = null)
-    {
-        $this->thumbnail = $thumbnail;
+        return $this->thumbnail ?: $this->thumbnail = Subdef::fromValue($this->source->thumbnail);
     }
 
     /**
@@ -282,12 +224,7 @@ class Record
      */
     public function getPhraseaType()
     {
-        return $this->phraseaType;
-    }
-
-    public function setPhraseaType($phraseaType)
-    {
-        $this->phraseaType = $phraseaType;
+        return $this->source->phrasea_type;
     }
 
     /**
@@ -297,12 +234,7 @@ class Record
      */
     public function getUuid()
     {
-        return $this->uuid;
-    }
-
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
+        return $this->source->uuid;
     }
 
     /**
@@ -312,12 +244,13 @@ class Record
      */
     public function getTechnicalInformation()
     {
-        return $this->technicalInformation;
-    }
+        if (! isset($this->source->technical_informations)) {
+            $this->technicalInformation = new ArrayCollection();
+        }
 
-    public function setTechnicalInformation(ArrayCollection $technicalInformations)
-    {
-        $this->technicalInformation = $technicalInformations;
+        return $this->technicalInformation ?: new ArrayCollection(Technical::fromList(
+            $this->source->technical_informations
+        ));
     }
 
     /**
@@ -327,7 +260,11 @@ class Record
      */
     public function getSubdefs()
     {
-        return $this->subdefs;
+        if (! isset($this->source->subdefs)) {
+            $this->subdefs = new ArrayCollection();
+        }
+
+        return $this->subdefs ?: new ArrayCollection(Subdef::fromList($this->source->subdefs));
     }
 
     /**
@@ -335,7 +272,11 @@ class Record
      */
     public function getStatus()
     {
-        return $this->status;
+        if (! isset($this->source->status)) {
+            $this->status = new ArrayCollection();
+        }
+
+        return $this->status ?: new ArrayCollection(RecordStatus::fromList($this->source->status));
     }
 
     /**
@@ -343,7 +284,11 @@ class Record
      */
     public function getCaption()
     {
-        return $this->caption;
+        if (! isset($this->source->caption)) {
+            $this->caption = new ArrayCollection();
+        }
+
+        return $this->caption ?: new ArrayCollection(RecordCaption::fromList($this->source->caption));
     }
 
     /**
@@ -351,26 +296,10 @@ class Record
      */
     public function getMetadata()
     {
-        return $this->metadata;
-    }
+        if (! isset($this->source->metadata)) {
+            $this->metadata = new ArrayCollection();
+        }
 
-    public function setCaption($caption)
-    {
-        $this->caption = $caption;
-    }
-
-    public function setMetadata($metadata)
-    {
-        $this->metadata = $metadata;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    public function setSubdefs($subdefs)
-    {
-        $this->subdefs = $subdefs;
+        return $this->metadata ?: new ArrayCollection(Metadata::fromList($this->source->metadata));
     }
 }

@@ -11,9 +11,9 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\Entity\RecordCaption;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
 
 class Caption extends AbstractRepository
 {
@@ -29,16 +29,10 @@ class Caption extends AbstractRepository
     {
         $response = $this->query('GET', sprintf('records/%d/%d/caption/', $databoxId, $recordId));
 
-        $caption = new ArrayCollection();
-
         if (true !== $response->hasProperty('caption_metadatas')) {
             throw new RuntimeException('Missing "caption_metadatas" property in response content');
         }
 
-        foreach ($response->getProperty('caption_metadatas') as $metaData) {
-            $caption->add(EntityHydrator::hydrate('recordCaption', $metaData, $this->em));
-        }
-
-        return $caption;
+        return new ArrayCollection(RecordCaption::fromList($response->getProperty('caption_metadatas')));
     }
 }

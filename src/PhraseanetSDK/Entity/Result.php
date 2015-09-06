@@ -18,27 +18,58 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 class Result
 {
     /**
-     * @ApiField(bind_to="records", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Record")
+     * @param \stdClass[] $values
+     * @return Result[]
+     */
+    public static function fromList(array $values)
+    {
+        $results = array();
+
+        foreach ($values as $value) {
+            $results[] = self::fromValue($value);
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param \stdClass $value
+     * @return Result
+     */
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
+    /**
+     * @var \stdClass
+     */
+    protected $source;
+
+    /**
+     * @var ArrayCollection|Record[]
      */
     protected $records;
+
     /**
-     * @ApiField(bind_to="stories", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Story")
+     * @var ArrayCollection|Story[]
      */
     protected $stories;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * @return ArrayCollection
      */
     public function getRecords()
     {
-        return $this->records;
-    }
-
-    public function setRecords(ArrayCollection $records)
-    {
-        $this->records = $records;
+        return $this->records ?: $this->records = new ArrayCollection(Record::fromList($this->source->records));
     }
 
     /**
@@ -46,11 +77,6 @@ class Result
      */
     public function getStories()
     {
-        return $this->stories;
-    }
-
-    public function setStories(ArrayCollection $stories)
-    {
-        $this->stories = $stories;
+        return $this->stories ?: $this->stories = new ArrayCollection(Story::fromList($this->source->stories));
     }
 }

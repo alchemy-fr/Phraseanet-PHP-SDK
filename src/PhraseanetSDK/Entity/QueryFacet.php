@@ -8,28 +8,46 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
 class QueryFacet 
 {
+    /**
+     * @param \stdClass[] $values
+     * @return QueryFacet[]
+     */
+    public static function fromList(array $values)
+    {
+        $facets = array();
+
+        foreach ($values as $value) {
+            $facets[] = self::fromValue($value);
+        }
+
+        return $facets;
+    }
 
     /**
-     * @var string
-     * @ApiField(bind_to="name", type="string")
+     * @param \stdClass $value
+     * @return QueryFacet
      */
-    protected $name;
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
+    /**
+     * @var \stdClass
+     */
+    protected $source;
 
     /**
      * @var QueryFacetValue[]|ArrayCollection
-     * @ApiField(bind_to="values", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="QueryFacetValue")
      */
     protected $values;
 
     /**
-     * @param string $name
-     * @param ArrayCollection|null $values
+     * @param \stdClass $source
      */
-    public function __construct($name = '', ArrayCollection $values = null)
+    public function __construct(\stdClass $source)
     {
-        $this->name = (string) $name;
-        $this->values = $values ?: new ArrayCollection();
+        $this->source = $source;
     }
 
     /**
@@ -37,15 +55,7 @@ class QueryFacet
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -53,7 +63,11 @@ class QueryFacet
      */
     public function getValues()
     {
-        return $this->values;
+        if (! isset($this->source->values)) {
+            $this->values = new ArrayCollection();
+        }
+
+        return $this->values ?: $this->values = new ArrayCollection(QueryFacetValue::fromList($this->source->values));
     }
 
     /**

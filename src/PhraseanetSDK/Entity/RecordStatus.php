@@ -16,43 +16,61 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class RecordStatus
 {
+
+    public static function fromList(array $values)
+    {
+        $statuses = array();
+
+        foreach ($values as $value) {
+            $statuses[] = self::fromValue($value);
+        }
+
+        return $statuses;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="bit", type="int")
+     * @var \stdClass
      */
-    protected $bit;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="state", type="boolean")
+     * @param \stdClass $source
      */
-    protected $state;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
+
+    /***
+     * @return \stdClass
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
 
     /**
      * Get the status bit
      *
-     * @return integer
+     * @return int
      */
     public function getBit()
     {
-        return $this->bit;
-    }
-
-    public function setBit($bit)
-    {
-        $this->bit = $bit;
+        return $this->source->bit;
     }
 
     /**
      * Get the status state
      *
-     * @return Boolean
+     * @return bool
      */
     public function getState()
     {
-        return $this->state;
-    }
-
-    public function setState($state)
-    {
-        $this->state = $state;
+        return $this->source->state;
     }
 }
