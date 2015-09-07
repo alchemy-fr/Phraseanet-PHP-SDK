@@ -41,7 +41,7 @@ class User extends AbstractRepository
         }
 
         /** @var \PhraseanetSDK\Entity\User $user */
-        $user = EntityHydrator::hydrate('user', $response->getProperty('user'), $this->em);
+        $user = new \PhraseanetSDK\Entity\User($response->getProperty('user'));
 
         if ($response->hasProperty('collections')) {
             $user->setCollectionRights($response->getProperty('collections'));
