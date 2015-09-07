@@ -14,32 +14,40 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\EntityManager;
 
 class Result
 {
     /**
+     * @param EntityManager $entityManager
      * @param \stdClass[] $values
      * @return Result[]
      */
-    public static function fromList(array $values)
+    public static function fromList(EntityManager $entityManager, array $values)
     {
         $results = array();
 
         foreach ($values as $value) {
-            $results[] = self::fromValue($value);
+            $results[] = self::fromValue($entityManager, $value);
         }
 
         return $results;
     }
 
     /**
+     * @param EntityManager $entityManager
      * @param \stdClass $value
      * @return Result
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(EntityManager $entityManager, \stdClass $value)
     {
-        return new self($value);
+        return new self($entityManager, $value);
     }
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
 
     /**
      * @var \stdClass
@@ -57,10 +65,12 @@ class Result
     protected $stories;
 
     /**
+     * @param EntityManager $entityManager
      * @param \stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(EntityManager $entityManager, \stdClass $source)
     {
+        $this->entityManager = $entityManager;
         $this->source = $source;
     }
 
@@ -77,6 +87,9 @@ class Result
      */
     public function getStories()
     {
-        return $this->stories ?: $this->stories = new ArrayCollection(Story::fromList($this->source->stories));
+        return $this->stories ?: $this->stories = new ArrayCollection(Story::fromList(
+            $this->entityManager,
+            $this->source->stories
+        ));
     }
 }

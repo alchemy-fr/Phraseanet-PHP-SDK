@@ -80,6 +80,6 @@ class Record extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return Query::fromValue($response->getResult());
+        return Query::fromValue($this->em, $response->getResult());
     }
 }

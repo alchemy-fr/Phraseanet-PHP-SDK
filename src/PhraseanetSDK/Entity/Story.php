@@ -18,6 +18,23 @@ use PhraseanetSDK\EntityManager;
 
 class Story
 {
+
+    public static function fromList(EntityManager $entityManager, array $values)
+    {
+        $stories = array();
+
+        foreach ($values as $value) {
+            $stories[] = self::fromValue($entityManager, $value);
+        }
+
+        return $stories;
+    }
+
+    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    {
+        return new self($entityManager, $value);
+    }
+
     /**
      * @var EntityManager
      */

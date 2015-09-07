@@ -14,18 +14,25 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\EntityManager;
 
 class Query
 {
 
     /**
+     * @param EntityManager $entityManager
      * @param \stdClass $value
      * @return Query
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(EntityManager $entityManager, \stdClass $value)
     {
-        return new self($value);
+        return new self($entityManager, $value);
     }
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
 
     /**
      * @var \stdClass
@@ -48,10 +55,12 @@ class Query
     protected $results;
 
     /**
+     * @param EntityManager $entityManager
      * @param \stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(EntityManager $entityManager, \stdClass $source)
     {
+        $this->entityManager = $entityManager;
         $this->source = $source;
     }
 
@@ -174,6 +183,6 @@ class Query
             return null;
         }
 
-        return $this->results ?: $this->results = Result::fromValue($this->source->results);
+        return $this->results ?: $this->results = Result::fromValue($this->entityManager, $this->source->results);
     }
 }
