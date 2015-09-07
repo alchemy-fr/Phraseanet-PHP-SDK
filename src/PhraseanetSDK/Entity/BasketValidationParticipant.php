@@ -16,27 +16,40 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
 class BasketValidationParticipant
 {
+
+    public static function fromList(array $values)
+    {
+        $participants = array();
+
+        foreach ($values as $value) {
+            $participants[] = self::fromValue($value);
+        }
+
+        return $participants;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="user", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="User")
+     * @var \stdClass
+     */
+    protected $source;
+
+    /**
+     * @var User
      */
     protected $user;
+
     /**
-     * @ApiField(bind_to="confirmed", type="boolean")
+     * @param \stdClass $source
      */
-    protected $confirmed;
-    /**
-     * @ApiField(bind_to="can_agree", type="boolean")
-     */
-    protected $canAgree;
-    /**
-     * @ApiField(bind_to="can_see_others", type="boolean")
-     */
-    protected $canSeeOthers;
-    /**
-     * @ApiField(bind_to="readonly", type="boolean")
-     */
-    protected $readOnly;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the user
@@ -45,71 +58,46 @@ class BasketValidationParticipant
      */
     public function getUser()
     {
-        return $this->user;
-    }
-
-    public function setUser($user)
-    {
-        $this->user = $user;
+        return $this->user ?: $this->user = User::fromValue($this->source->user);
     }
 
     /**
      * Tell whether the participant is confirmed
      *
-     * @return Boolean
+     * @return bool
      */
     public function isConfirmed()
     {
-        return $this->confirmed;
-    }
-
-    public function setConfirmed($confirmed)
-    {
-        $this->confirmed = $confirmed;
+        return $this->source->confirmed;
     }
 
     /**
      * Tell whether the participant can agree
      *
-     * @return Boolean
+     * @return bool
      */
     public function canAgree()
     {
-        return $this->canAgree;
-    }
-
-    public function setCanAgree($canAgree)
-    {
-        $this->canAgree = $canAgree;
+        return $this->source->can_agree;
     }
 
     /**
      * Tell whether the participant can see the other participants
      *
-     * @return Boolean
+     * @return bool
      */
     public function canSeeOthers()
     {
-        return $this->canSeeOthers;
-    }
-
-    public function setCanSeeOthers($canSeeOthers)
-    {
-        $this->canSeeOthers = $canSeeOthers;
+        return $this->source->can_see_others;
     }
 
     /**
      * Tell whether the participant can access data in readonly mode
      *
-     * @return Boolean
+     * @return bool
      */
     public function isReadOnly()
     {
-        return $this->readOnly;
-    }
-
-    public function setReadonly($readonly)
-    {
-        $this->readOnly = $readonly;
+        return $this->source->readonly;
     }
 }

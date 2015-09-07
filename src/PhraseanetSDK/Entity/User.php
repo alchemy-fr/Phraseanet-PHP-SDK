@@ -16,6 +16,23 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class User
 {
+
+    public static function fromList(array $values)
+    {
+        $users = array();
+
+        foreach ($values as $value) {
+            $users[] = self::fromValue($value);
+        }
+
+        return $users;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
      * @var \stdClass
      */

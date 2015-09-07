@@ -16,23 +16,35 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class Databox
 {
+
+    public static function fromList(array $values)
+    {
+        $databoxes = array();
+
+        foreach ($values as $value) {
+            $databoxes[] = self::fromValue($value);
+        }
+
+        return $databoxes;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="databox_id", type="int")
+     * @var \stdClass
      */
-    protected $id;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="name", type="string")
+     * @param \stdClass $source
      */
-    protected $name;
-    /**
-     * @ApiField(bind_to="version", type="string")
-     */
-    protected $version;
-    /**
-     * @ApiField(bind_to="labels", type="array")
-     */
-    protected $labels;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * the databox id
@@ -41,12 +53,7 @@ class Databox
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->databox_id;
     }
 
     /**
@@ -56,12 +63,7 @@ class Databox
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -71,27 +73,14 @@ class Databox
      */
     public function getVersion()
     {
-        return $this->version;
-    }
-
-    public function setVersion($version)
-    {
-        $this->version = $version;
+        return $this->source->version;
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getLabels()
     {
-        return $this->labels;
-    }
-
-    /**
-     * @param mixed $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
+        return $this->source->labels;
     }
 }

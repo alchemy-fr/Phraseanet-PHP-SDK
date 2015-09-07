@@ -19,13 +19,13 @@ class Metadata
 
     public static function fromList(array $values)
     {
-        $metas = array();
+        $metadata = array();
 
         foreach ($values as $value) {
-            $metas[] = self::fromValue($value);
+            $metadata[] = self::fromValue($value);
         }
 
-        return $metas;
+        return $metadata;
     }
 
     public static function fromValue(\stdClass $value)

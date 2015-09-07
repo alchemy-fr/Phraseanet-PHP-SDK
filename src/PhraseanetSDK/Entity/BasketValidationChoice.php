@@ -16,23 +16,45 @@ use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
 class BasketValidationChoice
 {
+
+    public static function fromList(array $values)
+    {
+        $choices = array();
+
+        foreach ($values as $value) {
+            $choices[] = self::fromValue($value);
+        }
+
+        return $choices;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="agreement", type="boolean")
+     * @var \stdClass
      */
-    protected $agreement;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="updated_on", type="date")
+     * @var \DateTime|null
      */
     protected $updatedOn;
+
     /**
-     * @ApiField(bind_to="note", type="int")
-     */
-    protected $note;
-    /**
-     * @ApiField(bind_to="validation_user", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="BasketValidationParticipant")
+     * @var BasketValidationParticipant
      */
     protected $participant;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the validation user
@@ -41,12 +63,9 @@ class BasketValidationChoice
      */
     public function getParticipant()
     {
-        return $this->participant;
-    }
-
-    public function setParticipant(BasketValidationParticipant $participant)
-    {
-        $this->participant = $participant;
+        return $this->participant ?: $this->participant = BasketValidationParticipant::fromValue(
+            $this->source->validation_user
+        );
     }
 
     /**
@@ -56,12 +75,7 @@ class BasketValidationChoice
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -71,12 +85,7 @@ class BasketValidationChoice
      */
     public function getNote()
     {
-        return $this->note;
-    }
-
-    public function setNote($note)
-    {
-        $this->note = $note;
+        return $this->source->note;
     }
 
     /**
@@ -90,11 +99,6 @@ class BasketValidationChoice
      */
     public function getAgreement()
     {
-        return $this->agreement;
-    }
-
-    public function setAgreement($agreement)
-    {
-        $this->agreement = $agreement;
+        return $this->source->agreement;
     }
 }

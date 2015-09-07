@@ -18,37 +18,29 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class BasketElement
 {
+
     /**
-     * @Id
-     * @ApiField(bind_to="basket_element_id", type="int")
+     * @var \stdClass
      */
-    protected $id;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="order", type="int")
-     */
-    protected $order;
-    /**
-     * @ApiField(bind_to="validation_item", type="boolean")
-     */
-    protected $validationItem;
-    /**
-     * @ApiField(bind_to="record", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Record")
+     * @var Record
      */
     protected $record;
+
     /**
-     * @ApiField(bind_to="validation_choices", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="BasketValidationChoice")
+     * @var ArrayCollection|BasketValidationChoice[]
      */
     protected $validationChoices;
+
     /**
-     * @ApiField(bind_to="note", type="int")
+     * @param \stdClass $source
      */
-    protected $note;
-    /**
-     * @ApiField(bind_to="agreement", type="boolean")
-     */
-    protected $agreement;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The id of the element
@@ -57,12 +49,7 @@ class BasketElement
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->basket_element_id;
     }
 
     /**
@@ -72,27 +59,17 @@ class BasketElement
      */
     public function getOrder()
     {
-        return $this->order;
-    }
-
-    public function setOrder($order)
-    {
-        $this->order = $order;
+        return $this->source->order;
     }
 
     /**
      * Tell whether the basket item is a validation item
      *
-     * @return Boolean
+     * @return bool
      */
     public function isValidationItem()
     {
-        return $this->validationItem;
-    }
-
-    public function setValidationItem($validationItem)
-    {
-        $this->validationItem = $validationItem;
+        return $this->source->validation_item;
     }
 
     /**
@@ -102,16 +79,7 @@ class BasketElement
      */
     public function getRecord()
     {
-        return $this->record;
-    }
-
-    /**
-     *
-     * @param Record $record
-     */
-    public function setRecord(Record $record)
-    {
-        $this->record = $record;
+        return $this->record ?: $this->record = Record::fromValue($this->source->record);
     }
 
     /**
@@ -122,12 +90,13 @@ class BasketElement
      */
     public function getValidationChoices()
     {
-        return $this->validationChoices;
-    }
+        if (! isset($this->source->validation_choices)) {
+            $this->validationChoices = new ArrayCollection();
+        }
 
-    public function setValidationChoices(ArrayCollection $validationChoices = null)
-    {
-        $this->validationChoices = $validationChoices;
+        return $this->validationChoices ?: $this->validationChoices = BasketValidationChoice::fromList(
+            $this->source->validation_choices
+        );
     }
 
     /**
@@ -137,16 +106,11 @@ class BasketElement
      */
     public function getNote()
     {
-        return $this->note;
-    }
-
-    public function setNote($note)
-    {
-        $this->note = $note;
+        return $this->source->note;
     }
 
     /**
-     * Get the agreement of the current authenticated user
+     * Get the agreement of the currently authenticated user
      *
      * - null : no response yet
      * - true : accepted
@@ -156,11 +120,6 @@ class BasketElement
      */
     public function getAgreement()
     {
-        return $this->agreement;
-    }
-
-    public function setAgreement($agreement)
-    {
-        $this->agreement = $agreement;
+        return $this->source->agreement;
     }
 }
