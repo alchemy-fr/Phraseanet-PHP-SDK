@@ -37,13 +37,9 @@ class Quarantine extends AbstractRepository
             throw new RuntimeException('Missing "quarantine_items" property in response content');
         }
 
-        $quarantineItems = new ArrayCollection();
-
-        foreach ($response->getProperty('quarantine_items') as $quarantineData) {
-            $quarantineItems->add(EntityHydrator::hydrate('quarantine', $quarantineData, $this->em));
-        }
-
-        return $quarantineItems;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Quarantine::fromList(
+            $response->getProperty('quarantine_items')
+        ));
     }
 
     /**
@@ -61,6 +57,6 @@ class Quarantine extends AbstractRepository
             throw new RuntimeException('Missing "quarantine_item" property in response content');
         }
 
-        return EntityHydrator::hydrate('quarantine', $response->getProperty('quarantine_item'), $this->em);
+        return \PhraseanetSDK\Entity\Quarantine::fromValue($response->getProperty('quarantine_item'));
     }
 }

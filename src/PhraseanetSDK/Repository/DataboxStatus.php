@@ -32,12 +32,8 @@ class DataboxStatus extends AbstractRepository
             throw new RuntimeException('Missing "status" property in response content');
         }
 
-        $databoxStatusCollection = new ArrayCollection();
-
-        foreach ($response->getProperty('status') as $databoxStatusData) {
-            $databoxStatusCollection->add(EntityHydrator::hydrate('databoxStatus', $databoxStatusData, $this->em));
-        }
-
-        return $databoxStatusCollection;
+        return new ArrayCollection(\PhraseanetSDK\Entity\DataboxStatus::fromList(
+            $response->getProperty('status')
+        ));
     }
 }

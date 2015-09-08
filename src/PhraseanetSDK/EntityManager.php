@@ -35,7 +35,6 @@ class EntityManager
     public function __construct(APIGuzzleAdapter $adapter, array $options = array())
     {
         $this->adapter = $adapter;
-        self::registerAnnotations();
 
         $debug = isset($options['debug']) && !!$options['debug'];
         $annotationsPath = isset($options['annotation.path']) ? $options['annotation.path'] : __DIR__.'/../../cache/annotations';
@@ -145,16 +144,5 @@ class EntityManager
         }
 
         return $this->virtualProxies[$name] = new $objectName($this);
-    }
-
-    /**
-     * Register entities annotations
-     */
-    private static function registerAnnotations()
-    {
-        AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiField.php');
-        AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiObject.php');
-        AnnotationRegistry::registerFile(__DIR__.'/Annotation/ApiRelation.php');
-        AnnotationRegistry::registerFile(__DIR__.'/Annotation/Id.php');
     }
 }

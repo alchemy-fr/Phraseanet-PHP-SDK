@@ -31,12 +31,6 @@ class Databox extends AbstractRepository
             throw new RuntimeException('Missing "databoxes" property in response content');
         }
 
-        $databoxCollection = new ArrayCollection();
-
-        foreach ($response->getProperty('databoxes') as $databoxData) {
-            $databoxCollection->add(EntityHydrator::hydrate('databox', $databoxData, $this->em));
-        }
-
-        return $databoxCollection;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Databox::fromList($response->getProperty('databoxes')));
     }
 }

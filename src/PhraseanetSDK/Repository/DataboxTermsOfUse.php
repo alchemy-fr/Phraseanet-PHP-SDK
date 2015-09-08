@@ -33,12 +33,8 @@ class DataboxTermsOfUse extends AbstractRepository
             throw new RuntimeException('Missing "termsOfuse" property in response content');
         }
 
-        $metaCollection = new ArrayCollection();
-
-        foreach ($response->getProperty('termsOfUse') as $metadata) {
-            $metaCollection->add(EntityHydrator::hydrate('databoxTermsOfUse', $metadata, $this->em));
-        }
-
-        return $metaCollection;
+        return new ArrayCollection(\PhraseanetSDK\Entity\DataboxTermsOfUse::fromList(
+            $response->getProperty('termsOfUse')
+        ));
     }
 }
