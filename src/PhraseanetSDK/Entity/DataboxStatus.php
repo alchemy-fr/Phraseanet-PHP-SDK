@@ -17,38 +17,41 @@ use PhraseanetSDK\Annotation\Id as Id;
 class DataboxStatus
 {
     /**
-     * @Id
-     * @ApiField(bind_to="bit", type="int")
+     * @param \stdClass[] $values
+     * @return DataboxStatus[]
      */
-    protected $bit;
+    public static function fromList(array $values)
+    {
+        $statuses = array();
+
+        foreach ($values as $value) {
+            $statuses[] = self::fromValue($value);
+        }
+
+        return $statuses;
+    }
+
     /**
-     * @ApiField(bind_to="label_on", type="string")
+     * @param \stdClass $value
+     * @return DataboxStatus
      */
-    protected $labelOn;
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="label_off", type="string")
+     * @var \stdClass
      */
-    protected $labelOff;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="img_on", type="string")
+     * @param \stdClass $source
      */
-    protected $imgOn;
-    /**
-     * @ApiField(bind_to="img_off", type="string")
-     */
-    protected $imgOff;
-    /**
-     * @ApiField(bind_to="searchable", type="boolean")
-     */
-    protected $searchable;
-    /**
-     * @ApiField(bind_to="printable", type="boolean")
-     */
-    protected $printable;
-    /**
-     * @ApiField(bind_to="labels", type="array")
-     */
-    protected $labels;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the status bit
@@ -57,12 +60,7 @@ class DataboxStatus
      */
     public function getBit()
     {
-        return $this->bit;
-    }
-
-    public function setBit($bit)
-    {
-        $this->bit = $bit;
+        return $this->source->bit;
     }
 
     /**
@@ -72,12 +70,7 @@ class DataboxStatus
      */
     public function getLabelOn()
     {
-        return $this->labelOn;
-    }
-
-    public function setLabelOn($labelOn)
-    {
-        $this->labelOn = $labelOn;
+        return $this->source->label_on;
     }
 
     /**
@@ -87,12 +80,7 @@ class DataboxStatus
      */
     public function getLabelOff()
     {
-        return $this->labelOff;
-    }
-
-    public function setLabelOff($labelOff)
-    {
-        $this->labelOff = $labelOff;
+        return $this->source->label_off;
     }
 
     /**
@@ -102,12 +90,7 @@ class DataboxStatus
      */
     public function getImgOn()
     {
-        return $this->imgOn;
-    }
-
-    public function setImgOn($imgOn)
-    {
-        $this->imgOn = $imgOn;
+        return $this->source->img_on;
     }
 
     /**
@@ -117,12 +100,7 @@ class DataboxStatus
      */
     public function getImgOff()
     {
-        return $this->imgOff;
-    }
-
-    public function setImgOff($imgOff)
-    {
-        $this->imgOff = $imgOff;
+        return $this->source->img_off;
     }
 
     /**
@@ -132,12 +110,7 @@ class DataboxStatus
      */
     public function isSearchable()
     {
-        return $this->searchable;
-    }
-
-    public function setSearchable($searchable)
-    {
-        $this->searchable = $searchable;
+        return $this->source->searchable;
     }
 
     /**
@@ -147,12 +120,7 @@ class DataboxStatus
      */
     public function isPrintable()
     {
-        return $this->printable;
-    }
-
-    public function setPrintable($printable)
-    {
-        $this->printable = $printable;
+        return $this->source->printable;
     }
 
     /**
@@ -160,14 +128,6 @@ class DataboxStatus
      */
     public function getLabels()
     {
-        return $this->labels;
-    }
-
-    /**
-     * @param mixed $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
+        return $this->source->labels;
     }
 }

@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\VirtualProxy;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityManager;
 
 class Record
@@ -25,6 +26,7 @@ class Record
     /**
      * Return the record sub definition as a collection of PhraseanetSDK\Entity\Subdef objects
      *
+     * @param \PhraseanetSDK\Entity\Record $record
      * @return ArrayCollection
      */
     public function getSubdefs(\PhraseanetSDK\Entity\Record $record)
@@ -35,6 +37,7 @@ class Record
     /**
      * Return the record metadata as a collection of PhraseanetSDK\Entity\metadata objects
      *
+     * @param \PhraseanetSDK\Entity\Record $record
      * @return ArrayCollection
      */
     public function getMetadata(\PhraseanetSDK\Entity\Record $record)
@@ -45,6 +48,7 @@ class Record
     /**
      * Get the record caption as collection of PhraseanetSDK\Entity\RecordCaption objects
      *
+     * @param \PhraseanetSDK\Entity\Record $record
      * @return ArrayCollection
      */
     public function getCaption(\PhraseanetSDK\Entity\Record $record)
@@ -55,6 +59,7 @@ class Record
     /**
      * Get the record status as collection of PhraseanetSDK\Entity\RecordStatus objects
      *
+     * @param \PhraseanetSDK\Entity\Record $record
      * @return ArrayCollection
      */
     public function getStatus(\PhraseanetSDK\Entity\Record $record)

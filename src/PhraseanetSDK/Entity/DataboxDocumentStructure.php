@@ -16,59 +16,35 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class DataboxDocumentStructure
 {
+
+    public static function fromList(array $values)
+    {
+        $structures = array();
+
+        foreach ($values as $value) {
+            $structures[] = self::fromValue($value);
+        }
+
+        return $structures;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="id", type="int")
-     */
-    protected $id;
-    /**
-     * @ApiField(bind_to="namespace", type="string")
-     */
-    protected $namespace;
-    /**
-     * @ApiField(bind_to="source", type="string")
+     * @var \stdClass
      */
     protected $source;
+
     /**
-     * @ApiField(bind_to="tagname", type="string")
+     * @param \stdClass $source
      */
-    protected $tagName;
-    /**
-     * @ApiField(bind_to="name", type="string")
-     */
-    protected $name;
-    /**
-     * @ApiField(bind_to="separator", type="string")
-     */
-    protected $separator;
-    /**
-     * @ApiField(bind_to="thesaurus_branch", type="string")
-     */
-    protected $thesaurusBranch;
-    /**
-     * @ApiField(bind_to="type", type="string")
-     */
-    protected $type;
-    /**
-     * @ApiField(bind_to="indexable", type="boolean")
-     */
-    protected $searchable;
-    /**
-     * @ApiField(bind_to="multivalue", type="boolean")
-     */
-    protected $multivalued;
-    /**
-     * @ApiField(bind_to="readonly", type="boolean")
-     */
-    protected $readonly;
-    /**
-     * @ApiField(bind_to="required", type="boolean")
-     */
-    protected $required;
-    /**
-     * @ApiField(bind_to="labels", type="array")
-     */
-    protected $labels;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The documentary field id
@@ -77,12 +53,7 @@ class DataboxDocumentStructure
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->id;
     }
 
     /**
@@ -92,12 +63,7 @@ class DataboxDocumentStructure
      */
     public function getNamespace()
     {
-        return $this->namespace;
-    }
-
-    public function setNamespace($namespace)
-    {
-        $this->namespace = $namespace;
+        return $this->source->namespace;
     }
 
     /**
@@ -107,12 +73,7 @@ class DataboxDocumentStructure
      */
     public function getSource()
     {
-        return $this->source;
-    }
-
-    public function setSource($source)
-    {
-        $this->source = $source;
+        return $this->source->source;
     }
 
     /**
@@ -122,12 +83,7 @@ class DataboxDocumentStructure
      */
     public function getTagName()
     {
-        return $this->tagName;
-    }
-
-    public function setTagName($tagName)
-    {
-        $this->tagName = $tagName;
+        return $this->source->tagname;
     }
 
     /**
@@ -137,12 +93,7 @@ class DataboxDocumentStructure
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -152,12 +103,7 @@ class DataboxDocumentStructure
      */
     public function getSeparator()
     {
-        return $this->separator;
-    }
-
-    public function setSeparator($separator)
-    {
-        $this->separator = $separator;
+        return $this->source->separator;
     }
 
     /**
@@ -167,12 +113,7 @@ class DataboxDocumentStructure
      */
     public function getThesaurusBranch()
     {
-        return $this->thesaurusBranch;
-    }
-
-    public function setThesaurusBranch($thesaurus_branch)
-    {
-        $this->thesaurusBranch = $thesaurus_branch;
+        return $this->source->thesaurus_branch;
     }
 
     /**
@@ -182,12 +123,7 @@ class DataboxDocumentStructure
      */
     public function getType()
     {
-        return $this->type;
-    }
-
-    public function setType($type)
-    {
-        $this->type = $type;
+        return $this->source->type;
     }
 
     /**
@@ -197,12 +133,7 @@ class DataboxDocumentStructure
      */
     public function isSearchable()
     {
-        return $this->searchable;
-    }
-
-    public function setSearchable($searchable)
-    {
-        $this->searchable = $searchable;
+        return $this->source->indexable;
     }
 
     /**
@@ -212,12 +143,7 @@ class DataboxDocumentStructure
      */
     public function isMultivalued()
     {
-        return $this->multivalued;
-    }
-
-    public function setMultivalued($multivalued)
-    {
-        $this->multivalued = $multivalued;
+        return $this->source->multivalue;
     }
 
     /**
@@ -227,12 +153,7 @@ class DataboxDocumentStructure
      */
     public function isReadonly()
     {
-        return $this->readonly;
-    }
-
-    public function setReadonly($readonly)
-    {
-        $this->readonly = $readonly;
+        return $this->source->readonly;
     }
 
     /**
@@ -242,12 +163,7 @@ class DataboxDocumentStructure
      */
     public function isRequired()
     {
-        return $this->required;
-    }
-
-    public function setRequired($required)
-    {
-        $this->required = $required;
+        return $this->source->required;
     }
 
     /**
@@ -255,14 +171,6 @@ class DataboxDocumentStructure
      */
     public function getLabels()
     {
-        return $this->labels;
-    }
-
-    /**
-     * @param mixed $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
+        return $this->source->labels;
     }
 }

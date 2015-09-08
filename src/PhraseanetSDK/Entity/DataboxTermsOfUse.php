@@ -16,33 +16,49 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class DataboxTermsOfUse
 {
-    /**
-     * @Id
-     * @ApiField(bind_to="locale", type="string")
-     */
-    protected $locale;
-    /**
-     * @ApiField(bind_to="terms", type="string")
-     */
-    protected $terms;
 
+    public static function fromList(array $values)
+    {
+        $terms = array();
+
+        foreach ($values as $value) {
+            $terms[] = self::fromValue($value);
+        }
+
+        return $terms;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
+    /**
+     * @var \stdClass
+     */
+    protected $source;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     * @return string
+     */
     public function getLocale()
     {
-        return $this->locale;
+        return $this->source->locale;
     }
 
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
+    /**
+     * @return string
+     */
     public function getTerms()
     {
-        return $this->terms;
-    }
-
-    public function setTerms($terms)
-    {
-        $this->terms = $terms;
+        return $this->source->terms;
     }
 }

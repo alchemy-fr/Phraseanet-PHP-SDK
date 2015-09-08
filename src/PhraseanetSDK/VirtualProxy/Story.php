@@ -27,6 +27,7 @@ class Story
     /**
      * Get the story caption as collection of PhraseanetSDK\Entity\RecordCaption objects
      *
+     * @param \PhraseanetSDK\Entity\Story $story
      * @return ArrayCollection
      */
     public function getCaption(\PhraseanetSDK\Entity\Story $story)
@@ -37,6 +38,7 @@ class Story
     /**
      * Get the story status as collection of PhraseanetSDK\Entity\RecordStatus objects
      *
+     * @param \PhraseanetSDK\Entity\Story $story
      * @return ArrayCollection
      */
     public function getStatus(\PhraseanetSDK\Entity\Story $story)
