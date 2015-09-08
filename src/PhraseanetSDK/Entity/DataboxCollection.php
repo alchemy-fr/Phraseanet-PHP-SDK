@@ -19,7 +19,7 @@ class DataboxCollection
         $collections = array();
 
         foreach ($values as $value) {
-            $collections[] = self::fromValue($value);
+            $collections[$value->base_id] = self::fromValue($value);
         }
 
         return $collections;

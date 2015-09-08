@@ -19,7 +19,7 @@ class DataboxTermsOfUse
         $terms = array();
 
         foreach ($values as $value) {
-            $terms[] = self::fromValue($value);
+            $terms[$value->locale] = self::fromValue($value);
         }
 
         return $terms;

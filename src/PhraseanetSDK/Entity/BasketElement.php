@@ -15,6 +15,29 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class BasketElement
 {
+    /**
+     * @param \stdClass[] $values
+     * @return BasketElement[]
+     */
+    public static function fromList(array $values)
+    {
+        $elements = array();
+
+        foreach ($values as $value) {
+            $elements[$value->basket_element_id] = $value;
+        }
+
+        return $elements;
+    }
+
+    /**
+     * @param \stdClass $value
+     * @return BasketElement
+     */
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
 
     /**
      * @var \stdClass

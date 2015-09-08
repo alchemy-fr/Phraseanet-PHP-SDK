@@ -22,7 +22,7 @@ class RecordCaption
         $captions = array();
 
         foreach ($values as $value) {
-            $captions[] = self::fromValue($value);
+            $captions[$value->meta_structure_id] = self::fromValue($value);
         }
 
         return $captions;

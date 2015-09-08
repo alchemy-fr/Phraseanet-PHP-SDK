@@ -22,7 +22,7 @@ class Feed
         $feeds = array();
 
         foreach ($values as $value) {
-            $feeds[] = self::fromValue($entityManager, $value);
+            $feeds[$value->id] = self::fromValue($entityManager, $value);
         }
 
         return $feeds;

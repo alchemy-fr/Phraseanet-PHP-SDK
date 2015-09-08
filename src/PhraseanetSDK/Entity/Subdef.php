@@ -27,7 +27,7 @@ class Subdef
                 continue;
             }
 
-            $subdefs[] = self::fromValue($value);
+            $subdefs[$value->name] = self::fromValue($value);
         }
 
         return $subdefs;

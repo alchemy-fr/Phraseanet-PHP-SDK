@@ -25,7 +25,7 @@ class FeedEntry
         $entries = array();
 
         foreach ($values as $value) {
-            $entries[] = self::fromValue($value);
+            $entries[$value->id] = self::fromValue($value);
         }
 
         return $entries;

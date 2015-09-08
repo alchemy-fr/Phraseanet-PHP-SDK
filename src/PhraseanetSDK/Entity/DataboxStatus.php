@@ -22,7 +22,7 @@ class DataboxStatus
         $statuses = array();
 
         foreach ($values as $value) {
-            $statuses[] = self::fromValue($value);
+            $statuses[$value->bit] = self::fromValue($value);
         }
 
         return $statuses;

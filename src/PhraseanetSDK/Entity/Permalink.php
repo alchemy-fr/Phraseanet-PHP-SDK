@@ -34,6 +34,9 @@ class Permalink
      */
     protected $updatedOn;
 
+    /**
+     * @param \stdClass $source
+     */
     public function __construct(\stdClass $source)
     {
         $this->source = $source;

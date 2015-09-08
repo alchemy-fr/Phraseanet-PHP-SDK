@@ -22,7 +22,7 @@ class User
         $users = array();
 
         foreach ($values as $value) {
-            $users[] = self::fromValue($value);
+            $users[$value->id] = self::fromValue($value);
         }
 
         return $users;

@@ -19,7 +19,7 @@ class DataboxDocumentStructure
         $structures = array();
 
         foreach ($values as $value) {
-            $structures[] = self::fromValue($value);
+            $structures[$value->id] = self::fromValue($value);
         }
 
         return $structures;

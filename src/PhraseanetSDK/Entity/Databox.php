@@ -19,7 +19,7 @@ class Databox
         $databoxes = array();
 
         foreach ($values as $value) {
-            $databoxes[] = self::fromValue($value);
+            $databoxes[$value->databox_id] = self::fromValue($value);
         }
 
         return $databoxes;
