@@ -75,7 +75,7 @@ class Result
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Record[]
      */
     public function getRecords()
     {
@@ -83,7 +83,7 @@ class Result
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Story[]
      */
     public function getStories()
     {

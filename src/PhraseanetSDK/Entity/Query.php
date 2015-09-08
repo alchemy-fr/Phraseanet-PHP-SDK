@@ -179,10 +179,6 @@ class Query
      */
     public function getResults()
     {
-        if (! isset($this->source->results)) {
-            return null;
-        }
-
         return $this->results ?: $this->results = Result::fromValue($this->entityManager, $this->source->results);
     }
 }
