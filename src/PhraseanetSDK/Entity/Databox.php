@@ -11,9 +11,6 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\Id as Id;
-
 class Databox
 {
 

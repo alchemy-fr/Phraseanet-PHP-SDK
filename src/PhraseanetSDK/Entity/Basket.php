@@ -12,9 +12,6 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\Id as Id;
 
 class Basket
 {
@@ -58,11 +55,6 @@ class Basket
      * @var User|null
      */
     protected $validationInitiatorUser;
-
-    /**
-     * @ApiField(bind_to="validation_initiator", type="boolean")
-     */
-    protected $validationInitiator;
 
     public function __construct(\stdClass $source)
     {

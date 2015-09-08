@@ -11,22 +11,42 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\Id as Id;
-
 class FeedEntryItem
 {
+
+    public static function fromList(array $values)
+    {
+        $items = array();
+
+        foreach ($values as $value) {
+            $items[$value->id] = self::fromValue($value);
+        }
+
+        return $items;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="item_id", type="int")
+     * @var \stdClass
      */
-    protected $id;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="record", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Record")
+     * @var Record|null
      */
     protected $record;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the item id
@@ -35,12 +55,7 @@ class FeedEntryItem
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->id;
     }
 
     /**
@@ -50,11 +65,6 @@ class FeedEntryItem
      */
     public function getRecord()
     {
-        return $this->record;
-    }
-
-    public function setRecord(Record $record)
-    {
-        $this->record = $record;
+        return $this->record ?: $this->record = Record::fromValue($this->source->record);
     }
 }
