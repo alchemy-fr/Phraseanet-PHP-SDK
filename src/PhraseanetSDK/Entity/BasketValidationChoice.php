@@ -78,11 +78,11 @@ class BasketValidationChoice
     /**
      * Get the annotation about the validation of the current authenticated user
      *
-     * @return string
+     * @return int
      */
     public function getNote()
     {
-        return $this->source->note;
+        return (int) $this->source->note;
     }
 
     /**

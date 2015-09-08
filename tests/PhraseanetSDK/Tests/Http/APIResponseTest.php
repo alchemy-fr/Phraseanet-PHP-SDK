@@ -7,7 +7,7 @@ use PhraseanetSDK\Http\APIResponse;
 class APIResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
+     * @expectedException \PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testBadResponse()
     {
@@ -99,6 +99,6 @@ class APIResponseTest extends \PHPUnit_Framework_TestCase
 
     private function getSampleResponse($filename)
     {
-        return file_get_contents(__DIR__.'/../../../resources/response_samples/'.$filename.'.json');
+        return file_get_contents(__DIR__ . '/../../../resources/response_samples/' . $filename . '.json');
     }
 }

@@ -11,6 +11,8 @@
 
 namespace PhraseanetSDK\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class DataboxStatus
 {
     /**
@@ -41,6 +43,11 @@ class DataboxStatus
      * @var \stdClass
      */
     protected $source;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $labels;
 
     /**
      * @param \stdClass $source
@@ -125,6 +132,6 @@ class DataboxStatus
      */
     public function getLabels()
     {
-        return $this->source->labels;
+        return $this->labels ?: $this->labels = new ArrayCollection((array) $this->source->labels);
     }
 }

@@ -55,7 +55,7 @@ class QueryFacet
      */
     public function getName()
     {
-        return $this->source->name;
+        return isset($this->source->name) ? $this->source->name : '';
     }
 
     /**

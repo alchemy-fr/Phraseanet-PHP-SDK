@@ -11,6 +11,8 @@
 
 namespace PhraseanetSDK\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class DataboxDocumentStructure
 {
 
@@ -34,6 +36,11 @@ class DataboxDocumentStructure
      * @var \stdClass
      */
     protected $source;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $labels;
 
     /**
      * @param \stdClass $source
@@ -168,6 +175,6 @@ class DataboxDocumentStructure
      */
     public function getLabels()
     {
-        return $this->source->labels;
+        return $this->labels ?: $this->labels = new ArrayCollection((array) $this->source->labels);
     }
 }

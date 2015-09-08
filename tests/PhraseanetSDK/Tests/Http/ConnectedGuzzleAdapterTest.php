@@ -11,7 +11,7 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testCall($method, $path, $query, $postFields, $token, $files)
     {
-        $response = mt_rand().'response';
+        $response = mt_rand() . 'response';
 
         $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
@@ -26,10 +26,31 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
     public function provideCallParameters()
     {
         return array(
-            array('GET', '/path/to/resource', array(), array(), 'token-'.mt_rand(), array()),
-            array('GET', '/path/to/resource', array('query1' => 'value1', 'oauth_token' => 'custom_token'), array(), 'token-'.mt_rand(), array()),
-            array('POST', '/path/to/resource', array('query1' => 'value1', 'oauth_token' => 'custom_token'), array('post' => 'value'), 'token-'.mt_rand(), array('file' => '/path/to/file')),
-            array('POST', '/path/to/resource', array('query1' => 'value1'), array('post' => 'value'), 'token-'.mt_rand(), array('file' => '/path/to/file')),
+            array('GET', '/path/to/resource', array(), array(), 'token-' . mt_rand(), array()),
+            array(
+                'GET',
+                '/path/to/resource',
+                array('query1' => 'value1', 'oauth_token' => 'custom_token'),
+                array(),
+                'token-' . mt_rand(),
+                array()
+            ),
+            array(
+                'POST',
+                '/path/to/resource',
+                array('query1' => 'value1', 'oauth_token' => 'custom_token'),
+                array('post' => 'value'),
+                'token-' . mt_rand(),
+                array('file' => '/path/to/file')
+            ),
+            array(
+                'POST',
+                '/path/to/resource',
+                array('query1' => 'value1'),
+                array('post' => 'value'),
+                'token-' . mt_rand(),
+                array('file' => '/path/to/file')
+            ),
         );
     }
 

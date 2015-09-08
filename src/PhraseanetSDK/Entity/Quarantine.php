@@ -82,7 +82,7 @@ class Quarantine
      */
     public function getSession()
     {
-        return $this->session ?: $this->session = QuarantineSession::fromValue($this->source->session);
+        return $this->session ?: $this->session = QuarantineSession::fromValue($this->source->quarantine_session);
     }
 
     /**

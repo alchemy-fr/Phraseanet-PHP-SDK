@@ -31,7 +31,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function getSampleResponse($filename)
     {
-        $filename = __DIR__.'/../../../resources/response_samples/'.$filename.'.json';
+        $filename = __DIR__ . '/../../../resources/response_samples/' . $filename . '.json';
 
         return file_get_contents($filename);
     }
@@ -77,37 +77,9 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         }
     }
 
-    protected function checkBasketElement($basketElement)
-    {
-        $this->assertTrue($basketElement instanceof \PhraseanetSDK\Entity\BasketElement);
-        /* @var $basketElement \PhraseanetSDK\Entity\BasketElement */
-
-        $this->assertNotNull($basketElement->getOrder());
-        $this->assertInternalType('integer', $basketElement->getOrder());
-        $this->assertNotNull($basketElement->getId());
-        $this->assertInternalType('integer', $basketElement->getId());
-        $this->assertNotNull($basketElement->isValidationItem());
-        $this->assertInternalType('boolean', $basketElement->isValidationItem());
-        $this->assertNotNull($record = $basketElement->getRecord());
-        $this->checkRecord($record);
-
-        if ($basketElement->isValidationItem()) {
-            $this->assertNotNull($choices = $basketElement->getValidationChoices());
-            $this->assertIsCollection($choices);
-
-            foreach ($choices as $choice) {
-                $this->checkValidationChoice($choice);
-            }
-
-            $this->assertTrue(in_array($basketElement->getAgreement(), array(null, true, false)));
-            $this->assertNotNull($basketElement->getNote());
-            $this->assertInternalType('integer', $basketElement->getNote());
-        }
-    }
-
     protected function checkValidationChoice($choice)
     {
-        $this->assertTrue($choice instanceof \PhraseanetSDK\Entity\BasketValidationChoice);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\BasketValidationChoice', $choice);
         /* @var $choice \PhraseanetSDK\Entity\BasketValidationChoice */
 
         if (null !== $agreement = $choice->getAgreement()) {
@@ -124,7 +96,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkDataboxCollection($collection)
     {
-        $this->assertTrue($collection instanceof \PhraseanetSDK\Entity\DataboxCollection);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\DataboxCollection', $collection);
         /* @var $collection \PhraseanetSDK\Entity\DataboxCollection */
         $this->assertNotNull($collection->getBaseId());
         $this->assertInternalType('integer', $collection->getBaseId());
@@ -135,12 +107,12 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($collection->getRecordAmount());
         $this->assertInternalType('integer', $collection->getRecordAmount());
         $this->assertNotNull($collection->getLabels());
-        $this->assertTrue($collection->getLabels() instanceof ArrayCollection);
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $collection->getLabels());
     }
 
     public function checkDataboxStructure($metadata)
     {
-        $this->assertTrue($metadata instanceof \PhraseanetSDK\Entity\DataboxDocumentStructure);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\DataboxDocumentStructure', $metadata);
         /* @var $metadata \PhraseanetSDK\Entity\DataboxDocumentStructure */
         $this->assertNotNull($metadata->getId());
         $this->assertInternalType('integer', $metadata->getId());
@@ -167,12 +139,12 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($metadata->isReadonly());
         $this->assertInternalType('boolean', $metadata->isReadonly());
         $this->assertNotNull($metadata->getLabels());
-        $this->assertTrue($metadata->getLabels() instanceof ArrayCollection);
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $metadata->getLabels());
     }
 
     public function checkDataBoxStatus($status)
     {
-        $this->assertTrue($status instanceof \PhraseanetSDK\Entity\DataboxStatus);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\DataboxStatus', $status);
         /* @var $status \PhraseanetSDK\Entity\DataboxStatus */
         $this->assertNotNull($status->getBit());
         $this->assertInternalType('integer', $status->getBit());
@@ -189,12 +161,12 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($status->isPrintable());
         $this->assertInternalType('boolean', $status->isPrintable());
         $this->assertNotNull($status->getLabels());
-        $this->assertTrue($status->getLabels() instanceof ArrayCollection);
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $status->getLabels());
     }
 
     protected function checkParticipant($participant)
     {
-        $this->assertTrue($participant instanceof \PhraseanetSDK\Entity\BasketValidationParticipant);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\BasketValidationParticipant', $participant);
         /* @var $participant \PhraseanetSDK\Entity\BasketValidationParticipant */
         $this->assertInternalType('boolean', $participant->isConfirmed());
         $this->assertNotNull($participant->canAgree());
@@ -207,7 +179,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkRecordStatus($status)
     {
-        $this->assertTrue($status instanceof \PhraseanetSDK\Entity\RecordStatus);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\RecordStatus', $status);
         /* @var $status \PhraseanetSDK\Entity\Status */
         $this->assertNotNull($status->getBit());
         $this->assertInternalType('integer', $status->getBit());
@@ -217,7 +189,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkQueryObject($query)
     {
-        $this->assertTrue($query instanceof \PhraseanetSDK\Entity\Query);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\Query', $query);
         /* @var $query \PhraseanetSDK\Entity\Query */
         $this->assertNotNull($query->getOffsetStart());
         $this->assertInternalType('integer', $query->getOffsetStart());
@@ -238,14 +210,14 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($query->getSuggestions());
 
         $suggestions = $query->getSuggestions();
-        $this->assertTrue($suggestions instanceof \Doctrine\Common\Collections\ArrayCollection);
+        $this->assertInstanceOf('\Doctrine\Common\Collections\ArrayCollection', $suggestions);
 
         foreach ($suggestions as $suggestion) {
             $this->checkQuerySuggestions($suggestion);
         }
 
         $results = $query->getResults();
-        $this->assertTrue($results instanceof Result);
+        $this->assertInstanceOf('PhraseanetSDK\Entity\Result', $results);
 
         foreach ($results as $record) {
             $this->checkRecord($record);
@@ -254,8 +226,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkStory($story)
     {
-        $this->assertTrue($story instanceof \PhraseanetSDK\Entity\Story);
-        /* @var $suggestion \PhraseanetSDK\Entity\QuerySuggestion */
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\Story', $story);
+        /* @var $story \PhraseanetSDK\Entity\Story */
         $this->assertNotNull($story->getId());
         $this->assertInternalType('string', $story->getId());
         $this->assertNotNull($story->getStoryId());
@@ -275,12 +247,12 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->checkSubdef($subdef);
         $metas = $story->getMetadata();
         $this->assertNotNull($metas);
-        $this->assertTrue($metas instanceof ArrayCollection);
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $metas);
     }
 
     protected function checkQuerySuggestions($suggestion)
     {
-        $this->assertTrue($suggestion instanceof \PhraseanetSDK\Entity\QuerySuggestion);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\QuerySuggestion', $suggestion);
         /* @var $suggestion \PhraseanetSDK\Entity\QuerySuggestion */
         $this->assertNotNull($suggestion->getValue());
         $this->assertInternalType('string', $suggestion->getValue());
@@ -292,7 +264,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkDatabox($databox)
     {
-        $this->assertTrue($databox instanceof \PhraseanetSDK\Entity\Databox);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\Databox', $databox);
         /* @var $databox \PhraseanetSDK\Entity\Databox */
         $this->assertNotNull($databox->getId());
         $this->assertNotNull($databox->getName());
@@ -301,12 +273,12 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $databox->getId());
         $this->assertInternalType('string', $databox->getVersion());
         $this->assertInternalType('string', $databox->getName());
-        $this->assertTrue($databox->getLabels() instanceof ArrayCollection);
+        $this->assertInstanceOf('\Doctrine\Common\Collections\ArrayCollection', $databox->getLabels());
     }
 
     protected function checkTechnicalInformation($technical)
     {
-        $this->assertTrue($technical instanceof \PhraseanetSDK\Entity\Technical);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\Technical', $technical);
         /* @var $technical \PhraseanetSDK\Entity\Technical */
 
         $this->assertNotNull($technical->getName());
@@ -504,7 +476,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkFeedEntryItem($item)
     {
-        $this->assertTrue($item instanceof \PhraseanetSDK\Entity\FeedEntryItem);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\FeedEntryItem', $item);
         /* @var $item \PhraseanetSDK\Entity\FeedEntryItem */
         $this->assertNotNull($item->getId());
         $this->assertInternalType('integer', $item->getId());
@@ -514,7 +486,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkQuarantineSession($session)
     {
-        $this->assertTrue($session instanceof \PhraseanetSDK\Entity\QuarantineSession);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\QuarantineSession', $session);
         $this->assertNotNull($session->getId());
         $this->assertInternalType('integer', $session->getId());
         $this->assertNotNull($session->getUser());
@@ -523,7 +495,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkRecordCaption($caption)
     {
-        $this->assertTrue($caption instanceof \PhraseanetSDK\Entity\RecordCaption);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\RecordCaption', $caption);
         $this->assertNotNull($caption->getMetaStructureId());
         $this->assertInternalType('integer', $caption->getMetaStructureId());
         $this->assertNotNull($caption->getName());
@@ -534,18 +506,18 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkUser($user)
     {
-        $this->assertTrue($user instanceof \PhraseanetSDK\Entity\User);
+        $this->assertInstanceOf('\PhraseanetSDK\Entity\User', $user);
         $this->assertNotNull($user->getEmail());
         $this->assertNotNull($user->getLogin());
     }
 
     protected function assertIsCollection($collection)
     {
-        $this->assertTrue($collection instanceof \Doctrine\Common\Collections\ArrayCollection);
+        $this->assertInstanceOf('\Doctrine\Common\Collections\ArrayCollection', $collection);
     }
 
     protected function assertIsDate($date)
     {
-        $this->assertTrue($date instanceof \DateTime);
+        $this->assertInstanceOf('\DateTime', $date);
     }
 }

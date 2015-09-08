@@ -19,7 +19,7 @@ class FeedEntryItem
         $items = array();
 
         foreach ($values as $value) {
-            $items[$value->id] = self::fromValue($value);
+            $items[$value->item_id] = self::fromValue($value);
         }
 
         return $items;
@@ -55,7 +55,7 @@ class FeedEntryItem
      */
     public function getId()
     {
-        return $this->source->id;
+        return $this->source->item_id;
     }
 
     /**

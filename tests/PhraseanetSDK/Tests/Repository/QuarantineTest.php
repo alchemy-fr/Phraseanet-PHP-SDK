@@ -31,7 +31,7 @@ class QuarantineTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
+     * @expectedException \PhraseanetSDK\Exception\RuntimeException
      */
     public function testFindByIdRuntimeException()
     {
@@ -41,7 +41,7 @@ class QuarantineTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\NotFoundException
+     * @expectedException \PhraseanetSDK\Exception\NotFoundException
      */
     public function testFindByOffsetByNameException()
     {
@@ -51,7 +51,7 @@ class QuarantineTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
+     * @expectedException \PhraseanetSDK\Exception\UnauthorizedException
      */
     public function testFindByOffsetdException()
     {
@@ -61,7 +61,7 @@ class QuarantineTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
+     * @expectedException \PhraseanetSDK\Exception\RuntimeException
      */
     public function testFindByOffsetdQueryRuntimeException()
     {
@@ -71,7 +71,7 @@ class QuarantineTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
+     * @expectedException \PhraseanetSDK\Exception\RuntimeException
      */
     public function testFindByOffsetdRuntimeException()
     {

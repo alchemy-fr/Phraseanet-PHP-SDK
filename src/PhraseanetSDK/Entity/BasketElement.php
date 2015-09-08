@@ -24,7 +24,7 @@ class BasketElement
         $elements = array();
 
         foreach ($values as $value) {
-            $elements[$value->basket_element_id] = $value;
+            $elements[$value->basket_element_id] = self::fromValue($value);
         }
 
         return $elements;
@@ -69,7 +69,7 @@ class BasketElement
      */
     public function getId()
     {
-        return $this->source->basket_element_id;
+        return (int) $this->source->basket_element_id;
     }
 
     /**
@@ -79,7 +79,7 @@ class BasketElement
      */
     public function getOrder()
     {
-        return $this->source->order;
+        return (int) $this->source->order;
     }
 
     /**
@@ -114,19 +114,19 @@ class BasketElement
             $this->validationChoices = new ArrayCollection();
         }
 
-        return $this->validationChoices ?: $this->validationChoices = BasketValidationChoice::fromList(
-            $this->source->validation_choices
+        return $this->validationChoices ?: $this->validationChoices = new ArrayCollection(
+            BasketValidationChoice::fromList($this->source->validation_choices)
         );
     }
 
     /**
      * Get the annotation about the validation of the current authenticated user
      *
-     * @return string
+     * @return int
      */
     public function getNote()
     {
-        return $this->source->note;
+        return (int) $this->source->note;
     }
 
     /**

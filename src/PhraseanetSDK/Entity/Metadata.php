@@ -47,7 +47,7 @@ class Metadata
      */
     public function getId()
     {
-        return $this->source->id;
+        return $this->source->meta_id;
     }
 
     /**
