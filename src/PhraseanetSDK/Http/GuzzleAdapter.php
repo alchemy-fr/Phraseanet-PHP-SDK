@@ -22,6 +22,7 @@ use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GuzzleAdapter implements GuzzleAdapterInterface
 {
@@ -74,7 +75,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function setExtended($extended)
     {
-        $this->extended = (boolean) $extended;
+        $this->extended = (boolean)$extended;
     }
 
     /**
@@ -88,22 +89,30 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     /**
      * Performs an HTTP request, returns the body response
      *
-     * @param string $method     The method
-     * @param string $path       The path to query
-     * @param array  $query      An array of query parameters
-     * @param array  $postFields An array of post fields
-     * @param array  $files      An array of post files
-     * @param array  $headers    An array of request headers
+     * @param string $method The method
+     * @param string $path The path to query
+     * @param array $query An array of query parameters
+     * @param array $postFields An array of post fields
+     * @param array $files An array of post files
+     * @param array $headers An array of request headers
      *
      * @return string The response body
      *
      * @throws BadResponseException
      * @throws RuntimeException
      */
-    public function call($method, $path, array $query = array(), array $postFields = array(), array $files = array(), array $headers = array())
-    {
+    public function call(
+        $method,
+        $path,
+        array $query = array(),
+        array $postFields = array(),
+        array $files = array(),
+        array $headers = array()
+    ) {
         try {
-            $acceptHeader = array('Accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json');
+            $acceptHeader = array(
+                'Accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
+            );
 
             $request = $this->guzzle->createRequest($method, $path, array_merge($acceptHeader, $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
@@ -122,8 +131,8 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     /**
      * Creates a new instance of GuzzleAdapter
      *
-     * @param array $config
-     * @param array $plugins
+     * @param string $endpoint
+     * @param EventSubscriberInterface[] $plugins
      *
      * @return static
      */
@@ -133,12 +142,18 @@ class GuzzleAdapter implements GuzzleAdapterInterface
             throw new InvalidArgumentException('API url endpoint must be a valid url');
         }
         // test if url already end with API_MOUNT_POINT
-        if (ApplicationInterface::API_MOUNT_POINT !== substr(trim($endpoint, '/'), -strlen(ApplicationInterface::API_MOUNT_POINT))) {
+        $mountPoint = substr(trim($endpoint, '/'), -strlen(ApplicationInterface::API_MOUNT_POINT));
+
+        if (ApplicationInterface::API_MOUNT_POINT !== $mountPoint) {
             $endpoint = sprintf('%s%s/', trim($endpoint, '/'), ApplicationInterface::API_MOUNT_POINT);
         }
 
         $guzzle = new Guzzle($endpoint);
-        $guzzle->setUserAgent(sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION));
+        $guzzle->setUserAgent(sprintf(
+            '%s version %s',
+            ApplicationInterface::USER_AGENT,
+            ApplicationInterface::VERSION
+        ));
 
         foreach ($plugins as $plugin) {
             $guzzle->addSubscriber($plugin);

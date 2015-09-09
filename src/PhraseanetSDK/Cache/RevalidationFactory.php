@@ -25,7 +25,10 @@ class RevalidationFactory
             case 'deny':
                 return new DenyRevalidation();
             default:
-                throw new RuntimeException(sprintf('Unknown revalidation type %s, available are `skip`, `deny`.', $type));
+                throw new RuntimeException(sprintf(
+                    'Unknown revalidation type %s, available are `skip`, `deny`.',
+                    $type
+                ));
         }
     }
 }

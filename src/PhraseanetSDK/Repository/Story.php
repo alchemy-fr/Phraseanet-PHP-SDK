@@ -72,7 +72,8 @@ class Story extends AbstractRepository
     public function search(array $parameters = array())
     {
         $response = $this->query('POST', 'search/', array(), array_merge(
-            array('search_type' => 1), $parameters
+            array('search_type' => 1),
+            $parameters
         ));
 
         if ($response->isEmpty()) {

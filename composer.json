@@ -4,9 +4,6 @@
     "type": "library",
     "keywords": ["Phraseanet"],
     "license": "MIT",
-    "config": {
-        "bin-dir" : "bin/"
-    },
     "authors": [
         {
             "name": "nlegoff",
@@ -29,7 +26,8 @@
         "silex/silex"             : "~1.0",
         "silex/web-profiler"      : "1.0.3",
         "symfony/console"         : "~2.0",
-        "phpunit/phpunit"         : "~4.0"
+        "phpunit/phpunit"         : "~4.0",
+        "squizlabs/php_codesniffer": "^2.3"
     },
     "suggest": {
         "silex/web-profiler"      : "To use the WebProfiler with silex",

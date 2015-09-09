@@ -19,9 +19,13 @@ class RequestExtractor
 {
     public function extract(RequestInterface $request)
     {
+        $postFields = $request instanceof EntityEnclosingRequestInterface ?
+            $request->getPostFields()->toArray() :
+            array();
+
         return array(
             'query'       => $request->getQuery()->toArray(),
-            'post-fields' => $request instanceof EntityEnclosingRequestInterface ? $request->getPostFields()->toArray() : array(),
+            'post-fields' => $postFields,
             'method'      => $request->getMethod(),
             'path'        => substr($request->getPath(), strlen(ApplicationInterface::API_MOUNT_POINT)),
         );

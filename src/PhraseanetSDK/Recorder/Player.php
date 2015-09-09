@@ -34,34 +34,43 @@ class Player
     {
         $data = $this->storage->fetch();
         foreach ($data as $request) {
-            $this->output($output, sprintf(
-                "--> Executing request %s %s", $request['method'], $request['path']
-            ));
+            $this->output(sprintf(
+                "--> Executing request %s %s",
+                $request['method'],
+                $request['path']
+            ), $output);
 
             $start = microtime(true);
             $error = null;
             try {
-                $this->adapter->call($request['method'], $request['path'], $request['query'], $request['post-fields'], array(), array('User-Agent' => sprintf('%s/%s', self::USER_AGENT, ApplicationInterface::VERSION)));
+                $this->adapter->call(
+                    $request['method'],
+                    $request['path'],
+                    $request['query'],
+                    $request['post-fields'],
+                    array(),
+                    array('User-Agent' => sprintf('%s/%s', self::USER_AGENT, ApplicationInterface::VERSION))
+                );
             } catch (GuzzleException $e) {
                 $error = $e;
             }
             $duration = microtime(true) - $start;
 
             if (null !== $error) {
-                $this->output($output, sprintf(
+                $this->output(sprintf(
                     "    Query <error>failed</error> : %s.\n",
                     $e->getMessage()
-                ));
+                ), $output);
             } else {
-                $this->output($output, sprintf(
+                $this->output(sprintf(
                     "    Query took <comment>%f</comment>.\n",
                     $duration
-                ));
+                ), $output);
             }
         }
     }
 
-    private function output(OutputInterface $output = null, $message)
+    private function output($message, OutputInterface $output = null)
     {
         if (null !== $output) {
             $output->writeln($message);

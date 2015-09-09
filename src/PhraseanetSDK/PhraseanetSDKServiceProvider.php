@@ -48,7 +48,8 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                         'file' => realpath(__DIR__.'/../..').'/phraseanet.recorder.json',
                     ),
                     'limit' => 1000,
-                ), $app['recorder.config']
+                ),
+                $app['recorder.config']
             );
         });
 
@@ -68,7 +69,8 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
                 array(
                     'type' => 'array',
                     'ttl' => 300,
-                ), $app['cache.config']
+                ),
+                $app['cache.config']
             );
         });
 
@@ -183,11 +185,14 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
 
             $app['phraseanet-sdk.profiler.templates_path'] = __DIR__.'/Profiler/resources/views';
 
-            $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function ($loader, $app) {
-                $loader->addPath($app['phraseanet-sdk.profiler.templates_path'], 'PhraseanetSDK');
+            $app['twig.loader.filesystem'] = $app->share($app->extend(
+                'twig.loader.filesystem',
+                function ($loader, $app) {
+                    $loader->addPath($app['phraseanet-sdk.profiler.templates_path'], 'PhraseanetSDK');
 
-                return $loader;
-            }));
+                    return $loader;
+                }
+            ));
         }
 
         $app['phraseanet-sdk.recorder.storage-factory'] = $app->share(function (SilexApplication $app) {
