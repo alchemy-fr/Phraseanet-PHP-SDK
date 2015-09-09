@@ -2,33 +2,43 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-
 class QueryFacetValue 
 {
     /**
-     * @var string
-     * @ApiField(bind_to="value", type="string")
+     * @param \stdClass[] $values
+     * @return QueryFacetValue[]
      */
-    protected $value;
-
-    /**
-     * @var int
-     * @ApiField(bind_to="count", type="int")
-     */
-    protected $count;
-
-    /**
-     * @var string
-     * @ApiField(bind_to="query", type="string")
-     */
-    protected $query;
-
-    public function __construct($value = '', $count = 0, $query = '')
+    public static function fromList(array $values)
     {
-        $this->value = (string) $value;
-        $this->count = (int) $count;
-        $this->query = (string) $query;
+        $facetValues = array();
+
+        foreach ($values as $value) {
+            $facetValues[] = self::fromValue($value);
+        }
+
+        return $facetValues;
+    }
+
+    /**
+     * @param \stdClass $value
+     * @return QueryFacetValue
+     */
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
+    /**
+     * @var \stdClass
+     */
+    protected $source;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
     }
 
     /**
@@ -36,15 +46,7 @@ class QueryFacetValue
      */
     public function getValue()
     {
-        return $this->value;
-    }
-
-    /**
-     * @param string $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
+        return $this->source->value;
     }
 
     /**
@@ -52,15 +54,7 @@ class QueryFacetValue
      */
     public function getCount()
     {
-        return $this->count;
-    }
-
-    /**
-     * @param int $count
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
+        return $this->source->count;
     }
 
     /**
@@ -68,14 +62,6 @@ class QueryFacetValue
      */
     public function getQuery()
     {
-        return $this->query;
-    }
-
-    /**
-     * @param string $query
-     */
-    public function setQuery($query)
-    {
-        $this->query = $query;
+        return $this->source->query;
     }
 }

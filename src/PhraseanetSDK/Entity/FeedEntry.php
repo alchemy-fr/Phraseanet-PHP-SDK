@@ -12,62 +12,61 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\Id as Id;
 
 class FeedEntry
 {
+
     /**
-     * @Id
-     * @ApiField(bind_to="id", type="int")
+     * @param \stdClass[] $values
+     * @return FeedEntry[]
      */
-    protected $id;
+    public static function fromList(array $values)
+    {
+        $entries = array();
+
+        foreach ($values as $value) {
+            $entries[$value->id] = self::fromValue($value);
+        }
+
+        return $entries;
+    }
+
     /**
-     * @ApiField(bind_to="feed_id", type="int")
+     * @param \stdClass $value
+     * @return FeedEntry
      */
-    protected $feedId;
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="feed_title", type="string")
+     * @var \stdClass
      */
-    protected $feedTitle;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="feed_url", type="string")
-     */
-    protected $feedUrl;
-    /**
-     * @ApiField(bind_to="url", type="string")
-     */
-    protected $url;
-    /**
-     * @ApiField(bind_to="author_email", type="string")
-     */
-    protected $authorEmail;
-    /**
-     * @ApiField(bind_to="author_name", type="string")
-     */
-    protected $authorName;
-    /**
-     * @ApiField(bind_to="title", type="string")
-     */
-    protected $title;
-    /**
-     * @ApiField(bind_to="subtitle", type="string")
-     */
-    protected $subtitle;
-    /**
-     * @ApiField(bind_to="created_on", type="date")
+     * @var \DateTime
      */
     protected $createdOn;
+
     /**
-     * @ApiField(bind_to="updated_on", type="date")
+     * @var \DateTime
      */
     protected $updatedOn;
+
     /**
-     * @ApiField(bind_to="items", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="FeedEntryItem")
+     * FeedEntryItem[]|ArrayCollection
      */
     protected $items;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The Entry id
@@ -76,12 +75,7 @@ class FeedEntry
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->id;
     }
 
     /**
@@ -91,12 +85,7 @@ class FeedEntry
      */
     public function getAuthorEmail()
     {
-        return $this->authorEmail;
-    }
-
-    public function setAuthorEmail($authorEmail)
-    {
-        $this->authorEmail = $authorEmail;
+        return $this->source->author_email;
     }
 
     /**
@@ -106,12 +95,7 @@ class FeedEntry
      */
     public function getAuthorName()
     {
-        return $this->authorName;
-    }
-
-    public function setAuthorName($authorName)
-    {
-        $this->authorName = $authorName;
+        return $this->source->author_name;
     }
 
     /**
@@ -121,12 +105,7 @@ class FeedEntry
      */
     public function getTitle()
     {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
+        return $this->source->title;
     }
 
     /**
@@ -136,12 +115,7 @@ class FeedEntry
      */
     public function getSubtitle()
     {
-        return $this->subtitle;
-    }
-
-    public function setSubtitle($subtitle)
-    {
-        $this->subtitle = $subtitle;
+        return $this->source->subtitle;
     }
 
     /**
@@ -151,12 +125,7 @@ class FeedEntry
      */
     public function getCreatedOn()
     {
-        return $this->createdOn;
-    }
-
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
     }
 
     /**
@@ -166,12 +135,7 @@ class FeedEntry
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -182,73 +146,44 @@ class FeedEntry
      */
     public function getItems()
     {
-        return $this->items;
-    }
+        if (! isset($this->source->items)) {
+            $this->items = new ArrayCollection();
+        }
 
-    public function setItems(ArrayCollection $items)
-    {
-        $this->items = $items;
+        return $this->items ?: $this->items = new ArrayCollection(FeedEntryItem::fromList($this->source->items));
     }
 
     /**
-     * Recover the entrie's feed id
+     * Returns the entry's feed id
+     *
      * @return integer
      */
     public function getFeedId()
     {
-        return $this->feedId;
-    }
-
-    public function setFeedId($feedId)
-    {
-        $this->feedId = $feedId;
+        return $this->source->feed_id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFeedTitle()
     {
-        return $this->feedTitle;
+        return $this->source->feed_title;
     }
 
     /**
-     * @param mixed $feedTitle
-     */
-    public function setFeedTitle($feedTitle)
-    {
-        $this->feedTitle = $feedTitle;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getFeedUrl()
     {
-        return $this->feedUrl;
+        return $this->source->feed_url;
     }
 
     /**
-     * @param mixed $feedUrl
-     */
-    public function setFeedUrl($feedUrl)
-    {
-        $this->feedUrl = $feedUrl;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getUrl()
     {
-        return $this->url;
-    }
-
-    /**
-     * @param mixed $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
+        return $this->source->url;
     }
 }

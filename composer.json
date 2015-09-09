@@ -19,13 +19,10 @@
         }
     ],
     "require": {
-        "php"                     : ">5.3.3",
+        "php"                     : ">5.4",
         "doctrine/cache"          : "~1.0",
         "doctrine/collections"    : "~1.0",
-        "doctrine/annotations"    : "~1.0",
-        "guzzle/guzzle"           : "~3.0",
-        "monolog/monolog"         : "~1.0",
-        "ocramius/proxy-manager"  : "~1.0"
+        "guzzle/guzzle"           : "~3.0"
     },
     "require-dev": {
         "sami/sami"               : "~1.0",
@@ -45,7 +42,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.6-dev"
+            "dev-master": "0.8.x-dev"
         }
     }
 }

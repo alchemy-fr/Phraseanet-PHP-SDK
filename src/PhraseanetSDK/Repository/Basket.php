@@ -33,13 +33,7 @@ class Basket extends AbstractRepository
             throw new RuntimeException('Missing "baskets" property in response content');
         }
 
-        $baskets = new ArrayCollection();
-
-        foreach ($response->getProperty('baskets') as $basketData) {
-            $baskets->add(EntityHydrator::hydrate('basket', $basketData, $this->em));
-        }
-
-        return $baskets;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Basket::fromList($response->getProperty('baskets')));
     }
 
     /**
@@ -56,12 +50,6 @@ class Basket extends AbstractRepository
             throw new RuntimeException('Missing "baskets" property in response content');
         }
 
-        $baskets = new ArrayCollection();
-
-        foreach ($response->getProperty('baskets') as $basketData) {
-            $baskets->add(EntityHydrator::hydrate('basket', $basketData, $this->em));
-        }
-
-        return $baskets;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Basket::fromList($response->getProperty('baskets')));
     }
 }

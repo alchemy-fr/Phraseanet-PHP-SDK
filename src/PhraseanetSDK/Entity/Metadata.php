@@ -11,32 +11,34 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\Id as Id;
-
 class Metadata
 {
+
+    public static function fromList(array $values)
+    {
+        $metadata = array();
+
+        foreach ($values as $value) {
+            $metadata[$value->meta_id] = self::fromValue($value);
+        }
+
+        return $metadata;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="meta_id", type="int")
+     * @var \stdClass
      */
-    protected $id;
-    /**
-     * @ApiField(bind_to="meta_structure_id", type="int")
-     */
-    protected $metaStructureId;
-    /**
-     * @ApiField(bind_to="name", type="string")
-     */
-    protected $name;
-    /**
-     * @ApiField(bind_to="value", type="string")
-     */
-    protected $value;
-    /**
-     * @ApiField(bind_to="labels", type="array")
-     */
-    protected $labels;
+    protected $source;
+
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the metadata id
@@ -45,12 +47,7 @@ class Metadata
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->meta_id;
     }
 
     /**
@@ -60,12 +57,7 @@ class Metadata
      */
     public function getMetaStructureId()
     {
-        return $this->metaStructureId;
-    }
-
-    public function setMetaStructureId($structureId)
-    {
-        $this->metaStructureId = $structureId;
+        return $this->source->meta_structure_id;
     }
 
     /**
@@ -75,12 +67,7 @@ class Metadata
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -90,27 +77,14 @@ class Metadata
      */
     public function getValue()
     {
-        return $this->value;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
+        return $this->source->value;
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getLabels()
     {
-        return $this->labels;
-    }
-
-    /**
-     * @param mixed $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
+        return $this->source->labels;
     }
 }

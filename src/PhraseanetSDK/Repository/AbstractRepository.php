@@ -21,7 +21,9 @@ use PhraseanetSDK\Http\APIGuzzleAdapter;
 
 abstract class AbstractRepository
 {
-    /** @var EntityManager */
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
     /**

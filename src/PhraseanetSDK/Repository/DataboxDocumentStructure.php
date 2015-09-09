@@ -32,12 +32,8 @@ class DataboxDocumentStructure extends AbstractRepository
             throw new RuntimeException('Missing "document_metadatas_structure" property in response content');
         }
 
-        $databoxDocumentStructure = new ArrayCollection();
-
-        foreach ($response->getProperty('document_metadatas') as $databoxMetadataData) {
-            $databoxDocumentStructure->add(EntityHydrator::hydrate('databoxDocumentStructure', $databoxMetadataData, $this->em));
-        }
-
-        return $databoxDocumentStructure;
+        return new ArrayCollection(\PhraseanetSDK\Entity\DataboxDocumentStructure::fromList(
+            $response->getProperty('document_metadatas')
+        ));
     }
 }

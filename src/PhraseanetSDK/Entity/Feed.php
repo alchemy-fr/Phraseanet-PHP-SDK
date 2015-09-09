@@ -12,58 +12,56 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\Id as Id;
+use PhraseanetSDK\EntityManager;
 
 class Feed
 {
+
+    public static function fromList(EntityManager $entityManager, array $values)
+    {
+        $feeds = array();
+
+        foreach ($values as $value) {
+            $feeds[$value->id] = self::fromValue($entityManager, $value);
+        }
+
+        return $feeds;
+    }
+
+    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    {
+        return new self($entityManager, $value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="id", type="int")
+     * @var EntityManager
      */
-    protected $id;
+    protected $entityManager;
+
     /**
-     * @ApiField(bind_to="title", type="string")
+     * @var \stdClass
      */
-    protected $title;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="icon", type="string")
-     */
-    protected $icon;
-    /**
-     * @ApiField(bind_to="subtitle", type="string")
-     */
-    protected $subTitle;
-    /**
-     * @ApiField(bind_to="total_entries", type="int")
-     */
-    protected $totalEntries;
-    /**
-     * @ApiField(bind_to="created_on", type="date")
+     * @var \DateTime|null
      */
     protected $createdOn;
+
     /**
-     * @ApiField(bind_to="updated_on", type="date")
+     * @var \DateTime|null
      */
     protected $updatedOn;
+
     /**
-     * @ApiField(bind_to="entries", type="relation", virtual="1")
-     * @ApiRelation(type="one_to_many", target_entity="FeedEntry")
+     * @param EntityManager $entityManager
+     * @param \stdClass $source
      */
-    protected $entries;
-    /**
-     * @ApiField(bind_to="public", type="boolean")
-     */
-    protected $public;
-    /**
-     * @ApiField(bind_to="readonly", type="boolean")
-     */
-    protected $readonly;
-    /**
-     * @ApiField(bind_to="deletable", type="boolean")
-     */
-    protected $deletable;
+    public function __construct(EntityManager $entityManager, \stdClass $source)
+    {
+        $this->entityManager = $entityManager;
+        $this->source = $source;
+    }
 
     /**
      * The feed id
@@ -72,12 +70,7 @@ class Feed
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->id;
     }
 
     /**
@@ -87,12 +80,7 @@ class Feed
      */
     public function getTitle()
     {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
+        return $this->source->title;
     }
 
     /**
@@ -102,12 +90,7 @@ class Feed
      */
     public function getIcon()
     {
-        return $this->icon;
-    }
-
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
+        return $this->source->icon;
     }
 
     /**
@@ -117,12 +100,7 @@ class Feed
      */
     public function getSubTitle()
     {
-        return $this->subTitle;
-    }
-
-    public function setSubTitle($subTitle)
-    {
-        $this->subTitle = $subTitle;
+        return $this->source->subtitle;
     }
 
     /**
@@ -132,12 +110,7 @@ class Feed
      */
     public function getTotalEntries()
     {
-        return $this->totalEntries;
-    }
-
-    public function setTotalEntries($totalEntries)
-    {
-        $this->totalEntries = $totalEntries;
+        return $this->source->total_entries;
     }
 
     /**
@@ -147,12 +120,7 @@ class Feed
      */
     public function getCreatedOn()
     {
-        return $this->createdOn;
-    }
-
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
     }
 
     /**
@@ -162,22 +130,7 @@ class Feed
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
-    }
-
-    public function getEntries($offset, $perPage)
-    {
-        return $this->entries;
-    }
-
-    public function setEntries(ArrayCollection $entries)
-    {
-        $this->entries = $entries;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -187,12 +140,7 @@ class Feed
      */
     public function isPublic()
     {
-        return $this->public;
-    }
-
-    public function setPublic($public)
-    {
-        $this->public = $public;
+        return $this->source->public;
     }
 
     /**
@@ -202,12 +150,7 @@ class Feed
      */
     public function isReadonly()
     {
-        return $this->readonly;
-    }
-
-    public function setReadonly($readonly)
-    {
-        $this->readonly = $readonly;
+        return $this->source->readonly;
     }
 
     /**
@@ -217,11 +160,18 @@ class Feed
      */
     public function isDeletable()
     {
-        return $this->deletable;
+        return $this->source->deletable;
     }
 
-    public function setDeletable($deletable)
+    /**
+     * @param int $offset
+     * @param int $perPage
+     * @return FeedEntry[]|ArrayCollection
+     */
+    public function getEntries($offset = 0, $perPage = 0)
     {
-        $this->deletable = $deletable;
+        return $this->entityManager
+            ->getRepository('entry')
+            ->findByFeed($this->getId(), $offset, $perPage);
     }
 }

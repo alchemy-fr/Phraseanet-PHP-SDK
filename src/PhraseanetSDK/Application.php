@@ -15,118 +15,19 @@ use PhraseanetSDK\Http\GuzzleAdapter;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
+use Psr\Log\NullLogger;
 
 /**
  * Phraseanet SDK Application
  */
 class Application implements ApplicationInterface
 {
-    /** @var GuzzleAdapter */
-    private $adapter;
-
-    /** @var string Url */
-    private $clientId;
-
-    /** @var string Url */
-    private $secret;
-
-    /** @var array An array of EntityManager */
-    private $ems = array();
-
-    /** @var OAuth2Connector */
-    private $connector;
-
-    /** @var APIGuzzleAdapter[] */
-    private $adapters = array();
-
-    /** @var array An array of loaders */
-    private $uploaders = array();
-
-    public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
-    {
-        $this->adapter = $adapter;
-        $this->clientId = $clientId;
-        $this->secret = $secret;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getOauth2Connector()
-    {
-        if (null !== $this->connector) {
-            return $this->connector;
-        }
-
-        return $this->connector = new OAuth2Connector($this->adapter, $this->clientId, $this->secret);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUploader($token)
-    {
-        if ('' === trim($token)) {
-            throw new InvalidArgumentException('Token can not be empty.');
-        }
-
-        if (isset($this->uploaders[$token])) {
-            return $this->uploaders[$token];
-        }
-
-        return $this->uploaders[$token] = new Uploader($this->getAdapterByToken($token), $this->getEntityManager($token));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEntityManager($token, array $options = array())
-    {
-        if ('' === trim($token)) {
-            throw new InvalidArgumentException('Token can not be empty.');
-        }
-
-        if (isset($this->ems[$token])) {
-            return $this->ems[$token];
-        }
-
-        return $this->ems[$token] = new EntityManager($this->getAdapterByToken($token), $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMonitor($token)
-    {
-        if ('' === trim($token)) {
-            throw new InvalidArgumentException('Token can not be empty.');
-        }
-
-        if (isset($this->monitors[$token])) {
-            return $this->monitors[$token];
-        }
-
-        return $this->monitors[$token] = new Monitor($this->getAdapterByToken($token));
-    }
-
-    /**
-     * Returns the guzzle adapter
-     *
-     * @return GuzzleAdapter
-     */
-    public function getAdapter()
-    {
-        return $this->adapter;
-    }
-
     /**
      * Creates the application.
      *
+     * @param array $config
      * @param GuzzleAdapter $adapter
-     *
      * @return Application
-     *
-     * @throws InvalidArgumentException In case a required parameter is missing
      */
     public static function create(array $config, GuzzleAdapter $adapter = null)
     {
@@ -152,6 +53,53 @@ class Application implements ApplicationInterface
     }
 
     /**
+     * @var GuzzleAdapter
+     */
+    private $adapter;
+
+    /**
+     * @var string Application client ID. Used by Oauth2Connector
+     */
+    private $clientId;
+
+    /**
+     * @var string Application secret. Used by Oauth2Connector
+     */
+    private $secret;
+
+    /**
+     * @var OAuth2Connector
+     */
+    private $connector;
+
+    /**
+     * @var EntityManager[]
+     */
+    private $entityManagers = array();
+
+    /**
+     * @var APIGuzzleAdapter[]
+     */
+    private $adapters = array();
+
+    /**
+     * @var Uploader[]
+     */
+    private $uploaders = array();
+
+    /**
+     * @var Monitor[]
+     */
+    private $monitors = array();
+
+    public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
+    {
+        $this->adapter = $adapter;
+        $this->clientId = $clientId;
+        $this->secret = $secret;
+    }
+
+    /**
      * Activate extended graph object by adding required accept headers.
      * This results in bigger response message but less requests to get
      * relation of queried object.
@@ -161,6 +109,76 @@ class Application implements ApplicationInterface
     public function setExtendedMode($mode)
     {
         $this->adapter->setExtended($mode);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOauth2Connector()
+    {
+        if ($this->connector === null) {
+            $this->connector = new OAuth2Connector($this->adapter, $this->clientId, $this->secret);
+        }
+
+        return $this->connector;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUploader($token)
+    {
+        if ('' === trim($token)) {
+            throw new InvalidArgumentException('Token can not be empty.');
+        }
+
+        if (!isset($this->uploaders[$token])) {
+            $this->uploaders[$token] = new Uploader($this->getAdapterByToken($token), $this->getEntityManager($token));
+        }
+
+        return $this->uploaders[$token];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEntityManager($token)
+    {
+        if ('' === trim($token)) {
+            throw new InvalidArgumentException('Token can not be empty.');
+        }
+
+        if (!isset($this->entityManagers[$token])) {
+            $this->entityManagers[$token] = new EntityManager($this->getAdapterByToken($token), new NullLogger());
+        }
+
+        return $this->entityManagers[$token];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMonitor($token)
+    {
+        if ('' === trim($token)) {
+            throw new InvalidArgumentException('Token can not be empty.');
+        }
+
+        if (!isset($this->monitors[$token])) {
+            $this->monitors[$token] = new Monitor($this->getAdapterByToken($token));
+        }
+
+        return $this->monitors[$token];
+    }
+
+    /**
+     * Returns the guzzle adapter
+     *
+     * @return GuzzleAdapter
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
     }
 
     private function getAdapterByToken($token)

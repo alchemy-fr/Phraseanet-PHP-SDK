@@ -17,16 +17,40 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class QuarantineSession
 {
+
+    public static function fromList(array $values)
+    {
+        $sessions = array();
+
+        foreach ($values as $value) {
+            $sessions[$value->id] = self::fromValue($value);
+        }
+
+        return $sessions;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="id", type="int")
+     * @var \stdClass
      */
-    protected $id;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="user", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="User")
+     * @var User
      */
     protected $user;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The session id
@@ -35,12 +59,7 @@ class QuarantineSession
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->id;
     }
 
     /**
@@ -50,11 +69,6 @@ class QuarantineSession
      */
     public function getUser()
     {
-        return $this->user;
-    }
-
-    public function setUser($user)
-    {
-        $this->user = $user;
+        return $this->user ?: $this->user = User::fromValue($this->source->user);
     }
 }

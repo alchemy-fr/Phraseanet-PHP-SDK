@@ -35,7 +35,7 @@ class Feed extends AbstractRepository
             throw new RuntimeException('Missing "feed" property in response content');
         }
 
-        return EntityHydrator::hydrate('feed', $response->getProperty('feed'), $this->em);
+        return \PhraseanetSDK\Entity\Feed::fromValue($this->em, $response->getProperty('feed'));
     }
 
     /**
@@ -52,12 +52,9 @@ class Feed extends AbstractRepository
             throw new RuntimeException('Missing "feeds" property in response content');
         }
 
-        $feedCollection = new ArrayCollection();
-
-        foreach ($response->getProperty('feeds') as $feedData) {
-            $feedCollection->add(EntityHydrator::hydrate('feed', $feedData, $this->em));
-        }
-
-        return $feedCollection;
+        return new ArrayCollection(\PhraseanetSDK\Entity\Feed::fromList(
+            $this->em,
+            $response->getProperty('feeds')
+        ));
     }
 }

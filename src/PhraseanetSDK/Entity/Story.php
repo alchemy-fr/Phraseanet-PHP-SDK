@@ -14,57 +14,81 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\EntityManager;
 
 class Story
 {
+
+    public static function fromList(EntityManager $entityManager, array $values)
+    {
+        $stories = array();
+
+        foreach ($values as $value) {
+            $stories[] = self::fromValue($entityManager, $value);
+        }
+
+        return $stories;
+    }
+
+    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    {
+        return new self($entityManager, $value);
+    }
+
     /**
-     * @ApiField(bind_to="story_id", type="int")
+     * @var EntityManager
      */
-    protected $storyId;
+    protected $entityManager;
+
     /**
-     * @ApiField(bind_to="databox_id", type="int")
+     * @var \stdClass
      */
-    protected $databoxId;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="updated_on", type="date")
+     * @var \DateTime
      */
     protected $updatedOn;
+
     /**
-     * @ApiField(bind_to="created_on", type="date")
+     * @var \DateTime
      */
     protected $createdOn;
+
     /**
-     * @ApiField(bind_to="collection_id", type="int")
-     */
-    protected $collectionId;
-    /**
-     * @ApiField(bind_to="uuid", type="string")
-     */
-    protected $uuid;
-    /**
-     * @ApiField(bind_to="thumbnail", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="Subdef")
+     * @var Subdef|null
      */
     protected $thumbnail;
+
     /**
-     * @ApiField(bind_to="records", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Record")
+     * @var ArrayCollection|Record[]
      */
     protected $records;
+
     /**
-     * @ApiField(bind_to="metadatas", type="array")
+     * @var ArrayCollection|Metadata[]
      */
     protected $metadata;
+
     /**
-     * @ApiField(bind_to="status", type="relation", virtual="1")
-     * @ApiRelation(type="one_to_many", target_entity="RecordStatus")
+     * @var ArrayCollection|RecordStatus[]
      */
     protected $status;
+
     /**
-     * @ApiField(bind_to="caption", type="relation", virtual="1")
-     * @ApiRelation(type="one_to_many", target_entity="RecordCaption")
+     * @var ArrayCollection|RecordCaption[]
      */
     protected $caption;
+
+    /**
+     * @param EntityManager $entityManager
+     * @param \stdClass $source
+     */
+    public function __construct(EntityManager $entityManager, \stdClass $source)
+    {
+        $this->entityManager = $entityManager;
+        $this->source = $source;
+    }
 
     /**
      * Get unique id
@@ -83,12 +107,7 @@ class Story
      */
     public function getStoryId()
     {
-        return $this->storyId;
-    }
-
-    public function setStoryId($storyId)
-    {
-        $this->storyId = $storyId;
+        return $this->source->story_id;
     }
 
     /**
@@ -98,12 +117,7 @@ class Story
      */
     public function getDataboxId()
     {
-        return $this->databoxId;
-    }
-
-    public function setDataboxId($databoxId)
-    {
-        $this->databoxId = $databoxId;
+        return $this->source->databox_id;
     }
 
     /**
@@ -111,15 +125,11 @@ class Story
      */
     public function getThumbnail()
     {
-        return $this->thumbnail;
-    }
+        if (! isset($this->source->thumbnail)) {
+            return null;
+        }
 
-    /**
-     * Thumbnail can be null for stories, if no representative image is set.
-     */
-    public function setThumbnail(Subdef $thumbnail = null)
-    {
-        $this->thumbnail = $thumbnail;
+        return $this->thumbnail ?: $this->thumbnail = Subdef::fromValue($this->source->thumbnail);
     }
 
     /**
@@ -129,12 +139,7 @@ class Story
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -144,12 +149,7 @@ class Story
      */
     public function getCreatedOn()
     {
-        return $this->createdOn;
-    }
-
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
     }
 
     /**
@@ -159,12 +159,7 @@ class Story
      */
     public function getCollectionId()
     {
-        return $this->collectionId;
-    }
-
-    public function setCollectionId($collectionId)
-    {
-        $this->collectionId = $collectionId;
+        return $this->source->collection_id;
     }
 
     /**
@@ -174,12 +169,7 @@ class Story
      */
     public function getUuid()
     {
-        return $this->uuid;
-    }
-
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
+        return $this->source->uuid;
     }
 
     /**
@@ -187,12 +177,11 @@ class Story
      */
     public function getRecords()
     {
-        return $this->records;
-    }
+        if (! isset($this->source->records)) {
+            $this->records = new ArrayCollection();
+        }
 
-    public function setRecords(ArrayCollection $records)
-    {
-        $this->records = $records;
+        return $this->records ?: $this->records = new ArrayCollection(Record::fromList($this->source->records));
     }
 
     /**
@@ -200,12 +189,11 @@ class Story
      */
     public function getMetadata()
     {
-        return $this->metadata;
-    }
+        if (! isset($this->source->metadata)) {
+            $this->metadata = new ArrayCollection();
+        }
 
-    public function setMetadata(ArrayCollection $metadata)
-    {
-        $this->metadata = $metadata;
+        return $this->metadata ?: $this->metadata = new ArrayCollection(Metadata::fromList($this->source->metadata));
     }
 
     /**
@@ -213,12 +201,14 @@ class Story
      */
     public function getStatus()
     {
-        return $this->status;
-    }
+        if (! isset($this->status)) {
+            $this->status = $this->entityManager->getRepository('recordStatus')->findByRecord(
+                $this->getDataboxId(),
+                $this->getStoryId()
+            );
+        }
 
-    public function setStatus(ArrayCollection $status)
-    {
-        $this->status = $status;
+        return $this->status;
     }
 
     /**
@@ -226,11 +216,13 @@ class Story
      */
     public function getCaption()
     {
-        return $this->caption;
-    }
+        if (! isset($this->caption)) {
+            $this->caption = $this->entityManager->getRepository('caption')->findByRecord(
+                $this->getDataboxId(),
+                $this->getStoryId()
+            );
+        }
 
-    public function setCaption(ArrayCollection $caption)
-    {
-        $this->caption = $caption;
+        return $this->caption;
     }
 }

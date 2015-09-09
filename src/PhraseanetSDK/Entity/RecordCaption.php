@@ -16,19 +16,40 @@ use PhraseanetSDK\Annotation\Id as Id;
 
 class RecordCaption
 {
+
+    public static function fromList(array $values)
+    {
+        $captions = array();
+
+        foreach ($values as $value) {
+            $captions[$value->meta_structure_id] = self::fromValue($value);
+        }
+
+        return $captions;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="meta_structure_id", type="int")
+     * @var \stdClass
      */
-    protected $metaStructureId;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="name", type="string")
+     * @param \stdClass $source
      */
-    protected $name;
-    /**
-     * @ApiField(bind_to="value", type="string")
-     */
-    protected $value;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
+    }
 
     /**
      * Get the related databox meta field id
@@ -37,12 +58,7 @@ class RecordCaption
      */
     public function getMetaStructureId()
     {
-        return $this->metaStructureId;
-    }
-
-    public function setMetaStructureId($metaStructureId)
-    {
-        $this->metaStructureId = $metaStructureId;
+        return $this->source->meta_structure_id;
     }
 
     /**
@@ -52,12 +68,7 @@ class RecordCaption
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -67,11 +78,6 @@ class RecordCaption
      */
     public function getValue()
     {
-        return $this->value;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
+        return $this->source->value;
     }
 }

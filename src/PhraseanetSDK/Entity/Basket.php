@@ -12,77 +12,70 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
-use PhraseanetSDK\Annotation\Id as Id;
 
 class Basket
 {
+
+    public static function fromList(array $values)
+    {
+        $baskets = array();
+
+        foreach ($values as $value) {
+            $baskets[$value->basket_id] = self::fromValue($value);
+        }
+
+        return $baskets;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="basket_id", type="int")
+     * @var \stdClass
      */
-    protected $id;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="name", type="string")
-     */
-    protected $name;
-    /**
-     * @ApiField(bind_to="description", type="string")
-     */
-    protected $description;
-    /**
-     * @ApiField(bind_to="owner", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="User")
+     * @var User|null
      */
     protected $owner;
+
     /**
-     * @ApiField(bind_to="pusher", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="User")
+     * @var User|null
      */
     protected $pusher;
+
     /**
-     * @ApiField(bind_to="unread", type="boolean")
-     */
-    protected $unread;
-    /**
-     * @ApiField(bind_to="created_on", type="date")
+     * @var \DateTime
      */
     protected $createdOn;
+
     /**
-     * @ApiField(bind_to="updated_on", type="date")
+     * @var \DateTime
      */
     protected $updatedOn;
+
     /**
-     * @ApiField(bind_to="validation_basket", type="boolean")
-     */
-    protected $validationBasket;
-    /**
-     * @ApiField(bind_to="validation_users", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="BasketValidationParticipant")
+     * ArrayCollection|User[]
      */
     protected $validationUsers;
+
     /**
-     * @ApiField(bind_to="expires_on", type="date")
+     * @var \DateTime
      */
     protected $expiresOn;
+
     /**
-     * @ApiField(bind_to="validation_infos", type="string")
-     */
-    protected $validationInfo;
-    /**
-     * @ApiField(bind_to="validation_confirmed", type="boolean")
-     */
-    protected $validationConfirmed;
-    /**
-     * @ApiField(bind_to="validation_initiator_user", type="relation")
-     * @ApiRelation(type="one_to_one", target_entity="User")
+     * @var User|null
      */
     protected $validationInitiatorUser;
-    /**
-     * @ApiField(bind_to="validation_initiator", type="boolean")
-     */
-    protected $validationInitiator;
+
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The basket id
@@ -91,12 +84,7 @@ class Basket
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->source->basket_id;
     }
 
     /**
@@ -106,12 +94,7 @@ class Basket
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -121,12 +104,7 @@ class Basket
      */
     public function getDescription()
     {
-        return $this->description;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
+        return $this->source->description;
     }
 
     /**
@@ -137,12 +115,7 @@ class Basket
      */
     public function getPusher()
     {
-        return $this->pusher;
-    }
-
-    public function setPusher($pusher)
-    {
-        $this->pusher = $pusher;
+        return $this->pusher ?: $this->pusher = User::fromValue($this->source->pusher);
     }
 
     /**
@@ -152,12 +125,7 @@ class Basket
      */
     public function isUnread()
     {
-        return $this->unread;
-    }
-
-    public function setUnread($unread)
-    {
-        $this->unread = $unread;
+        return $this->source->unread;
     }
 
     /**
@@ -167,12 +135,7 @@ class Basket
      */
     public function getCreatedOn()
     {
-        return $this->createdOn;
-    }
-
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
     }
 
     /**
@@ -182,12 +145,7 @@ class Basket
      */
     public function getUpdatedOn()
     {
-        return $this->updatedOn;
-    }
-
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
     }
 
     /**
@@ -197,12 +155,7 @@ class Basket
      */
     public function isValidationBasket()
     {
-        return $this->validationBasket;
-    }
-
-    public function setValidationBasket($validationBasket)
-    {
-        $this->validationBasket = $validationBasket;
+        return $this->source->validation_basket;
     }
 
     /**
@@ -213,12 +166,13 @@ class Basket
      */
     public function getValidationUsers()
     {
-        return $this->validationUsers;
-    }
+        if (! $this->isValidationBasket()) {
+            return null;
+        }
 
-    public function setValidationUsers(ArrayCollection $validationUsers = null)
-    {
-        $this->validationUsers = $validationUsers;
+        return $this->validationUsers ?: $this->validationUsers = new ArrayCollection(
+            BasketValidationParticipant::fromList($this->source->validation_users)
+        );
     }
 
     /**
@@ -228,12 +182,7 @@ class Basket
      */
     public function getExpiresOn()
     {
-        return $this->expiresOn;
-    }
-
-    public function setExpiresOn(\DateTime $expiresOn = null)
-    {
-        $this->expiresOn = $expiresOn;
+        return $this->expiresOn ?: $this->expiresOn = new \DateTime($this->source->expires_on);
     }
 
     /**
@@ -244,67 +193,44 @@ class Basket
      */
     public function getValidationInfo()
     {
-        return $this->validationInfo;
-    }
-
-    public function setValidationInfo($validationInfo)
-    {
-        $this->validationInfo = $validationInfo;
+        return $this->source->validation_infos;
     }
 
     /**
      * Tell whether the validation is confirmed
      *
-     * @return Boolean|null
+     * @return bool
      */
     public function isValidationConfirmed()
     {
-        return $this->validationConfirmed;
-    }
-
-    public function setValidationConfirmed($validationConfirmed)
-    {
-        $this->validationConfirmed = $validationConfirmed;
+        return (bool) $this->source->validation_confirmed;
     }
 
     /**
      * Tell whether the current authenticated user initiates the validation process
      *
-     * @return Boolean|null
+     * @return bool
      */
     public function isValidationInitiator()
     {
-        return $this->validationInitiator;
-    }
-
-    public function setValidationInitiator($initiator)
-    {
-        $this->validationInitiator = $initiator;
-    }
-
-    public function getValidationInitiatorUser()
-    {
-        return $this->validationInitiatorUser;
-    }
-
-    public function setValidationInitiatorUser($validationInitiator)
-    {
-        $this->validationInitiatorUser = $validationInitiator;
+        return (bool) $this->source->validation_initiator;
     }
 
     /**
-     * @return mixed
+     * @return User|null
+     */
+    public function getValidationInitiatorUser()
+    {
+        return $this->validationInitiatorUser ?: $this->validationInitiatorUser = User::fromValue(
+            $this->source->validation_initiator_user
+        );
+    }
+
+    /**
+     * @return User
      */
     public function getOwner()
     {
-        return $this->owner;
-    }
-
-    /**
-     * @param mixed $owner
-     */
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
+        return $this->owner ?: $this->owner = User::fromValue($this->source->owner);
     }
 }

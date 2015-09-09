@@ -14,43 +14,82 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use PhraseanetSDK\EntityManager;
 
 class Result
 {
     /**
-     * @ApiField(bind_to="records", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Record")
+     * @param EntityManager $entityManager
+     * @param \stdClass[] $values
+     * @return Result[]
+     */
+    public static function fromList(EntityManager $entityManager, array $values)
+    {
+        $results = array();
+
+        foreach ($values as $value) {
+            $results[] = self::fromValue($entityManager, $value);
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param EntityManager $entityManager
+     * @param \stdClass $value
+     * @return Result
+     */
+    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    {
+        return new self($entityManager, $value);
+    }
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+
+    /**
+     * @var \stdClass
+     */
+    protected $source;
+
+    /**
+     * @var ArrayCollection|Record[]
      */
     protected $records;
+
     /**
-     * @ApiField(bind_to="stories", type="relation")
-     * @ApiRelation(type="one_to_many", target_entity="Story")
+     * @var ArrayCollection|Story[]
      */
     protected $stories;
 
     /**
-     * @return ArrayCollection
+     * @param EntityManager $entityManager
+     * @param \stdClass $source
      */
-    public function getRecords()
+    public function __construct(EntityManager $entityManager, \stdClass $source)
     {
-        return $this->records;
-    }
-
-    public function setRecords(ArrayCollection $records)
-    {
-        $this->records = $records;
+        $this->entityManager = $entityManager;
+        $this->source = $source;
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Record[]
+     */
+    public function getRecords()
+    {
+        return $this->records ?: $this->records = new ArrayCollection(Record::fromList($this->source->records));
+    }
+
+    /**
+     * @return ArrayCollection|Story[]
      */
     public function getStories()
     {
-        return $this->stories;
-    }
-
-    public function setStories(ArrayCollection $stories)
-    {
-        $this->stories = $stories;
+        return $this->stories ?: $this->stories = new ArrayCollection(Story::fromList(
+            $this->entityManager,
+            $this->source->stories
+        ));
     }
 }

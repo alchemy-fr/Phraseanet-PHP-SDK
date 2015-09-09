@@ -11,22 +11,44 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-
 class QuerySuggestion
 {
     /**
-     * @ApiField(bind_to="value", type="string")
+     * @param \stdClass[] $values
+     * @return QuerySuggestion[]
      */
-    protected $value;
+    public static function fromList(array $values)
+    {
+        $suggestions = array();
+
+        foreach ($values as $value) {
+            $suggestions[] = self::fromValue($value);
+        }
+
+        return $suggestions;
+    }
+
     /**
-     * @ApiField(bind_to="current", type="string")
+     * @param \stdClass $value
+     * @return QuerySuggestion
      */
-    protected $current;
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @ApiField(bind_to="hits", type="int")
+     * @var \stdClass
      */
-    protected $hits;
+    protected $source;
+
+    /**
+     * @param \stdClass $source
+     */
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * Get the suggestion value
@@ -35,12 +57,7 @@ class QuerySuggestion
      */
     public function getValue()
     {
-        return $this->value;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
+        return $this->source->value;
     }
 
     /**
@@ -50,12 +67,7 @@ class QuerySuggestion
      */
     public function isCurrent()
     {
-        return $this->current;
-    }
-
-    public function setCurrent($current)
-    {
-        $this->current = $current;
+        return $this->source->current;
     }
 
     /**
@@ -65,11 +77,6 @@ class QuerySuggestion
      */
     public function getHits()
     {
-        return $this->hits;
-    }
-
-    public function setHits($hits)
-    {
-        $this->hits = $hits;
+        return $this->source->hits;
     }
 }

@@ -39,18 +39,18 @@ class OAuth2Connector
      * Builds the Authorization Url
      *
      * @param string $redirectUri
-     * @param array  $parameters
-     * @param array  $scopes
+     * @param array $parameters
+     * @param array $scopes
      *
      * @return string
      */
     public function getAuthorizationUrl($redirectUri, array $parameters = array(), array $scopes = array())
     {
         $oauthParams = array_replace($parameters, array(
-            'redirect_uri'  => $redirectUri,
+            'redirect_uri' => $redirectUri,
             'response_type' => 'code',
-            'client_id'     => $this->clientId,
-            'scope'         => implode(' ', $scopes),
+            'client_id' => $this->clientId,
+            'scope' => implode(' ', $scopes),
         ));
 
         $parameters = http_build_query($oauthParams, null, '&');
@@ -69,15 +69,16 @@ class OAuth2Connector
     public function retrieveAccessToken($code, $redirectUri)
     {
         $postFields = array(
-            'grant_type'    => static::GRANT_TYPE_AUTHORIZATION,
-            'redirect_uri'  => $redirectUri,
-            'client_id'     => $this->clientId,
+            'grant_type' => static::GRANT_TYPE_AUTHORIZATION,
+            'redirect_uri' => $redirectUri,
+            'client_id' => $this->clientId,
             'client_secret' => $this->secret,
-            'code'          => $code,
+            'code' => $code,
         );
 
         try {
-            $responseContent = $this->adapter->call('POST', $this->getUrl().static::TOKEN_ENDPOINT, array(), $postFields);
+            $responseContent = $this->adapter->call('POST', $this->getUrl() . static::TOKEN_ENDPOINT, array(),
+                $postFields);
             $data = json_decode($responseContent, true);
             $token = $data["access_token"];
         } catch (BadResponseException $e) {

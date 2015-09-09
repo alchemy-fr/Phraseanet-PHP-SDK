@@ -10,7 +10,7 @@ class QueryFacetTest extends \PHPUnit_Framework_TestCase
 
     public function testFacetsAreInitializedWithDefaultValues()
     {
-        $facet = new QueryFacet();
+        $facet = new QueryFacet(new \stdClass());
 
         $this->assertEquals('', $facet->getName());
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $facet->getValues());
@@ -19,21 +19,23 @@ class QueryFacetTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorArgumentsAreAssignedToProperties()
     {
-        $collection = new ArrayCollection();
-        $facet = new QueryFacet('facet', $collection);
+        $data = new \stdClass();
+        $data->name = 'facet';
+        $data->values = array();
+
+        $facet = new QueryFacet($data);
 
         $this->assertEquals('facet', $facet->getName());
-        $this->assertSame($collection, $facet->getValues());
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $facet->getValues());
     }
 
     public function testPropertiesAreUpdatedViaSetters()
     {
-        $collection = new ArrayCollection();
-        $facet = new QueryFacet('facet', $collection);
+        $data = new \stdClass();
+        $data->name = 'facet';
+        $data->values = array();
 
-        $facet->setName('modified-facet');
-
-        $this->assertEquals('modified-facet', $facet->getName());
+        $facet = new QueryFacet($data);
 
         $modified = new ArrayCollection();
         $facet->setValues($modified);

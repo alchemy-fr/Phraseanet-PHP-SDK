@@ -33,7 +33,7 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 
         $endpoint = 'http://phraseanet.com';
         $adapter = GuzzleAdapter::create($endpoint);
-        $this->assertEquals($endpoint.'/api/v1/', $adapter->getBaseUrl());
+        $this->assertEquals($endpoint . '/api/v1/', $adapter->getBaseUrl());
     }
 
     public function testSetUserAgent()
@@ -69,7 +69,7 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
                 ->method('addPostFile');
         }
 
-        $body = 'body '.mt_rand();
+        $body = 'body ' . mt_rand();
 
         $queryString = $this->getMock('Guzzle\Http\QueryString');
 
@@ -105,11 +105,41 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
             array('GET', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array()),
             array('POST', 'path/to/resource', array(), array(), array()),
             array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array()),
-            array('POST', 'path/to/resource', array(), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array()),
-            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array()),
-            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array('file' => '/path/to/file')),
-            array('POST', 'path/to/resource', array(), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array('file' => '/path/to/file')),
-            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'), array('file' => '/path/to/file')),
+            array(
+                'POST',
+                'path/to/resource',
+                array(),
+                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
+                array()
+            ),
+            array(
+                'POST',
+                'path/to/resource',
+                array('query1' => 'param1', 'query2' => 'param2'),
+                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
+                array()
+            ),
+            array(
+                'POST',
+                'path/to/resource',
+                array('query1' => 'param1', 'query2' => 'param2'),
+                array(),
+                array('file' => '/path/to/file')
+            ),
+            array(
+                'POST',
+                'path/to/resource',
+                array(),
+                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
+                array('file' => '/path/to/file')
+            ),
+            array(
+                'POST',
+                'path/to/resource',
+                array('query1' => 'param1', 'query2' => 'param2'),
+                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
+                array('file' => '/path/to/file')
+            ),
         );
     }
 
@@ -192,11 +222,11 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
     public function testClientWithCacheDoNotExecuteQueries()
     {
         $cache = $this->getMockBuilder('Guzzle\Cache\CacheAdapterInterface')
-                      ->disableOriginalConstructor()
-                      ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $cache->expects($this->atLeast(3))
-              ->method('fetch');
+            ->method('fetch');
 
         $mock = new MockPlugin();
         $response = new Response(200, null, json_encode(array(

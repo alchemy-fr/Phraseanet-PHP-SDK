@@ -11,36 +11,44 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\Id as Id;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class DataboxCollection
 {
+
+    public static function fromList(array $values)
+    {
+        $collections = array();
+
+        foreach ($values as $value) {
+            $collections[$value->base_id] = self::fromValue($value);
+        }
+
+        return $collections;
+    }
+
+    public static function fromValue(\stdClass $value)
+    {
+        return new self($value);
+    }
+
     /**
-     * @Id
-     * @ApiField(bind_to="base_id", type="int")
+     * @var \stdClass
      */
-    protected $baseId;
+    protected $source;
+
     /**
-     * @ApiField(bind_to="collection_id", type="int")
-     */
-    protected $collectionId;
-    /**
-     * @ApiField(bind_to="name", type="string")
-     */
-    protected $name;
-    /**
-     * @ApiField(bind_to="record_amount", type="int")
-     */
-    protected $recordAmount;
-    /**
-     * @ApiField(bind_to="labels", type="array")
+     * @var ArrayCollection
      */
     protected $labels;
+
     /**
-     * @var int
+     * @param \stdClass $source
      */
-    protected $databox_id;
+    public function __construct(\stdClass $source)
+    {
+        $this->source = $source;
+    }
 
     /**
      * The collection base id
@@ -49,12 +57,7 @@ class DataboxCollection
      */
     public function getBaseId()
     {
-        return $this->baseId;
-    }
-
-    public function setBaseId($baseId)
-    {
-        $this->baseId = $baseId;
+        return $this->source->base_id;
     }
 
     /**
@@ -64,12 +67,7 @@ class DataboxCollection
      */
     public function getDataboxId()
     {
-        return $this->databox_id;
-    }
-
-    public function setDataboxId($databoxId)
-    {
-        $this->databox_id = $databoxId;
+        return $this->source->databox_id;
     }
 
     /**
@@ -79,12 +77,7 @@ class DataboxCollection
      */
     public function getCollectionId()
     {
-        return $this->collectionId;
-    }
-
-    public function setCollectionId($collId)
-    {
-        $this->collectionId = $collId;
+        return $this->source->collection_id;
     }
 
     /**
@@ -94,12 +87,7 @@ class DataboxCollection
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
+        return $this->source->name;
     }
 
     /**
@@ -109,27 +97,14 @@ class DataboxCollection
      */
     public function getRecordAmount()
     {
-        return $this->recordAmount;
-    }
-
-    public function setRecordAmount($recordAmount)
-    {
-        $this->recordAmount = $recordAmount;
+        return $this->source->record_amount;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|string[]
      */
     public function getLabels()
     {
-        return $this->labels;
-    }
-
-    /**
-     * @param mixed $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
+        return $this->labels ?: $this->labels = new ArrayCollection((array) $this->source->labels);
     }
 }

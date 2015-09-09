@@ -168,7 +168,7 @@ class APIResponse
      *
      * @param string $property The property name
      *
-     * @return \stdClass|null
+     * @return \stdClass|\stdClass[]|null
      */
     public function getProperty($property)
     {

@@ -21,7 +21,7 @@ class DocumentStructureTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
+     * @expectedException \PhraseanetSDK\Exception\UnauthorizedException
      */
     public function testFindByDataboxException()
     {
@@ -31,7 +31,7 @@ class DocumentStructureTest extends RepositoryTestCase
     }
 
     /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
+     * @expectedException \PhraseanetSDK\Exception\RuntimeException
      */
     public function testFindByDataboxRuntimeException()
     {

@@ -32,12 +32,8 @@ class BasketElement extends AbstractRepository
             throw new RuntimeException('Missing "basket_elements" property in response content');
         }
 
-        $basketElements = new ArrayCollection();
-
-        foreach ($response->getProperty('basket_elements') as $basketElementData) {
-            $basketElements->add(EntityHydrator::hydrate('basketElement', $basketElementData, $this->em));
-        }
-
-        return $basketElements;
+        return new ArrayCollection(\PhraseanetSDK\Entity\BasketElement::fromList(
+            $response->getProperty('basket_elements')
+        ));
     }
 }
