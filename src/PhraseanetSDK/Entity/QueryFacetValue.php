@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Entity;
 
-class QueryFacetValue 
+class QueryFacetValue
 {
     /**
      * @param \stdClass[] $values

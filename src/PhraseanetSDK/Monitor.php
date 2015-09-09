@@ -86,7 +86,10 @@ class Monitor
             $n++;
         }
 
-        $response = $this->adapter->call(static::$mappings[$name]['method'], array(static::$mappings[$name]['path'], $parameters));
+        $response = $this->adapter->call(
+            static::$mappings[$name]['method'],
+            array(static::$mappings[$name]['path'], $parameters)
+        );
         $result = $response->getResult()->{static::$mappings[$name]['result-property']};
 
         if (is_array($result)) {
@@ -108,7 +111,7 @@ class Monitor
         array_walk($data, function ($value, $property) use ($entity) {
             $method = 'set'.implode('', array_map(function ($chunk) {
                     return ucfirst($chunk);
-                }, preg_split('/[-_]/', $property)));
+            }, preg_split('/[-_]/', $property)));
 
             $ref = new \ReflectionParameter(array($entity, $method), 0);
             if (null !== $ref->getClass()) {

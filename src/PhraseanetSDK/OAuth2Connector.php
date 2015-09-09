@@ -77,8 +77,12 @@ class OAuth2Connector
         );
 
         try {
-            $responseContent = $this->adapter->call('POST', $this->getUrl() . static::TOKEN_ENDPOINT, array(),
-                $postFields);
+            $responseContent = $this->adapter->call(
+                'POST',
+                $this->getUrl() . static::TOKEN_ENDPOINT,
+                array(),
+                $postFields
+            );
             $data = json_decode($responseContent, true);
             $token = $data["access_token"];
         } catch (BadResponseException $e) {

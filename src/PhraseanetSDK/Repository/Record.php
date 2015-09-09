@@ -73,7 +73,8 @@ class Record extends AbstractRepository
     public function search(array $parameters = array())
     {
         $response = $this->query('POST', 'search/', array(), array_merge(
-            array('search_type' => 0), $parameters
+            array('search_type' => 0),
+            $parameters
         ));
 
         if ($response->isEmpty()) {

@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 
-class QueryFacet 
+class QueryFacet
 {
     /**
      * @param \stdClass[] $values

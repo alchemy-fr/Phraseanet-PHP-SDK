@@ -199,11 +199,14 @@ class PhraseanetSDKDataCollector extends DataCollector
         );
 
         if (isset($data['response']['offset_start'])) {
+            $pageMaxSize = isset($data['response']['available_results']) ? $data['response']['available_results'] : '-';
+            $totalResults = isset($data['response']['total_results']) ? $data['response']['total_results'] : '-';
+
             $pagination = array(
                 'Offset' => $data['response']['offset_start'],
                 'Page size' => $data['response']['per_page'],
-                'Page max size' => isset($data['response']['available_results']) ? $data['response']['available_results'] : '-',
-                'Total results' => isset($data['response']['total_results']) ? $data['response']['total_results'] : '-'
+                'Page max size' => $pageMaxSize,
+                'Total results' => $totalResults
             );
 
             $parsed['pagination'] = $pagination;

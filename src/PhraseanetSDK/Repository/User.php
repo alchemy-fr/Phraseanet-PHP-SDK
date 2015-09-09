@@ -148,8 +148,13 @@ class User extends AbstractRepository
             $data['collections'] = $collections;
         }
 
-        $response = $this->query('POST', 'accounts/access-demand/', array(), $data,
-            array('Content-Type' => 'application/json'));
+        $response = $this->query(
+            'POST',
+            'accounts/access-demand/',
+            array(),
+            $data,
+            array('Content-Type' => 'application/json')
+        );
 
         if (!$response->hasProperty('user')) {
             throw new \RuntimeException('Missing "user" property in response content');
@@ -176,8 +181,13 @@ class User extends AbstractRepository
             'notifications' => false
         );
 
-        $response = $this->query('POST', 'me/update-account/', array(), $data,
-            array('Content-Type' => 'application/json'));
+        $response = $this->query(
+            'POST',
+            'me/update-account/',
+            array(),
+            $data,
+            array('Content-Type' => 'application/json')
+        );
 
         if (!$response->hasProperty('success')) {
             throw new RuntimeException('Missing "success" property in response content');

@@ -57,7 +57,11 @@ class BackendCacheFactory
         $stats = @$memcache->getExtendedStats();
 
         if (!isset($stats[$key]) || false === $stats[$key]) {
-            throw new RuntimeException(sprintf("Memcache instance with host '%s' and port '%s' is not reachable", $host, $port));
+            throw new RuntimeException(sprintf(
+                "Memcache instance with host '%s' and port '%s' is not reachable",
+                $host,
+                $port
+            ));
         }
 
         $cache = new MemcacheCache();
@@ -75,7 +79,11 @@ class BackendCacheFactory
         $stats = @$memcached->getStats();
 
         if (!isset($stats[$key]) || false === $stats[$key] || '' === $stats[$key]['version']) {
-            throw new RuntimeException(sprintf("Memcached instance with host '%s' and port '%s' is not reachable", $host, $port));
+            throw new RuntimeException(sprintf(
+                "Memcached instance with host '%s' and port '%s' is not reachable",
+                $host,
+                $port
+            ));
         }
 
         $cache = new MemcachedCache();
