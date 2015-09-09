@@ -11,12 +11,8 @@ The Phraseanet PHP SDK is an OO library to interact with
 
 The recommended way to install Phraseanet PHP SDK is [through composer](http://getcomposer.org).
 
-```JSON
-{
-    "require": {
-        "phraseanet/php-sdk": "~0.6.0"
-    }
-}
+```bash
+composer require phraseanet/php-sdk:~0.7
 ```
 
 ## Basic Usage
