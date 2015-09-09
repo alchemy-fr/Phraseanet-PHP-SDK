@@ -1,6 +1,8 @@
 # Phraseanet API PHP-SDK
 
 [![Build Status](https://secure.travis-ci.org/alchemy-fr/Phraseanet-PHP-SDK.png?branch=master)](http://travis-ci.org/alchemy-fr/Phraseanet-PHP-SDK)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/?branch=master)
 
 The Phraseanet PHP SDK is an OO library to interact with
 [Phraseanet API](https://docs.phraseanet.com/Devel).
