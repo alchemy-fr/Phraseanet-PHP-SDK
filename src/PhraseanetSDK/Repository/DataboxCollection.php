@@ -21,7 +21,7 @@ class DataboxCollection extends AbstractRepository
      * Find all collection in the provided databox
      *
      * @param  integer          $databoxId the databox id
-     * @return ArrayCollection
+     * @return ArrayCollection|\PhraseanetSDK\Entity\DataboxCollection[]
      * @throws RuntimeException
      */
     public function findByDatabox($databoxId)
@@ -41,7 +41,7 @@ class DataboxCollection extends AbstractRepository
      * Finds a collection in all available databoxes
      *
      * @param integer $baseId The base ID of the collection
-     * @return \ProxyManager\Proxy\GhostObjectInterface
+     * @return \PhraseanetSDK\Entity\DataboxCollection
      * @throws \PhraseanetSDK\Exception\NotFoundException
      * @throws \PhraseanetSDK\Exception\UnauthorizedException
      */
