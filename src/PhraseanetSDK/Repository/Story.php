@@ -20,9 +20,9 @@ class Story extends AbstractRepository
     /**
      * Find the story by its id that belongs to the provided databox
      *
-     * @param  integer                      $databoxId The record databox id
-     * @param  integer                      $recordId  The record id
-     * @return \PhraseanetSDK\Entity\Record
+     * @param  integer $databoxId The record databox id
+     * @param  integer $recordId  The record id
+     * @return \PhraseanetSDK\Entity\Story
      * @throws RuntimeException
      */
     public function findById($databoxId, $recordId)
@@ -41,9 +41,9 @@ class Story extends AbstractRepository
     /**
      * Find stories
      *
-     * @param  integer          $offsetStart The offset
-     * @param  integer          $perPage     The number of item per page
-     * @return ArrayCollection
+     * @param  integer $offsetStart The offset
+     * @param  integer $perPage The number of item per page
+     * @return ArrayCollection|Story[]
      * @throws RuntimeException
      */
     public function find($offsetStart, $perPage)
@@ -65,7 +65,7 @@ class Story extends AbstractRepository
     /**
      * Search for stories
      *
-     * @param  array                       $parameters Query parameters
+     * @param  array $parameters Query parameters
      * @return \PhraseanetSDK\Entity\Query object
      * @throws RuntimeException
      */
