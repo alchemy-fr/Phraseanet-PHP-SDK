@@ -1,0 +1,52 @@
+{
+    "meta": {
+        "api_version": "1.3",
+        "request": "GET /api/v1/databoxes/list/",
+        "response_time": "2014-10-07T17:04:22+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "databoxes": [
+            {
+                "databox_id": 3,
+                "name": "db_alch_ftvpreview",
+                "viewname": "db_alch_ftvpreview",
+                "labels": {
+                    "en": "db_alch_ftvpreview",
+                    "de": "db_alch_ftvpreview",
+                    "fr": "db_alch_ftvpreview",
+                    "nl": "db_alch_ftvpreview"
+                },
+                "version": "3.8.6-alpha.3"
+            },
+            {
+                "databox_id": 2,
+                "name": "db_alch_test38_base2",
+                "viewname": "db_alch_test38_base2",
+                "labels": {
+                    "en": "db_alch_test38_base2",
+                    "de": "db_alch_test38_base2",
+                    "fr": "db_alch_test38_base2",
+                    "nl": "db_alch_test38_base2"
+                },
+                "version": "3.8.6-alpha.3"
+            },
+            {
+                "databox_id": 1,
+                "name": "db_alch_test382",
+                "viewname": "db_alch_test382",
+                "labels": {
+                    "en": "db_alch_test382",
+                    "de": "db_alch_test382",
+                    "fr": "db_alch_test382",
+                    "nl": "db_alch_test382"
+                },
+                "version": "3.8.6-alpha.3"
+            }
+        ]
+    }
+}

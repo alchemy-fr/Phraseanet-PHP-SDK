@@ -1,0 +1,1358 @@
+{
+    "meta": {
+        "api_version": "1.3",
+        "request": "GET /api/v1/stories/1/2027/",
+        "response_time": "2014-10-07T17:40:17+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "story": {
+            "@entity@": "http://api.phraseanet.com/api/objects/story",
+            "databox_id": 1,
+            "story_id": 2027,
+            "updated_on": "2014-09-17T18:31:46+02:00",
+            "created_on": "2014-07-09T12:24:31+02:00",
+            "collection_id": 1,
+            "thumbnail": {
+                "name": "thumbnail",
+                "permalink": {
+                    "created_on": "2014-09-17T18:17:51+02:00",
+                    "id": 6150,
+                    "is_activated": true,
+                    "label": "test-pour-PHRAS-109-et-aussi-pour-PHRAS-108-avec-un-long-titre",
+                    "updated_on": "2014-09-17T18:17:51+02:00",
+                    "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2027/thumbnail/?token=sS2PPtv1",
+                    "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2027/thumbnail/test-pour-PHRAS-109-et-aussi-pour-PHRAS-108-avec-un-long-titre.jpg?token=sS2PPtv1&download=1",
+                    "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2027/thumbnail/test-pour-PHRAS-109-et-aussi-pour-PHRAS-108-avec-un-long-titre.jpg?token=sS2PPtv1"
+                },
+                "height": 200,
+                "width": 150,
+                "filesize": 3954,
+                "devices": [],
+                "player_type": "IMAGE",
+                "mime_type": "image/jpeg"
+            },
+            "uuid": "31d80ad3-a613-4c97-a699-7166409888b6",
+            "metadatas": {
+                "@entity@": "http://api.phraseanet.com/api/objects/story-metadata-bag",
+                "dc:contributor": null,
+                "dc:coverage": null,
+                "dc:creator": null,
+                "dc:date": null,
+                "dc:description": null,
+                "dc:format": null,
+                "dc:identifier": null,
+                "dc:language": null,
+                "dc:publisher": null,
+                "dc:relation": null,
+                "dc:rights": null,
+                "dc:source": null,
+                "dc:subject": null,
+                "dc:title": null,
+                "dc:type": null
+            },
+            "records": [
+                {
+                    "databox_id": 1,
+                    "record_id": 2030,
+                    "mime_type": "image/jpeg",
+                    "title": "IMG_3066",
+                    "original_name": "IMG_3066.jpg",
+                    "updated_on": "2014-09-17T23:48:37+02:00",
+                    "created_on": "2014-07-28T21:33:54+02:00",
+                    "collection_id": 1,
+                    "sha256": "05efa2ac1acfdb1453e173cff6d35f599ba15753bec265c9ee5941dd2e5a8e46",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-07-28T21:34:49+02:00",
+                            "id": 5232,
+                            "is_activated": true,
+                            "label": "IMG_3066",
+                            "updated_on": "2014-07-28T21:34:49+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2030/thumbnail/?token=IRhZ0rjB",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2030/thumbnail/IMG_3066.jpg?token=IRhZ0rjB&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2030/thumbnail/IMG_3066.jpg?token=IRhZ0rjB"
+                        },
+                        "height": 200,
+                        "width": 150,
+                        "filesize": 5696,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Aperture",
+                            "value": 2.2
+                        },
+                        {
+                            "name": "CameraModel",
+                            "value": "iPhone 5s"
+                        },
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 1984448
+                        },
+                        {
+                            "name": "FlashFired",
+                            "value": 0
+                        },
+                        {
+                            "name": "FocalLength",
+                            "value": 4.12
+                        },
+                        {
+                            "name": "Height",
+                            "value": 3264
+                        },
+                        {
+                            "name": "HyperfocalDistance",
+                            "value": 1.8698439341847
+                        },
+                        {
+                            "name": "ISO",
+                            "value": 32
+                        },
+                        {
+                            "name": "Latitude",
+                            "value": 48.887505555556
+                        },
+                        {
+                            "name": "LightValue",
+                            "value": 14.488718845698
+                        },
+                        {
+                            "name": "Longitude",
+                            "value": 2.2828
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "ShutterSpeed",
+                            "value": 0.0006578947368
+                        },
+                        {
+                            "name": "Width",
+                            "value": 2448
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "20c54fe4-a863-4b73-ac3d-6deb652a6e5a"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2029,
+                    "mime_type": "image/jpeg",
+                    "title": "IMG_3070",
+                    "original_name": "IMG_3070.jpg",
+                    "updated_on": "2014-09-17T23:48:43+02:00",
+                    "created_on": "2014-07-22T20:14:42+02:00",
+                    "collection_id": 1,
+                    "sha256": "ad9ea2d4808f386858d0a551bd4790af3252fa3998eac379e22502a6e83d43fe",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-07-22T20:14:50+02:00",
+                            "id": 5228,
+                            "is_activated": true,
+                            "label": "IMG_3070",
+                            "updated_on": "2014-07-22T20:14:50+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2029/thumbnail/?token=tvSGeyn2",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2029/thumbnail/IMG_3070.jpg?token=tvSGeyn2&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2029/thumbnail/IMG_3070.jpg?token=tvSGeyn2"
+                        },
+                        "height": 200,
+                        "width": 150,
+                        "filesize": 3951,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Aperture",
+                            "value": 2.4
+                        },
+                        {
+                            "name": "CameraModel",
+                            "value": "iPhone 4S"
+                        },
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 1489383
+                        },
+                        {
+                            "name": "FlashFired",
+                            "value": 0
+                        },
+                        {
+                            "name": "FocalLength",
+                            "value": 4.28
+                        },
+                        {
+                            "name": "Height",
+                            "value": 3264
+                        },
+                        {
+                            "name": "HyperfocalDistance",
+                            "value": 2.0773522348635
+                        },
+                        {
+                            "name": "ISO",
+                            "value": 50
+                        },
+                        {
+                            "name": "Latitude",
+                            "value": 48.887388888889
+                        },
+                        {
+                            "name": "LightValue",
+                            "value": 8.1110313122733
+                        },
+                        {
+                            "name": "Longitude",
+                            "value": 2.2827638888889
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "ShutterSpeed",
+                            "value": 0.04166666667
+                        },
+                        {
+                            "name": "Width",
+                            "value": 2448
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "cbedf373-5f0e-4b54-b3db-1ddf59b41413"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2031,
+                    "mime_type": "image/jpeg",
+                    "title": "IMG_3062",
+                    "original_name": "IMG_3062.jpg",
+                    "updated_on": "2014-09-17T23:48:30+02:00",
+                    "created_on": "2014-07-28T21:35:37+02:00",
+                    "collection_id": 1,
+                    "sha256": "8586dcceb9978a71a461bf739368467a76d79a325cfbd0aac0d989fa360d9707",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-07-28T21:35:43+02:00",
+                            "id": 5236,
+                            "is_activated": true,
+                            "label": "IMG_3062",
+                            "updated_on": "2014-07-28T21:35:43+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2031/thumbnail/?token=PawWwwWm",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2031/thumbnail/IMG_3062.jpg?token=PawWwwWm&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2031/thumbnail/IMG_3062.jpg?token=PawWwwWm"
+                        },
+                        "height": 200,
+                        "width": 150,
+                        "filesize": 7061,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Width",
+                            "value": 2448
+                        },
+                        {
+                            "name": "Height",
+                            "value": 3264
+                        },
+                        {
+                            "name": "FocalLength",
+                            "value": 4.12
+                        },
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "CameraModel",
+                            "value": "iPhone 5s"
+                        },
+                        {
+                            "name": "FlashFired",
+                            "value": 0
+                        },
+                        {
+                            "name": "Aperture",
+                            "value": 2.2
+                        },
+                        {
+                            "name": "ShutterSpeed",
+                            "value": 0.01666666667
+                        },
+                        {
+                            "name": "HyperfocalDistance",
+                            "value": 1.8698439341847
+                        },
+                        {
+                            "name": "ISO",
+                            "value": 40
+                        },
+                        {
+                            "name": "LightValue",
+                            "value": 9.5038257377072
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "Longitude",
+                            "value": 2.2828
+                        },
+                        {
+                            "name": "Latitude",
+                            "value": 48.887505555556
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 1907977
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "81b8be16-37e5-424a-a593-c0b02ea0b2fe"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1917,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-780-slow.avi - Xmen-OpenDivX-780-slow",
+                    "original_name": "Xmen-OpenDivX-780-slow.avi",
+                    "updated_on": "2014-06-24T00:55:08+02:00",
+                    "created_on": "2014-06-24T00:39:36+02:00",
+                    "collection_id": 3,
+                    "sha256": "c42ce67be06e892664fe38c5e0273f8bc97db083c3e8fe8b2e7bf9335da2db62",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6136,
+                            "is_activated": true,
+                            "label": "Xmen-OpenDivX-780-slow---samplefiletesttestsDivX-testXmen-OpenDi",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1917/thumbnail/?token=Ea5ZnqAR",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1917/thumbnail/Xmen-OpenDivX-780-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=Ea5ZnqAR&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1917/thumbnail/Xmen-OpenDivX-780-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=Ea5ZnqAR"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 5086,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "AudioCodec",
+                            "value": 1
+                        },
+                        {
+                            "name": "AudioSamplerate",
+                            "value": 44100
+                        },
+                        {
+                            "name": "Duration",
+                            "value": 1.6
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 335872
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "VideoCodec",
+                            "value": 44100.000002822
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "7bd33097-fe1f-40a3-b2ab-16b92998bd64"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1916,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-780-fast.avi - Xmen-OpenDivX-780-fast",
+                    "original_name": "Xmen-OpenDivX-780-fast.avi",
+                    "updated_on": "2014-06-24T00:55:12+02:00",
+                    "created_on": "2014-06-24T00:39:35+02:00",
+                    "collection_id": 3,
+                    "sha256": "ecf09544baaac4750e5afa7e3272f16d4b33d13f5bd743cdbb475c6182338777",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6138,
+                            "is_activated": true,
+                            "label": "Xmen-OpenDivX-780-fast---samplefiletesttestsDivX-testXmen-OpenDi",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1916/thumbnail/?token=XMGUsRS9",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1916/thumbnail/Xmen-OpenDivX-780-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=XMGUsRS9&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1916/thumbnail/Xmen-OpenDivX-780-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=XMGUsRS9"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 3221,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Duration",
+                            "value": 4
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 499712
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "1a625863-ed63-4984-b020-1edf758429fe"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1915,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-650-slow.avi - Xmen-OpenDivX-650-slow",
+                    "original_name": "Xmen-OpenDivX-650-slow.avi",
+                    "updated_on": "2014-06-24T00:55:15+02:00",
+                    "created_on": "2014-06-24T00:39:34+02:00",
+                    "collection_id": 3,
+                    "sha256": "4e3ace1ac8e775c1dbcd19cce9a7397876a7c695a82814dec500abdcd4a6b448",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6140,
+                            "is_activated": true,
+                            "label": "Xmen-OpenDivX-650-slow---samplefiletesttestsDivX-testXmen-OpenDi",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1915/thumbnail/?token=nsmrTl5j",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1915/thumbnail/Xmen-OpenDivX-650-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=nsmrTl5j&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1915/thumbnail/Xmen-OpenDivX-650-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=nsmrTl5j"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 5151,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Duration",
+                            "value": 2.4
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 225280
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "6c09e6de-f131-4d67-ac39-744d9d7273c3"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1914,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-650-fast.avi - Xmen-OpenDivX-650-fast",
+                    "original_name": "Xmen-OpenDivX-650-fast.avi",
+                    "updated_on": "2014-06-24T00:55:18+02:00",
+                    "created_on": "2014-06-24T00:39:33+02:00",
+                    "collection_id": 3,
+                    "sha256": "c1d768ce548ad4798f2079d8a17cbbad1cafe9e87cd47b7204b57a53ce9f28da",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6142,
+                            "is_activated": true,
+                            "label": "Xmen-OpenDivX-650-fast---samplefiletesttestsDivX-testXmen-OpenDi",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1914/thumbnail/?token=QaDgfev7",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1914/thumbnail/Xmen-OpenDivX-650-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=QaDgfev7&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1914/thumbnail/Xmen-OpenDivX-650-fast---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=QaDgfev7"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 3284,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Duration",
+                            "value": 4
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 399360
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "5998becc-b0ce-476e-abcd-9f4672f7c39a"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1913,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-OpenDivX-200-slow.avi - Xmen-OpenDivX-200-slow",
+                    "original_name": "Xmen-OpenDivX-200-slow.avi",
+                    "updated_on": "2014-06-24T00:55:22+02:00",
+                    "created_on": "2014-06-24T00:39:32+02:00",
+                    "collection_id": 3,
+                    "sha256": "c5ed0a19dde40ced639b99ab15a6f49ffd7aa95fea7371b279b18ae1d2b795d2",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6144,
+                            "is_activated": true,
+                            "label": "Xmen-OpenDivX-200-slow---samplefiletesttestsDivX-testXmen-OpenDi",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1913/thumbnail/?token=9GodgB6v",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1913/thumbnail/Xmen-OpenDivX-200-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=9GodgB6v&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1913/thumbnail/Xmen-OpenDivX-200-slow---samplefiletesttestsDivX-testXmen-OpenDi.jpg?token=9GodgB6v"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 5042,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Duration",
+                            "value": 5.2
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 169984
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "745c44ad-fdd2-443d-b926-2870d4406e7c"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1912,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-DivX-1800-slow.avi - Xmen-DivX-1800-slow",
+                    "original_name": "Xmen-DivX-1800-slow.avi",
+                    "updated_on": "2014-06-24T00:55:24+02:00",
+                    "created_on": "2014-06-24T00:39:31+02:00",
+                    "collection_id": 3,
+                    "sha256": "1d0733d7ef29879c0e3f5ddbc5af4533b001fa83490c4c70087e745094e7adf4",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6146,
+                            "is_activated": true,
+                            "label": "Xmen-DivX-1800-slow---samplefiletesttestsDivX-testXmen-DivX-1800",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1912/thumbnail/?token=senNmWRM",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1912/thumbnail/Xmen-DivX-1800-slow---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=senNmWRM&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1912/thumbnail/Xmen-DivX-1800-slow---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=senNmWRM"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 4730,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "AudioCodec",
+                            "value": 1
+                        },
+                        {
+                            "name": "AudioSamplerate",
+                            "value": 44100
+                        },
+                        {
+                            "name": "Duration",
+                            "value": 1.6
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 296960
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "VideoCodec",
+                            "value": 44100.000002822
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "217a25d2-ea86-4353-b655-5e326c463737"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 1911,
+                    "mime_type": "video/x-msvideo",
+                    "title": "samplefiletest/tests/DivX-test/Xmen-DivX-1800-fast.avi - Xmen-DivX-1800-fast",
+                    "original_name": "Xmen-DivX-1800-fast.avi",
+                    "updated_on": "2014-06-24T00:55:31+02:00",
+                    "created_on": "2014-06-24T00:39:30+02:00",
+                    "collection_id": 3,
+                    "sha256": "39c42f904d203e78635df28554bed0d542ee2842f790117941130465355eab1c",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-17T18:17:51+02:00",
+                            "id": 6148,
+                            "is_activated": true,
+                            "label": "Xmen-DivX-1800-fast---samplefiletesttestsDivX-testXmen-DivX-1800",
+                            "updated_on": "2014-09-17T18:17:51+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1911/thumbnail/?token=6E2CnnpP",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1911/thumbnail/Xmen-DivX-1800-fast---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=6E2CnnpP&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/1911/thumbnail/Xmen-DivX-1800-fast---samplefiletesttestsDivX-testXmen-DivX-1800.jpg?token=6E2CnnpP"
+                        },
+                        "height": 136,
+                        "width": 200,
+                        "filesize": 3014,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Duration",
+                            "value": 4
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 401408
+                        },
+                        {
+                            "name": "FrameRate",
+                            "value": 25
+                        },
+                        {
+                            "name": "Height",
+                            "value": 240
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "video/x-msvideo"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 352
+                        }
+                    ],
+                    "phrasea_type": "video",
+                    "uuid": "02bb7c72-1471-4add-9b9e-fc8e18b214dd"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2246,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog stock 1974",
+                    "original_name": "1974MercedesBenzUnimog_01_700.jpg",
+                    "updated_on": "2014-09-17T23:24:27+02:00",
+                    "created_on": "2014-09-05T10:28:51+02:00",
+                    "collection_id": 1,
+                    "sha256": "ac1b46e076c25976f823825bf83ab9962fa91621fea0db9251e3e43b4deb4bae",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:29:48+02:00",
+                            "id": 6005,
+                            "is_activated": true,
+                            "label": "1974MercedesBenzUnimog_01_700",
+                            "updated_on": "2014-09-05T10:29:48+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2246/thumbnail/?token=IbmmTXT5",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2246/thumbnail/1974MercedesBenzUnimog_01_700.jpg?token=IbmmTXT5&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2246/thumbnail/1974MercedesBenzUnimog_01_700.jpg?token=IbmmTXT5"
+                        },
+                        "height": 154,
+                        "width": 200,
+                        "filesize": 5659,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 54490
+                        },
+                        {
+                            "name": "Height",
+                            "value": 538
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 700
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "456ed534-2a92-4a7e-a1c0-ff4f5df40b4b"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2245,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog vert olive",
+                    "original_name": "Unimog-2-700x533.jpg",
+                    "updated_on": "2014-09-17T23:24:31+02:00",
+                    "created_on": "2014-09-05T10:28:50+02:00",
+                    "collection_id": 1,
+                    "sha256": "78aefdab3ce443e0b1803ce91b634a615eb536540afdb9f9b9630052ccd3bf22",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:29:54+02:00",
+                            "id": 6008,
+                            "is_activated": true,
+                            "label": "Unimog-2-700x533",
+                            "updated_on": "2014-09-05T10:29:54+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2245/thumbnail/?token=lGvicehc",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2245/thumbnail/Unimog-2-700x533.jpg?token=lGvicehc&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2245/thumbnail/Unimog-2-700x533.jpg?token=lGvicehc"
+                        },
+                        "height": 152,
+                        "width": 200,
+                        "filesize": 7734,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 135016
+                        },
+                        {
+                            "name": "Height",
+                            "value": 533
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 700
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "f45f9926-5f82-4df1-a470-288eed46364e"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2244,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog pour l'autoroute",
+                    "original_name": "Unimog_U400.jpg",
+                    "updated_on": "2014-09-17T23:24:34+02:00",
+                    "created_on": "2014-09-05T10:28:49+02:00",
+                    "collection_id": 1,
+                    "sha256": "0b6f98c3338a454f8892f688f26e93cf3e13844034cb55111a82b491213d4b47",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:29:56+02:00",
+                            "id": 6011,
+                            "is_activated": true,
+                            "label": "Unimog_U400",
+                            "updated_on": "2014-09-05T10:29:56+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2244/thumbnail/?token=tj7IZaDp",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2244/thumbnail/Unimog_U400.jpg?token=tj7IZaDp&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2244/thumbnail/Unimog_U400.jpg?token=tj7IZaDp"
+                        },
+                        "height": 171,
+                        "width": 200,
+                        "filesize": 12152,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 505737
+                        },
+                        {
+                            "name": "Height",
+                            "value": 846
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 990
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "5c9940d7-bf98-4bb6-9b48-d6fe0ecf97f5"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2243,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog de l'armée",
+                    "original_name": "Mercedes-Benz_Unimog_U_5000.jpg",
+                    "updated_on": "2014-09-17T23:24:36+02:00",
+                    "created_on": "2014-09-05T10:28:47+02:00",
+                    "collection_id": 1,
+                    "sha256": "ee2296096570e6039cf14e350782a4e738e115e29baaec379a3f0955282526cf",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:49+02:00",
+                            "id": 5982,
+                            "is_activated": true,
+                            "label": "Mercedes-Benz_Unimog_U_5000",
+                            "updated_on": "2014-09-05T10:28:49+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2243/thumbnail/?token=qxucde2q",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2243/thumbnail/Mercedes-Benz_Unimog_U_5000.jpg?token=qxucde2q&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2243/thumbnail/Mercedes-Benz_Unimog_U_5000.jpg?token=qxucde2q"
+                        },
+                        "height": 150,
+                        "width": 200,
+                        "filesize": 6333,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Aperture",
+                            "value": 5.6
+                        },
+                        {
+                            "name": "CameraModel",
+                            "value": "DSC-W100"
+                        },
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 3460370
+                        },
+                        {
+                            "name": "FlashFired",
+                            "value": 0
+                        },
+                        {
+                            "name": "FocalLength",
+                            "value": 7.9
+                        },
+                        {
+                            "name": "Height",
+                            "value": 2448
+                        },
+                        {
+                            "name": "ISO",
+                            "value": 125
+                        },
+                        {
+                            "name": "LightValue",
+                            "value": 11.97085365434
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "ShutterSpeed",
+                            "value": 0.00625
+                        },
+                        {
+                            "name": "Width",
+                            "value": 3264
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "f118bb77-a0d1-4531-88c1-4630ad6fc846"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2242,
+                    "mime_type": "image/jpeg",
+                    "title": "La famille Unimog",
+                    "original_name": "UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_history_home_715x230.jpg",
+                    "updated_on": "2014-09-17T23:24:38+02:00",
+                    "created_on": "2014-09-05T10:28:45+02:00",
+                    "collection_id": 1,
+                    "sha256": "1c6da4a93d7fcc05042db01d3dcaac768608856f8bbe2e371ff37385c5001282",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:52+02:00",
+                            "id": 5987,
+                            "is_activated": true,
+                            "label": "UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_hist",
+                            "updated_on": "2014-09-05T10:28:52+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2242/thumbnail/?token=9NsUeTNu",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2242/thumbnail/UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_hist.jpg?token=9NsUeTNu&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2242/thumbnail/UsershanDesktopBilderUnimog-WorldHistoryunimog_unimog_world_hist.jpg?token=9NsUeTNu"
+                        },
+                        "height": 64,
+                        "width": 200,
+                        "filesize": 3694,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 72746
+                        },
+                        {
+                            "name": "Height",
+                            "value": 230
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 715
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "a2a79dc6-6997-485f-b670-91b82c285b5a"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2241,
+                    "mime_type": "image/jpeg",
+                    "title": "Concept truck Unimog",
+                    "original_name": "unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg",
+                    "updated_on": "2014-09-17T23:24:39+02:00",
+                    "created_on": "2014-09-05T10:28:44+02:00",
+                    "collection_id": 1,
+                    "sha256": "fe8c1aa38f79c4a45e6d7e5de5587c751ebb2466e2b2f47641b6d048938ad4dd",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:54+02:00",
+                            "id": 5990,
+                            "is_activated": true,
+                            "label": "unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog",
+                            "updated_on": "2014-09-05T10:28:54+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/?token=og6qy4RR",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg?token=og6qy4RR&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg?token=og6qy4RR"
+                        },
+                        "height": 125,
+                        "width": 200,
+                        "filesize": 5518,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 447218
+                        },
+                        {
+                            "name": "Height",
+                            "value": 938
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 1500
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "dc0e45d4-bd96-47a2-b2c8-edb8c9bc0bc4"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2240,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog avec un frein à main",
+                    "original_name": "mercedes_benz-unimog_mp35_pic_29397.jpg",
+                    "updated_on": "2014-09-17T23:24:41+02:00",
+                    "created_on": "2014-09-05T10:28:42+02:00",
+                    "collection_id": 1,
+                    "sha256": "ed44c00a679e487c43c7d6c017d0eb130ecb319124971257c187000dd077228f",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:56+02:00",
+                            "id": 5993,
+                            "is_activated": true,
+                            "label": "mercedes_benz-unimog_mp35_pic_29397",
+                            "updated_on": "2014-09-05T10:28:56+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2240/thumbnail/?token=ncgJdO9O",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2240/thumbnail/mercedes_benz-unimog_mp35_pic_29397.jpg?token=ncgJdO9O&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2240/thumbnail/mercedes_benz-unimog_mp35_pic_29397.jpg?token=ncgJdO9O"
+                        },
+                        "height": 160,
+                        "width": 200,
+                        "filesize": 9351,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 256369
+                        },
+                        {
+                            "name": "Height",
+                            "value": 1024
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 1280
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "34c7e683-1153-4c88-9494-6132d94a63c4"
+                },
+                {
+                    "databox_id": 1,
+                    "record_id": 2239,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog et Smart faisant la course",
+                    "original_name": "57975564_9393659d84.jpg",
+                    "updated_on": "2014-09-17T23:24:42+02:00",
+                    "created_on": "2014-09-05T10:28:41+02:00",
+                    "collection_id": 1,
+                    "sha256": "34c68e927f39cce8b6fb5dad28e2103956cc087db6f572cb924044ea76673af8",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:58+02:00",
+                            "id": 5996,
+                            "is_activated": true,
+                            "label": "57975564_9393659d84",
+                            "updated_on": "2014-09-05T10:28:58+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/?token=o0o1s1pI",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/57975564_9393659d84.jpg?token=o0o1s1pI&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/57975564_9393659d84.jpg?token=o0o1s1pI"
+                        },
+                        "height": 133,
+                        "width": 200,
+                        "filesize": 6199,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 37146
+                        },
+                        {
+                            "name": "Height",
+                            "value": 373
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 559
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "bae3d525-7e06-49c6-8e6e-f770838ebe9b"
+                }
+            ]
+        }
+    }
+}

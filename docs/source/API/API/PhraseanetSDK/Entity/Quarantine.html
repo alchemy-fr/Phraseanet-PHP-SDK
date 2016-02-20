@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Entity\Quarantine | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../PhraseanetSDK/Entity.html">PhraseanetSDK\Entity</a>\Quarantine</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Quarantine</strong>        extends <a href="../../PhraseanetSDK/Entity/AbstractEntity.html"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getId">getId</a>()
+                    <p>Get Quarantine item id</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setId">setId</a>($id)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../PhraseanetSDK/Entity/QuarantineSession.html"><abbr title="PhraseanetSDK\Entity\QuarantineSession">QuarantineSession</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getQuarantineSession">getQuarantineSession</a>()
+                    <p>Get The related quarantine session</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setQuarantineSession">setQuarantineSession</a>(<a href="../../PhraseanetSDK/Entity/QuarantineSession.html"><abbr title="PhraseanetSDK\Entity\QuarantineSession">QuarantineSession</abbr></a> $session)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getBaseId">getBaseId</a>()
+                    <p>Get the related base id</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setBaseId">setBaseId</a>($baseId)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getOriginalName">getOriginalName</a>()
+                    <p>Get the item original name</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setOriginalName">setOriginalName</a>($originalName)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getSha256">getSha256</a>()
+                    <p>Get the item SHA 256 HASH</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setSha256">setSha256</a>($sha256)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getUuid">getUuid</a>()
+                    <p>Get the item UUID</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setUuid">setUuid</a>($uuid)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    Boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isForced">isForced</a>()
+                    <p>Tell whether the item has been forced to the quarantine</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setForced">setForced</a>($forced)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+                </td>
+                <td class="last">
+                    <a href="#method_getChecks">getChecks</a>()
+                    <p>Get the check messages as a collection of string</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setChecks">setChecks</a>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $checks)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getCreatedOn">getCreatedOn</a>()
+                    <p>Creation date</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setCreatedOn">setCreatedOn</a>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $createdOn)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getUpdatedOn">getUpdatedOn</a>()
+                    <p>Last updated date</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setUpdatedOn">setUpdatedOn</a>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $updatedOn)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../PhraseanetSDK/Entity/AbstractEntity.html#method___construct"><abbr title="PhraseanetSDK\Entity\AbstractEntity">AbstractEntity</abbr></a> at line 21</div>
+        <code>final            public            
+    <strong>__construct</strong>(<a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a> $em)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/EntityManager.html"><abbr title="PhraseanetSDK\EntityManager">EntityManager</abbr></a></td>
+                <td>$em</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getId">
+        <div class="location">at line 34</div>
+        <code>            public            integer
+    <strong>getId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get Quarantine item id</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setId">
+        <div class="location">at line 39</div>
+        <code>            public            
+    <strong>setId</strong>($id)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$id</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getQuarantineSession">
+        <div class="location">at line 49</div>
+        <code>            public            <a href="../../PhraseanetSDK/Entity/QuarantineSession.html"><abbr title="PhraseanetSDK\Entity\QuarantineSession">QuarantineSession</abbr></a>
+    <strong>getQuarantineSession</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get The related quarantine session</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../PhraseanetSDK/Entity/QuarantineSession.html"><abbr title="PhraseanetSDK\Entity\QuarantineSession">QuarantineSession</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setQuarantineSession">
+        <div class="location">at line 54</div>
+        <code>            public            
+    <strong>setQuarantineSession</strong>(<a href="../../PhraseanetSDK/Entity/QuarantineSession.html"><abbr title="PhraseanetSDK\Entity\QuarantineSession">QuarantineSession</abbr></a> $session)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../PhraseanetSDK/Entity/QuarantineSession.html"><abbr title="PhraseanetSDK\Entity\QuarantineSession">QuarantineSession</abbr></a></td>
+                <td>$session</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBaseId">
+        <div class="location">at line 64</div>
+        <code>            public            integer
+    <strong>getBaseId</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the related base id</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBaseId">
+        <div class="location">at line 69</div>
+        <code>            public            
+    <strong>setBaseId</strong>($baseId)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$baseId</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getOriginalName">
+        <div class="location">at line 79</div>
+        <code>            public            string
+    <strong>getOriginalName</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the item original name</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setOriginalName">
+        <div class="location">at line 84</div>
+        <code>            public            
+    <strong>setOriginalName</strong>($originalName)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$originalName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSha256">
+        <div class="location">at line 94</div>
+        <code>            public            string
+    <strong>getSha256</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the item SHA 256 HASH</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setSha256">
+        <div class="location">at line 99</div>
+        <code>            public            
+    <strong>setSha256</strong>($sha256)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$sha256</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getUuid">
+        <div class="location">at line 109</div>
+        <code>            public            string
+    <strong>getUuid</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the item UUID</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setUuid">
+        <div class="location">at line 114</div>
+        <code>            public            
+    <strong>setUuid</strong>($uuid)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$uuid</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isForced">
+        <div class="location">at line 124</div>
+        <code>            public            Boolean
+    <strong>isForced</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Tell whether the item has been forced to the quarantine</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>Boolean</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setForced">
+        <div class="location">at line 129</div>
+        <code>            public            
+    <strong>setForced</strong>($forced)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$forced</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getChecks">
+        <div class="location">at line 139</div>
+        <code>            public            <abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>
+    <strong>getChecks</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the check messages as a collection of string</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setChecks">
+        <div class="location">at line 144</div>
+        <code>            public            
+    <strong>setChecks</strong>(<abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr> $checks)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></td>
+                <td>$checks</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getCreatedOn">
+        <div class="location">at line 154</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getCreatedOn</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Creation date</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setCreatedOn">
+        <div class="location">at line 159</div>
+        <code>            public            
+    <strong>setCreatedOn</strong>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $createdOn)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr></td>
+                <td>$createdOn</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getUpdatedOn">
+        <div class="location">at line 169</div>
+        <code>            public            <a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a>
+    <strong>getUpdatedOn</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Last updated date</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="http://php.net/DateTime"><abbr title="DateTime">DateTime</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setUpdatedOn">
+        <div class="location">at line 174</div>
+        <code>            public            
+    <strong>setUpdatedOn</strong>(<abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr> $updatedOn)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="PhraseanetSDK\Entity\DateTime">DateTime</abbr></td>
+                <td>$updatedOn</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

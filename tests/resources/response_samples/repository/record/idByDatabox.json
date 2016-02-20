@@ -1,0 +1,38 @@
+{
+    "meta": {
+        "api_version": "1.3",
+        "request": "GET /api/v1/records/1/638/",
+        "response_time": "2014-10-07T17:22:41+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "record": {
+            "databox_id": 1,
+            "record_id": 638,
+            "mime_type": "application/octet-stream",
+            "title": "samplefiletest/ffmpeg-bugs/roundup/issue591/02785736.mxf - 02785736",
+            "original_name": "02785736.mxf",
+            "updated_on": "2014-06-23T21:47:45+02:00",
+            "created_on": "2014-06-23T21:47:45+02:00",
+            "collection_id": 3,
+            "sha256": "a7f33964749bd7b920e852b48feb91759531eb7f9141ac07863d883ef5487339",
+            "thumbnail": null,
+            "technical_informations": [
+                {
+                    "name": "FileSize",
+                    "value": 2179119
+                },
+                {
+                    "name": "MimeType",
+                    "value": "application/octet-stream"
+                }
+            ],
+            "phrasea_type": "unknown",
+            "uuid": "9528f1b7-4a1f-40e4-bdf0-46bfaf93bff2"
+        }
+    }
+}

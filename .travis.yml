@@ -1,0 +1,28 @@
+language: php
+sudo: false
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - hhvm
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: hhvm
+services:
+  - memcached
+before_script:
+  - if [ $(phpenv version-name) != 'hhvm' ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  - if [ $(phpenv version-name) != 'hhvm' ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+before_install:
+  - composer self-update --no-progress --no-interaction
+install:
+  - make deps
+script:
+  - make test
+  - if [ $(phpenv version-name) = '5.6' ]; then make scrutinizer; fi
+notifications:
+  hipchat:
+    rooms:
+      secure: SGRF/sejAh54kp5p9C49TxJ0SE/WCZS/dM9L7Bjqfk2zxeB11s0k6Z0QaRJhwWtv7FETLVRF8/ZR6penJ3ibJj53ixzx2YzhuONIWYNlVGgnjnCsBST7eUzZesEbpob2p2oDchkG6OEG72nZJF3AQImeJvq0iWmdnhfJHFz0VYo=

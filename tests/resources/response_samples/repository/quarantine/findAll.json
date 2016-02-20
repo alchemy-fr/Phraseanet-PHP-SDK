@@ -1,0 +1,265 @@
+{
+    "meta": {
+        "api_version": "1.3",
+        "request": "GET /api/v1/quarantine/list/",
+        "response_time": "2014-10-07T17:18:53+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "offset_start": 0,
+        "per_page": 10,
+        "quarantine_items": [
+            {
+                "id": 11,
+                "quarantine_session": {
+                    "id": 84,
+                    "usr_id": 6,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 6,
+                        "email": "acabot@alchemy.fr",
+                        "login": "acabot@alchemy.fr",
+                        "first_name": null,
+                        "last_name": null,
+                        "display_name": "acabot@alchemy.fr",
+                        "gender": "Miss",
+                        "address": null,
+                        "zip_code": null,
+                        "city": null,
+                        "country": null,
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": null,
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-04-01T11:54:51+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                "base_id": 1,
+                "original_name": "Toutsurlespiles.pdf",
+                "sha256": "1ec9156f803e7bab955fdb127910a02eb92b38901769a6cc53c662b09771ee58",
+                "uuid": "a16438be-6172-4e9e-8d86-7a0e7ba28699",
+                "forced": false,
+                "checks": [
+                    "Un fichier avec le même UUID existe déjà dans la base de données"
+                ],
+                "created_on": "2014-09-25T10:28:15+02:00",
+                "updated_on": "2014-09-25T10:28:15+02:00"
+            },
+            {
+                "id": 10,
+                "quarantine_session": {
+                    "id": 83,
+                    "usr_id": 6,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 6,
+                        "email": "acabot@alchemy.fr",
+                        "login": "acabot@alchemy.fr",
+                        "first_name": null,
+                        "last_name": null,
+                        "display_name": "acabot@alchemy.fr",
+                        "gender": "Miss",
+                        "address": null,
+                        "zip_code": null,
+                        "city": null,
+                        "country": null,
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": null,
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-04-01T11:54:51+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                "base_id": 6,
+                "original_name": "photoshop_cs3_help.pdf",
+                "sha256": "7c699fc5e561cef9e3c2fe4fb7b43663b1a1b917f48c158ff5381353a4aa635c",
+                "uuid": "67f3b678-35e2-4d2f-9417-91e750fcbbc8",
+                "forced": false,
+                "checks": [
+                    "Un fichier avec la même somme de contrôle existe déjà dans la base de données"
+                ],
+                "created_on": "2014-09-25T10:05:33+02:00",
+                "updated_on": "2014-09-25T10:05:33+02:00"
+            },
+            {
+                "id": 9,
+                "quarantine_session": {
+                    "id": 82,
+                    "usr_id": 6,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 6,
+                        "email": "acabot@alchemy.fr",
+                        "login": "acabot@alchemy.fr",
+                        "first_name": null,
+                        "last_name": null,
+                        "display_name": "acabot@alchemy.fr",
+                        "gender": "Miss",
+                        "address": null,
+                        "zip_code": null,
+                        "city": null,
+                        "country": null,
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": null,
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-04-01T11:54:51+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                "base_id": 6,
+                "original_name": "glossairelardy.pdf",
+                "sha256": "c8d4e29c3494dd006567a7f376904bb7a354573241bc2831686b88793892ebf7",
+                "uuid": "5b9bf086-2cdc-4592-88f5-f4aa2057d950",
+                "forced": false,
+                "checks": [
+                    "Un fichier avec la même somme de contrôle existe déjà dans la base de données"
+                ],
+                "created_on": "2014-09-25T10:05:18+02:00",
+                "updated_on": "2014-09-25T10:05:18+02:00"
+            },
+            {
+                "id": 8,
+                "quarantine_session": {
+                    "id": 81,
+                    "usr_id": 6,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 6,
+                        "email": "acabot@alchemy.fr",
+                        "login": "acabot@alchemy.fr",
+                        "first_name": null,
+                        "last_name": null,
+                        "display_name": "acabot@alchemy.fr",
+                        "gender": "Miss",
+                        "address": null,
+                        "zip_code": null,
+                        "city": null,
+                        "country": null,
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": null,
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-04-01T11:54:51+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                "base_id": 1,
+                "original_name": "Pile Documents.pdf",
+                "sha256": "07bba6121e6ad409d3ed90d028648853cbcd2f0a6a638ec01aae6abadbd5cd25",
+                "uuid": "4f4c870a-0993-4618-90a8-ef2bed11bde2",
+                "forced": false,
+                "checks": [
+                    "Un fichier avec la même somme de contrôle existe déjà dans la base de données"
+                ],
+                "created_on": "2014-09-25T10:00:53+02:00",
+                "updated_on": "2014-09-25T10:00:53+02:00"
+            },
+            {
+                "id": 7,
+                "quarantine_session": {
+                    "id": 80,
+                    "usr_id": 6,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 6,
+                        "email": "acabot@alchemy.fr",
+                        "login": "acabot@alchemy.fr",
+                        "first_name": null,
+                        "last_name": null,
+                        "display_name": "acabot@alchemy.fr",
+                        "gender": "Miss",
+                        "address": null,
+                        "zip_code": null,
+                        "city": null,
+                        "country": null,
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": null,
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-04-01T11:54:51+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                "base_id": 1,
+                "original_name": "photoshop_cs3_help.pdf",
+                "sha256": "7c699fc5e561cef9e3c2fe4fb7b43663b1a1b917f48c158ff5381353a4aa635c",
+                "uuid": "65f79ef1-1d1c-40c1-9b47-4c59a68208e6",
+                "forced": false,
+                "checks": [
+                    "Un fichier avec la même somme de contrôle existe déjà dans la base de données"
+                ],
+                "created_on": "2014-09-25T10:00:45+02:00",
+                "updated_on": "2014-09-25T10:00:45+02:00"
+            },
+            {
+                "id": 6,
+                "quarantine_session": {
+                    "id": 79,
+                    "usr_id": 3,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 3,
+                        "email": "support@alchemy.fr",
+                        "login": "support@alchemy.fr",
+                        "first_name": "nicolas",
+                        "last_name": "support ",
+                        "display_name": "nicolas support ",
+                        "gender": "Mr",
+                        "address": null,
+                        "zip_code": null,
+                        "city": "Paris",
+                        "country": "France",
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": "2988507",
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2013-09-25T17:47:23+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                "base_id": 1,
+                "original_name": "add-publisher.pdf",
+                "sha256": "ee376fa814c826d3526c920feaf4165cb6e24d22b6592f72696812c3b619d405",
+                "uuid": "0b360015-9520-4af4-9ee1-34a43bfa9e7b",
+                "forced": false,
+                "checks": [
+                    "Un fichier avec la même somme de contrôle existe déjà dans la base de données",
+                    "Un fichier avec le même UUID existe déjà dans la base de données"
+                ],
+                "created_on": "2014-09-12T17:34:04+02:00",
+                "updated_on": "2014-09-12T17:34:04+02:00"
+            }
+        ]
+    }
+}

@@ -1,0 +1,545 @@
+{
+    "meta": {
+        "api_version": "1.3",
+        "request": "GET /api/v1/baskets/53/content/",
+        "response_time": "2014-10-07T17:43:14+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "basket": {
+            "validation_users": [
+                {
+                    "usr_id": 10,
+                    "usr_name": "Nicolas Maillat",
+                    "confirmed": false,
+                    "can_agree": true,
+                    "can_see_others": true,
+                    "readonly": true,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 10,
+                        "email": "nmaillat@gmail.com",
+                        "login": "nmaillat@gmail.com",
+                        "first_name": "Nicolas",
+                        "last_name": "Maillat",
+                        "display_name": "Nicolas Maillat",
+                        "gender": "Mr",
+                        "address": "11 rue laf",
+                        "zip_code": "75009",
+                        "city": "Paris",
+                        "country": "France",
+                        "phone": "01 01 01 01 01",
+                        "fax": "06 06 06 06 06",
+                        "job": "Activité",
+                        "position": "Poste",
+                        "company": "Alchemy",
+                        "geoname_id": "2988507",
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-04-16T01:43:58+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                {
+                    "usr_id": 21,
+                    "usr_name": "Nicolas Amendola",
+                    "confirmed": false,
+                    "can_agree": true,
+                    "can_see_others": true,
+                    "readonly": true,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 21,
+                        "email": "amendola@alchemy.fr",
+                        "login": "nicolas4",
+                        "first_name": "Nicolas",
+                        "last_name": "Amendola",
+                        "display_name": "Nicolas Amendola",
+                        "gender": "Miss",
+                        "address": null,
+                        "zip_code": null,
+                        "city": null,
+                        "country": null,
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": "Alchemy",
+                        "geoname_id": null,
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2014-05-13T10:36:16+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                },
+                {
+                    "usr_id": 3,
+                    "usr_name": "nicolas support ",
+                    "confirmed": false,
+                    "can_agree": false,
+                    "can_see_others": true,
+                    "readonly": false,
+                    "user": {
+                        "@entity@": "http://api.phraseanet.com/api/objects/user",
+                        "id": 3,
+                        "email": "support@alchemy.fr",
+                        "login": "support@alchemy.fr",
+                        "first_name": "nicolas",
+                        "last_name": "support ",
+                        "display_name": "nicolas support ",
+                        "gender": "Mr",
+                        "address": null,
+                        "zip_code": null,
+                        "city": "Paris",
+                        "country": "France",
+                        "phone": null,
+                        "fax": null,
+                        "job": null,
+                        "position": null,
+                        "company": null,
+                        "geoname_id": "2988507",
+                        "last_connection": "-0001-11-30T00:00:00+00:09",
+                        "created_on": "2013-09-25T17:47:23+02:00",
+                        "updated_on": "-0001-11-30T00:00:00+00:09",
+                        "locale": "fr_FR"
+                    }
+                }
+            ],
+            "expires_on": "2014-09-19T16:23:56+02:00",
+            "validation_infos": "Vous avez envoyé cette demande à 2 utilisateurs.",
+            "validation_confirmed": false,
+            "validation_initiator": true,
+            "validation_initiator_user": {
+                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                "id": 3,
+                "email": "support@alchemy.fr",
+                "login": "support@alchemy.fr",
+                "first_name": "nicolas",
+                "last_name": "support ",
+                "display_name": "nicolas support ",
+                "gender": "Mr",
+                "address": null,
+                "zip_code": null,
+                "city": "Paris",
+                "country": "France",
+                "phone": null,
+                "fax": null,
+                "job": null,
+                "position": null,
+                "company": null,
+                "geoname_id": "2988507",
+                "last_connection": "-0001-11-30T00:00:00+00:09",
+                "created_on": "2013-09-25T17:47:23+02:00",
+                "updated_on": "-0001-11-30T00:00:00+00:09",
+                "locale": "fr_FR"
+            },
+            "basket_id": 53,
+            "owner": {
+                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                "id": 3,
+                "email": "support@alchemy.fr",
+                "login": "support@alchemy.fr",
+                "first_name": "nicolas",
+                "last_name": "support ",
+                "display_name": "nicolas support ",
+                "gender": "Mr",
+                "address": null,
+                "zip_code": null,
+                "city": "Paris",
+                "country": "France",
+                "phone": null,
+                "fax": null,
+                "job": null,
+                "position": null,
+                "company": null,
+                "geoname_id": "2988507",
+                "last_connection": "-0001-11-30T00:00:00+00:09",
+                "created_on": "2013-09-25T17:47:23+02:00",
+                "updated_on": "-0001-11-30T00:00:00+00:09",
+                "locale": "fr_FR"
+            },
+            "created_on": "2014-09-09T16:23:56+02:00",
+            "description": "",
+            "name": "une validation",
+            "pusher_usr_id": null,
+            "pusher": null,
+            "updated_on": "2014-09-09T16:24:11+02:00",
+            "unread": false,
+            "validation_basket": true
+        },
+        "basket_elements": [
+            {
+                "basket_element_id": 152,
+                "order": 1,
+                "record": {
+                    "databox_id": 1,
+                    "record_id": 2241,
+                    "mime_type": "image/jpeg",
+                    "title": "Concept truck Unimog",
+                    "original_name": "unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg",
+                    "updated_on": "2014-09-17T23:24:39+02:00",
+                    "created_on": "2014-09-05T10:28:44+02:00",
+                    "collection_id": 1,
+                    "sha256": "fe8c1aa38f79c4a45e6d7e5de5587c751ebb2466e2b2f47641b6d048938ad4dd",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:54+02:00",
+                            "id": 5990,
+                            "is_activated": true,
+                            "label": "unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog",
+                            "updated_on": "2014-09-05T10:28:54+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/?token=og6qy4RR",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg?token=og6qy4RR&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2241/thumbnail/unimog-show-car-for-jubilee-60-years-mercedes-benz-unimog.jpg?token=og6qy4RR"
+                        },
+                        "height": 125,
+                        "width": 200,
+                        "filesize": 5518,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 447218
+                        },
+                        {
+                            "name": "Height",
+                            "value": 938
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 1500
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "dc0e45d4-bd96-47a2-b2c8-edb8c9bc0bc4"
+                },
+                "validation_item": true,
+                "validation_choices": [
+                    {
+                        "validation_user": {
+                            "usr_id": 10,
+                            "usr_name": "Nicolas Maillat",
+                            "confirmed": false,
+                            "can_agree": true,
+                            "can_see_others": true,
+                            "readonly": true,
+                            "user": {
+                                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                                "id": 10,
+                                "email": "nmaillat@gmail.com",
+                                "login": "nmaillat@gmail.com",
+                                "first_name": "Nicolas",
+                                "last_name": "Maillat",
+                                "display_name": "Nicolas Maillat",
+                                "gender": "Mr",
+                                "address": "11 rue laf",
+                                "zip_code": "75009",
+                                "city": "Paris",
+                                "country": "France",
+                                "phone": "01 01 01 01 01",
+                                "fax": "06 06 06 06 06",
+                                "job": "Activité",
+                                "position": "Poste",
+                                "company": "Alchemy",
+                                "geoname_id": "2988507",
+                                "last_connection": "-0001-11-30T00:00:00+00:09",
+                                "created_on": "2014-04-16T01:43:58+02:00",
+                                "updated_on": "-0001-11-30T00:00:00+00:09",
+                                "locale": "fr_FR"
+                            }
+                        },
+                        "agreement": null,
+                        "updated_on": "2014-09-09T16:23:56+02:00",
+                        "note": ""
+                    },
+                    {
+                        "validation_user": {
+                            "usr_id": 21,
+                            "usr_name": "Nicolas Amendola",
+                            "confirmed": false,
+                            "can_agree": true,
+                            "can_see_others": true,
+                            "readonly": true,
+                            "user": {
+                                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                                "id": 21,
+                                "email": "amendola@alchemy.fr",
+                                "login": "nicolas4",
+                                "first_name": "Nicolas",
+                                "last_name": "Amendola",
+                                "display_name": "Nicolas Amendola",
+                                "gender": "Miss",
+                                "address": null,
+                                "zip_code": null,
+                                "city": null,
+                                "country": null,
+                                "phone": null,
+                                "fax": null,
+                                "job": null,
+                                "position": null,
+                                "company": "Alchemy",
+                                "geoname_id": null,
+                                "last_connection": "-0001-11-30T00:00:00+00:09",
+                                "created_on": "2014-05-13T10:36:16+02:00",
+                                "updated_on": "-0001-11-30T00:00:00+00:09",
+                                "locale": "fr_FR"
+                            }
+                        },
+                        "agreement": null,
+                        "updated_on": "2014-09-09T16:23:56+02:00",
+                        "note": ""
+                    },
+                    {
+                        "validation_user": {
+                            "usr_id": 3,
+                            "usr_name": "nicolas support ",
+                            "confirmed": false,
+                            "can_agree": false,
+                            "can_see_others": true,
+                            "readonly": false,
+                            "user": {
+                                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                                "id": 3,
+                                "email": "support@alchemy.fr",
+                                "login": "support@alchemy.fr",
+                                "first_name": "nicolas",
+                                "last_name": "support ",
+                                "display_name": "nicolas support ",
+                                "gender": "Mr",
+                                "address": null,
+                                "zip_code": null,
+                                "city": "Paris",
+                                "country": "France",
+                                "phone": null,
+                                "fax": null,
+                                "job": null,
+                                "position": null,
+                                "company": null,
+                                "geoname_id": "2988507",
+                                "last_connection": "-0001-11-30T00:00:00+00:09",
+                                "created_on": "2013-09-25T17:47:23+02:00",
+                                "updated_on": "-0001-11-30T00:00:00+00:09",
+                                "locale": "fr_FR"
+                            }
+                        },
+                        "agreement": null,
+                        "updated_on": "2014-09-09T16:23:56+02:00",
+                        "note": ""
+                    }
+                ],
+                "agreement": null,
+                "note": ""
+            },
+            {
+                "basket_element_id": 153,
+                "order": 2,
+                "record": {
+                    "databox_id": 1,
+                    "record_id": 2239,
+                    "mime_type": "image/jpeg",
+                    "title": "Unimog et Smart faisant la course",
+                    "original_name": "57975564_9393659d84.jpg",
+                    "updated_on": "2014-09-17T23:24:42+02:00",
+                    "created_on": "2014-09-05T10:28:41+02:00",
+                    "collection_id": 1,
+                    "sha256": "34c68e927f39cce8b6fb5dad28e2103956cc087db6f572cb924044ea76673af8",
+                    "thumbnail": {
+                        "name": "thumbnail",
+                        "permalink": {
+                            "created_on": "2014-09-05T10:28:58+02:00",
+                            "id": 5996,
+                            "is_activated": true,
+                            "label": "57975564_9393659d84",
+                            "updated_on": "2014-09-05T10:28:58+02:00",
+                            "page_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/?token=o0o1s1pI",
+                            "download_url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/57975564_9393659d84.jpg?token=o0o1s1pI&download=1",
+                            "url": "http://test38.preprod.alchemyasp.com/permalink/v1/1/2239/thumbnail/57975564_9393659d84.jpg?token=o0o1s1pI"
+                        },
+                        "height": 133,
+                        "width": 200,
+                        "filesize": 6199,
+                        "devices": [
+                            "screen"
+                        ],
+                        "player_type": "IMAGE",
+                        "mime_type": "image/jpeg"
+                    },
+                    "technical_informations": [
+                        {
+                            "name": "Channels",
+                            "value": 3
+                        },
+                        {
+                            "name": "ColorDepth",
+                            "value": 8
+                        },
+                        {
+                            "name": "ColorSpace",
+                            "value": "RGB"
+                        },
+                        {
+                            "name": "FileSize",
+                            "value": 37146
+                        },
+                        {
+                            "name": "Height",
+                            "value": 373
+                        },
+                        {
+                            "name": "MimeType",
+                            "value": "image/jpeg"
+                        },
+                        {
+                            "name": "Width",
+                            "value": 559
+                        }
+                    ],
+                    "phrasea_type": "image",
+                    "uuid": "bae3d525-7e06-49c6-8e6e-f770838ebe9b"
+                },
+                "validation_item": true,
+                "validation_choices": [
+                    {
+                        "validation_user": {
+                            "usr_id": 10,
+                            "usr_name": "Nicolas Maillat",
+                            "confirmed": false,
+                            "can_agree": true,
+                            "can_see_others": true,
+                            "readonly": true,
+                            "user": {
+                                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                                "id": 10,
+                                "email": "nmaillat@gmail.com",
+                                "login": "nmaillat@gmail.com",
+                                "first_name": "Nicolas",
+                                "last_name": "Maillat",
+                                "display_name": "Nicolas Maillat",
+                                "gender": "Mr",
+                                "address": "11 rue laf",
+                                "zip_code": "75009",
+                                "city": "Paris",
+                                "country": "France",
+                                "phone": "01 01 01 01 01",
+                                "fax": "06 06 06 06 06",
+                                "job": "Activité",
+                                "position": "Poste",
+                                "company": "Alchemy",
+                                "geoname_id": "2988507",
+                                "last_connection": "-0001-11-30T00:00:00+00:09",
+                                "created_on": "2014-04-16T01:43:58+02:00",
+                                "updated_on": "-0001-11-30T00:00:00+00:09",
+                                "locale": "fr_FR"
+                            }
+                        },
+                        "agreement": null,
+                        "updated_on": "2014-09-09T16:23:56+02:00",
+                        "note": ""
+                    },
+                    {
+                        "validation_user": {
+                            "usr_id": 21,
+                            "usr_name": "Nicolas Amendola",
+                            "confirmed": false,
+                            "can_agree": true,
+                            "can_see_others": true,
+                            "readonly": true,
+                            "user": {
+                                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                                "id": 21,
+                                "email": "amendola@alchemy.fr",
+                                "login": "nicolas4",
+                                "first_name": "Nicolas",
+                                "last_name": "Amendola",
+                                "display_name": "Nicolas Amendola",
+                                "gender": "Miss",
+                                "address": null,
+                                "zip_code": null,
+                                "city": null,
+                                "country": null,
+                                "phone": null,
+                                "fax": null,
+                                "job": null,
+                                "position": null,
+                                "company": "Alchemy",
+                                "geoname_id": null,
+                                "last_connection": "-0001-11-30T00:00:00+00:09",
+                                "created_on": "2014-05-13T10:36:16+02:00",
+                                "updated_on": "-0001-11-30T00:00:00+00:09",
+                                "locale": "fr_FR"
+                            }
+                        },
+                        "agreement": null,
+                        "updated_on": "2014-09-09T16:23:56+02:00",
+                        "note": ""
+                    },
+                    {
+                        "validation_user": {
+                            "usr_id": 3,
+                            "usr_name": "nicolas support ",
+                            "confirmed": false,
+                            "can_agree": false,
+                            "can_see_others": true,
+                            "readonly": false,
+                            "user": {
+                                "@entity@": "http://api.phraseanet.com/api/objects/user",
+                                "id": 3,
+                                "email": "support@alchemy.fr",
+                                "login": "support@alchemy.fr",
+                                "first_name": "nicolas",
+                                "last_name": "support ",
+                                "display_name": "nicolas support ",
+                                "gender": "Mr",
+                                "address": null,
+                                "zip_code": null,
+                                "city": "Paris",
+                                "country": "France",
+                                "phone": null,
+                                "fax": null,
+                                "job": null,
+                                "position": null,
+                                "company": null,
+                                "geoname_id": "2988507",
+                                "last_connection": "-0001-11-30T00:00:00+00:09",
+                                "created_on": "2013-09-25T17:47:23+02:00",
+                                "updated_on": "-0001-11-30T00:00:00+00:09",
+                                "locale": "fr_FR"
+                            }
+                        },
+                        "agreement": null,
+                        "updated_on": "2014-09-09T16:23:56+02:00",
+                        "note": ""
+                    }
+                ],
+                "agreement": null,
+                "note": ""
+            }
+        ]
+    }
+}

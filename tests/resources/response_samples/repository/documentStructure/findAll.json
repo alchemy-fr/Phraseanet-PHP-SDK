@@ -1,0 +1,676 @@
+{
+    "meta": {
+        "api_version": "1.3",
+        "request": "GET /api/v1/databoxes/1/metadatas/",
+        "response_time": "2014-10-07T17:12:50+02:00",
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "document_metadatas": [
+            {
+                "id": 2,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "Categorie",
+                "labels": {
+                    "fr": "Categorie",
+                    "en": "Categorie",
+                    "de": "Categorie",
+                    "nl": "Categorie"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 1,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "Objet",
+                "labels": {
+                    "fr": "LabelObjet",
+                    "en": "Objet",
+                    "de": "Objet",
+                    "nl": "Objet"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 3,
+                "namespace": "IPTC",
+                "source": "IPTC:SupplementalCategories",
+                "tagname": "SupplementalCategories",
+                "name": "AutresCategories",
+                "labels": {
+                    "fr": "AutresCategories",
+                    "en": "AutresCategories",
+                    "de": "AutresCategories",
+                    "nl": "AutresCategories"
+                },
+                "separator": ";,",
+                "thesaurus_branch": "/thesaurus/te[@id='T5']",
+                "type": "string",
+                "indexable": true,
+                "multivalue": true,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 4,
+                "namespace": "IPTC",
+                "source": "IPTC:Keywords",
+                "tagname": "Keywords",
+                "name": "MotsCles",
+                "labels": {
+                    "fr": "MotsCles",
+                    "en": "MotsCles",
+                    "de": "MotsCles",
+                    "nl": "MotsCles"
+                },
+                "separator": ";,",
+                "thesaurus_branch": "/thesaurus/te[@id='T7'] | /thesaurus/te[@id='T8']",
+                "type": "string",
+                "indexable": true,
+                "multivalue": true,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 5,
+                "namespace": "IPTC",
+                "source": "IPTC:SpecialInstructions",
+                "tagname": "SpecialInstructions",
+                "name": "Observations",
+                "labels": {
+                    "fr": "Observations",
+                    "en": "Observations",
+                    "de": "Observations",
+                    "nl": "Observations"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 6,
+                "namespace": "IPTC",
+                "source": "IPTC:DateCreated",
+                "tagname": "DateCreated",
+                "name": "Date",
+                "labels": {
+                    "fr": "Date",
+                    "en": "Date",
+                    "de": "Date",
+                    "nl": "Date"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "date",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 7,
+                "namespace": "IPTC",
+                "source": "IPTC:By-line",
+                "tagname": "By-line",
+                "name": "Signature",
+                "labels": {
+                    "fr": "Signature",
+                    "en": "Signature",
+                    "de": "Signature",
+                    "nl": "Signature"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 8,
+                "namespace": "IPTC",
+                "source": "IPTC:By-lineTitle",
+                "tagname": "By-lineTitle",
+                "name": "TitreCredits",
+                "labels": {
+                    "fr": "TitreCredits",
+                    "en": "TitreCredits",
+                    "de": "TitreCredits",
+                    "nl": "TitreCredits"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 9,
+                "namespace": "IPTC",
+                "source": "IPTC:City",
+                "tagname": "City",
+                "name": "Ville",
+                "labels": {
+                    "fr": "Ville",
+                    "en": "City",
+                    "de": "Ville",
+                    "nl": "Ville"
+                },
+                "separator": "",
+                "thesaurus_branch": "/thesaurus/te[@id='T6']",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 10,
+                "namespace": "IPTC",
+                "source": "IPTC:Province-State",
+                "tagname": "Province-State",
+                "name": "Province",
+                "labels": {
+                    "fr": "Province",
+                    "en": "Province",
+                    "de": "Province",
+                    "nl": "Province"
+                },
+                "separator": "",
+                "thesaurus_branch": "/thesaurus/te[@id='T6']",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 11,
+                "namespace": "IPTC",
+                "source": "IPTC:Country-PrimaryLocationName",
+                "tagname": "Country-PrimaryLocationName",
+                "name": "Pays",
+                "labels": {
+                    "fr": "Pays",
+                    "en": "Pays",
+                    "de": "Pays",
+                    "nl": "Pays"
+                },
+                "separator": "",
+                "thesaurus_branch": "/thesaurus/te[@id='T6']",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 12,
+                "namespace": "IPTC",
+                "source": "IPTC:OriginalTransmissionReference",
+                "tagname": "OriginalTransmissionReference",
+                "name": "ReferencesOriginales",
+                "labels": {
+                    "fr": "ReferencesOriginales",
+                    "en": "ReferencesOriginales",
+                    "de": "ReferencesOriginales",
+                    "nl": "ReferencesOriginales"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 13,
+                "namespace": "IPTC",
+                "source": "IPTC:Headline",
+                "tagname": "Headline",
+                "name": "Titre",
+                "labels": {
+                    "fr": "Titre",
+                    "en": "Titre",
+                    "de": "Titre",
+                    "nl": "Titre"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 14,
+                "namespace": "IPTC",
+                "source": "IPTC:Credit",
+                "tagname": "Credit",
+                "name": "Credit",
+                "labels": {
+                    "fr": "Credit",
+                    "en": "Credit",
+                    "de": "Credit",
+                    "nl": "Credit"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 15,
+                "namespace": "IPTC",
+                "source": "IPTC:Source",
+                "tagname": "Source",
+                "name": "Source",
+                "labels": {
+                    "fr": "Source",
+                    "en": "Source",
+                    "de": "Source",
+                    "nl": "Source"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 16,
+                "namespace": "IPTC",
+                "source": "IPTC:Caption-Abstract",
+                "tagname": "Caption-Abstract",
+                "name": "Legende",
+                "labels": {
+                    "fr": "Legende",
+                    "en": "Legende",
+                    "de": "Legende",
+                    "nl": "Legende"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 17,
+                "namespace": "IPTC",
+                "source": "IPTC:Writer-Editor",
+                "tagname": "Writer-Editor",
+                "name": "Redacteur",
+                "labels": {
+                    "fr": "Redacteur",
+                    "en": "Redacteur",
+                    "de": "Redacteur",
+                    "nl": "Redacteur"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 18,
+                "namespace": "GPS",
+                "source": "GPS:GPSLongitude",
+                "tagname": "GPSLongitude",
+                "name": "Longitude",
+                "labels": {
+                    "fr": "Longitude",
+                    "en": "Longitude",
+                    "de": "Longitude",
+                    "nl": "Longitude"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": true,
+                "required": false
+            },
+            {
+                "id": 19,
+                "namespace": "GPS",
+                "source": "GPS:GPSLatitude",
+                "tagname": "GPSLatitude",
+                "name": "Latitude",
+                "labels": {
+                    "fr": "Latitude",
+                    "en": "Latitude",
+                    "de": "Latitude",
+                    "nl": "Latitude"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": true,
+                "required": false
+            },
+            {
+                "id": 20,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "AppareilPhoto",
+                "labels": {
+                    "fr": "AppareilPhoto",
+                    "en": "AppareilPhoto",
+                    "de": "AppareilPhoto",
+                    "nl": "AppareilPhoto"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": true,
+                "required": false
+            },
+            {
+                "id": 21,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "NomDeFichier",
+                "labels": {
+                    "fr": "NomDeFichier",
+                    "en": "NomDeFichier",
+                    "de": "NomDeFichier",
+                    "nl": "NomDeFichier"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "text",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": true,
+                "required": false
+            },
+            {
+                "id": 23,
+                "namespace": "XMP-dc",
+                "source": "XMP-dc:Title",
+                "tagname": "Title",
+                "name": "DcTitle",
+                "labels": {
+                    "fr": "DcTitle",
+                    "en": "DcTitle",
+                    "de": "DcTitle",
+                    "nl": "DcTitle"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 22,
+                "namespace": "XMP-dc",
+                "source": "XMP-dc:Description",
+                "tagname": "Description",
+                "name": "DcDescription",
+                "labels": {
+                    "fr": "DcDescription",
+                    "en": "DcDescription",
+                    "de": "DcDescription",
+                    "nl": "DcDescription"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 33,
+                "namespace": "XMP-dc",
+                "source": "XMP-dc:Subject",
+                "tagname": "Subject",
+                "name": "dcSubject",
+                "labels": {
+                    "fr": "dcSubject",
+                    "en": "dcSubject",
+                    "de": "dcSubject",
+                    "nl": "dcSubject"
+                },
+                "separator": ";",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": true,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 24,
+                "namespace": "XMP-dc",
+                "source": "XMP-dc:Rights",
+                "tagname": "Rights",
+                "name": "dcRights",
+                "labels": {
+                    "fr": "dcRights",
+                    "en": "dcRights",
+                    "de": "dcRights",
+                    "nl": "dcRights"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 26,
+                "namespace": "XMP-photoshop",
+                "source": "XMP-photoshop:Headline",
+                "tagname": "Headline",
+                "name": "XMPphotoshop",
+                "labels": {
+                    "fr": "XMPphotoshop",
+                    "en": "XMPphotoshop",
+                    "de": "XMPphotoshop",
+                    "nl": "XMPphotoshop"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 27,
+                "namespace": "XMP-photoshop",
+                "source": "XMP-photoshop:Credit",
+                "tagname": "Credit",
+                "name": "XMPphotoshopCredit",
+                "labels": {
+                    "fr": "XMPphotoshopCredit",
+                    "en": "XMPphotoshopCredit",
+                    "de": "XMPphotoshopCredit",
+                    "nl": "XMPphotoshopCredit"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 28,
+                "namespace": "XMP-photoshop",
+                "source": "XMP-photoshop:City",
+                "tagname": "City",
+                "name": "XMPphotoshopCity",
+                "labels": {
+                    "fr": "XMPphotoshopCity",
+                    "en": "XMPphotoshopCity",
+                    "de": "XMPphotoshopCity",
+                    "nl": "XMPphotoshopCity"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 29,
+                "namespace": "XMP-photoshop",
+                "source": "XMP-photoshop:Country",
+                "tagname": "Country",
+                "name": "XMPphotoshopCountry",
+                "labels": {
+                    "fr": "XMPphotoshopCountry",
+                    "en": "XMPphotoshopCountry",
+                    "de": "XMPphotoshopCountry",
+                    "nl": "XMPphotoshopCountry"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 30,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "DerniereDif",
+                "labels": {
+                    "fr": "Dernière diffusion",
+                    "en": "DerniereDif",
+                    "de": "DerniereDif",
+                    "nl": "DerniereDif"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "date",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 31,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "Commentaire",
+                "labels": {
+                    "fr": "Commentaire",
+                    "en": "Commentaire",
+                    "de": "Commentaire",
+                    "nl": "Commentaire"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "string",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 32,
+                "namespace": "",
+                "source": "",
+                "tagname": "",
+                "name": "NumberSort",
+                "labels": {
+                    "fr": "NumberSort",
+                    "en": "NumberSort",
+                    "de": "NumberSort",
+                    "nl": "NumberSort"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "number",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            },
+            {
+                "id": 34,
+                "namespace": "XMP-plus",
+                "source": "XMP-plus:LicenseEndDate",
+                "tagname": "LicenseEndDate",
+                "name": "DateExpiration",
+                "labels": {
+                    "fr": "DateExpiration",
+                    "en": "DateExpiration",
+                    "de": "DateExpiration",
+                    "nl": "DateExpiration"
+                },
+                "separator": "",
+                "thesaurus_branch": "",
+                "type": "date",
+                "indexable": true,
+                "multivalue": false,
+                "readonly": false,
+                "required": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>PhraseanetSDK\Exception\BadResponseException | Phraseanet PHP SDK API</title>
+                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../classes.html">Classes</a></li>
+                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Phraseanet PHP SDK API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../PhraseanetSDK/Exception.html">PhraseanetSDK\Exception</a>\BadResponseException</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>BadResponseException</strong>        extends <a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a>        implements
+        <a href="../../PhraseanetSDK/Exception/ExceptionInterface.html"><abbr title="PhraseanetSDK\Exception\ExceptionInterface">ExceptionInterface</abbr></a></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    <a href="../../PhraseanetSDK/Exception/BadResponseException.html"><abbr title="PhraseanetSDK\Exception\BadResponseException">BadResponseException</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setResponseBody">setResponseBody</a>(string $body)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getResponseBody">getResponseBody</a>()
+                    <p>The content of the response</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    integer
+                </td>
+                <td class="last">
+                    <a href="#method_getStatusCode">getStatusCode</a>()
+                    <p>The response HTTP status code</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../PhraseanetSDK/Exception/BadResponseException.html"><abbr title="PhraseanetSDK\Exception\BadResponseException">BadResponseException</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_setHttpStatusCode">setHttpStatusCode</a>(integer $httpStatusCode)
+                    <p>Set the response HTTP status code</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_isClientError">isClientError</a>()
+                    <p>Checks if HTTP Status code is a Client Error (4xx)</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_isServerError">isServerError</a>()
+                    <p>Checks if HTTP Status code is Server Error (5xx)</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;
+                </td>
+                <td class="last">
+                    <a href="#method_fromGuzzleResponse">fromGuzzleResponse</a>(<abbr title="Guzzle\Http\Exception\BadResponseException">BadResponseException</abbr> $e)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method_setResponseBody">
+        <div class="location">at line 37</div>
+        <code>            public            <a href="../../PhraseanetSDK/Exception/BadResponseException.html"><abbr title="PhraseanetSDK\Exception\BadResponseException">BadResponseException</abbr></a>
+    <strong>setResponseBody</strong>(string $body)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$body</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../PhraseanetSDK/Exception/BadResponseException.html"><abbr title="PhraseanetSDK\Exception\BadResponseException">BadResponseException</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getResponseBody">
+        <div class="location">at line 49</div>
+        <code>            public            string
+    <strong>getResponseBody</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The content of the response</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getStatusCode">
+        <div class="location">at line 59</div>
+        <code>            public            integer
+    <strong>getStatusCode</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>The response HTTP status code</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>integer</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setHttpStatusCode">
+        <div class="location">at line 70</div>
+        <code>            public            <a href="../../PhraseanetSDK/Exception/BadResponseException.html"><abbr title="PhraseanetSDK\Exception\BadResponseException">BadResponseException</abbr></a>
+    <strong>setHttpStatusCode</strong>(integer $httpStatusCode)</code>
+    </h3>
+    <div class="details">
+        <p>Set the response HTTP status code</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>integer</td>
+                <td>$httpStatusCode</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../PhraseanetSDK/Exception/BadResponseException.html"><abbr title="PhraseanetSDK\Exception\BadResponseException">BadResponseException</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isClientError">
+        <div class="location">at line 82</div>
+        <code>            public            bool
+    <strong>isClientError</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Checks if HTTP Status code is a Client Error (4xx)</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isServerError">
+        <div class="location">at line 92</div>
+        <code>            public            bool
+    <strong>isServerError</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Checks if HTTP Status code is Server Error (5xx)</p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_fromGuzzleResponse">
+        <div class="location">at line 97</div>
+        <code>        static    public            
+    <strong>fromGuzzleResponse</strong>(<abbr title="Guzzle\Http\Exception\BadResponseException">BadResponseException</abbr> $e)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Guzzle\Http\Exception\BadResponseException">BadResponseException</abbr></td>
+                <td>$e</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

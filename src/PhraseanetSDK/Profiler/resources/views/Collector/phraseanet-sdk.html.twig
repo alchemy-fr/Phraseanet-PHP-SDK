@@ -1,0 +1,210 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% if collector.calls is empty %}
+        {% set color = 'grey' %}
+    {% elseif collector.countErrors > 0 %}
+        {% set color = 'red' %}
+    {% else %}
+        {% set color = 'green' %}
+    {% endif %}
+
+    {% set icon %}
+        <img width="20" height="20" alt="{{ (collector.name|capitalize)|default('HTTP calls') }}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIUDSQF9nGk8AAABLpJREFUWMOtl21olmUUx3/3XmTryZWmKb6hRhQalb0oqdPlKvfX7AUk+hQRRGVQEAQ1oj5JH4Ig+pBlFlKLVWZp0hFl6NT5gtMKU8sJaiqZzZc5dc7NXX05T9xd3s/m0PPtec51nft/zvmflyupqamhP2Jm5cB9wMPAaOBXYAOwS1IX/ZTkSgGY2VigCqgERmQc+RPYDDRJ2n9NALi3k4Fq4G6gNKU+A/wFjAMGpP7vAfZ6VLZJ+rvfANzbWe7t8Eh9AFgJbJHUZmZjgGnAdGB8dPa8p6gR2CmpvSAAM8sB96e8LSkA+gDwE7BVUmsKdBEwwUFPAYZF91qB7Q5mt6RugCSEMN69nZbhbQuwFbgVuCcKdQewA2gAfpbUmQJznTsxE5gEDIzsHgS2ABuTEEI9cENK2Qas8xz+Lim40TFusNLZn5Yjfn6DpENROod4RCqBiVFk25IQwjIg56TKuWd1wHpJpzP4McC9qvZyLE+puzznDcB2Seeiu8OAp4HZQAKcS0II33iIvvRwy8utDGgGVgM7smrczIa7Z1UZBDwONAHrJLU4x2YDc4CRfqY9DeALSV+54QrgAQdzG/CPe9Ug6UgGkCLgLufSZKAipQ7Ab8Dg1IfpFUBk/BbgEfeyAvjFq6BZUkfG+Zs8RXOB2/voQ30DiJg9xUN4B3AKWA+slXQgOnsn8IyTrv8AnGhFki700parPeSDgT3Aj8BpYD5w7xV24vaiAoongA/NbFCWUtJBSUuA54CFwAXgdeDdAh8v8Wopi3rJ5d3OzEqdrSO8zNZ6+EsltUVAOoFNwCYze8VJm5Zi//Axj9Be4FFv2xcp0G6nAEP8wlRgLTAKeNvM1gMrJR3PuNcZ/S4CzgLLgHqgI0mSrhBCq7f84vyhWOZ7i10CjPaJ2O08qQQWmdmMjHtpW4mX30LgU+BBoC6E8Kw3vK6sFHSa2Siv+1O+cHQ6k1uBk8DLwAxggZnt8/mwU9KxeMj5WG4F5gG1Psov+pDKuVP/Q33Jw3/Ux+1T3t0mua4U6Ja0GtjlfWGOD51YgtsuA673cK8BfgCedMdDDKAcWAXUSqoHXgSWupc5YBDwnplNd6NDfW5c6qXMSoD9QG2SJG844FleNZeloMdZfdwZfh6oN7OZXg2twCHgtRTYsX3U+YAkSbaFEMaFEN7x9HXnvc9HIB+FKjObZmZJZOR9Z/M54APgeeBVSU0e4t6kI4QwFVjsnnc5N/77fomHI+fevAXsNrPvJG3xSLQALWbWDBRLOgGcSJGtkOSdG+hA2zPO9JQAb3pzqHYgE4GJZrbHSdMkqSdrCrrh4kL7ptsbmmd8xmq3qETSYeAjM1sBPO7lV+773QRgr5ktBzZL6omMrElFI66CLmCBl11HpFsO1EnquGwrNrORHpGHnO152Qd8D2yUdCmjhb8EPBb9XRqR7jDwsaQdfb4LfNuZ53Mhl1L94R40pYEUAJCWVcBSSWf79TJyIHN9KamINuYVQKOkbjN7wadoLEeBxZK2Xe3T7GaPSE2Umhbgax/D8TRcDXwu6cxVvw2jzVaemhujjbg0tZB+4r3i2jxOM4AM8dQoelc0AJ9JOnlNX8d9AJnj2/C3khr7c/9f0+jX6AqYsLAAAAAASUVORK5CYII=" />
+        <span class="sf-toolbar-value">{{ collector.calls|length }}</span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Requests</b>
+            <span>{{ collector.calls|length - collector.countErrors }}</span>
+            {% if collector.countErrors > 0 %}
+                + <span>{{ collector.countErrors }}</span>
+            {% endif %}
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Requests time</b>
+            {% if collector.totalTime > 1.0 %}
+                <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
+            {% else %}
+                <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
+            {% endif %}
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Cache hit ratio</b>
+            <span>{{ '%0.0f'|format(collector.cacheHitRatio) }} %</span>
+        </div>
+    {% endset %}
+
+    {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { link: 'phrasea-sdk', status: color } %}
+{% endblock %}
+
+{% block menu %}
+    {% if collector.calls is empty %}
+        {% set labelClass = '' %}
+    {% elseif collector.countErrors > 0 %}
+        {% set labelClass = 'label-status-error' %}
+    {% else %}
+        {% set labelClass = 'label-status-success' %}
+    {% endif %}
+
+    <span class="label {{ labelClass }}">
+        <span class="icon">
+            <img height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIUDSQF9nGk8AAABLpJREFUWMOtl21olmUUx3/3XmTryZWmKb6hRhQalb0oqdPlKvfX7AUk+hQRRGVQEAQ1oj5JH4Ig+pBlFlKLVWZp0hFl6NT5gtMKU8sJaiqZzZc5dc7NXX05T9xd3s/m0PPtec51nft/zvmflyupqamhP2Jm5cB9wMPAaOBXYAOwS1IX/ZTkSgGY2VigCqgERmQc+RPYDDRJ2n9NALi3k4Fq4G6gNKU+A/wFjAMGpP7vAfZ6VLZJ+rvfANzbWe7t8Eh9AFgJbJHUZmZjgGnAdGB8dPa8p6gR2CmpvSAAM8sB96e8LSkA+gDwE7BVUmsKdBEwwUFPAYZF91qB7Q5mt6RugCSEMN69nZbhbQuwFbgVuCcKdQewA2gAfpbUmQJznTsxE5gEDIzsHgS2ABuTEEI9cENK2Qas8xz+Lim40TFusNLZn5Yjfn6DpENROod4RCqBiVFk25IQwjIg56TKuWd1wHpJpzP4McC9qvZyLE+puzznDcB2Seeiu8OAp4HZQAKcS0II33iIvvRwy8utDGgGVgM7smrczIa7Z1UZBDwONAHrJLU4x2YDc4CRfqY9DeALSV+54QrgAQdzG/CPe9Ug6UgGkCLgLufSZKAipQ7Ab8Dg1IfpFUBk/BbgEfeyAvjFq6BZUkfG+Zs8RXOB2/voQ30DiJg9xUN4B3AKWA+slXQgOnsn8IyTrv8AnGhFki700parPeSDgT3Aj8BpYD5w7xV24vaiAoongA/NbFCWUtJBSUuA54CFwAXgdeDdAh8v8Wopi3rJ5d3OzEqdrSO8zNZ6+EsltUVAOoFNwCYze8VJm5Zi//Axj9Be4FFv2xcp0G6nAEP8wlRgLTAKeNvM1gMrJR3PuNcZ/S4CzgLLgHqgI0mSrhBCq7f84vyhWOZ7i10CjPaJ2O08qQQWmdmMjHtpW4mX30LgU+BBoC6E8Kw3vK6sFHSa2Siv+1O+cHQ6k1uBk8DLwAxggZnt8/mwU9KxeMj5WG4F5gG1Psov+pDKuVP/Q33Jw3/Ux+1T3t0mua4U6Ja0GtjlfWGOD51YgtsuA673cK8BfgCedMdDDKAcWAXUSqoHXgSWupc5YBDwnplNd6NDfW5c6qXMSoD9QG2SJG844FleNZeloMdZfdwZfh6oN7OZXg2twCHgtRTYsX3U+YAkSbaFEMaFEN7x9HXnvc9HIB+FKjObZmZJZOR9Z/M54APgeeBVSU0e4t6kI4QwFVjsnnc5N/77fomHI+fevAXsNrPvJG3xSLQALWbWDBRLOgGcSJGtkOSdG+hA2zPO9JQAb3pzqHYgE4GJZrbHSdMkqSdrCrrh4kL7ptsbmmd8xmq3qETSYeAjM1sBPO7lV+773QRgr5ktBzZL6omMrElFI66CLmCBl11HpFsO1EnquGwrNrORHpGHnO152Qd8D2yUdCmjhb8EPBb9XRqR7jDwsaQdfb4LfNuZ53Mhl1L94R40pYEUAJCWVcBSSWf79TJyIHN9KamINuYVQKOkbjN7wadoLEeBxZK2Xe3T7GaPSE2Umhbgax/D8TRcDXwu6cxVvw2jzVaemhujjbg0tZB+4r3i2jxOM4AM8dQoelc0AJ9JOnlNX8d9AJnj2/C3khr7c/9f0+jX6AqYsLAAAAAASUVORK5CYII=" alt="{{ (collector.name|capitalize)|default('HTTP calls') }}" />
+        </span>
+        <strong>Phraseanet API</strong>
+        <span class="count">
+            <span>{{ collector.calls|length }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    {% include '@PhraseanetSDK/Profiler/panel.html.twig' with {'calls': collector.calls, 'collector': collector } %}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    <style>
+        #tree-menu {
+            float: left;
+            padding-right: 10px;
+            width: 230px;
+        }
+        #tree-menu ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+        }
+        #tree-menu li {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        #tree-menu .empty {
+            border: 0;
+            mmargin: 0;
+            padding: 0;
+        }
+        #tree-details-container {
+            border-left: 1px solid #DDD;
+            margin-left: 250px;
+            padding-left: 20px;
+        }
+        .tree-details {
+            padding-bottom: 40px;
+        }
+        .tree-details h3 {
+            font-size: 18px;
+            position: relative;
+        }
+
+        .toggle-icon {
+            display: inline-block;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgBAMAAADpp+X/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDgwx4LcKwAAAABVQTFRFAAAA////////////////ZmZm////bvjBwAAAAAV0Uk5TABZwsuCVEUjgAAAAAWJLR0QF+G/pxwAAAE1JREFUGNNjSHMSYGBgUEljSGYAAzMGBwiDhUEBwmBiEIAwGBmwgTQgQGWgA7h2uIFwK+CWwp1BpHvYEqDuATEYkBlY3IOmBq6dCPcAAIT5Eg2IksjQAAAAAElFTkSuQmCC") no-repeat top left #5eb5e0;
+        }
+        .closed .toggle-icon, .closed.toggle-icon {
+            background-position: bottom left;
+        }
+        .toggle-icon.empty {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QAZgBmAGYHukptAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDhIf6CA40AAAAFRJREFUOMvtk7ENACEMA61vfx767MROWfO+AdGBHlNyTZrYUZRYDBII4NWE1pNdpFarfgLUbpDaBEgBYRiEVjsvDLa1l6O4Z3wkFWN+OfLKdpisOH/TlICzukmUJwAAAABJRU5ErkJggg==");
+        }
+
+        .tree .tree-inner {
+            cursor: pointer;
+            padding: 5px 7px 5px 22px;
+            position: relative;
+
+        }
+        .tree .toggle-button {
+            /* provide a bigger clickable area than just 10x10px */
+            width: 16px;
+            height: 16px;
+            /* vertically center the button */
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            margin-left: -18px;
+        }
+        .tree .toggle-icon {
+            width: 10px;
+            height: 10px;
+            /* position the icon in the center of the clickable area */
+            margin-left: 3px;
+            margin-top: 3px;
+            background-size: 10px 20px;
+            background-color: #ccc;
+        }
+        .tree .toggle-icon.empty {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 50%;
+            margin-top: -5px;
+            margin-left: -15px;
+            background-size: 10px 10px;
+        }
+        .tree ul ul .tree-inner {
+            padding-left: 37px;
+        }
+        .tree ul ul ul .tree-inner {
+            padding-left: 52px;
+        }
+        .tree ul ul ul ul .tree-inner {
+            padding-left: 67px;
+        }
+        .tree ul ul ul ul ul .tree-inner {
+            padding-left: 82px;
+        }
+        .tree .tree-inner:hover {
+            background: #dfdfdf;
+        }
+        .tree .tree-inner.active, .tree .tree-inner.active:hover {
+            background: #E0E0E0;
+            font-weight: bold;
+        }
+        .tree .tree-inner.active .toggle-icon, .tree .tree-inner:hover .toggle-icon, .tree .tree-inner.active:hover .toggle-icon {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgBAMAAADpp+X/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDhEYXWn+sAAAABhQTFRFAAAA39/f39/f39/f39/fZmZm39/f////gc3YPwAAAAV0Uk5TAAtAc6ZeVyCYAAAAAWJLR0QF+G/pxwAAAE1JREFUGNNjSHMSYGBgUEljSGYAAzMGBwiDhUEBwmBiEIAwGBmwgXIgQGWgA7h2uIFwK+CWwp1BpHvYC6DuATEYkBlY3IOmBq6dCPcAADqLE4MnBi/fAAAAAElFTkSuQmCC");
+            background-color: #999;
+        }
+        .tree .tree-inner.active .toggle-icon.empty, .tree .tree-inner:hover .toggle-icon.empty, .tree .tree-inner.active:hover .toggle-icon.empty {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDhoucSey4gAAABVQTFRFAAAA39/f39/f39/f39/fZmZm39/fD5Dx2AAAAAV0Uk5TAAtAc6ZeVyCYAAAAAWJLR0QF+G/pxwAAADJJREFUCNdjSHMSYGBgUEljSGYAAzMGBwiDhUEBwmBiEIAwGBnIA3DtcAPhVsAthTkDAFOfBKW9C1iqAAAAAElFTkSuQmCC");
+        }
+        .tree-details .toggle-icon {
+            width: 16px;
+            height: 16px;
+            /* vertically center the button */
+            position: absolute;
+            top: 50%;
+            margin-top: -9px;
+            margin-left: 6px;
+        }
+        .form-type {
+            color: #999;
+        }
+        .badge-error {
+            float: right;
+            background: #B0413E;
+            color: #FFF;
+            padding: 1px 4px;
+            font-size: 10px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .errors h3 {
+            color: #B0413E;
+        }
+        .errors th {
+            background: #B0413E;
+            color: #FFF;
+        }
+        .errors .toggle-icon {
+            background-color: #B0413E;
+        }
+        h3 a, h3 a:hover, h3 a:focus {
+            color: inherit;
+            text-decoration: inherit;
+        }
+    </style>
+{% endblock %}
