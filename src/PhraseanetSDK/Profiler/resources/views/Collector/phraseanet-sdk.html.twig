@@ -3,23 +3,23 @@
 {% block toolbar %}
     {% if collector.calls is empty %}
         {% set color = 'grey' %}
-    {% elseif collector.countErrors > 0 %}
+    {% elseif collector.countErrors == (collector.calls | length) %}
         {% set color = 'red' %}
-    {% else %}
-        {% set color = 'green' %}
+	{% elseif collector.countErrors > 0 %}
+	    {% set color = 'orange' %}
     {% endif %}
 
     {% set icon %}
-        <img width="18" height="18" style="padding-top:6px;padding-bottom:4px;" alt="{{ (collector.name|capitalize)|default('HTTP calls') }}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjA1MjcxRTVDNTY4MTFFMjg4MERCQjVGQjA1ODJCQ0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjA1MjcxRTZDNTY4MTFFMjg4MERCQjVGQjA1ODJCQ0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpCMDUyNzFFM0M1NjgxMUUyODgwREJCNUZCMDU4MkJDQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCMDUyNzFFNEM1NjgxMUUyODgwREJCNUZCMDU4MkJDQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjSoo2EAAAUjSURBVHjarJcNbJ1jFMfP/e7t7q6GDvGVkS5jsVmMNaEibKoVts5uq1PzUS0ShCAsaUgaUlHJIsxIWNZMbEarowk2tNFR5foYYf3YpOa77rairXvX3nvrf27+d3n67r23LZ7kl96+z/u+zznn+Z/znNdRUlIiMxwBUApuBueAdvAq+AAcmenL3DO4dyFYA8pBgXH9VrIXtILXwRf/lwHq7dVgLVgGfMbcIbAfnAdywAKyDnzMqLSB77Mt4MiwBeptFb09yzL3NXgGvAEiXPRasBosttz7F7doO9gFDmeLwHHgKnAjuBx4sxjuNaKxlzwOLgIVjNpcEARl5CfwFo3ZDcbTEVhMb9WDMy0LfQbeBBeAYoY6PUbAO+Al8B7425gLcssqwXJwvOW934Ad4DU14Hf8mGNMali30tJPQJLXF/CFIarfHH3cc33mW8vcaYyIRuZiS2QjTuPCQRDntgyA74zF06F+BCwBK9R6RkHHfPAw+JxhXsMtFYb+eW6r3vcimOCcRw1I8J8NYCl4BdSDn6niFRb1R3m9ghnwENjDOR9rxFaKdT0NTmtMxXqpbj2vJXULDnGP1LtHOZEPVoLbaNSPYAv3u89GlC5wGbiB4T7BmEtSdKeAeZbnDjvNlDR+63ZsAoXgfKbcHaCXgitnjUiPBK9rdVzEv92cc9LreXbp5JxGsfoS3M16oB56KLj9DPEiy/2/gAPU05QjkwF+MMumqLxMbxZySzQrvgIfUnjLmJodoOi/GHAPFX1yhnnN4wd5Jmhajhr14ErrzfF4XKLRqMRiMRkbG5vSAB8PF02ZEqOwzLG5V4tPCxfdZJ1MJBIyMjIieXl5Ul1dLY2NjVJUVDTJCLvD6BpwKngWrAJNNEYr1zbwNPjB5rmo+U8ymZRAICChUEgqKyvF7/eLx+OR/Px8CYfDKeOcTuekCKSLwwNgJ0N8NtU+xlQNsdJdl207JyYmxOFwSF1dndTU1EhHR4dUVVVJU1OTBIPBlCF2EYjSU02935hKeu0S1oFfedpV8DT8lOfDLlZOMQ1Q79TbtrY2aWhokPHxcfF6vTI4OCijo6PidruP0UCcRWQfF1jHSreccz5GQktpJ1V/O5U/+YyH97oFKjrVgIa7uLhYysrKpLW1NSVKvccagQDzupl5rKX5Lqaa1v2TuPATIA+cwbMgY77rQgUFBakIqAHNzc3S3t4uOTk5tluQoKoPGHnfQE9LeKjo/m8Gs8FGcG62HFe1FxYWysDAgNTX10tnZ2cq9Gnv01vg4u/reVg4LO+5BfwB/gS1FOZS9n6BbAao8ru6uqS2tjbluYpPtWEK18kiIvSmhWFeaWlKnqL43Cy1YZvzQ6xpqAwPD6e0kJubO8nz9G1OimgDPRSW0B0sr+VGhPQUjFleMCtTY6uZoGqPRCJHFW/TW652QSR68r1N8TnY+fgoMjXgChrXZ9QKU7j7SClTOOWpy+WSnp4e6e7uthqQpNhvAv1qwNGzmYa08Kb5PJROZ/hLqfpeo1PazcXFNCA9hoaGUsYYoe9li/8cU9r2LOgH97KTWU8B6riQnc5Hhh6yDhWdsfhGds07p9sPaHW7n4Y8yQ8RYQZsZ8Ox1ugpExne08/z5U4NyjGtlLEFmYY+9C57xTg14meLtYrfEgfZKS+xPPsCW/49M/0yyjbmslfUI/tE4/oRo3nVYnYfa0XWMZ0IWIdq4n1GJMbCZKbjFlbP8HRe9m8MsH73bWMJn02vHzO+F6Yc/wgwACxUg6D1rzIUAAAAAElFTkSuQmCC" />
-        <span class="sf-toolbar-status sf-toolbar-status-{{ color }}">{{ collector.calls|length }}</span>
+        <img width="20" height="20" alt="{{ (collector.name|capitalize)|default('HTTP calls') }}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIUDSQF9nGk8AAABLpJREFUWMOtl21olmUUx3/3XmTryZWmKb6hRhQalb0oqdPlKvfX7AUk+hQRRGVQEAQ1oj5JH4Ig+pBlFlKLVWZp0hFl6NT5gtMKU8sJaiqZzZc5dc7NXX05T9xd3s/m0PPtec51nft/zvmflyupqamhP2Jm5cB9wMPAaOBXYAOwS1IX/ZTkSgGY2VigCqgERmQc+RPYDDRJ2n9NALi3k4Fq4G6gNKU+A/wFjAMGpP7vAfZ6VLZJ+rvfANzbWe7t8Eh9AFgJbJHUZmZjgGnAdGB8dPa8p6gR2CmpvSAAM8sB96e8LSkA+gDwE7BVUmsKdBEwwUFPAYZF91qB7Q5mt6RugCSEMN69nZbhbQuwFbgVuCcKdQewA2gAfpbUmQJznTsxE5gEDIzsHgS2ABuTEEI9cENK2Qas8xz+Lim40TFusNLZn5Yjfn6DpENROod4RCqBiVFk25IQwjIg56TKuWd1wHpJpzP4McC9qvZyLE+puzznDcB2Seeiu8OAp4HZQAKcS0II33iIvvRwy8utDGgGVgM7smrczIa7Z1UZBDwONAHrJLU4x2YDc4CRfqY9DeALSV+54QrgAQdzG/CPe9Ug6UgGkCLgLufSZKAipQ7Ab8Dg1IfpFUBk/BbgEfeyAvjFq6BZUkfG+Zs8RXOB2/voQ30DiJg9xUN4B3AKWA+slXQgOnsn8IyTrv8AnGhFki700parPeSDgT3Aj8BpYD5w7xV24vaiAoongA/NbFCWUtJBSUuA54CFwAXgdeDdAh8v8Wopi3rJ5d3OzEqdrSO8zNZ6+EsltUVAOoFNwCYze8VJm5Zi//Axj9Be4FFv2xcp0G6nAEP8wlRgLTAKeNvM1gMrJR3PuNcZ/S4CzgLLgHqgI0mSrhBCq7f84vyhWOZ7i10CjPaJ2O08qQQWmdmMjHtpW4mX30LgU+BBoC6E8Kw3vK6sFHSa2Siv+1O+cHQ6k1uBk8DLwAxggZnt8/mwU9KxeMj5WG4F5gG1Psov+pDKuVP/Q33Jw3/Ux+1T3t0mua4U6Ja0GtjlfWGOD51YgtsuA673cK8BfgCedMdDDKAcWAXUSqoHXgSWupc5YBDwnplNd6NDfW5c6qXMSoD9QG2SJG844FleNZeloMdZfdwZfh6oN7OZXg2twCHgtRTYsX3U+YAkSbaFEMaFEN7x9HXnvc9HIB+FKjObZmZJZOR9Z/M54APgeeBVSU0e4t6kI4QwFVjsnnc5N/77fomHI+fevAXsNrPvJG3xSLQALWbWDBRLOgGcSJGtkOSdG+hA2zPO9JQAb3pzqHYgE4GJZrbHSdMkqSdrCrrh4kL7ptsbmmd8xmq3qETSYeAjM1sBPO7lV+773QRgr5ktBzZL6omMrElFI66CLmCBl11HpFsO1EnquGwrNrORHpGHnO152Qd8D2yUdCmjhb8EPBb9XRqR7jDwsaQdfb4LfNuZ53Mhl1L94R40pYEUAJCWVcBSSWf79TJyIHN9KamINuYVQKOkbjN7wadoLEeBxZK2Xe3T7GaPSE2Umhbgax/D8TRcDXwu6cxVvw2jzVaemhujjbg0tZB+4r3i2jxOM4AM8dQoelc0AJ9JOnlNX8d9AJnj2/C3khr7c/9f0+jX6AqYsLAAAAAASUVORK5CYII=" />
+        <span class="sf-toolbar-value">{{ collector.calls|length }}</span>
     {% endset %}
 
     {% set text %}
         <div class="sf-toolbar-info-piece">
             <b>Requests</b>
-            <span class="sf-toolbar-status sf-toolbar-status-green">{{ collector.calls|length - collector.countErrors }}</span>
+            <span>{{ collector.calls|length - collector.countErrors }}</span>
             {% if collector.countErrors > 0 %}
-                + <span class="sf-toolbar-status sf-toolbar-status-red">{{ collector.countErrors }}</span>
+                + <span>{{ collector.countErrors }}</span>
             {% endif %}
         </div>
         <div class="sf-toolbar-info-piece">
@@ -36,410 +36,175 @@
         </div>
     {% endset %}
 
-    {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': 'phrasea-sdk' } %}
+    {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { link: 'phrasea-sdk', status: color } %}
 {% endblock %}
 
 {% block menu %}
-    <span class="label">
-        <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjA1MjcxRTVDNTY4MTFFMjg4MERCQjVGQjA1ODJCQ0IiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjA1MjcxRTZDNTY4MTFFMjg4MERCQjVGQjA1ODJCQ0IiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpCMDUyNzFFM0M1NjgxMUUyODgwREJCNUZCMDU4MkJDQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCMDUyNzFFNEM1NjgxMUUyODgwREJCNUZCMDU4MkJDQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjSoo2EAAAUjSURBVHjarJcNbJ1jFMfP/e7t7q6GDvGVkS5jsVmMNaEibKoVts5uq1PzUS0ShCAsaUgaUlHJIsxIWNZMbEarowk2tNFR5foYYf3YpOa77rairXvX3nvrf27+d3n67r23LZ7kl96+z/u+zznn+Z/znNdRUlIiMxwBUApuBueAdvAq+AAcmenL3DO4dyFYA8pBgXH9VrIXtILXwRf/lwHq7dVgLVgGfMbcIbAfnAdywAKyDnzMqLSB77Mt4MiwBeptFb09yzL3NXgGvAEiXPRasBosttz7F7doO9gFDmeLwHHgKnAjuBx4sxjuNaKxlzwOLgIVjNpcEARl5CfwFo3ZDcbTEVhMb9WDMy0LfQbeBBeAYoY6PUbAO+Al8B7425gLcssqwXJwvOW934Ad4DU14Hf8mGNMali30tJPQJLXF/CFIarfHH3cc33mW8vcaYyIRuZiS2QjTuPCQRDntgyA74zF06F+BCwBK9R6RkHHfPAw+JxhXsMtFYb+eW6r3vcimOCcRw1I8J8NYCl4BdSDn6niFRb1R3m9ghnwENjDOR9rxFaKdT0NTmtMxXqpbj2vJXULDnGP1LtHOZEPVoLbaNSPYAv3u89GlC5wGbiB4T7BmEtSdKeAeZbnDjvNlDR+63ZsAoXgfKbcHaCXgitnjUiPBK9rdVzEv92cc9LreXbp5JxGsfoS3M16oB56KLj9DPEiy/2/gAPU05QjkwF+MMumqLxMbxZySzQrvgIfUnjLmJodoOi/GHAPFX1yhnnN4wd5Jmhajhr14ErrzfF4XKLRqMRiMRkbG5vSAB8PF02ZEqOwzLG5V4tPCxfdZJ1MJBIyMjIieXl5Ul1dLY2NjVJUVDTJCLvD6BpwKngWrAJNNEYr1zbwNPjB5rmo+U8ymZRAICChUEgqKyvF7/eLx+OR/Px8CYfDKeOcTuekCKSLwwNgJ0N8NtU+xlQNsdJdl207JyYmxOFwSF1dndTU1EhHR4dUVVVJU1OTBIPBlCF2EYjSU02935hKeu0S1oFfedpV8DT8lOfDLlZOMQ1Q79TbtrY2aWhokPHxcfF6vTI4OCijo6PidruP0UCcRWQfF1jHSreccz5GQktpJ1V/O5U/+YyH97oFKjrVgIa7uLhYysrKpLW1NSVKvccagQDzupl5rKX5Lqaa1v2TuPATIA+cwbMgY77rQgUFBakIqAHNzc3S3t4uOTk5tluQoKoPGHnfQE9LeKjo/m8Gs8FGcG62HFe1FxYWysDAgNTX10tnZ2cq9Gnv01vg4u/reVg4LO+5BfwB/gS1FOZS9n6BbAao8ru6uqS2tjbluYpPtWEK18kiIvSmhWFeaWlKnqL43Cy1YZvzQ6xpqAwPD6e0kJubO8nz9G1OimgDPRSW0B0sr+VGhPQUjFleMCtTY6uZoGqPRCJHFW/TW652QSR68r1N8TnY+fgoMjXgChrXZ9QKU7j7SClTOOWpy+WSnp4e6e7uthqQpNhvAv1qwNGzmYa08Kb5PJROZ/hLqfpeo1PazcXFNCA9hoaGUsYYoe9li/8cU9r2LOgH97KTWU8B6riQnc5Hhh6yDhWdsfhGds07p9sPaHW7n4Y8yQ8RYQZsZ8Ox1ugpExne08/z5U4NyjGtlLEFmYY+9C57xTg14meLtYrfEgfZKS+xPPsCW/49M/0yyjbmslfUI/tE4/oRo3nVYnYfa0XWMZ0IWIdq4n1GJMbCZKbjFlbP8HRe9m8MsH73bWMJn02vHzO+F6Yc/wgwACxUg6D1rzIUAAAAAElFTkSuQmCC" alt="{{ (collector.name|capitalize)|default('HTTP calls') }}" /></span>
-        <strong>{{ (collector.name|capitalize)|default('HTTP calls') }}</strong>
+    {% if collector.calls is empty %}
+        {% set labelClass = '' %}
+    {% elseif collector.countErrors > 0 %}
+        {% set labelClass = 'label-status-error' %}
+    {% else %}
+        {% set labelClass = '' %}
+    {% endif %}
+
+    <span class="label {{ labelClass }}">
+        <span class="icon">
+            <img height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIUDSQF9nGk8AAABLpJREFUWMOtl21olmUUx3/3XmTryZWmKb6hRhQalb0oqdPlKvfX7AUk+hQRRGVQEAQ1oj5JH4Ig+pBlFlKLVWZp0hFl6NT5gtMKU8sJaiqZzZc5dc7NXX05T9xd3s/m0PPtec51nft/zvmflyupqamhP2Jm5cB9wMPAaOBXYAOwS1IX/ZTkSgGY2VigCqgERmQc+RPYDDRJ2n9NALi3k4Fq4G6gNKU+A/wFjAMGpP7vAfZ6VLZJ+rvfANzbWe7t8Eh9AFgJbJHUZmZjgGnAdGB8dPa8p6gR2CmpvSAAM8sB96e8LSkA+gDwE7BVUmsKdBEwwUFPAYZF91qB7Q5mt6RugCSEMN69nZbhbQuwFbgVuCcKdQewA2gAfpbUmQJznTsxE5gEDIzsHgS2ABuTEEI9cENK2Qas8xz+Lim40TFusNLZn5Yjfn6DpENROod4RCqBiVFk25IQwjIg56TKuWd1wHpJpzP4McC9qvZyLE+puzznDcB2Seeiu8OAp4HZQAKcS0II33iIvvRwy8utDGgGVgM7smrczIa7Z1UZBDwONAHrJLU4x2YDc4CRfqY9DeALSV+54QrgAQdzG/CPe9Ug6UgGkCLgLufSZKAipQ7Ab8Dg1IfpFUBk/BbgEfeyAvjFq6BZUkfG+Zs8RXOB2/voQ30DiJg9xUN4B3AKWA+slXQgOnsn8IyTrv8AnGhFki700parPeSDgT3Aj8BpYD5w7xV24vaiAoongA/NbFCWUtJBSUuA54CFwAXgdeDdAh8v8Wopi3rJ5d3OzEqdrSO8zNZ6+EsltUVAOoFNwCYze8VJm5Zi//Axj9Be4FFv2xcp0G6nAEP8wlRgLTAKeNvM1gMrJR3PuNcZ/S4CzgLLgHqgI0mSrhBCq7f84vyhWOZ7i10CjPaJ2O08qQQWmdmMjHtpW4mX30LgU+BBoC6E8Kw3vK6sFHSa2Siv+1O+cHQ6k1uBk8DLwAxggZnt8/mwU9KxeMj5WG4F5gG1Psov+pDKuVP/Q33Jw3/Ux+1T3t0mua4U6Ja0GtjlfWGOD51YgtsuA673cK8BfgCedMdDDKAcWAXUSqoHXgSWupc5YBDwnplNd6NDfW5c6qXMSoD9QG2SJG844FleNZeloMdZfdwZfh6oN7OZXg2twCHgtRTYsX3U+YAkSbaFEMaFEN7x9HXnvc9HIB+FKjObZmZJZOR9Z/M54APgeeBVSU0e4t6kI4QwFVjsnnc5N/77fomHI+fevAXsNrPvJG3xSLQALWbWDBRLOgGcSJGtkOSdG+hA2zPO9JQAb3pzqHYgE4GJZrbHSdMkqSdrCrrh4kL7ptsbmmd8xmq3qETSYeAjM1sBPO7lV+773QRgr5ktBzZL6omMrElFI66CLmCBl11HpFsO1EnquGwrNrORHpGHnO152Qd8D2yUdCmjhb8EPBb9XRqR7jDwsaQdfb4LfNuZ53Mhl1L94R40pYEUAJCWVcBSSWf79TJyIHN9KamINuYVQKOkbjN7wadoLEeBxZK2Xe3T7GaPSE2Umhbgax/D8TRcDXwu6cxVvw2jzVaemhujjbg0tZB+4r3i2jxOM4AM8dQoelc0AJ9JOnlNX8d9AJnj2/C3khr7c/9f0+jX6AqYsLAAAAAASUVORK5CYII=" alt="{{ (collector.name|capitalize)|default('HTTP calls') }}" />
+        </span>
+        <strong>Phraseanet API</strong>
         <span class="count">
-            {% if collector.calls is not empty %}
-                <span>{{ collector.calls|length }}</span>
-                {% if collector.totalTime > 1.0 %}
-                    <span>{{ '%0.2f'|format(collector.totalTime) }} s</span>
-                {% else %}
-                    <span>{{ '%0.0f'|format(collector.totalTime * 1000) }} ms</span>
-                {% endif %}
-            {% endif %}
+            <span>{{ collector.calls|length }}</span>
         </span>
     </span>
 {% endblock %}
 
-{% block head %}
-    {{ parent() }}
-    <style type="text/css">
-            .icon:before {
-                font-family: FontAwesome;
-                font-weight: normal;
-                font-style: normal;
-                display: inline-block;
-                text-decoration: inherit;
-            }
-
-            div.phraseanet-sdk div.request {
-                margin-bottom: 10px;
-            }
-
-            div.phraseanet-sdk div.request div.status {
-                float: left;
-                width: 24px;
-                height: 18px;
-                margin-top: 10px;
-                font-size: 16px;
-            }
-
-            div.phraseanet-sdk div.request div.status.success:before {
-                color: #d1d1d1;
-                content: "\f00c";
-            }
-
-            div.phraseanet-sdk div.request div.status.error:before {
-                color: #A41E22;
-                content: "\f071";
-            }
-
-            div.phraseanet-sdk div.request div.summary {
-                font-family: sans-serif;
-                display: block;
-                float: none;
-                overflow: hidden;
-                margin: 0;
-                padding: 0;
-                border: 1px solid;
-                cursor: pointer;
-            }
-
-            div.phraseanet-sdk div.request.post div.summary {
-                background-color: #E7F6EC;
-                border-color: #C3E8D1;
-                color: #10A54A;
-            }
-
-            div.phraseanet-sdk div.request.get div.summary {
-                background-color: #E7F0F7;
-                border-color: #C3D9EC;
-                color: #0F6AB4;
-            }
-
-            div.phraseanet-sdk div.request.put div.summary {
-                background-color: #F9F2E9;
-                border-color: #F0E0CA;
-                color: #C5862B;
-            }
-
-            div.phraseanet-sdk div.request.delete div.summary {
-                background-color: #F5E8E8;
-                border-color: #E8C6C7;
-                color: #A41E22;
-            }
-
-            div.phraseanet-sdk div.request div.summary h3 {
-                float: left;
-                font-weight: normal;
-                line-height: 1.1em;
-                font-size: 14px;
-                margin: 0;
-                padding: 0;
-            }
-
-            div.phraseanet-sdk div.request div.summary div.code {
-                display: block;
-                float: right;
-                margin: 6px 10px 0 0;
-                font-size: small;
-            }
-
-            div.phraseanet-sdk div.request div.summary h3 > span.method {
-                text-transform: uppercase;
-                text-decoration: none;
-                color: white;
-                display: inline-block;
-                width: 50px;
-                font-size: 0.9em;
-                text-align: center;
-                margin: 0;
-                padding: 7px 0 4px 0;
-                -moz-border-radius: 2px;
-                -webkit-border-radius: 2px;
-                -o-border-radius: 2px;
-                -ms-border-radius: 2px;
-                -khtml-border-radius: 2px;
-                border-radius: 2px;
-            }
-
-            div.phraseanet-sdk div.request div.summary h3 > span.time {
-                text-decoration: none;
-                color: #999;
-                display: inline-block;
-                width: 50px;
-                font-size: 0.9em;
-                text-align: left;
-                margin: 0;
-                padding: 7px 0 4px 0;
-            }
-
-            div.phraseanet-sdk div.request.post div.summary h3 > span.method {
-                background-color: #10a54a;
-            }
-
-            div.phraseanet-sdk div.request.get div.summary h3 > span.method {
-                background-color: #0F6AB4;
-            }
-
-            div.phraseanet-sdk div.request.put div.summary h3 > span.method {
-                background-color: #C5862B;
-            }
-
-            div.phraseanet-sdk div.request.delete div.summary h3 > span.method {
-                background-color: #0F6AB4;
-            }
-
-            div.phraseanet-sdk div.request div.summary h3 > span.path {
-                margin: 0;
-                padding: 10px 0 0 0;
-                color: black;
-            }
-
-            div.phraseanet-sdk .details {
-                display: none;
-                margin-top: 20px;
-            }
-
-            div.phraseanet-sdk div.request div.details {
-                padding: 0px 0px;
-                color: #313131;
-            }
-
-            div.phraseanet-sdk div.request div.details .nav {
-                margin-bottom: 5px;
-            }
-
-            div.phraseanet-sdk div.request div.details .nav li > a {
-                margin: 0;
-                color: #313131;
-                font-size: 1.2em;
-            }
-
-            div.phraseanet-sdk div.request div.details .nav li.active > a {
-                font-weight: bold;
-            }
-
-            div.phraseanet-sdk div.request div.details div.tab-content {
-                padding: 10px 20px;
-                border-left: 1px dashed #ddd;
-                border-right: 1px dashed #ddd;
-            }
-
-            div.request h5 {
-                text-align: left;
-                font-size: 1.1em;
-                text-transform: lowercase;
-                font-variant: small-caps;
-                font-weight: bold;
-            }
-
-            /* Bootstrap progress bar */
-            .progress {
-                height: 20px;
-                overflow: hidden;
-                background-color: #F7F7F7;
-                background-image: -moz-linear-gradient(top, whiteSmoke, #F9F9F9);
-                background-image: -webkit-gradient(linear, 0 0, 0 100%, from(whiteSmoke), to(#F9F9F9));
-                background-image: -webkit-linear-gradient(top, whiteSmoke, #F9F9F9);
-                background-image: -o-linear-gradient(top, whiteSmoke, #F9F9F9);
-                background-image: linear-gradient(to bottom, whiteSmoke, #F9F9F9);
-                background-repeat: repeat-x;
-                -webkit-border-radius: 4px;
-                -moz-border-radius: 4px;
-                border-radius: 4px;
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0);
-                -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-                -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-            }
-
-            .progress .bar {
-                float: left;
-                width: 0;
-                height: 100%;
-                font-size: 14px;
-                font-weight: light;
-                color: white;
-                text-align: center;
-                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-                background-color: #0E90D2;
-                background-image: -moz-linear-gradient(top, #149BDF, #0480BE);
-                background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#149BDF), to(#0480BE));
-                background-image: -webkit-linear-gradient(top, #149BDF, #0480BE);
-                background-image: -o-linear-gradient(top, #149BDF, #0480BE);
-                background-image: linear-gradient(to bottom, #149BDF, #0480BE);
-                background-repeat: repeat-x;
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0);
-                -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-                -moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-                box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-                -webkit-box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                box-sizing: border-box;
-                -webkit-transition: width 0.6s ease;
-                -moz-transition: width 0.6s ease;
-                -o-transition: width 0.6s ease;
-                transition: width 0.6s ease;
-            }
-
-            .progress-striped .bar {
-                background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-                background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                -webkit-background-size: 40px 40px;
-                -moz-background-size: 40px 40px;
-                -o-background-size: 40px 40px;
-                background-size: 40px 40px;
-            }
-
-            .progress .bar + .bar {
-                -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-                -moz-box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-                box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-            }
-
-            .progress-warning .bar, .progress .bar-warning {
-                background-color: #FAA732;
-                background-image: -moz-linear-gradient(top, #FBB450, #F89406);
-                background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FBB450), to(#F89406));
-                background-image: -webkit-linear-gradient(top, #FBB450, #F89406);
-                background-image: -o-linear-gradient(top, #FBB450, #F89406);
-                background-image: linear-gradient(to bottom, #FBB450, #F89406);
-                background-repeat: repeat-x;
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=0);
-            }
-
-            .progress-warning.progress-striped .bar, .progress-striped .bar-warning {
-                background-color: #FBB450;
-                background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-                background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-            }
-
-            .progress-success .bar, .progress .bar-success {
-                background-color: #5EB95E;
-                background-image: -moz-linear-gradient(top, #62C462, #57A957);
-                background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62C462), to(#57A957));
-                background-image: -webkit-linear-gradient(top, #62C462, #57A957);
-                background-image: -o-linear-gradient(top, #62C462, #57A957);
-                background-image: linear-gradient(to bottom, #62C462, #57A957);
-                background-repeat: repeat-x;
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff57a957', GradientType=0);
-            }
-
-            .progress-success.progress-striped .bar, .progress-striped .bar-success {
-                background-color: #62C462;
-                background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-                background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-                background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-            }
-
-            /* Bootstrap nav */
-            .nav {
-              margin-bottom: 20px;
-              margin-left: 0;
-              list-style: none;
-            }
-
-            .nav > li > a {
-              display: block;
-            }
-
-            .nav > li > a:hover {
-              text-decoration: none;
-              background-color: #eeeeee;
-            }
-
-            .nav-tabs {
-              *zoom: 1;
-            }
-
-            .nav-tabs:before,
-            .nav-tabs:after {
-              display: table;
-              line-height: 0;
-              content: "";
-            }
-
-            .nav-tabs:after {
-              clear: both;
-            }
-
-            .nav-tabs > li {
-              float: left;
-            }
-
-            .nav-tabs > li > a {
-              text-decoration: none;
-              padding-right: 12px;
-              padding-left: 12px;
-              margin-right: 2px;
-              line-height: 14px;
-            }
-
-            .nav-tabs {
-              border-bottom: 1px solid #ddd;
-            }
-
-            .nav-tabs > li {
-              margin-bottom: -1px;
-              padding-bottom: 0;
-            }
-
-            .nav-tabs > li > a {
-              padding-top: 8px;
-              padding-bottom: 8px;
-              line-height: 20px;
-              border: 1px solid transparent;
-              -webkit-border-radius: 4px 4px 0 0;
-                 -moz-border-radius: 4px 4px 0 0;
-                      border-radius: 4px 4px 0 0;
-            }
-
-            .nav-tabs > li > a:hover {
-              border-color: #eeeeee #eeeeee #dddddd;
-            }
-
-            .nav-tabs > .active > a,
-            .nav-tabs > .active > a:hover {
-              color: #555555;
-              cursor: default;
-              background-color: #ffffff;
-              border: 1px solid #ddd;
-              border-bottom-color: transparent;
-            }
-
-            .tab-content {
-              overflow: auto;
-            }
-
-            .tab-content > .tab-pane,
-            .pill-content > .pill-pane {
-              display: none;
-            }
-
-            .tab-content > .active,
-            .pill-content > .active {
-              display: block;
-            }
-
-            .nav > .disabled > a {
-              color: #999999;
-            }
-
-            .nav > .disabled > a:hover {
-              text-decoration: none;
-              cursor: default;
-              background-color: transparent;
-            }
-
-    </style>
+{% block panel %}
+    {% include '@PhraseanetSDK/Profiler/panel.html.twig' with {'calls': collector.calls, 'collector': collector } %}
 {% endblock %}
 
-{% block panel %}
-    <h2>{{ (collector.name|capitalize)|default('HTTP calls') }}</h2>
+{% block head %}
+    {{ parent() }}
 
-    {% include '@PhraseanetSDK/Profiler/calls.html.twig' with {'calls': collector.calls } %}
+    <style>
+        #tree-menu {
+            float: left;
+            padding-right: 10px;
+            width: 230px;
+        }
+        #tree-menu ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+        }
+        #tree-menu li {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        #tree-menu .empty {
+            border: 0;
+            mmargin: 0;
+            padding: 0;
+        }
+        #tree-details-container {
+            border-left: 1px solid #DDD;
+            margin-left: 250px;
+            padding-left: 20px;
+        }
+        .tree-details {
+            padding-bottom: 40px;
+        }
+        .tree-details h3 {
+            font-size: 18px;
+            position: relative;
+        }
+
+        .toggle-icon {
+            display: inline-block;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgBAMAAADpp+X/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDgwx4LcKwAAAABVQTFRFAAAA////////////////ZmZm////bvjBwAAAAAV0Uk5TABZwsuCVEUjgAAAAAWJLR0QF+G/pxwAAAE1JREFUGNNjSHMSYGBgUEljSGYAAzMGBwiDhUEBwmBiEIAwGBmwgTQgQGWgA7h2uIFwK+CWwp1BpHvYEqDuATEYkBlY3IOmBq6dCPcAAIT5Eg2IksjQAAAAAElFTkSuQmCC") no-repeat top left #5eb5e0;
+        }
+        .closed .toggle-icon, .closed.toggle-icon {
+            background-position: bottom left;
+        }
+        .toggle-icon.empty {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QAZgBmAGYHukptAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDhIf6CA40AAAAFRJREFUOMvtk7ENACEMA61vfx767MROWfO+AdGBHlNyTZrYUZRYDBII4NWE1pNdpFarfgLUbpDaBEgBYRiEVjsvDLa1l6O4Z3wkFWN+OfLKdpisOH/TlICzukmUJwAAAABJRU5ErkJggg==");
+        }
+
+        .tree .tree-inner {
+            cursor: pointer;
+            padding: 5px 7px 5px 22px;
+            position: relative;
+
+        }
+        .tree .toggle-button {
+            /* provide a bigger clickable area than just 10x10px */
+            width: 16px;
+            height: 16px;
+            /* vertically center the button */
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            margin-left: -18px;
+        }
+        .tree .toggle-icon {
+            width: 10px;
+            height: 10px;
+            /* position the icon in the center of the clickable area */
+            margin-left: 3px;
+            margin-top: 3px;
+            background-size: 10px 20px;
+            background-color: #ccc;
+        }
+        .tree .toggle-icon.empty {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 50%;
+            margin-top: -5px;
+            margin-left: -15px;
+            background-size: 10px 10px;
+        }
+        .tree ul ul .tree-inner {
+            padding-left: 37px;
+        }
+        .tree ul ul ul .tree-inner {
+            padding-left: 52px;
+        }
+        .tree ul ul ul ul .tree-inner {
+            padding-left: 67px;
+        }
+        .tree ul ul ul ul ul .tree-inner {
+            padding-left: 82px;
+        }
+        .tree .tree-inner:hover {
+            background: #dfdfdf;
+        }
+        .tree .tree-inner.active, .tree .tree-inner.active:hover {
+            background: #E0E0E0;
+            font-weight: bold;
+        }
+        .tree .tree-inner.active .toggle-icon, .tree .tree-inner:hover .toggle-icon, .tree .tree-inner.active:hover .toggle-icon {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgBAMAAADpp+X/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDhEYXWn+sAAAABhQTFRFAAAA39/f39/f39/f39/fZmZm39/f////gc3YPwAAAAV0Uk5TAAtAc6ZeVyCYAAAAAWJLR0QF+G/pxwAAAE1JREFUGNNjSHMSYGBgUEljSGYAAzMGBwiDhUEBwmBiEIAwGBmwgXIgQGWgA7h2uIFwK+CWwp1BpHvYC6DuATEYkBlY3IOmBq6dCPcAADqLE4MnBi/fAAAAAElFTkSuQmCC");
+            background-color: #999;
+        }
+        .tree .tree-inner.active .toggle-icon.empty, .tree .tree-inner:hover .toggle-icon.empty, .tree .tree-inner.active:hover .toggle-icon.empty {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QweDhoucSey4gAAABVQTFRFAAAA39/f39/f39/f39/fZmZm39/fD5Dx2AAAAAV0Uk5TAAtAc6ZeVyCYAAAAAWJLR0QF+G/pxwAAADJJREFUCNdjSHMSYGBgUEljSGYAAzMGBwiDhUEBwmBiEIAwGBnIA3DtcAPhVsAthTkDAFOfBKW9C1iqAAAAAElFTkSuQmCC");
+        }
+        .tree-details .toggle-icon {
+            width: 16px;
+            height: 16px;
+            /* vertically center the button */
+            position: absolute;
+            top: 50%;
+            margin-top: -9px;
+            margin-left: 6px;
+        }
+        .form-type {
+            color: #999;
+        }
+        .badge-error {
+            float: right;
+            background: #B0413E;
+            color: #FFF;
+            padding: 1px 4px;
+            font-size: 10px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .errors h3 {
+            color: #B0413E;
+        }
+        .errors th {
+            background: #B0413E;
+            color: #FFF;
+        }
+        .errors .toggle-icon {
+            background-color: #B0413E;
+        }
+        h3 a, h3 a:hover, h3 a:focus {
+            color: inherit;
+            text-decoration: inherit;
+        }
+    </style>
 {% endblock %}

@@ -20,7 +20,7 @@
         {% set process_percent = 100 %}
     {% endif %}
 
-    <h5>Time</h5>
+    <h4>Time</h4>
     <table>
         <tbody>
             <tr>
@@ -35,18 +35,10 @@
                 <th>Duration process</th>
                 <td>{{ ((time.total - time.connection) * 1000)|number_format(0, '', '') }} <small>ms</small> - {{ process_percent|number_format(0, '', '') }}%</td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="progress progress-striped">
-                        <div class="bar bar-warning" style="width: {{ connection_percent|number_format(0) }}%;">wait {{ connection_percent|number_format(0) }} %</div>
-                        <div class="bar bar-success" style="width: {{ process_percent|number_format(0) }}%;">process {{ process_percent|number_format(0) }} %</div>
-                    </div>
-                </td>
-            </tr>
         </tbody>
     </table>
 
-    <h5>Informations</h5>
+    <h4>Informations</h4>
     <table>
         <tbody>
             <tr>
@@ -72,7 +64,7 @@
         </tbody>
     </table>
 
-    <h5>Headers</h5>
+    <h4>Headers</h4>
     <table>
         <tbody>
         {% for header,value in request.headers %}
@@ -84,7 +76,7 @@
         </tbody>
     </table>
 
-    <h5>Query Parameters</h5>
+    <h4>Query Parameters</h4>
     <table>
         <tbody>
         {% for name,parameter in request.query_parameters %}
@@ -103,7 +95,7 @@
     </table>
 
     {% if request.post_parameters %}
-        <h5>Post Parameters</h5>
+        <h4>Post Parameters</h4>
         <table>
             <tbody>
             {% for name,parameter in request.post_parameters %}
@@ -123,7 +115,7 @@
     {% endif %}
 
     {% if requestContent is not empty %}
-        <h5>Content</h5>
+        <h4>Content</h4>
         <pre class="prettyprint linenums"><code class="language-javascript  ">{{ requestContent|replace({"\t\t\n": "", "\t": "  "}) }}</code></pre>
     {% endif %}
 </div>
