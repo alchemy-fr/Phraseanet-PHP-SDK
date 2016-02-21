@@ -86,7 +86,7 @@ class PhraseanetSDKDataCollector extends DataCollector
                 'responseContent' => $decodedBody,
                 'time' => $time,
                 'error' => $error,
-                'phraseanet' => $this->parsePhraseanetResponse($response)
+                'phraseanet' => $this->parsePhraseanetResponse($decodedBody, $response)
             );
         }
     }
@@ -181,30 +181,23 @@ class PhraseanetSDKDataCollector extends DataCollector
         );
     }
 
-    private function parsePhraseanetResponse($response)
+    private function parsePhraseanetResponse($data, $response)
     {
         if ($response->getStatusCode() !== 200) {
             return array();
         }
 
-        $body = $response->getBody(true);
-        $data = json_decode($body, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return array();
-        }
-
         $parsed = array(
-            'metadata' => $data['meta']
+            'metadata' => $data->meta
         );
 
-        if (isset($data['response']['offset_start'])) {
-            $pageMaxSize = isset($data['response']['available_results']) ? $data['response']['available_results'] : '-';
-            $totalResults = isset($data['response']['total_results']) ? $data['response']['total_results'] : '-';
+        if (isset($data->response->offset_start)) {
+            $pageMaxSize = isset($data->response->available_results) ? $data->response->available_results : '-';
+            $totalResults = isset($data->response->total_results) ? $data->response->total_results : '-';
 
             $pagination = array(
-                'Offset' => $data['response']['offset_start'],
-                'Page size' => $data['response']['per_page'],
+                'Offset' => $data->response->offset_start,
+                'Page size' => $data->response->per_page,
                 'Page max size' => $pageMaxSize,
                 'Total results' => $totalResults
             );
