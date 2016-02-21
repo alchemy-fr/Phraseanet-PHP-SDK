@@ -3,10 +3,10 @@
 {% block toolbar %}
     {% if collector.calls is empty %}
         {% set color = 'grey' %}
-    {% elseif collector.countErrors > 0 %}
+    {% elseif collector.countErrors == (collector.calls | length) %}
         {% set color = 'red' %}
-    {% else %}
-        {% set color = 'green' %}
+	{% elseif collector.countErrors > 0 %}
+	    {% set color = 'orange' %}
     {% endif %}
 
     {% set icon %}
@@ -45,7 +45,7 @@
     {% elseif collector.countErrors > 0 %}
         {% set labelClass = 'label-status-error' %}
     {% else %}
-        {% set labelClass = 'label-status-success' %}
+        {% set labelClass = '' %}
     {% endif %}
 
     <span class="label {{ labelClass }}">
