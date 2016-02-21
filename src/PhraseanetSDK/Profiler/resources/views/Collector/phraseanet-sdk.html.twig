@@ -1,6 +1,7 @@
 {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
 {% block toolbar %}
+    {% set color = '' %}
     {% if collector.calls is empty %}
         {% set color = 'grey' %}
     {% elseif collector.countErrors == (collector.calls | length) %}
