@@ -1,5 +1,5 @@
 <div id="response_{{ index }}" class="tab-pane">
-    <h5>Informations</h5>
+    <h4>Informations</h4>
     <table>
         <tbody>
             <tr>
@@ -13,7 +13,7 @@
         </tbody>
     </table>
 
-    <h5>Headers</h5>
+    <h4>Headers</h4>
     <table>
         <tbody>
         {% for header,value in response.headers %}
@@ -26,7 +26,7 @@
     </table>
 
     {% if phraseanet is defined and phraseanet | length > 0 %}
-    <h5>Phraseanet Metadata</h5>
+    <h4>Phraseanet Metadata</h4>
     <table>
         <tbody>
         {% for key,value in phraseanet.metadata %}
@@ -39,7 +39,7 @@
     </table>
 
     {% if phraseanet.pagination is defined %}
-    <h5>Phraseanet Results</h5>
+    <h4>Phraseanet Results</h4>
     <table>
         <tbody>
         {% for key,value in phraseanet.pagination %}
@@ -52,7 +52,4 @@
     </table>
     {% endif %}
     {% endif %}
-
-    <h5>Content</h5>
-    {{ dump(responseContent) }}
 </div>

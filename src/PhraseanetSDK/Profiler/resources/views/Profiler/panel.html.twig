@@ -1,0 +1,105 @@
+<h2>Phraseanet Metrics</h2>
+
+<div class="metrics">
+    <div class="metric">
+        <span class="value">{{ calls | length }}</span>
+        <span class="label">Calls</span>
+    </div>
+
+    <div class="metric">
+        <span class="value">
+            {{ (collector.totalTime * 1000) | round(0) }}
+            <span class="unit">ms</span></span>
+        <span class="label">Total API time</span>
+    </div>
+
+    <div class="metric">
+        <span class="value">
+            {{ collector.cacheHitRatio }}
+            <span class="unit">%</span></span>
+        <span class="label">Cache hit ratio</span>
+    </div>
+</div>
+
+<h2>Phraseanet Requests</h2>
+
+<div id="tree-menu" class="tree">
+    <ul>
+        <li>
+            <div class="tree-inner" data-tab-target-id="details_index">
+                <a class="toggle-button" href="#" data-toggle-target-id="details-children"><span class="toggle-icon"></span></a>
+                <strong>Requests</strong>
+            </div>
+            <ul id="details-children">
+                {% for index, call in calls %}
+                    <li>
+                        <div class="tree-inner" data-tab-target-id="details_{{ index }}">
+                            <div class="toggle-icon empty"></div>
+                            {{ call.request.path }} [{{ call.request.method | upper }}]
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div id="tree-details-container">
+    <div class="tree-details" id="details_index">
+        <h3>Requests</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Path</th>
+                    <th>Method</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+{% for index, call in calls %}
+                <tr class="{% if call.response.statusCode == '200' %}status-success{% endif %}">
+                    <td>{{ (call.time.total * 1000) | round(0) }} ms</td>
+                    <td>{{ call.request.path }}</td>
+                    <td>{{ call.request.method }}</td>
+                    <td>{{ call.response.statusCode }}</td>
+                </tr>
+{% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% for index, call in calls %}
+    <div class="tree-details" id="details_{{ index }}">
+        <h3><strong>Request details</strong>: {{ call.request.path }}</h3>
+
+        <div class="sf-tabs">
+            <div class="tab">
+                <h3 class="tab-title">Request</h3>
+                <div class="tab-content">
+                    {% include '@PhraseanetSDK/Profiler/request.html.twig' with {'index':index, 'request': call.request, 'requestContent': call.requestContent, 'time': call.time} %}
+                </div>
+            </div>
+            <div class="tab">
+                <h3 class="tab-title">Response headers</h3>
+                <div class="tab-content">
+                    {% include '@PhraseanetSDK/Profiler/response.html.twig' with {'index':index, 'response':call.response, 'responseContent': call.responseContent, 'time': call.time, 'phraseanet': call.phraseanet} %}
+                </div>
+            </div>
+            <div class="tab">
+                <h3 class="tab-title">Response dump</h3>
+                <div class="tab-content">
+                    {% include '@PhraseanetSDK/Profiler/response-dump.html.twig' with {'index':index, 'response':call.response, 'responseContent': call.responseContent, 'time': call.time, 'phraseanet': call.phraseanet} %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{#
+{% for index,call in calls %}
+{% include '@PhraseanetSDK/Profiler/call.html.twig' with { 'call': call } %}
+{% endfor %}
+
+#}
+{% include '@PhraseanetSDK/Profiler/javascript.html.twig' %}

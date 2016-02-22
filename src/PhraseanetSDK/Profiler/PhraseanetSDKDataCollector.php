@@ -41,53 +41,7 @@ class PhraseanetSDKDataCollector extends DataCollector
         );
 
         foreach ($this->profiler as $call) {
-            $error = false;
-            $request = $call;
-            $response = $request->getResponse();
-
-            $requestContent = null;
-            if ($request instanceof EntityEnclosingRequestInterface) {
-                $requestContent = (string) $request->getBody();
-            }
-
-            $time = array(
-                'total' => $response->getInfo('total_time'),
-                'connection' => $response->getInfo('connect_time'),
-            );
-
-
-            $this->data['total_time'] += $response->getInfo('total_time');
-
-            if (!isset($this->data['methods'][$request->getMethod()])) {
-                $this->data['methods'][$request->getMethod()] = 0;
-            }
-
-            $this->data['methods'][$request->getMethod()]++;
-
-            if ($response->isError()) {
-                $this->data['error_count']++;
-                $error = true;
-            }
-
-            if (substr($response->getHeaders()->get('X-Cache', ''), 0, 3) == 'HIT') {
-                $this->data['cache_hits'] += 1;
-            }
-
-            $decodedBody = json_decode($response->getBody(true));
-
-            if (! $decodedBody) {
-                $decodedBody = $response->getBody('true');
-            }
-
-            $this->data['calls'][] = array(
-                'request' => $this->sanitizeRequest($request),
-                'requestContent' => $requestContent,
-                'response' => $this->sanitizeResponse($response),
-                'responseContent' => $decodedBody,
-                'time' => $time,
-                'error' => $error,
-                'phraseanet' => $this->parsePhraseanetResponse($response)
-            );
+            $this->parseCall($request, $response, $call);
         }
     }
 
@@ -181,30 +135,23 @@ class PhraseanetSDKDataCollector extends DataCollector
         );
     }
 
-    private function parsePhraseanetResponse($response)
+    private function parsePhraseanetResponse($data, $response)
     {
         if ($response->getStatusCode() !== 200) {
             return array();
         }
 
-        $body = $response->getBody(true);
-        $data = json_decode($body, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return array();
-        }
-
         $parsed = array(
-            'metadata' => $data['meta']
+            'metadata' => $data->meta
         );
 
-        if (isset($data['response']['offset_start'])) {
-            $pageMaxSize = isset($data['response']['available_results']) ? $data['response']['available_results'] : '-';
-            $totalResults = isset($data['response']['total_results']) ? $data['response']['total_results'] : '-';
+        if (isset($data->response->offset_start)) {
+            $pageMaxSize = isset($data->response->available_results) ? $data->response->available_results : '-';
+            $totalResults = isset($data->response->total_results) ? $data->response->total_results : '-';
 
             $pagination = array(
-                'Offset' => $data['response']['offset_start'],
-                'Page size' => $data['response']['per_page'],
+                'Offset' => $data->response->offset_start,
+                'Page size' => $data->response->per_page,
                 'Page max size' => $pageMaxSize,
                 'Total results' => $totalResults
             );
@@ -213,5 +160,61 @@ class PhraseanetSDKDataCollector extends DataCollector
         }
 
         return $parsed;
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $call
+     */
+    protected function parseCall(Request $request, Response $response, $call)
+    {
+        $error = false;
+        $request = $call;
+        $response = $request->getResponse();
+
+        $requestContent = null;
+        if ($request instanceof EntityEnclosingRequestInterface) {
+            $requestContent = (string)$request->getBody();
+        }
+
+        $time = array(
+            'total' => $response->getInfo('total_time'),
+            'connection' => $response->getInfo('connect_time'),
+        );
+
+
+        $this->data['total_time'] += $response->getInfo('total_time');
+
+        if (!isset($this->data['methods'][$request->getMethod()])) {
+            $this->data['methods'][$request->getMethod()] = 0;
+        }
+
+        $this->data['methods'][$request->getMethod()]++;
+
+        if ($response->isError()) {
+            $this->data['error_count']++;
+            $error = true;
+        }
+
+        if (substr($response->getHeaders()->get('X-Cache', ''), 0, 3) == 'HIT') {
+            $this->data['cache_hits'] += 1;
+        }
+
+        $decodedBody = json_decode($response->getBody(true));
+
+        if (!$decodedBody) {
+            $decodedBody = $response->getBody('true');
+        }
+
+        $this->data['calls'][] = array(
+            'request' => $this->sanitizeRequest($request),
+            'requestContent' => $requestContent,
+            'response' => $this->sanitizeResponse($response),
+            'responseContent' => $decodedBody,
+            'time' => $time,
+            'error' => $error,
+            'phraseanet' => $this->parsePhraseanetResponse($decodedBody, $response)
+        );
     }
 }

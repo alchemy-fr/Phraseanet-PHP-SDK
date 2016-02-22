@@ -1,46 +1,46 @@
 {
-    "name": "phraseanet/php-sdk",
-    "description": "A library to interact with Phraseanet API",
-    "type": "library",
-    "keywords": ["Phraseanet"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "nlegoff",
-            "email": "legoff.n@gmail.com"
-        },
-        {
-            "name": "Phraseanet Team",
-            "email": "info@alchemy.fr",
-            "homepage": "http://www.phraseanet.com/"
-        }
-    ],
-    "require": {
-        "php"                     : ">5.4",
-        "doctrine/cache"          : "~1.0",
-        "doctrine/collections"    : "~1.0",
-        "guzzle/guzzle"           : "~3.0"
+  "name": "phraseanet/php-sdk",
+  "description": "A library to interact with Phraseanet API",
+  "type": "library",
+  "keywords": ["Phraseanet"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "nlegoff",
+      "email": "legoff.n@gmail.com"
     },
-    "require-dev": {
-        "sami/sami"               : "~1.0",
-        "silex/silex"             : "~1.0",
-        "silex/web-profiler"      : "1.0.3",
-        "symfony/console"         : "~2.0",
-        "phpunit/phpunit"         : "~4.0",
-        "squizlabs/php_codesniffer": "^2.3"
-    },
-    "suggest": {
-        "silex/web-profiler"      : "To use the WebProfiler with silex",
-        "symfony/console"         : "To run the request player with a console output"
-    },
-    "autoload": {
-        "psr-0": {
-            "PhraseanetSDK": "src"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.9.x-dev"
-        }
+    {
+      "name": "Phraseanet Team",
+      "email": "info@alchemy.fr",
+      "homepage": "http://www.phraseanet.com/"
     }
+  ],
+  "require": {
+    "php": ">5.4",
+    "doctrine/cache": "~1.0",
+    "doctrine/collections": "~1.0",
+    "guzzle/guzzle": "~3.0"
+  },
+  "require-dev": {
+    "sami/sami": "^1.0",
+    "silex/silex": "^1.0",
+    "silex/web-profiler": "^1.0",
+    "symfony/console": "^2.0",
+    "phpunit/phpunit": "^4.0",
+    "squizlabs/php_codesniffer": "^2.3"
+  },
+  "suggest": {
+    "silex/web-profiler": "To use the WebProfiler with silex",
+    "symfony/console": "To run the request player with a console output"
+  },
+  "autoload": {
+    "psr-0": {
+      "PhraseanetSDK": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.8.x-dev"
+    }
+  }
 }
