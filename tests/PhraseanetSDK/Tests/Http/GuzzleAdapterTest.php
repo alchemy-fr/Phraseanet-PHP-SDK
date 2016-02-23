@@ -27,13 +27,13 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $endpoint = 'http://phraseanet.com/api/v1/';
+        $endpoint = 'http://phraseanet.com/api/';
         $adapter = GuzzleAdapter::create($endpoint);
         $this->assertEquals($endpoint, $adapter->getBaseUrl());
 
         $endpoint = 'http://phraseanet.com';
         $adapter = GuzzleAdapter::create($endpoint);
-        $this->assertEquals($endpoint . '/api/v1/', $adapter->getBaseUrl());
+        $this->assertEquals($endpoint . '/api/', $adapter->getBaseUrl());
     }
 
     public function testSetUserAgent()

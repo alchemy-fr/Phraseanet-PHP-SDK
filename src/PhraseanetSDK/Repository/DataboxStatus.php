@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
@@ -26,7 +27,7 @@ class DataboxStatus extends AbstractRepository
      */
     public function findByDatabox($databoxId)
     {
-        $response = $this->query('GET', sprintf('databoxes/%d/status/', $databoxId));
+        $response = $this->query('GET', sprintf('v1/databoxes/%d/status/', $databoxId));
 
         if (true !== $response->hasProperty('status')) {
             throw new RuntimeException('Missing "status" property in response content');

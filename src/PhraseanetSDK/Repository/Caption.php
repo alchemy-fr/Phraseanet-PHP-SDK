@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Entity\RecordCaption;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,7 +28,7 @@ class Caption extends AbstractRepository
      */
     public function findByRecord($databoxId, $recordId)
     {
-        $response = $this->query('GET', sprintf('records/%d/%d/caption/', $databoxId, $recordId));
+        $response = $this->query('GET', sprintf('v1/records/%d/%d/caption/', $databoxId, $recordId));
 
         if (true !== $response->hasProperty('caption_metadatas')) {
             throw new RuntimeException('Missing "caption_metadatas" property in response content');

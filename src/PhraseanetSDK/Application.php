@@ -53,6 +53,16 @@ class Application implements ApplicationInterface
     }
 
     /**
+     * @param $token
+     */
+    private static function assertValidToken($token)
+    {
+        if ('' === trim($token)) {
+            throw new InvalidArgumentException('Token can not be empty.');
+        }
+    }
+
+    /**
      * @var GuzzleAdapter
      */
     private $adapter;
@@ -128,9 +138,7 @@ class Application implements ApplicationInterface
      */
     public function getUploader($token)
     {
-        if ('' === trim($token)) {
-            throw new InvalidArgumentException('Token can not be empty.');
-        }
+        self::assertValidToken($token);
 
         if (!isset($this->uploaders[$token])) {
             $this->uploaders[$token] = new Uploader($this->getAdapterByToken($token), $this->getEntityManager($token));
@@ -144,12 +152,13 @@ class Application implements ApplicationInterface
      */
     public function getEntityManager($token)
     {
-        if ('' === trim($token)) {
-            throw new InvalidArgumentException('Token can not be empty.');
-        }
+        self::assertValidToken($token);
 
         if (!isset($this->entityManagers[$token])) {
-            $this->entityManagers[$token] = new EntityManager($this->getAdapterByToken($token), new NullLogger());
+            $this->entityManagers[$token] = new EntityManager(
+                $this->getAdapterByToken($token),
+                new NullLogger()
+            );
         }
 
         return $this->entityManagers[$token];
@@ -160,9 +169,7 @@ class Application implements ApplicationInterface
      */
     public function getMonitor($token)
     {
-        if ('' === trim($token)) {
-            throw new InvalidArgumentException('Token can not be empty.');
-        }
+        self::assertValidToken($token);
 
         if (!isset($this->monitors[$token])) {
             $this->monitors[$token] = new Monitor($this->getAdapterByToken($token));

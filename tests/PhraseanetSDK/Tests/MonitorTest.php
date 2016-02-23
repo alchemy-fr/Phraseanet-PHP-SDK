@@ -18,7 +18,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('GET', array('monitor/scheduler/', array()))
+            ->with('GET', array('v1/monitor/scheduler/', array()))
             ->will($this->returnValue($this->getFixture('scheduler')));
 
         $mon = new Monitor($adapter);
@@ -39,7 +39,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('GET', array('monitor/tasks/', array()))
+            ->with('GET', array('v1/monitor/tasks/', array()))
             ->will($this->returnValue($this->getFixture('tasks')));
 
         $mon = new Monitor($adapter);
@@ -84,7 +84,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('GET', array('monitor/task/{task_id}/', array('task_id' => $task_id)))
+            ->with('GET', array('v1/monitor/task/{task_id}/', array('task_id' => $task_id)))
             ->will($this->returnValue($this->getFixture('task')));
 
         $mon = new Monitor($adapter);
@@ -113,7 +113,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('POST', array('monitor/task/{task_id}/start/', array('task_id' => $task_id)))
+            ->with('POST', array('v1/monitor/task/{task_id}/start/', array('task_id' => $task_id)))
             ->will($this->returnValue($this->getFixture('start-task')));
 
         $mon = new Monitor($adapter);
@@ -139,7 +139,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('POST', array('monitor/task/{task_id}/stop/', array('task_id' => $task_id)))
+            ->with('POST', array('v1/monitor/task/{task_id}/stop/', array('task_id' => $task_id)))
             ->will($this->returnValue($this->getFixture('stop-task')));
 
         $mon = new Monitor($adapter);

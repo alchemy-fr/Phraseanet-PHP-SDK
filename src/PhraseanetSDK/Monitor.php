@@ -15,46 +15,50 @@ use PhraseanetSDK\Http\APIGuzzleAdapter;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @method \PhraseanetSDK\Monitor getScheduler()
- * @method \PhraseanetSDK\Monitor startTask($task_id)
- * @method \PhraseanetSDK\Monitor stopTask($task_id)
- * @method \PhraseanetSDK\Monitor getTask($task_id)
- * @method \PhraseanetSDK\Monitor getTasks()
+ * @method Monitor getScheduler()
+ * @method Monitor startTask($task_id)
+ * @method Monitor stopTask($task_id)
+ * @method Monitor getTask($task_id)
+ * @method Monitor getTasks()
  */
 class Monitor
 {
+    /**
+     * @var APIGuzzleAdapter
+     */
     private $adapter;
+
     private static $mappings = array(
         'getScheduler' => array(
-            'path'            => 'monitor/scheduler/',
+            'path'            => 'v1/monitor/scheduler/',
             'entity'          => 'PhraseanetSDK\Monitor\Scheduler',
             'query-keys'      => array(),
             'result-property' => 'scheduler',
             'method'          => 'GET',
         ),
         'getTask'      => array(
-            'path'            => 'monitor/task/{task_id}/',
+            'path'            => 'v1/monitor/task/{task_id}/',
             'entity'          => 'PhraseanetSDK\Monitor\Task',
             'query-keys'      => array('task_id'),
             'result-property' => 'task',
             'method'          => 'GET',
         ),
         'startTask'      => array(
-            'path'            => 'monitor/task/{task_id}/start/',
+            'path'            => 'v1/monitor/task/{task_id}/start/',
             'entity'          => 'PhraseanetSDK\Monitor\Task',
             'query-keys'      => array('task_id'),
             'result-property' => 'task',
             'method'          => 'POST',
         ),
         'stopTask'      => array(
-            'path'            => 'monitor/task/{task_id}/stop/',
+            'path'            => 'v1/monitor/task/{task_id}/stop/',
             'entity'          => 'PhraseanetSDK\Monitor\Task',
             'query-keys'      => array('task_id'),
             'result-property' => 'task',
             'method'          => 'POST',
         ),
         'getTasks'     => array(
-            'path'            => 'monitor/tasks/',
+            'path'            => 'v1/monitor/tasks/',
             'entity'          => 'PhraseanetSDK\Monitor\Task',
             'query-keys'      => array(),
             'result-property' => 'tasks',

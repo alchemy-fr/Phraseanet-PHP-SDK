@@ -32,7 +32,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
 
         $guzzle->expects($this->once())
             ->method('call')
-            ->with('POST', 'records/add/', array(), $this->isType('array'), array('file' => $file))
+            ->with('POST', 'v1/records/add/', array(), $this->isType('array'), array('file' => $file))
             ->will($this->returnValue($result));
 
         $loader = new Uploader($guzzle, $em);

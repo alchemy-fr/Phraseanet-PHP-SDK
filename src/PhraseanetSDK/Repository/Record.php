@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Entity\Query;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,7 +28,7 @@ class Record extends AbstractRepository
      */
     public function findById($databoxId, $recordId)
     {
-        $path = sprintf('records/%s/%s/', $databoxId, $recordId);
+        $path = sprintf('v1/records/%s/%s/', $databoxId, $recordId);
 
         $response = $this->query('GET', $path);
 
@@ -48,7 +49,7 @@ class Record extends AbstractRepository
      */
     public function find($offsetStart, $perPage)
     {
-        $response = $this->query('POST', 'records/search/', array(), array(
+        $response = $this->query('POST', 'v1/records/search/', array(), array(
             'query'        => 'all',
             'offset_start' => (int) $offsetStart,
             'per_page'     => (int) $perPage,
@@ -72,7 +73,7 @@ class Record extends AbstractRepository
      */
     public function search(array $parameters = array())
     {
-        $response = $this->query('POST', 'search/', array(), array_merge(
+        $response = $this->query('POST', 'v1/search/', array(), array_merge(
             array('search_type' => 0),
             $parameters
         ));

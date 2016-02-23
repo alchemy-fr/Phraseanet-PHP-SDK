@@ -133,19 +133,24 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      *
      * @param string $endpoint
      * @param EventSubscriberInterface[] $plugins
-     *
+     * @param int $endpointVersion
      * @return static
      */
-    public static function create($endpoint, array $plugins = array())
-    {
+    public static function create(
+        $endpoint,
+        array $plugins = array()
+    ) {
         if (!is_string($endpoint)) {
             throw new InvalidArgumentException('API url endpoint must be a valid url');
         }
-        // test if url already end with API_MOUNT_POINT
-        $mountPoint = substr(trim($endpoint, '/'), -strlen(ApplicationInterface::API_MOUNT_POINT));
 
-        if (ApplicationInterface::API_MOUNT_POINT !== $mountPoint) {
-            $endpoint = sprintf('%s%s/', trim($endpoint, '/'), ApplicationInterface::API_MOUNT_POINT);
+        $versionMountPoint = ApplicationInterface::API_MOUNT_POINT;
+
+        // test if url already end with API_MOUNT_POINT
+        $mountPoint = substr(trim($endpoint, '/'), -strlen($versionMountPoint));
+
+        if ($versionMountPoint !== $mountPoint) {
+            $endpoint = sprintf('%s%s/', trim($endpoint, '/'), $versionMountPoint);
         }
 
         $guzzle = new Guzzle($endpoint);

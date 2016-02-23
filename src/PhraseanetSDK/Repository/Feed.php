@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
@@ -26,7 +27,7 @@ class Feed extends AbstractRepository
      */
     public function findById($id)
     {
-        $response = $this->query('GET', sprintf('feeds/%d/content/', $id), array(
+        $response = $this->query('GET', sprintf('v1/feeds/%d/content/', $id), array(
             'offset_start' => 0,
             'per_page'     => 0,
             ));
@@ -46,7 +47,7 @@ class Feed extends AbstractRepository
      */
     public function findAll()
     {
-        $response = $this->query('GET', 'feeds/list/');
+        $response = $this->query('GET', 'v1/feeds/list/');
 
         if (true !== $response->hasProperty('feeds')) {
             throw new RuntimeException('Missing "feeds" property in response content');

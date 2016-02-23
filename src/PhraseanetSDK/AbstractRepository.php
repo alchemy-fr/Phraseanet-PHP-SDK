@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\Repository;
+namespace PhraseanetSDK;
 
 use PhraseanetSDK\EntityManager;
 use PhraseanetSDK\Exception\BadResponseException;
@@ -27,11 +27,18 @@ abstract class AbstractRepository
     protected $em;
 
     /**
-     * @param EntityManager $em
+     * @var APIGuzzleAdapter
      */
-    public function __construct(EntityManager $em)
+    private $adapter;
+
+    /**
+     * @param EntityManager $em
+     * @param APIGuzzleAdapter $adapter
+     */
+    public function __construct(EntityManager $em, APIGuzzleAdapter $adapter = null)
     {
         $this->em = $em;
+        $this->adapter = $adapter ?: $this->em->getAdapter();
     }
 
     /**
@@ -39,7 +46,7 @@ abstract class AbstractRepository
      */
     private function getAdapter()
     {
-        return $this->em->getAdapter();
+        return $this->adapter;
     }
 
     /**

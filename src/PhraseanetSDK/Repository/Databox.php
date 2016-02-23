@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
@@ -25,7 +26,7 @@ class Databox extends AbstractRepository
      */
     public function findAll()
     {
-        $response = $this->query('GET', 'databoxes/list/');
+        $response = $this->query('GET', 'v1/databoxes/list/');
 
         if (true !== $response->hasProperty('databoxes')) {
             throw new RuntimeException('Missing "databoxes" property in response content');
