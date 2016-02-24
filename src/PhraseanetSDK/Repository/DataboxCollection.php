@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
@@ -26,7 +27,7 @@ class DataboxCollection extends AbstractRepository
      */
     public function findByDatabox($databoxId)
     {
-        $response = $this->query('GET', sprintf('databoxes/%d/collections/', $databoxId));
+        $response = $this->query('GET', sprintf('v1/databoxes/%d/collections/', $databoxId));
 
         if (true !== $response->hasProperty('collections')) {
             throw new RuntimeException('Missing "collections" property in response content');
@@ -47,7 +48,7 @@ class DataboxCollection extends AbstractRepository
      */
     public function find($baseId)
     {
-        $response = $this->query('GET', sprintf('collections/%d/', $baseId));
+        $response = $this->query('GET', sprintf('v1/collections/%d/', $baseId));
 
         if ($response->hasProperty(('collection')) !== true) {
             throw new RuntimeException('Missing "collection" property in response content');

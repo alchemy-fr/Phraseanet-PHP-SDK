@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\EntityHydrator;
 use PhraseanetSDK\Exception\RuntimeException;
 
@@ -34,7 +35,7 @@ class User extends AbstractRepository
      */
     public function me()
     {
-        $response = $this->query('GET', 'me/');
+        $response = $this->query('GET', 'v1/me/');
 
         if (!$response->hasProperty('user')) {
             throw new RuntimeException('Missing "user" property in response content');
@@ -56,7 +57,7 @@ class User extends AbstractRepository
 
     public function requestCollections(array $collections)
     {
-        $response = $this->query('POST', 'me/request-collections/', array(), $collections, array(
+        $response = $this->query('POST', 'v1/me/request-collections/', array(), $collections, array(
             'Content-Type' => 'application/json'
         ));
 
@@ -75,7 +76,7 @@ class User extends AbstractRepository
      */
     public function requestPasswordReset($emailAddress)
     {
-        $response = $this->query('POST', 'accounts/reset-password/' . $emailAddress . '/');
+        $response = $this->query('POST', 'v1/accounts/reset-password/' . $emailAddress . '/');
 
         if (!$response->hasProperty('reset_token')) {
             throw new RuntimeException('Missing "token" property in response content');
@@ -93,7 +94,7 @@ class User extends AbstractRepository
      */
     public function resetPassword($token, $password)
     {
-        $response = $this->query('POST', 'accounts/update-password/' . $token . '/', array(), array(
+        $response = $this->query('POST', 'v1/accounts/update-password/' . $token . '/', array(), array(
             'password' => $password
         ));
 
@@ -106,7 +107,7 @@ class User extends AbstractRepository
 
     public function updatePassword($currentPassword, $newPassword)
     {
-        $response = $this->query('POST', 'me/update-password/', array(), array(
+        $response = $this->query('POST', 'v1/me/update-password/', array(), array(
             'oldPassword' => $currentPassword,
             'password' => array(
                 'password' => $newPassword,
@@ -150,7 +151,7 @@ class User extends AbstractRepository
 
         $response = $this->query(
             'POST',
-            'accounts/access-demand/',
+            'v1/accounts/access-demand/',
             array(),
             $data,
             array('Content-Type' => 'application/json')
@@ -183,7 +184,7 @@ class User extends AbstractRepository
 
         $response = $this->query(
             'POST',
-            'me/update-account/',
+            'v1/me/update-account/',
             array(),
             $data,
             array('Content-Type' => 'application/json')
@@ -209,7 +210,7 @@ class User extends AbstractRepository
      */
     public function unlockAccount($token)
     {
-        $response = $this->query('POST', 'accounts/unlock/' . $token . '/', array(), array());
+        $response = $this->query('POST', 'v1/accounts/unlock/' . $token . '/', array(), array());
 
         if (!$response->hasProperty('success')) {
             throw new \RuntimeException('Missing "success" property in response content');

@@ -12,7 +12,7 @@ class RequestExtractorTest extends \PHPUnit_Framework_TestCase
             'query'       => array('params' => 'value'),
             'post-fields' => array(),
             'method'      => 'POST',
-            'path'        => '/path/to/request',
+            'path'        => '/v1/path/to/request',
         );
 
         $request = $this->getMock('Guzzle\Http\Message\RequestInterface');

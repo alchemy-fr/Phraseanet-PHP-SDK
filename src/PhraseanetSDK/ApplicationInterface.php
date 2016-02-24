@@ -16,7 +16,7 @@ interface ApplicationInterface
     /**
      * @var string Phraseanet API mount point
      */
-    const API_MOUNT_POINT = '/api/v1';
+    const API_MOUNT_POINT = '/api';
 
     /**
      * @var string PHP SDK user agent
@@ -26,7 +26,7 @@ interface ApplicationInterface
     /**
      * @var string SDK version
      */
-    const VERSION = '0.6.1';
+    const VERSION = '0.9.x';
 
     /**
      * Return an OAuth2Connector

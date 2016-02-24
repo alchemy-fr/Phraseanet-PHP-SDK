@@ -61,7 +61,7 @@ class Uploader
             $postFields['status'] = $status;
         }
 
-        $response = $this->adapter->call('POST', 'records/add/', array(), $postFields, array(
+        $response = $this->adapter->call('POST', 'v1/records/add/', array(), $postFields, array(
             'file' => $file,
         ));
 

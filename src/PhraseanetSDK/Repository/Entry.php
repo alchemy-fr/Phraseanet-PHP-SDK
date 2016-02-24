@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Entity\FeedEntry;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,7 +28,7 @@ class Entry extends AbstractRepository
      */
     public function findById($id)
     {
-        $response = $this->query('GET', sprintf('feeds/entry/%d/', $id));
+        $response = $this->query('GET', sprintf('v1/feeds/entry/%d/', $id));
 
         if (true !== $response->hasProperty('entry')) {
             throw new RuntimeException('Missing "entry" property in response content');
@@ -47,7 +48,7 @@ class Entry extends AbstractRepository
      */
     public function findByFeed($feedId, $offsetStart = 0, $perPage = 5)
     {
-        $response = $this->query('GET', sprintf('feeds/%d/content/', $feedId), array(
+        $response = $this->query('GET', sprintf('v1/feeds/%d/content/', $feedId), array(
             'offset_start' => $offsetStart,
             'per_page' => $perPage,
         ));
@@ -69,7 +70,7 @@ class Entry extends AbstractRepository
      */
     public function findInAggregatedFeed($offsetStart = 0, $perPage = 5, array $feeds = array())
     {
-        $response = $this->query('GET', 'feeds/content/', array(
+        $response = $this->query('GET', 'v1/feeds/content/', array(
             'offset_start' => $offsetStart,
             'per_page' => $perPage,
             'feeds' => $feeds,

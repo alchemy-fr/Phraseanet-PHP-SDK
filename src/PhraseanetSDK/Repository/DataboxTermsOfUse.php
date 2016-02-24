@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
@@ -27,7 +28,7 @@ class DataboxTermsOfUse extends AbstractRepository
      */
     public function findByDatabox($databoxId)
     {
-        $response = $this->query('GET', sprintf('databoxes/%d/termsOfUse/', $databoxId));
+        $response = $this->query('GET', sprintf('v1/databoxes/%d/termsOfUse/', $databoxId));
 
         if (true !== $response->hasProperty('termsOfUse')) {
             throw new RuntimeException('Missing "termsOfuse" property in response content');

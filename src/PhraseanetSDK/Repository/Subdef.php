@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Exception\NotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -40,7 +41,7 @@ class Subdef extends AbstractRepository
             $parameters['mimes'] = $mimes;
         }
 
-        $response = $this->query('GET', sprintf('records/%d/%d/embed/', $databoxId, $recordId), $parameters);
+        $response = $this->query('GET', sprintf('v1/records/%d/%d/embed/', $databoxId, $recordId), $parameters);
 
         if (true !== $response->hasProperty('embed')) {
             throw new RuntimeException('Missing "embed" property in response content');

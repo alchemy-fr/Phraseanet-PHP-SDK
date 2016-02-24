@@ -5,7 +5,6 @@ namespace PhraseanetSDK;
 use PhraseanetSDK\Http\GuzzleAdapter;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadResponseException;
-use PhraseanetSDK\Exception\TransportException;
 
 class OAuth2Connector
 {
@@ -17,10 +16,26 @@ class OAuth2Connector
      */
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
+    /**
+     * @var GuzzleAdapter
+     */
     private $adapter;
+
+    /**
+     * @var string
+     */
     private $clientId;
+
+    /**
+     * @var string
+     */
     private $secret;
 
+    /**
+     * @param GuzzleAdapter $adapter
+     * @param string $clientId
+     * @param string $secret
+     */
     public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
     {
         $this->adapter = $adapter;
@@ -59,12 +74,14 @@ class OAuth2Connector
     }
 
     /**
-     * Retrieves your access Token from your callback endpoint
+     * Retrieves your access token from your callback endpoint
      *
-     * @return Client
+     * @param $code
+     * @param $redirectUri
      *
-     * @throws AuthenticationException if error occurs during authentication
-     * @throws TransportException      if problem occurs with transport layer
+     * @return string
+     *
+     * @throws AuthenticationException
      */
     public function retrieveAccessToken($code, $redirectUri)
     {

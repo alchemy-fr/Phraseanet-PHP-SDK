@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK\Repository;
 
+use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
@@ -27,7 +28,7 @@ class Metadata extends AbstractRepository
      */
     public function findByRecord($databoxId, $recordId)
     {
-        $response = $this->query('GET', sprintf('records/%d/%d/metadatas/', $databoxId, $recordId));
+        $response = $this->query('GET', sprintf('v1/records/%d/%d/metadatas/', $databoxId, $recordId));
 
         if (true !== $response->hasProperty('record_metadatas')) {
             throw new RuntimeException('Missing "record_metadatas" property in response content');
