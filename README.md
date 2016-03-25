@@ -1,8 +1,11 @@
 # Phraseanet API PHP-SDK
 
-[![Build Status](https://secure.travis-ci.org/alchemy-fr/Phraseanet-PHP-SDK.png?branch=master)](http://travis-ci.org/alchemy-fr/Phraseanet-PHP-SDK)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/?branch=master)
+[![License](https://img.shields.io/packagist/l/phraseanet/php-sdk.svg?style=flat-square)](https://github.com/alchemy-fr/Phraseanet-PHP-SDK/LICENSE)
+[![Packagist](https://img.shields.io/packagist/v/phraseanet/php-sdk.svg?style=flat-square)](https://packagist.org/packages/phraseanet/php-sdk)
+[![Travis](https://img.shields.io/travis/alchemy-fr/Phraseanet-PHP-SDK.svg?style=flat-square)](https://travis-ci.org/alchemy-fr/Phraseanet-PHP-SDK)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/alchemy-fr/Phraseanet-PHP-SDK.svg?style=flat-square)](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/?branch=master)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/alchemy-fr/Phraseanet-PHP-SDK.svg?style=flat-square)](https://scrutinizer-ci.com/g/alchemy-fr/Phraseanet-PHP-SDK/)
+[![Packagist](https://img.shields.io/packagist/dt/phraseanet/php-sdk.svg?style=flat-square)](https://packagist.org/packages/phraseanet/php-sdk/stats)
 
 The Phraseanet PHP SDK is an OO library to interact with
 [Phraseanet API](https://docs.phraseanet.com/Devel).
@@ -12,7 +15,7 @@ The Phraseanet PHP SDK is an OO library to interact with
 The recommended way to install Phraseanet PHP SDK is [through composer](http://getcomposer.org).
 
 ```bash
-composer require phraseanet/php-sdk:~0.7
+composer require phraseanet/php-sdk:^0.9
 ```
 
 ## Basic Usage
@@ -50,16 +53,17 @@ OAuth2Connector for that :
 - Redirect the end user to the Phraseanet authorization URL :
 
 ```php
+// Must be identical to the redirect URI set in your Oauth application configuration in Phraseanet.
+$redirectUri = 'http://myhost.dev/oauth-callback-endpoint/';
 $connector = $app->getOauth2Connector();
-$url = $connector->getAuthorizationUrl($redirectUri); // must be the same as the one declared
-                                                      // in the application your created in Phraseanet
+$url = $connector->getAuthorizationUrl($redirectUri);
 ```
 
 Note that extra parameters can be passed to the `getAuthorizationUrl` method.
 Please refer to the [online documentation](https://docs.phraseanet.com/Devel)
 about available parameters.
 
-- Retrieve the access token in you application callback :
+- Retrieve an access token in your application callback :
 
 ```php
 $connector = $app->getOauth2Connector();
@@ -93,9 +97,9 @@ foreach($query->getResults() as $record) {
 }
 ```
 
-### Upload files
+### Uploading files to Phraseanet
 
-The Loader is used to upload files to Phraseanet.
+Files can be uploaded to Phraseanet using the uploader instance exposed via the `Application` object:
 
 ```php
 $uploader = $app->getUploader($token);

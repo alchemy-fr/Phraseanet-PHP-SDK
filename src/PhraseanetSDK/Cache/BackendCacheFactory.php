@@ -14,8 +14,11 @@ namespace PhraseanetSDK\Cache;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\MemcacheCache;
 use Doctrine\Common\Cache\MemcachedCache;
-use PhraseanetSDK\Exception\RuntimeException;
 
+/**
+ * Class BackendCacheFactory is responsible for creating a cache instance based on a configuration array.
+ * @package PhraseanetSDK\Cache
+ */
 class BackendCacheFactory
 {
     public function create($type, $host = null, $port = null)
