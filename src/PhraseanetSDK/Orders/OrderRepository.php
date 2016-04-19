@@ -25,7 +25,7 @@ class OrderRepository extends AbstractRepository
             'includes' => [ 'elements' ]
         ];
 
-        $response = $this->query('POST', 'v2/orders/', array(), $parameters);
+        $response = $this->query('GET', 'v2/orders/', $parameters);
 
         if ($response->isEmpty()) {
             throw new RuntimeException('Response content is empty');
