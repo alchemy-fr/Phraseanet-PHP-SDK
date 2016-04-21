@@ -13,6 +13,7 @@ namespace PhraseanetSDK;
 
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Orders\OrderRepository;
 use PhraseanetSDK\Search\SearchRepository;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -35,7 +36,7 @@ class EntityManager
     private $repositories = array();
 
     /**
-     * @param APIGuzzleAdapter $v1Adapter
+     * @param APIGuzzleAdapter $adapter
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -80,7 +81,11 @@ class EntityManager
         $objectName = sprintf('\\PhraseanetSDK\\Repository\\%s', $className);
 
         if ($name == 'search') {
-            return new SearchRepository($this, $this->adapter);
+            return $this->repositories['search'] = new SearchRepository($this, $this->adapter);
+        }
+
+        if ($name == 'orders') {
+            return $this->repositories['orders'] = new OrderRepository($this, $this->adapter);
         }
 
         if (!class_exists($objectName)) {

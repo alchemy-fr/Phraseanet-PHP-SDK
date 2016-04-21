@@ -41,7 +41,7 @@ class PhraseanetSDKDataCollector extends DataCollector
         );
 
         foreach ($this->profiler as $call) {
-            $this->parseCall($request, $response, $call);
+            $this->parseCall($call);
         }
     }
 
@@ -163,26 +163,24 @@ class PhraseanetSDKDataCollector extends DataCollector
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
      * @param $call
      */
-    protected function parseCall(Request $request, Response $response, $call)
+    protected function parseCall($call)
     {
         $error = false;
         $request = $call;
         $response = $request->getResponse();
 
         $requestContent = null;
+
         if ($request instanceof EntityEnclosingRequestInterface) {
             $requestContent = (string)$request->getBody();
         }
 
         $time = array(
             'total' => $response->getInfo('total_time'),
-            'connection' => $response->getInfo('connect_time'),
+            'connection' => $response->getInfo('connect_time')
         );
-
 
         $this->data['total_time'] += $response->getInfo('total_time');
 

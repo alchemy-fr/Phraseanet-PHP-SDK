@@ -181,7 +181,7 @@ class Story
             $this->records = new ArrayCollection();
         }
 
-        return $this->records ?: $this->records = new ArrayCollection(Record::fromList($this->source->records));
+        return $this->records ?: $this->records = new ArrayCollection(Record::fromList((array) $this->source->records));
     }
 
     /**
@@ -193,7 +193,7 @@ class Story
             $this->metadata = new ArrayCollection();
         }
 
-        return $this->metadata ?: $this->metadata = new ArrayCollection(Metadata::fromList($this->source->metadata));
+        return $this->metadata ?: $this->metadata = new ArrayCollection(Metadata::fromList((array) $this->source->metadata));
     }
 
     /**
