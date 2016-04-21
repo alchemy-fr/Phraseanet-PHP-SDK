@@ -19,10 +19,12 @@ class OrderRepository extends AbstractRepository
 
     public function listOrders($pageIndex = 0, $pageSize = 20)
     {
+        // 't' param is used for cache busting
         $parameters = [
             'page' => max($pageIndex, 0),
             'per_page' => max($pageSize, 1),
-            'includes' => [ 'elements' ]
+            'includes' => [ 'elements' ],
+            't' => time()
         ];
 
         $response = $this->query('GET', 'v2/orders/', $parameters);
@@ -35,6 +37,12 @@ class OrderRepository extends AbstractRepository
             throw new RuntimeException('Missing \'data\' property in response');
         }
 
-        return new OrderList($response->getProperty('data'), $response->getProperty('pagination'));
+        if (! $response->hasProperty('meta')) {
+            throw new RuntimeException('Missing \'meta\' property in response');
+        }
+
+        $meta = $response->getProperty('meta');
+
+        return new OrderList($response->getProperty('data'), $meta->pagination);
     }
 }
