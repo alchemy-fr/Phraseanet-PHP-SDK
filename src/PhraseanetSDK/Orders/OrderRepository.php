@@ -45,4 +45,17 @@ class OrderRepository extends AbstractRepository
 
         return new OrderList($response->getProperty('data'), $meta->pagination);
     }
+
+    public function createOrder($usage, array $recordsIds)
+    {
+        $parameters = [
+            'usage' => $usage,
+            'deadline' => '',
+            'records' => $recordsIds
+        ];
+
+        $response = $this->query('POST', 'v2/orders/', [], [ 'data' => $parameters ], ['Accept' => 'application/json']);
+
+        return new Order($response->getProperty('data'));
+    }
 }
