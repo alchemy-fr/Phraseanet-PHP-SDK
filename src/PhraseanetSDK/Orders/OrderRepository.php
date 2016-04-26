@@ -54,8 +54,11 @@ class OrderRepository extends AbstractRepository
             'records' => $recordsIds
         ];
 
-        $response = $this->query('POST', 'v2/orders/', [], [ 'data' => $parameters ], ['Accept' => 'application/json']);
-
+        $response = $this->query('POST', 'v2/orders/', [], [ 'data' => $parameters ], [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ]);
+        
         return new Order($response->getProperty('data'));
     }
 }
