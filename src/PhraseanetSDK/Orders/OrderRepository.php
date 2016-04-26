@@ -50,7 +50,6 @@ class OrderRepository extends AbstractRepository
     {
         $parameters = [
             'usage' => $usage,
-            'deadline' => '',
             'records' => $recordsIds
         ];
 
