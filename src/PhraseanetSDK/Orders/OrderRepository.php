@@ -17,6 +17,24 @@ use PhraseanetSDK\Exception\RuntimeException;
 class OrderRepository extends AbstractRepository
 {
 
+    public function getOrder($orderId)
+    {
+        // 't' param is used for cache busting
+        $parameters = [ 't' => time() ];
+
+        $response = $this->query('GET', 'v2/orders/' . $orderId, $parameters);
+
+        if ($response->isEmpty()) {
+            throw new RuntimeException('Response content is empty');
+        }
+
+        if (! $response->hasProperty('data')) {
+            throw new RuntimeException('Missing \'data\' property in response');
+        }
+
+        return new Order($response->getProperty('data'));
+    }
+
     public function listOrders($pageIndex = 0, $pageSize = 20)
     {
         // 't' param is used for cache busting
