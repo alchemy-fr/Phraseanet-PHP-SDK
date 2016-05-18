@@ -85,7 +85,7 @@ class OrderElement
      */
     public function getDataboxId()
     {
-        return (int) $this->source->databox_id;
+        return (int) $this->source->record->databox_id;
     }
 
     /**
@@ -93,7 +93,7 @@ class OrderElement
      */
     public function getRecordId()
     {
-        return (int) $this->source->record_id;
+        return (int) $this->source->record->record_id;
     }
 
     /**
