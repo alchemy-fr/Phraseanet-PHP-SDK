@@ -96,6 +96,11 @@ class OrderElement
         return (int) $this->source->record->record_id;
     }
 
+    public function getStatus()
+    {
+        return $this->source->status;
+    }
+
     /**
      * @return int
      */
