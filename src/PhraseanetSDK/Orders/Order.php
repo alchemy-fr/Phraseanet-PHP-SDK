@@ -114,8 +114,19 @@ class Order
         return $this->deadline ?: $this->deadline = new \DateTime($this->source->deadline);
     }
 
+    /**
+     * @return OrderElement[]
+     */
     public function getElements()
     {
         return $this->elements ?: $this->elements = OrderElement::fromList($this->source->elements->data);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getArchiveUrl()
+    {
+        return $this->source->archive_url;
     }
 }
