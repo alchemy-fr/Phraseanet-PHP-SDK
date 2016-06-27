@@ -50,7 +50,7 @@ class Story extends AbstractRepository
     public function find($offsetStart, $perPage)
     {
         $response = $this->query('POST', 'v1/search/', array(), array(
-            'query'        => 'all',
+            'query'        => '',
             'search_type'  => 1,
             'offset_start' => (int) $offsetStart,
             'per_page'     => (int) $perPage,
@@ -73,7 +73,7 @@ class Story extends AbstractRepository
     public function search(array $parameters = array())
     {
         $response = $this->query('POST', 'v1/search/', array(), array_merge(
-            array('search_type' => 1),
+            array('search_type' => 2),
             $parameters
         ));
 
