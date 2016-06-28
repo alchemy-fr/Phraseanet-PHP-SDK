@@ -81,6 +81,11 @@ class Story
     protected $caption;
 
     /**
+     * @var int
+     */
+    protected $recordCount;
+
+    /**
      * @param EntityManager $entityManager
      * @param \stdClass $source
      */
@@ -170,6 +175,16 @@ class Story
     public function getUuid()
     {
         return $this->source->uuid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRecordCount()
+    {
+        return $this->recordCount !== null ?
+            $this->recordCount :
+            $this->recordCount = (isset($this->source->record_count) ? $this->source->record_count : count($this->getRecords()));
     }
 
     /**
