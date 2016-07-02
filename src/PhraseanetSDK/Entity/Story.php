@@ -231,6 +231,10 @@ class Story
      */
     public function getCaption()
     {
+        if (! isset($this->caption) && isset($this->source->caption)) {
+            $this->caption = RecordCaption::fromList($this->source->caption);
+        }
+
         if (! isset($this->caption)) {
             $this->caption = $this->entityManager->getRepository('caption')->findByRecord(
                 $this->getDataboxId(),
