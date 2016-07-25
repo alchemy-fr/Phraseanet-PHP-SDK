@@ -66,6 +66,14 @@ class Quarantine
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get Quarantine item id
      *
      * @return integer

@@ -73,6 +73,13 @@ class Result
         $this->entityManager = $entityManager;
         $this->source = $source;
     }
+    /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
 
     /**
      * @return ArrayCollection|Record[]

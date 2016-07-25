@@ -69,6 +69,14 @@ class FeedEntry
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The Entry id
      *
      * @return integer

@@ -51,6 +51,14 @@ class Databox
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * the databox id
      *
      * @return integer

@@ -64,6 +64,14 @@ class Feed
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The feed id
      *
      * @return integer

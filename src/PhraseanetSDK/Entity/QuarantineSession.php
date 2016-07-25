@@ -53,6 +53,14 @@ class QuarantineSession
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The session id
      *
      * @return integer

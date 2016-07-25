@@ -65,6 +65,14 @@ class Query
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The offset start
      *
      * @return integer

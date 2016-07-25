@@ -51,6 +51,14 @@ class DataboxCollection
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The collection base id
      *
      * @return integer

@@ -41,6 +41,14 @@ class Metadata
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get the metadata id
      *
      * @return integer

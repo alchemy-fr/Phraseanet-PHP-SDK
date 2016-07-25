@@ -91,6 +91,14 @@ class Story
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get unique id
      *
      * @return string
