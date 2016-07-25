@@ -51,6 +51,14 @@ class QuerySuggestion
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get the suggestion value
      *
      * @return string

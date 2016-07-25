@@ -43,6 +43,14 @@ class Permalink
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get the permalink id
      *
      * @return integer

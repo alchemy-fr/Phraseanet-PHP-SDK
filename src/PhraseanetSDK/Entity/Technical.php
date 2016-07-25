@@ -46,6 +46,15 @@ class Technical
     /**
      * @return \stdClass
      */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @return \stdClass
+     * @deprecated Use getRawData() instead
+     */
     public function getSource()
     {
         return $this->source;

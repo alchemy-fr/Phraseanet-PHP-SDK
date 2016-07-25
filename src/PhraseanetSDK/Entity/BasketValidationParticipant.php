@@ -49,6 +49,14 @@ class BasketValidationParticipant
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get the user
      *
      * @return User

@@ -42,6 +42,14 @@ class QueryFacetValue
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * @return string
      */
     public function getValue()

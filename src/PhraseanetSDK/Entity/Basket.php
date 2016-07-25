@@ -78,6 +78,14 @@ class Basket
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The basket id
      *
      * @return integer

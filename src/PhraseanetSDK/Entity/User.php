@@ -82,6 +82,14 @@ class User
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * @return string
      */
     public function getAddress()

@@ -51,6 +51,14 @@ class DataboxDocumentStructure
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * The documentary field id
      *
      * @return integer

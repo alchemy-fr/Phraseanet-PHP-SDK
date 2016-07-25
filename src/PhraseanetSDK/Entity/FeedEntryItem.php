@@ -49,6 +49,14 @@ class FeedEntryItem
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get the item id
      *
      * @return integer

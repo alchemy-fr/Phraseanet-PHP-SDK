@@ -58,6 +58,14 @@ class DataboxStatus
     }
 
     /**
+     * @return \stdClass
+     */
+    public function getRawData()
+    {
+        return $this->source;
+    }
+
+    /**
      * Get the status bit
      *
      * @return integer
