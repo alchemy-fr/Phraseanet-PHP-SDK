@@ -26,11 +26,16 @@ class Record extends AbstractRepository
      * @return \PhraseanetSDK\Entity\Record
      * @throws RuntimeException
      */
-    public function findById($databoxId, $recordId)
+    public function findById($databoxId, $recordId, $disableCache = false)
     {
         $path = sprintf('v1/records/%s/%s/', $databoxId, $recordId);
+        $query = [];
 
-        $response = $this->query('GET', $path);
+        if ($disableCache) {
+            $query['t'] = time();
+        }
+
+        $response = $this->query('GET', $path, $query);
 
         if (true !== $response->hasProperty('record')) {
             throw new RuntimeException('Missing "record" property in response content');
