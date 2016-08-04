@@ -23,6 +23,7 @@ class Record extends AbstractRepository
      *
      * @param  integer                      $databoxId The record databox id
      * @param  integer                      $recordId  The record id
+     * @param  boolean                      $disableCache Bypass cache when fetching a single record
      * @return \PhraseanetSDK\Entity\Record
      * @throws RuntimeException
      */
@@ -31,7 +32,7 @@ class Record extends AbstractRepository
         $path = sprintf('v1/records/%s/%s/', $databoxId, $recordId);
         $query = [];
 
-        if ($disableCache) {
+        if (true === $disableCache) {
             $query['t'] = time();
         }
 
