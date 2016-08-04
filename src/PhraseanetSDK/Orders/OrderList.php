@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Orders;
 
-class OrderList 
+class OrderList
 {
     /**
      * @var \stdClass[]

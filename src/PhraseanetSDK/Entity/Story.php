@@ -192,7 +192,8 @@ class Story
     {
         return $this->recordCount !== null ?
             $this->recordCount :
-            $this->recordCount = (isset($this->source->record_count) ? $this->source->record_count : count($this->getRecords()));
+            $this->recordCount =
+                (isset($this->source->record_count) ? $this->source->record_count : count($this->getRecords()));
     }
 
     /**
@@ -204,7 +205,9 @@ class Story
             $this->records = new ArrayCollection();
         }
 
-        return $this->records ?: $this->records = new ArrayCollection(Record::fromList((array) $this->source->records));
+        return $this->records ?: $this->records = new ArrayCollection(
+            Record::fromList((array) $this->source->records)
+        );
     }
 
     /**
@@ -216,7 +219,9 @@ class Story
             $this->metadata = new ArrayCollection();
         }
 
-        return $this->metadata ?: $this->metadata = new ArrayCollection(Metadata::fromList((array) $this->source->metadata));
+        return $this->metadata ?: $this->metadata = new ArrayCollection(
+            Metadata::fromList((array) $this->source->metadata)
+        );
     }
 
     /**
@@ -240,7 +245,7 @@ class Story
     public function getCaption()
     {
         if (! isset($this->caption) && isset($this->source->caption)) {
-            $this->caption = RecordCaption::fromList($this->source->caption);
+            $this->caption = RecordCaption::fromList((array) $this->source->caption);
         }
 
         if (! isset($this->caption)) {

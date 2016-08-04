@@ -15,7 +15,7 @@ namespace PhraseanetSDK\Orders;
  * Class OrderElement
  * @package PhraseanetSDK\Orders
  */
-class OrderElement 
+class OrderElement
 {
 
     const STATUS_ACCEPTED = 'accepted';

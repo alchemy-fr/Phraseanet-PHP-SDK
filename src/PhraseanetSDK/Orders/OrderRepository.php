@@ -20,9 +20,9 @@ class OrderRepository extends AbstractRepository
     public function getOrder($orderId)
     {
         // 't' param is used for cache busting
-        $parameters = [ 
+        $parameters = [
             'includes' => [ 'elements' ],
-            't' => time() 
+            't' => time()
         ];
 
         $response = $this->query('GET', 'v2/orders/' . $orderId, $parameters);
