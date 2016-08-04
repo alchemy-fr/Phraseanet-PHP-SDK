@@ -15,7 +15,7 @@ namespace PhraseanetSDK\Orders;
  * Class Order
  * @package PhraseanetSDK\Orders
  */
-class Order 
+class Order
 {
 
     const STATUS_PENDING = 'pending';
