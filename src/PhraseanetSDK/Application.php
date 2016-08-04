@@ -11,10 +11,10 @@
 
 namespace PhraseanetSDK;
 
-use PhraseanetSDK\Http\GuzzleAdapter;
 use PhraseanetSDK\Exception\InvalidArgumentException;
-use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use PhraseanetSDK\Http\Guzzle\GuzzleClient;
 use Psr\Log\NullLogger;
 
 /**
@@ -26,10 +26,10 @@ class Application implements ApplicationInterface
      * Creates the application.
      *
      * @param array $config
-     * @param GuzzleAdapter $adapter
+     * @param GuzzleClient $adapter
      * @return Application
      */
-    public static function create(array $config, GuzzleAdapter $adapter = null)
+    public static function create(array $config, GuzzleClient $adapter = null)
     {
         foreach (array('client-id', 'secret') as $key) {
             if (!isset($config[$key]) || !is_string($config[$key])) {
@@ -42,7 +42,7 @@ class Application implements ApplicationInterface
                 throw new InvalidArgumentException(sprintf('Missing or invalid parameter "url"'));
             }
 
-            $adapter = GuzzleAdapter::create($config['url']);
+            $adapter = GuzzleClient::create($config['url']);
         }
 
         return new static(
@@ -63,7 +63,7 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * @var GuzzleAdapter
+     * @var GuzzleClient
      */
     private $adapter;
 
@@ -102,7 +102,7 @@ class Application implements ApplicationInterface
      */
     private $monitors = array();
 
-    public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
+    public function __construct(GuzzleClient $adapter, $clientId, $secret)
     {
         $this->adapter = $adapter;
         $this->clientId = $clientId;
@@ -181,7 +181,7 @@ class Application implements ApplicationInterface
     /**
      * Returns the guzzle adapter
      *
-     * @return GuzzleAdapter
+     * @return GuzzleClient
      */
     public function getAdapter()
     {

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PhraseanetSDK\Http;
+namespace PhraseanetSDK\Http\Guzzle;
 
 use Guzzle\Common\Exception\GuzzleException;
 use Guzzle\Http\Client as Guzzle;
@@ -22,14 +22,65 @@ use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Http\Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class GuzzleAdapter implements GuzzleAdapterInterface
+class GuzzleClient implements Client
 {
-    /** @var ClientInterface */
-    private $guzzle;
-    private $extended = false;
+    /**
+     * @param string $endpoint
+     * @return string
+     */
+    private static function applyEndpointVersion($endpoint)
+    {
+        $versionMountPoint = ApplicationInterface::API_MOUNT_POINT;
 
+        // test if url already end with API_MOUNT_POINT
+        $mountPoint = substr(trim($endpoint, '/'), -strlen($versionMountPoint));
+
+        if ($versionMountPoint !== $mountPoint) {
+            $endpoint = sprintf('%s%s/', trim($endpoint, '/'), $versionMountPoint);
+
+            return $endpoint;
+        }
+
+        return $endpoint;
+    }
+
+    /**
+     * Creates a new instance of GuzzleAdapter
+     *
+     * @param string $endpoint
+     * @param EventSubscriberInterface[] $plugins
+     * @return static
+     */
+    public static function create($endpoint, array $plugins = array()) {
+
+        if (!is_string($endpoint)) {
+            throw new InvalidArgumentException('API url endpoint must be a valid url');
+        }
+
+        $guzzle = new Guzzle(self::applyEndpointVersion($endpoint));
+
+        $guzzle->setUserAgent(
+            sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION)
+        );
+
+        foreach ($plugins as $plugin) {
+            $guzzle->addSubscriber($plugin);
+        }
+
+        return new static($guzzle);
+    }
+
+    /**
+     * @var ClientInterface
+     */
+    private $guzzle;
+
+    /**
+     * @param ClientInterface $guzzle
+     */
     public function __construct(ClientInterface $guzzle)
     {
         $this->guzzle = $guzzle;
@@ -66,27 +117,6 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     }
 
     /**
-     * Sets extended mode
-     *
-     * Extended mode fetch more data (status, meta, subdefs) in one request
-     * for a record
-     *
-     * @param boolean $extended
-     */
-    public function setExtended($extended)
-    {
-        $this->extended = (boolean)$extended;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isExtended()
-    {
-        return $this->extended;
-    }
-
-    /**
      * Performs an HTTP request, returns the body response
      *
      * @param string $method The method
@@ -110,11 +140,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         array $headers = array()
     ) {
         try {
-            $acceptHeader = array(
-                'Accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
-            );
-
-            $request = $this->guzzle->createRequest($method, $path, array_merge($acceptHeader, $headers));
+            $request = $this->guzzle->createRequest($method, $path, $headers);
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
         } catch (CurlException $e) {
@@ -126,45 +152,6 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         }
 
         return $response->getBody(true);
-    }
-
-    /**
-     * Creates a new instance of GuzzleAdapter
-     *
-     * @param string $endpoint
-     * @param EventSubscriberInterface[] $plugins
-     * @param int $endpointVersion
-     * @return static
-     */
-    public static function create(
-        $endpoint,
-        array $plugins = array()
-    ) {
-        if (!is_string($endpoint)) {
-            throw new InvalidArgumentException('API url endpoint must be a valid url');
-        }
-
-        $versionMountPoint = ApplicationInterface::API_MOUNT_POINT;
-
-        // test if url already end with API_MOUNT_POINT
-        $mountPoint = substr(trim($endpoint, '/'), -strlen($versionMountPoint));
-
-        if ($versionMountPoint !== $mountPoint) {
-            $endpoint = sprintf('%s%s/', trim($endpoint, '/'), $versionMountPoint);
-        }
-
-        $guzzle = new Guzzle($endpoint);
-        $guzzle->setUserAgent(sprintf(
-            '%s version %s',
-            ApplicationInterface::USER_AGENT,
-            ApplicationInterface::VERSION
-        ));
-
-        foreach ($plugins as $plugin) {
-            $guzzle->addSubscriber($plugin);
-        }
-
-        return new static($guzzle);
     }
 
     private function addRequestParameters(RequestInterface $request, $query, $postFields, $files)

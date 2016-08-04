@@ -16,12 +16,16 @@ use PhraseanetSDK\Exception\InvalidArgumentException;
 /**
  * Response object from a Phraseanet API call
  */
-class APIResponse
+class ApiResponse
 {
-    /** @var \stdClass */
+    /**
+     * @var \stdClass
+     */
     protected $result;
 
-    /** @var \stdClass */
+    /**
+     * @var \stdClass
+     */
     private $meta;
 
     /**
@@ -30,7 +34,7 @@ class APIResponse
     public function __construct(\stdClass $response)
     {
         if (!isset($response->meta) || !isset($response->response)) {
-            throw new InvalidArgumentException('The API json response is malformed');
+            throw new InvalidArgumentException('Malformed API response');
         }
 
         $this->meta = $response->meta;

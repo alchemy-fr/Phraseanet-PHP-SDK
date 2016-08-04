@@ -3,7 +3,7 @@
 namespace PhraseanetSDK\Tests\Http;
 
 use PhraseanetSDK\Http\APIGuzzleAdapter;
-use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\ApiResponse;
 
 class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,7 +39,7 @@ class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $apiResponse = $connected->call($method, $path, $query, $postFields, $files);
 
         $this->assertInstanceOf('PhraseanetSDK\Http\APIResponse', $apiResponse);
-        $this->assertEquals(new APIResponse(json_decode(json_encode($response))), $apiResponse);
+        $this->assertEquals(new ApiResponse(json_decode(json_encode($response))), $apiResponse);
     }
 
     public function testCallInvalidResponse()

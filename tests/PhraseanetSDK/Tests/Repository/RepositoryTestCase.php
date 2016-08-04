@@ -3,12 +3,11 @@
 namespace PhraseanetSDK\Tests\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Entity\Result;
-use PhraseanetSDK\Http\GuzzleAdapter;
-use PhraseanetSDK\Http\APIGuzzleAdapter;
-use Guzzle\Plugin\Mock\MockPlugin;
-use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Mock\MockPlugin;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\Guzzle\GuzzleClient;
 
 abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +25,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
                 });
         }
 
-        return new APIGuzzleAdapter(new GuzzleAdapter($clientHttp));
+        return new APIGuzzleAdapter(new GuzzleClient($clientHttp));
     }
 
     protected function getSampleResponse($filename)

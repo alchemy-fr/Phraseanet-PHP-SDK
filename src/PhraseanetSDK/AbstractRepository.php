@@ -16,8 +16,9 @@ use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\ApiResponse;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\Client;
 
 abstract class AbstractRepository
 {
@@ -33,12 +34,12 @@ abstract class AbstractRepository
 
     /**
      * @param EntityManager $em
-     * @param APIGuzzleAdapter $adapter
+     * @param Client $client
      */
-    public function __construct(EntityManager $em, APIGuzzleAdapter $adapter = null)
+    public function __construct(EntityManager $em, Client $client = null)
     {
         $this->em = $em;
-        $this->adapter = $adapter ?: $this->em->getAdapter();
+        $this->client = $client ?: $this->em->getClient();
     }
 
     /**
@@ -58,7 +59,7 @@ abstract class AbstractRepository
      * @param array $postFields An array of request parameters
      * @param array $headers
      *
-     * @return APIResponse
+     * @return ApiResponse
      * @throws NotFoundException
      * @throws UnauthorizedException
      */

@@ -3,7 +3,7 @@
 namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\Uploader;
-use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\ApiResponse;
 
 class UploaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -48,7 +48,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->method('getBaseId')
             ->will($this->returnValue(42));
 
-        $recordResponse = new APIResponse(json_decode(json_encode(array(
+        $recordResponse = new ApiResponse(json_decode(json_encode(array(
             'meta' => array(),
             'response' => array(
                 'entity' => '0',
@@ -56,7 +56,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ),
         ))));
 
-        $quarantineResponse = new APIResponse(json_decode(json_encode(array(
+        $quarantineResponse = new ApiResponse(json_decode(json_encode(array(
             'meta' => array(),
             'response' => array(
                 'entity' => '1',

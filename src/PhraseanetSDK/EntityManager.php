@@ -11,8 +11,10 @@
 
 namespace PhraseanetSDK;
 
+use PhraseanetSDK\Http\ApiClient;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Http\Client;
 use PhraseanetSDK\Orders\OrderRepository;
 use PhraseanetSDK\Search\SearchRepository;
 use Psr\Log\LoggerInterface;
@@ -23,7 +25,7 @@ class EntityManager
     /**
      * @var APIGuzzleAdapter
      */
-    private $adapter;
+    private $client;
 
     /**
      * @var LoggerInterface
@@ -36,14 +38,11 @@ class EntityManager
     private $repositories = array();
 
     /**
-     * @param APIGuzzleAdapter $adapter
+     * @param ApiClient $client
      * @param LoggerInterface $logger
      */
-    public function __construct(
-        APIGuzzleAdapter $adapter,
-        LoggerInterface $logger = null
-    ) {
-        $this->adapter = $adapter;
+    public function __construct(ApiClient $client, LoggerInterface $logger = null) {
+        $this->client = $client;
         $this->logger = $logger ?: new NullLogger();
     }
 
@@ -59,10 +58,19 @@ class EntityManager
      * Return the client attached to this entity manager
      *
      * @return APIGuzzleAdapter
+     * @deprecated This method will be removed in the next major release of the SDK. Use EntityManager::getClient().
      */
     public function getAdapter()
     {
-        return $this->adapter;
+        return $this->getClient();
+    }
+
+    /**
+     * @return ApiClient
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**
@@ -81,11 +89,11 @@ class EntityManager
         $objectName = sprintf('\\PhraseanetSDK\\Repository\\%s', $className);
 
         if ($name == 'search') {
-            return $this->repositories['search'] = new SearchRepository($this, $this->adapter);
+            return $this->repositories['search'] = new SearchRepository($this, $this->client);
         }
 
         if ($name == 'orders') {
-            return $this->repositories['orders'] = new OrderRepository($this, $this->adapter);
+            return $this->repositories['orders'] = new OrderRepository($this, $this->client);
         }
 
         if (!class_exists($objectName)) {

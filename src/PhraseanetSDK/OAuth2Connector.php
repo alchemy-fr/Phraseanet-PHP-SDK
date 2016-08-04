@@ -2,9 +2,9 @@
 
 namespace PhraseanetSDK;
 
-use PhraseanetSDK\Http\GuzzleAdapter;
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\Http\Guzzle\GuzzleClient;
 
 class OAuth2Connector
 {
@@ -17,7 +17,7 @@ class OAuth2Connector
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
     /**
-     * @var GuzzleAdapter
+     * @var GuzzleClient
      */
     private $adapter;
 
@@ -32,11 +32,11 @@ class OAuth2Connector
     private $secret;
 
     /**
-     * @param GuzzleAdapter $adapter
+     * @param GuzzleClient $adapter
      * @param string $clientId
      * @param string $secret
      */
-    public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
+    public function __construct(GuzzleClient $adapter, $clientId, $secret)
     {
         $this->adapter = $adapter;
         $this->clientId = $clientId;
