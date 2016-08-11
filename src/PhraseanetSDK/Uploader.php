@@ -15,21 +15,22 @@ use PhraseanetSDK\Entity\DataboxCollection;
 use PhraseanetSDK\Entity\Quarantine;
 use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Http\ApiClient;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 
 class Uploader
 {
-    /** @var APIGuzzleAdapter */
+    /** @var ApiClient */
     private $adapter;
 
     /** EntityManager */
     private $em;
 
     /**
-     * @param APIGuzzleAdapter $adapter
+     * @param ApiClient $adapter
      * @param EntityManager $em
      */
-    public function __construct(APIGuzzleAdapter $adapter, EntityManager $em)
+    public function __construct(ApiClient $adapter, EntityManager $em)
     {
         $this->adapter = $adapter;
         $this->em = $em;

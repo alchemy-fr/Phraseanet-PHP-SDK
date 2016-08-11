@@ -60,7 +60,7 @@ class ApiClient
     }
 
     /**
-     * @return string
+     * @return Client
      */
     public function getClient()
     {

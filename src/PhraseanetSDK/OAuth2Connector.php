@@ -4,10 +4,12 @@ namespace PhraseanetSDK;
 
 use PhraseanetSDK\Exception\AuthenticationException;
 use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\Http\ApiClient;
 use PhraseanetSDK\Http\Guzzle\GuzzleClient;
 
 class OAuth2Connector
 {
+
     const TOKEN_ENDPOINT = '/api/oauthv2/token';
     const AUTH_ENDPOINT = '/api/oauthv2/authorize';
 
@@ -17,9 +19,9 @@ class OAuth2Connector
     const GRANT_TYPE_AUTHORIZATION = 'authorization_code';
 
     /**
-     * @var GuzzleClient
+     * @var ApiClient
      */
-    private $adapter;
+    private $client;
 
     /**
      * @var string
@@ -32,20 +34,20 @@ class OAuth2Connector
     private $secret;
 
     /**
-     * @param GuzzleClient $adapter
+     * @param ApiClient $adapter
      * @param string $clientId
      * @param string $secret
      */
-    public function __construct(GuzzleClient $adapter, $clientId, $secret)
+    public function __construct(ApiClient $adapter, $clientId, $secret)
     {
-        $this->adapter = $adapter;
+        $this->client = $adapter;
         $this->clientId = $clientId;
         $this->secret = $secret;
     }
 
     private function getUrl()
     {
-        $baseUrl = $this->adapter->getBaseUrl();
+        $baseUrl = $this->client->getClient()->getEndpoint();
 
         return substr($baseUrl, 0, strlen($baseUrl) - 8);
     }
@@ -94,7 +96,7 @@ class OAuth2Connector
         );
 
         try {
-            $responseContent = $this->adapter->call(
+            $responseContent = $this->client->call(
                 'POST',
                 $this->getUrl() . static::TOKEN_ENDPOINT,
                 array(),

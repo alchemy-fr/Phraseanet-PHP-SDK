@@ -12,38 +12,40 @@
 namespace PhraseanetSDK\Http;
 
 use GuzzleHttp\Client;
+use PhraseanetSDK\Http\Guzzle\GuzzleClient;
+use PhraseanetSDK\Http\GuzzleHttp\GuzzleHttpClient;
 
 class ClientFactory
 {
 
-    public function createClient()
+    public function createClient(Endpoint $endpoint)
     {
         if (interface_exists('GuzzleHttp\ClientInterface')) {
-            return $this->createGuzzleClient();
+            return $this->createGuzzleClient($endpoint);
         }
 
         if (interface_exists('Guzzle\Http\ClientInterface')) {
-            return $this->createLegacyGuzzleClient();
+            return $this->createLegacyGuzzleClient($endpoint);
         }
 
         throw new \RuntimeException('No HTTP adapter is available.');
     }
 
     /**
-     * @return \GuzzleHttp\ClientInterface|Client
+     * @param Endpoint $endpoint
+     * @return Client|\GuzzleHttp\ClientInterface
      */
-    private function createGuzzleClient()
+    private function createGuzzleClient(Endpoint $endpoint)
     {
-        $client = new Client([]);
-
-        return new
+        return GuzzleClient::create($endpoint);
     }
 
     /**
+     * @param $endpoint
      * @return \Guzzle\Http\Client|Client
      */
-    private function createLegacyGuzzleClient()
+    private function createLegacyGuzzleClient(Endpoint $endpoint)
     {
-
+        return GuzzleHttpClient::create($endpoint);
     }
 }

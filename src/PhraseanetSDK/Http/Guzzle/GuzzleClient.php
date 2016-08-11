@@ -23,54 +23,30 @@ use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Http\Client;
+use PhraseanetSDK\Http\Endpoint;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GuzzleClient implements Client
 {
     /**
-     * @param string $endpoint
-     * @return string
-     */
-    private static function applyEndpointVersion($endpoint)
-    {
-        $versionMountPoint = ApplicationInterface::API_MOUNT_POINT;
-
-        // test if url already end with API_MOUNT_POINT
-        $mountPoint = substr(trim($endpoint, '/'), -strlen($versionMountPoint));
-
-        if ($versionMountPoint !== $mountPoint) {
-            $endpoint = sprintf('%s%s/', trim($endpoint, '/'), $versionMountPoint);
-
-            return $endpoint;
-        }
-
-        return $endpoint;
-    }
-
-    /**
      * Creates a new instance of GuzzleAdapter
      *
-     * @param string $endpoint
+     * @param Endpoint $endpoint
      * @param EventSubscriberInterface[] $plugins
      * @return static
      */
-    public static function create($endpoint, array $plugins = array()) {
+    public static function create(Endpoint $endpoint, array $plugins = array())
+    {
+        $userAgent = sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION);
+        $guzzle = new Guzzle($endpoint->getUrl());
 
-        if (!is_string($endpoint)) {
-            throw new InvalidArgumentException('API url endpoint must be a valid url');
-        }
-
-        $guzzle = new Guzzle(self::applyEndpointVersion($endpoint));
-
-        $guzzle->setUserAgent(
-            sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION)
-        );
+        $guzzle->setUserAgent($userAgent);
 
         foreach ($plugins as $plugin) {
             $guzzle->addSubscriber($plugin);
         }
 
-        return new static($guzzle);
+        return new static($guzzle, $endpoint);
     }
 
     /**
@@ -79,16 +55,29 @@ class GuzzleClient implements Client
     private $guzzle;
 
     /**
-     * @param ClientInterface $guzzle
+     * @var Endpoint
      */
-    public function __construct(ClientInterface $guzzle)
+    private $endpoint;
+
+    /**
+     * @param ClientInterface $guzzle
+     * @param Endpoint $endpoint
+     */
+    public function __construct(ClientInterface $guzzle, Endpoint $endpoint)
     {
         $this->guzzle = $guzzle;
+        $this->endpoint = $endpoint;
     }
 
     /**
-     * {@inheritdoc}
-     *
+     * @return Endpoint
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
      * @return ClientInterface
      */
     public function getGuzzle()

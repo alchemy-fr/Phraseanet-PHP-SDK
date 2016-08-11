@@ -13,6 +13,10 @@ namespace PhraseanetSDK\Http;
 
 interface Client 
 {
+    /**
+     * @return Endpoint
+     */
+    public function getEndpoint();
 
     /**
      * @param string $method
