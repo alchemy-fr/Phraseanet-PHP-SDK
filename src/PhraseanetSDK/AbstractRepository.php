@@ -16,6 +16,7 @@ use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Http\ApiClient;
 use PhraseanetSDK\Http\ApiResponse;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Http\Client;
@@ -25,29 +26,31 @@ abstract class AbstractRepository
     /**
      * @var EntityManager
      */
-    protected $em;
+    private $entityManager;
 
     /**
-     * @var APIGuzzleAdapter
+     * @param EntityManager $entityManager
      */
-    private $adapter;
-
-    /**
-     * @param EntityManager $em
-     * @param Client $client
-     */
-    public function __construct(EntityManager $em, Client $client = null)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
-        $this->client = $client ?: $this->em->getClient();
+        $this->entityManager = $entityManager;
+        $this->client = $this->entityManager->getClient();
     }
 
     /**
-     * @return APIGuzzleAdapter
+     * @return EntityManager
      */
-    private function getAdapter()
+    protected function getEntityManager()
     {
-        return $this->adapter;
+        return $this->entityManager;
+    }
+
+    /**
+     * @return ApiClient
+     */
+    protected function getClient()
+    {
+        return $this->entityManager->getClient();
     }
 
     /**
@@ -66,7 +69,7 @@ abstract class AbstractRepository
     protected function query($method, $path, $query = array(), $postFields = array(), array $headers = array())
     {
         try {
-            $response = $this->getAdapter()->call($method, $path, $query, $postFields, array(), $headers);
+            $response = $this->getClient()->call($method, $path, $query, $postFields, array(), $headers);
         } catch (BadResponseException $e) {
             $statusCode = $e->getStatusCode();
             switch ($statusCode) {
@@ -77,7 +80,7 @@ abstract class AbstractRepository
                     throw new UnauthorizedException(sprintf('Access to the following resource %s is forbidden', $path));
                     break;
                 default:
-                    throw new RuntimeException(sprintf('Something went wrong "%s"', $e->getMessage()));
+                    throw new RuntimeException(sprintf('Something went wrong "%s (%s)"', $e->getMessage(), $e->get));
             }
         }
 

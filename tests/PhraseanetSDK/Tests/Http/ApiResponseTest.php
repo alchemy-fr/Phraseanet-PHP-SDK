@@ -4,7 +4,7 @@ namespace PhraseanetSDK\Tests\Http;
 
 use PhraseanetSDK\Http\ApiResponse;
 
-class APIResponseTest extends \PHPUnit_Framework_TestCase
+class ApiResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \PhraseanetSDK\Exception\InvalidArgumentException

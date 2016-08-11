@@ -3,29 +3,18 @@
 namespace PhraseanetSDK\Tests\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Mock\MockPlugin;
-use PhraseanetSDK\Http\APIGuzzleAdapter;
-use PhraseanetSDK\Http\Guzzle\GuzzleClient;
+use PhraseanetSDK\Http\ApiClient;
+use PhraseanetSDK\Http\ApiResponse;
 
 abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getClient($response, $code = 200, $throwCurlException = false)
     {
-        $plugin = new MockPlugin();
-        $plugin->addResponse(new Response($code, null, $response));
+        $client = $this->getMockBuilder(ApiClient::class)->getMock();
 
-        $clientHttp = new GuzzleClient('http://my.domain.tld/api/v1');
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        if ($throwCurlException) {
-            $clientHttp->getEventDispatcher()->addListener('request.before_send', function (\Guzzle\Common\Event $event) {
-                    throw new \Guzzle\Http\Exception\CurlException();
-                });
-        }
-
-        return new APIGuzzleAdapter(new GuzzleClient($clientHttp));
+        $client->expects($this->once())
+            ->method('call')
+            ->willReturn(new ApiResponse(json_decode($response)));
     }
 
     protected function getSampleResponse($filename)

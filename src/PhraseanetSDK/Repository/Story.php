@@ -36,7 +36,7 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "story" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\Story::fromValue($this->em, $response->getProperty('story'));
+        return \PhraseanetSDK\Entity\Story::fromValue($this->entityManager, $response->getProperty('story'));
     }
 
     /**
@@ -60,7 +60,7 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "results" property in response content');
         }
 
-        return Query::fromValue($this->em, $response->getResult())->getResults()->getStories();
+        return Query::fromValue($this->entityManager, $response->getResult())->getResults()->getStories();
     }
 
     /**
@@ -81,6 +81,6 @@ class Story extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return Query::fromValue($this->em, $response->getResult());
+        return Query::fromValue($this->entityManager, $response->getResult());
     }
 }
