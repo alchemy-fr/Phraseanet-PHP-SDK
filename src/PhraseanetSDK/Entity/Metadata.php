@@ -19,7 +19,7 @@ class Metadata
         $metadata = array();
 
         foreach ($values as $value) {
-            $metadata[$value->meta_id] = self::fromValue($value);
+            $metadata[$value->name] = self::fromValue($value);
         }
 
         return $metadata;
