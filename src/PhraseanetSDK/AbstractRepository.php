@@ -14,6 +14,7 @@ namespace PhraseanetSDK;
 use PhraseanetSDK\EntityManager;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\TokenExpiredException;
 use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Http\APIResponse;
@@ -74,6 +75,9 @@ abstract class AbstractRepository
                     break;
                 case 401:
                     throw new UnauthorizedException(sprintf('Access to the following resource %s is forbidden', $path));
+                    break;
+                case 400:
+                    throw new TokenExpiredException('Token is expired or email validation is already done');
                     break;
                 default:
                     throw new RuntimeException(sprintf('Something went wrong "%s"', $e->getMessage()));
