@@ -1,4 +1,4 @@
-# Phraseanet API PHP-SDK
+# Phraseanet API PHP-SDK  (Updating guzzle to latest version)
 
 [![License](https://img.shields.io/packagist/l/phraseanet/php-sdk.svg?style=flat-square)](https://github.com/alchemy-fr/Phraseanet-PHP-SDK/LICENSE)
 [![Packagist](https://img.shields.io/packagist/v/phraseanet/php-sdk.svg?style=flat-square)](https://packagist.org/packages/phraseanet/php-sdk)
