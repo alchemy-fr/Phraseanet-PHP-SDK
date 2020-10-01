@@ -10,9 +10,9 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
 {
     public function testSave()
     {
-        $history = $this->getMock('Guzzle\Plugin\History\HistoryPlugin');
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
-        $extractor = $this->getMock('PhraseanetSDK\Recorder\RequestExtractor');
+        $history = $this->createMock('Guzzle\Plugin\History\HistoryPlugin');
+        $storage = $this->createMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+        $extractor = $this->createMock('PhraseanetSDK\Recorder\RequestExtractor');
         $limit = 3;
 
         $request1 = new Request('GET', '/path1');
@@ -52,9 +52,9 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
 
     public function testWithFilter()
     {
-        $history = $this->getMock('Guzzle\Plugin\History\HistoryPlugin');
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
-        $extractor = $this->getMock('PhraseanetSDK\Recorder\RequestExtractor');
+        $history = $this->createMock('Guzzle\Plugin\History\HistoryPlugin');
+        $storage = $this->createMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+        $extractor = $this->createMock('PhraseanetSDK\Recorder\RequestExtractor');
 
         $request1 = new Request('GET', '/path1');
         $request2 = new Request('GET', '/path2');

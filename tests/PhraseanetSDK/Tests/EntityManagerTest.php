@@ -48,6 +48,6 @@ class EntityManagerTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
     }
 }

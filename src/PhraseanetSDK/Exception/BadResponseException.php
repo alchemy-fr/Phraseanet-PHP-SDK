@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponseException;
+use GuzzleHttp\Exception\BadResponseException as GuzzleBadResponseException;
 
 class BadResponseException extends \Exception implements ExceptionInterface
 {

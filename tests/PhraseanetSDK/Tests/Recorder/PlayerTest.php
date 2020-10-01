@@ -10,8 +10,8 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+            ->createMock();
+        $storage = $this->createMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
 
         $serializedRequest = array(
             'query'       => array('query' => 'value'),
@@ -25,7 +25,7 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
             ->method('fetch')
             ->will($this->returnValue($storageData));
 
-        $output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->createMock('Symfony\Component\Console\Output\OutputInterface');
 
         $player = new Player($adapter, $storage);
         $player->play($output);
