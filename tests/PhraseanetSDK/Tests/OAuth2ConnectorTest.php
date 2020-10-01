@@ -17,7 +17,7 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
         $adapter->expects($this->any())
             ->method('getBaseUrl')
             ->will($this->returnValue($baseUrl));
@@ -58,7 +58,7 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
         $adapter->expects($this->any())
             ->method('getBaseUrl')
             ->will($this->returnValue($baseUrl));
@@ -89,14 +89,14 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
         $adapter->expects($this->any())
             ->method('getBaseUrl')
             ->will($this->returnValue($baseUrl));
 
         $badResponse = $this->getMockBuilder('PhraseanetSDK\Exception\BadResponseException')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
         $badResponse->expects($this->once())
             ->method('getResponseBody')
             ->will($this->returnValue('{"error": "expired token"}'));

@@ -14,7 +14,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $adapter->expects($this->once())
             ->method('call')
@@ -35,7 +35,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $adapter->expects($this->once())
             ->method('call')
@@ -80,7 +80,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $adapter->expects($this->once())
             ->method('call')
@@ -109,7 +109,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $adapter->expects($this->once())
             ->method('call')
@@ -135,7 +135,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $adapter->expects($this->once())
             ->method('call')

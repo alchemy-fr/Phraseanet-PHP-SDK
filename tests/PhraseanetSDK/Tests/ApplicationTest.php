@@ -55,7 +55,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $application = new Application($adapter, '12345', '54321');
         $connector = $application->getOauth2Connector();
@@ -69,7 +69,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $token1 = 'vpJPb2Wh';
         $token2 = 'E8xuvVVq';
@@ -92,7 +92,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $token1 = 'eijbOAMd';
         $token2 = 'loXZ8qa8';
@@ -115,7 +115,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $token1 = 'rfM7YHPq';
         $token2 = '3PubP90u';
@@ -142,7 +142,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $application = new Application($adapter, 'JLZqzMDG', '36QCU07C');
 

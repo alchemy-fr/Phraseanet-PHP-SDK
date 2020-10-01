@@ -130,7 +130,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app['recorder.enabled'] = true;
         $app['phraseanet-sdk.recorder'] = $this->getMockBuilder('PhraseanetSDK\Recorder\Recorder')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
         $app['phraseanet-sdk.recorder']->expects($this->once())
             ->method('save');
 
@@ -138,11 +138,11 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $response = $this->getMockBuilder('Symfony\Component\HttpFoundation\Response')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $app->terminate($request, $response);
     }
@@ -266,10 +266,10 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testRecordConfigIsPassedToFactory()
     {
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+        $storage = $this->createMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
         $storageFactory = $this->getMockBuilder('PhraseanetSDK\Recorder\Storage\StorageFactory')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $storageFactory->expects($this->once())
             ->method('create')
@@ -289,7 +289,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app['phraseanet-sdk.recorder.storage-factory'] = $storageFactory;
         $app['phraseanet-sdk.guzzle.history-plugin'] = $this->getMockBuilder('Guzzle\Plugin\History\HistoryPlugin')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->createMock();
 
         $recorder = $app['phraseanet-sdk.recorder'];
         $this->assertEquals($storage, $recorder->getStorage());
