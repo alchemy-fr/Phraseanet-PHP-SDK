@@ -4,6 +4,12 @@ namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\Uploader;
 use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Repository\RepositoryInterface;
+use PhraseanetSDK\Entity\DataboxCollection;
+use PhraseanetSDK\Entity\Record;
+use PhraseanetSDK\Entity\Quarantine;
+use PhraseanetSDK\EntityManager;
 
 class UploaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,13 +18,13 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpload($file, $behavior, $coll, $status, $result, $expected)
     {
-        $guzzle = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $guzzle = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
 
-        $em = $this->getMockBuilder('PhraseanetSDK\EntityManager')
+        $em = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
 
         $repo = $this->createMock('PhraseanetSDK\Repository\RepositoryInterface', array('findById'));
 
@@ -35,15 +41,17 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->with('POST', 'v1/records/add/', array(), $this->isType('array'), array('file' => $file))
             ->will($this->returnValue($result));
 
+        /** @var APIGuzzleAdapter $guzzle */
+        /** @var EntityManager $em */
         $loader = new Uploader($guzzle, $em);
         $this->assertSame($expected, $loader->upload($file, $coll, $behavior, $status));
     }
 
     public function provideUploadParameters()
     {
-        $coll = $this->getMockBuilder('PhraseanetSDK\Entity\DataboxCollection')
+        $coll = $this->getMockBuilder(DataboxCollection::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
         $coll->expects($this->any())
             ->method('getBaseId')
             ->will($this->returnValue(42));
@@ -64,13 +72,13 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ),
         ))));
 
-        $record = $this->getMockBuilder('PhraseanetSDK\Entity\Record')
+        $record = $this->getMockBuilder(Record::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
 
-        $quarantine = $this->getMockBuilder('PhraseanetSDK\Entity\Quarantine')
+        $quarantine = $this->getMockBuilder(Quarantine::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
 
         return array(
             array(__FILE__, 0, 42, '010101110001000', $recordResponse, $record),

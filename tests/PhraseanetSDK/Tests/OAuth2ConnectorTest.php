@@ -4,6 +4,8 @@ namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\OAuth2Connector;
 use PhraseanetSDK\Exception\AuthenticationException;
+use PhraseanetSDK\Http\GuzzleAdapter;
+use PhraseanetSDK\Exception\BadResponseException;
 
 class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,13 +17,14 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
         $clientId = 'api-client-id';
         $secret = 'api-client-secret';
 
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
         $adapter->expects($this->any())
             ->method('getBaseUrl')
             ->will($this->returnValue($baseUrl));
 
+        /** @var GuzzleAdapter $adapter */
         $connector = new OAuth2Connector($adapter, $clientId, $secret);
         $url = $connector->getAuthorizationUrl($redirectUri, $parameters, $scopes);
         $this->assertSame($expectedUrl, $url);
@@ -56,9 +59,9 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
         $baseUrl = 'http://phraseanet.com/api/v1/';
         $accessToken = md5(microtime(true)).'access';
 
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
         $adapter->expects($this->any())
             ->method('getBaseUrl')
             ->will($this->returnValue($baseUrl));
@@ -74,6 +77,7 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
             ))
             ->will($this->returnValue(json_encode(array('access_token' => $accessToken))));
 
+        /** @var GuzzleAdapter $adapter */
         $connector = new OAuth2Connector($adapter, $clientId, $secret);
         $this->assertEquals($accessToken, $connector->retrieveAccessToken($code, $redirectUri));
     }
@@ -87,20 +91,21 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
         $baseUrl = 'http://phraseanet.com/api/v1/';
         $accessToken = md5(microtime(true)).'access';
 
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
         $adapter->expects($this->any())
             ->method('getBaseUrl')
             ->will($this->returnValue($baseUrl));
 
-        $badResponse = $this->getMockBuilder('PhraseanetSDK\Exception\BadResponseException')
+        $badResponse = $this->getMockBuilder(BadResponseException::class)
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
         $badResponse->expects($this->once())
             ->method('getResponseBody')
             ->will($this->returnValue('{"error": "expired token"}'));
 
+        /** @var BadResponseException $badResponse */
         $adapter->expects($this->once())
             ->method('call')
             ->with('POST', 'http://phraseanet.com/api/oauthv2/token', array(), array(
@@ -112,11 +117,13 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
             ))
             ->will($this->throwException($badResponse));
 
+        /** @var GuzzleAdapter $adapter */
         $connector = new OAuth2Connector($adapter, $clientId, $secret);
         try {
             $this->assertEquals($accessToken, $connector->retrieveAccessToken($code, $redirectUri));
             $this->fail('An exception should have been raised');
-        } catch (AuthenticationException $e) {
+        }
+        catch (AuthenticationException $e) {
             $this->assertEquals('expired token', $e->getMessage());
         }
     }

@@ -24,17 +24,14 @@ class BackendCacheFactory
 {
     public function create($type, $host = null, $port = null)
     {
-        $host = $host ? $host : '127.0.0.1';
-        $port = $port ? (int) $port : 11211;
 
         switch (strtolower($type)) {
             case 'array':
                 $cache = $this->createArray();
                 break;
-            case 'memcache':
-                $cache = $this->createMemcache($host, $port);
-                break;
             case 'memcached':
+                $host = $host ? $host : '127.0.0.1';
+                $port = $port ? (int) $port : 11211;
                 $cache = $this->createMemcached($host, $port);
                 break;
             default:
@@ -52,27 +49,6 @@ class BackendCacheFactory
         return new ArrayCache();
     }
 
-    private function createMemcache($host, $port)
-    {
-        $memcache = new \Memcache();
-        $memcache->addServer($host, $port);
-
-        $key = sprintf("%s:%s", $host, $port);
-        $stats = @$memcache->getExtendedStats();
-
-        if (!isset($stats[$key]) || false === $stats[$key]) {
-            throw new RuntimeException(sprintf(
-                "Memcache instance with host '%s' and port '%s' is not reachable",
-                $host,
-                $port
-            ));
-        }
-
-        $cache = new MemcacheCache();
-        $cache->setMemcache($memcache);
-
-        return $cache;
-    }
 
     private function createMemcached($host, $port)
     {

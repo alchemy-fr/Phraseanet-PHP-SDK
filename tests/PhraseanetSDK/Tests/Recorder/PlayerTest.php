@@ -2,16 +2,20 @@
 
 namespace PhraseanetSDK\Tests\Recorder;
 
+use PHPUnit_Framework_TestCase;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Recorder\Player;
+use PhraseanetSDK\Recorder\Storage\StorageInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class PlayerTest extends \PHPUnit_Framework_TestCase
+class PlayerTest extends PHPUnit_Framework_TestCase
 {
     public function testPlay()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $adapter = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
-            ->createMock();
-        $storage = $this->createMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+            ->getMock();
+        $storage = $this->createMock(StorageInterface::class);
 
         $serializedRequest = array(
             'query'       => array('query' => 'value'),
@@ -25,9 +29,14 @@ class PlayerTest extends \PHPUnit_Framework_TestCase
             ->method('fetch')
             ->will($this->returnValue($storageData));
 
-        $output = $this->createMock('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->createMock(OutputInterface::class);
 
+        /** @var APIGuzzleAdapter $adapter
+         *  @var StorageInterface $storage
+         */
         $player = new Player($adapter, $storage);
+
+        /** @var OutputInterface $output */
         $player->play($output);
     }
 }
