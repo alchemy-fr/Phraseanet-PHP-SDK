@@ -162,9 +162,12 @@ class GuzzleAdapter implements GuzzleAdapterInterface
 
             // postFields
             if(count($postFields) > 0) {
+                if($method !== 'POST') {
+                    throw new InvalidArgumentException('postFields are only allowed with "POST" method');
+                }
                 if(count($files) > 0) {
                     // this will not happen while "files" is not implemented
-                    throw new \GuzzleHttp\Exception\InvalidArgumentException('request can\'t contain both form_params (from "postFields") and multipart (from "files")' );
+                    throw new \GuzzleHttp\Exception\InvalidArgumentException('request can\'t contain both postFields and files' );
                 }
                 $options[RequestOptions::FORM_PARAMS] = $postFields;
             }

@@ -2,31 +2,62 @@
 
 namespace PhraseanetSDK\Tests\Repository;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Entity\Result;
-use PhraseanetSDK\Http\GuzzleAdapter;
+use Exception;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use PhraseanetSDK\Entity\Basket;
+use PhraseanetSDK\Entity\BasketValidationChoice;
+use PhraseanetSDK\Entity\BasketValidationParticipant;
+use PhraseanetSDK\Entity\Databox;
+use PhraseanetSDK\Entity\DataboxCollection;
+use PhraseanetSDK\Entity\DataboxDocumentStructure;
+use PhraseanetSDK\Entity\DataboxStatus;
+use PhraseanetSDK\Entity\DataboxTermsOfUse;
+use PhraseanetSDK\Entity\Feed;
+use PhraseanetSDK\Entity\FeedEntry;
+use PhraseanetSDK\Entity\FeedEntryItem;
+use PhraseanetSDK\Entity\Metadata;
+use PhraseanetSDK\Entity\Permalink;
+use PhraseanetSDK\Entity\Quarantine;
+use PhraseanetSDK\Entity\QuarantineSession;
+use PhraseanetSDK\Entity\Query;
+use PhraseanetSDK\Entity\QuerySuggestion;
+use PhraseanetSDK\Entity\Record;
+use PhraseanetSDK\Entity\RecordCaption;
+use PhraseanetSDK\Entity\RecordStatus;
+use PhraseanetSDK\Entity\Status;
+use PhraseanetSDK\Entity\Story;
+use PhraseanetSDK\Entity\Subdef;
+use PhraseanetSDK\Entity\Technical;
+use PhraseanetSDK\Entity\User;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
-use Guzzle\Plugin\Mock\MockPlugin;
-use Guzzle\Http\Message\Response;
-use Guzzle\Http\Client as GuzzleClient;
+use PhraseanetSDK\Http\GuzzleAdapter;
+
 
 abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getClient($response, $code = 200, $throwCurlException = false)
     {
-        $plugin = new MockPlugin();
-        $plugin->addResponse(new Response($code, null, $response));
-
-        $clientHttp = new GuzzleClient('http://my.domain.tld/api/v1');
-        $clientHttp->getEventDispatcher()->addSubscriber($plugin);
-
-        if ($throwCurlException) {
-            $clientHttp->getEventDispatcher()->addListener('request.before_send', function (\Guzzle\Common\Event $event) {
-                    throw new \Guzzle\Http\Exception\CurlException();
-                });
+        if($throwCurlException) {
+            $mock = new MockHandler([
+                new TestException()
+            ]);
+        }
+        else {
+            $mock = new MockHandler([
+                new Response($code, [], $response)
+            ]);
         }
 
-        return new APIGuzzleAdapter(new GuzzleAdapter($clientHttp));
+        $handlerStack = HandlerStack::create($mock);
+        $client = new GuzzleClient(['handler' => $handlerStack]);
+
+        return new APIGuzzleAdapter(new GuzzleAdapter($client));
     }
 
     protected function getSampleResponse($filename)
@@ -38,8 +69,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkBasket($basket)
     {
-        $this->assertTrue($basket instanceof \PhraseanetSDK\Entity\Basket);
-        /* @var $basket \PhraseanetSDK\Entity\Basket */
+        $this->assertTrue($basket instanceof Basket);
+        /* @var $basket Basket */
         $this->assertNotNull($basket->getName());
         $this->assertInternalType('string', $basket->getName());
         $this->assertNotNull($basket->isUnread());
@@ -79,8 +110,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkValidationChoice($choice)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\BasketValidationChoice', $choice);
-        /* @var $choice \PhraseanetSDK\Entity\BasketValidationChoice */
+        $this->assertInstanceOf(BasketValidationChoice::class, $choice);
+        /* @var $choice BasketValidationChoice */
 
         if (null !== $agreement = $choice->getAgreement()) {
             $this->assertInternalType('boolean', $agreement);
@@ -96,8 +127,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkDataboxCollection($collection)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\DataboxCollection', $collection);
-        /* @var $collection \PhraseanetSDK\Entity\DataboxCollection */
+        $this->assertInstanceOf(DataboxCollection::class, $collection);
+        /* @var $collection DataboxCollection */
         $this->assertNotNull($collection->getBaseId());
         $this->assertInternalType('integer', $collection->getBaseId());
         $this->assertNotNull($collection->getCollectionId());
@@ -112,8 +143,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     public function checkDataboxStructure($metadata)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\DataboxDocumentStructure', $metadata);
-        /* @var $metadata \PhraseanetSDK\Entity\DataboxDocumentStructure */
+        $this->assertInstanceOf(DataboxDocumentStructure::class, $metadata);
+        /* @var $metadata DataboxDocumentStructure */
         $this->assertNotNull($metadata->getId());
         $this->assertInternalType('integer', $metadata->getId());
         $this->assertNotNull($metadata->getNamespace());
@@ -144,8 +175,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     public function checkDataBoxStatus($status)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\DataboxStatus', $status);
-        /* @var $status \PhraseanetSDK\Entity\DataboxStatus */
+        $this->assertInstanceOf(DataboxStatus::class, $status);
+        /* @var $status DataboxStatus */
         $this->assertNotNull($status->getBit());
         $this->assertInternalType('integer', $status->getBit());
         $this->assertNotNull($status->getLabelOn());
@@ -166,8 +197,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkParticipant($participant)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\BasketValidationParticipant', $participant);
-        /* @var $participant \PhraseanetSDK\Entity\BasketValidationParticipant */
+        $this->assertInstanceOf(BasketValidationParticipant::class, $participant);
+        /* @var $participant BasketValidationParticipant */
         $this->assertInternalType('boolean', $participant->isConfirmed());
         $this->assertNotNull($participant->canAgree());
         $this->assertInternalType('boolean', $participant->canAgree());
@@ -179,8 +210,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkRecordStatus($status)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\RecordStatus', $status);
-        /* @var $status \PhraseanetSDK\Entity\Status */
+        $this->assertInstanceOf(RecordStatus::class, $status);
+        /* @var $status Status */
         $this->assertNotNull($status->getBit());
         $this->assertInternalType('integer', $status->getBit());
         $this->assertNotNull($status->getState());
@@ -189,8 +220,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkQueryObject($query)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\Query', $query);
-        /* @var $query \PhraseanetSDK\Entity\Query */
+        $this->assertInstanceOf(Query::class, $query);
+        /* @var $query Query */
         $this->assertNotNull($query->getOffsetStart());
         $this->assertInternalType('integer', $query->getOffsetStart());
         $this->assertNotNull($query->getPerPage());
@@ -226,8 +257,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkStory($story)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\Story', $story);
-        /* @var $story \PhraseanetSDK\Entity\Story */
+        $this->assertInstanceOf(Story::class, $story);
+        /* @var $story Story */
         $this->assertNotNull($story->getId());
         $this->assertInternalType('string', $story->getId());
         $this->assertNotNull($story->getStoryId());
@@ -252,8 +283,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkQuerySuggestions($suggestion)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\QuerySuggestion', $suggestion);
-        /* @var $suggestion \PhraseanetSDK\Entity\QuerySuggestion */
+        $this->assertInstanceOf(QuerySuggestion::class, $suggestion);
+        /* @var $suggestion QuerySuggestion */
         $this->assertNotNull($suggestion->getValue());
         $this->assertInternalType('string', $suggestion->getValue());
         $this->assertNotNull($suggestion->isCurrent());
@@ -264,8 +295,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkDatabox($databox)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\Databox', $databox);
-        /* @var $databox \PhraseanetSDK\Entity\Databox */
+        $this->assertInstanceOf(Databox::class, $databox);
+        /* @var $databox Databox */
         $this->assertNotNull($databox->getId());
         $this->assertNotNull($databox->getName());
         $this->assertNotNull($databox->getVersion());
@@ -278,8 +309,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkTechnicalInformation($technical)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\Technical', $technical);
-        /* @var $technical \PhraseanetSDK\Entity\Technical */
+        $this->assertInstanceOf(Technical::class , $technical);
+        /* @var $technical Technical */
 
         $this->assertNotNull($technical->getName());
         $this->assertNotNull($technical->getValue());
@@ -287,8 +318,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkRecord($record)
     {
-        $this->assertTrue($record instanceof \PhraseanetSDK\Entity\Record);
-        /* @var $record \PhraseanetSDK\Entity\Record */
+        $this->assertTrue($record instanceof Record);
+        /* @var $record Record */
         $this->assertNotNull($record->getId());
         $this->assertInternalType('string', $record->getId());
         $this->assertNotNull($record->getRecordId());
@@ -327,8 +358,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkFeed($feed)
     {
-        $this->assertTrue($feed instanceof \PhraseanetSDK\Entity\Feed);
-        /* @var $feed \PhraseanetSDK\Entity\Feed */
+        $this->assertTrue($feed instanceof Feed);
+        /* @var $feed Feed */
         $this->assertNotNull($feed->getId());
         $this->assertInternalType('integer', $feed->getId());
         $this->assertNotNull($feed->getTitle());
@@ -353,8 +384,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkTermsOfUse($cgus)
     {
-        $this->assertTrue($cgus instanceof \PhraseanetSDK\Entity\DataboxTermsOfUse);
-        /* @var $metadata \PhraseanetSDK\Entity\Metadata */
+        $this->assertTrue($cgus instanceof DataboxTermsOfUse);
+        /* @var $metadata Metadata */
         $this->assertNotNull($cgus->getLocale());
         $this->assertInternalType('string', $cgus->getLocale());
         $this->assertNotNull($cgus->getTerms());
@@ -363,8 +394,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkMetadata($metadata)
     {
-        $this->assertTrue($metadata instanceof \PhraseanetSDK\Entity\Metadata);
-        /* @var $metadata \PhraseanetSDK\Entity\Metadata */
+        $this->assertTrue($metadata instanceof Metadata);
+        /* @var $metadata Metadata */
         $this->assertNotNull($metadata->getId());
         $this->assertInternalType('integer', $metadata->getId());
         $this->assertNotNull($metadata->getMetaStructureId());
@@ -377,8 +408,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkPermalink($permalink)
     {
-        $this->assertTrue($permalink instanceof \PhraseanetSDK\Entity\Permalink);
-        /* @var $permalink \PhraseanetSDK\Entity\Permalink */
+        $this->assertTrue($permalink instanceof Permalink);
+        /* @var $permalink Permalink */
         $this->assertNotNull($permalink->getId());
         $this->assertInternalType('integer', $permalink->getId());
         $this->assertNotNull($permalink->isActivated());
@@ -400,8 +431,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         if (null === $subdef) {
             return;
         }
-        $this->assertTrue($subdef instanceof \PhraseanetSDK\Entity\Subdef);
-        /* @var $subdef \PhraseanetSDK\Entity\Subdef */
+        $this->assertTrue($subdef instanceof Subdef);
+        /* @var $subdef Subdef */
         $this->assertNotNull($subdef->getPlayerType());
         $this->assertInternalType('string', $subdef->getPlayerType());
         $this->assertNotNull($subdef->getMimeType());
@@ -420,8 +451,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkQuarantine($quarantine)
     {
-        $this->assertTrue($quarantine instanceof \PhraseanetSDK\Entity\Quarantine);
-        /* @var $quarantine \PhraseanetSDK\Entity\Quarantine */
+        $this->assertTrue($quarantine instanceof Quarantine);
+        /* @var $quarantine Quarantine */
         $this->assertNotNull($quarantine->getId());
         $this->assertInternalType('integer', $quarantine->getId());
         $this->assertNotNull($quarantine->getBaseId());
@@ -448,8 +479,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkFeedEntry($entry)
     {
-        $this->assertTrue($entry instanceof \PhraseanetSDK\Entity\FeedEntry);
-        /* @var $entry \PhraseanetSDK\Entity\FeedEntry */
+        $this->assertTrue($entry instanceof FeedEntry);
+        /* @var $entry FeedEntry */
         $this->assertNotNull($entry->getId());
         $this->assertInternalType('integer', $entry->getId());
         $this->assertNotNull($entry->getFeedId());
@@ -476,8 +507,8 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkFeedEntryItem($item)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\FeedEntryItem', $item);
-        /* @var $item \PhraseanetSDK\Entity\FeedEntryItem */
+        $this->assertInstanceOf(FeedEntryItem::class, $item);
+        /* @var $item FeedEntryItem */
         $this->assertNotNull($item->getId());
         $this->assertInternalType('integer', $item->getId());
         $this->assertNotNull($record = $item->getRecord());
@@ -486,7 +517,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkQuarantineSession($session)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\QuarantineSession', $session);
+        $this->assertInstanceOf(QuarantineSession::class, $session);
         $this->assertNotNull($session->getId());
         $this->assertInternalType('integer', $session->getId());
         $this->assertNotNull($session->getUser());
@@ -495,7 +526,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkRecordCaption($caption)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\RecordCaption', $caption);
+        $this->assertInstanceOf(RecordCaption::class, $caption);
         $this->assertNotNull($caption->getMetaStructureId());
         $this->assertInternalType('integer', $caption->getMetaStructureId());
         $this->assertNotNull($caption->getName());
@@ -506,7 +537,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function checkUser($user)
     {
-        $this->assertInstanceOf('\PhraseanetSDK\Entity\User', $user);
+        $this->assertInstanceOf(User::class, $user);
         $this->assertNotNull($user->getEmail());
         $this->assertNotNull($user->getLogin());
     }
@@ -518,6 +549,10 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 
     protected function assertIsDate($date)
     {
-        $this->assertInstanceOf('\DateTime', $date);
+        $this->assertInstanceOf(DateTime::class, $date);
     }
+}
+
+class TestException extends Exception implements GuzzleException
+{
 }

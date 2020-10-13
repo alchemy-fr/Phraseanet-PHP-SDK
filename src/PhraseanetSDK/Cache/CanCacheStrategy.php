@@ -11,8 +11,8 @@
 
 namespace PhraseanetSDK\Cache;
 
-use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Http\Message\Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Guzzle\Plugin\Cache\DefaultCanCacheStrategy;
 
 class CanCacheStrategy extends DefaultCanCacheStrategy
@@ -28,7 +28,7 @@ class CanCacheStrategy extends DefaultCanCacheStrategy
     /**
      * {@inheritdoc}
      */
-    public function canCacheResponse(Response $response)
+    public function canCacheResponse(ResponseInterface $response)
     {
         if (false !== strpos($response->getEffectiveUrl(), '/api/v1/monitor/')) {
             return false;

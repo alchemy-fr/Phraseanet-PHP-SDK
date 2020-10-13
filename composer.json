@@ -20,7 +20,9 @@
     "doctrine/cache": "~1.0",
     "doctrine/collections": "~1.0",
     "guzzlehttp/guzzle": "7.1.1",
-    "gmponos/guzzle_logger": "^2.0"
+    "gmponos/guzzle_logger": "^2.0",
+    "ext-json": "*",
+    "kevinrob/guzzle-cache-middleware": "~2.0"
   },
   "require-dev": {
     "sami/sami": "^1.0",

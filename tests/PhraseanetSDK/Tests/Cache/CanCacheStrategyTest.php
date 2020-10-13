@@ -13,7 +13,7 @@ class CanCacheStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->getMockBuilder('Guzzle\Http\Message\Response')
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
         $response->expects($this->once())
             ->method('getEffectiveUrl')
             ->will($this->returnValue($url));
