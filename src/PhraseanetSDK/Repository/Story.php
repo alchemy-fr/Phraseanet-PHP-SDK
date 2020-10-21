@@ -15,6 +15,7 @@ use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Entity\Query;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Search\SearchResult;
 
 class Story extends AbstractRepository
 {
@@ -51,7 +52,7 @@ class Story extends AbstractRepository
     {
         $response = $this->query('POST', 'v1/search/', array(), array(
             'query'        => '',
-            'search_type'  => 1,
+            'search_type'  => SearchResult::TYPE_STORY,
             'offset_start' => (int) $offsetStart,
             'per_page'     => (int) $perPage,
         ));
@@ -67,14 +68,15 @@ class Story extends AbstractRepository
      * Search for stories
      *
      * @param  array $parameters Query parameters
+	 * @param int $pAPINumber API number (e.g. 3)
      * @return \PhraseanetSDK\Entity\Query object
      * @throws RuntimeException
      */
-    public function search(array $parameters = array())
+    public function search(array $parameters = array(), $pAPINumber = 1)
     {
-        $response = $this->query('POST', 'v1/search/', array(), array_merge(
-            array('search_type' => 2),
-            $parameters
+        $response = $this->query('POST', 'v'.$pAPINumber.'/search/', array(), array_merge(
+            $parameters,
+			array('search_type' => SearchResult::TYPE_STORY)
         ));
 
         if ($response->isEmpty()) {

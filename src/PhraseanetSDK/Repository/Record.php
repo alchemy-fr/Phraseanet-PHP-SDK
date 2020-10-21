@@ -74,12 +74,13 @@ class Record extends AbstractRepository
      * Search for records
      *
      * @param  array                       $parameters Query parameters
+	 * @param int                          $pAPINumber API number (e.g. 3)
      * @return \PhraseanetSDK\Entity\Query object
      * @throws RuntimeException
      */
-    public function search(array $parameters = array())
+    public function search(array $parameters = array(), $pAPINumber = 1)
     {
-        $response = $this->query('POST', 'v1/search/', array(), array_merge(
+		$response = $this->query('POST', 'v'.$pAPINumber.'/search/', array(), array_merge(
             array('search_type' => 0),
             $parameters
         ));
