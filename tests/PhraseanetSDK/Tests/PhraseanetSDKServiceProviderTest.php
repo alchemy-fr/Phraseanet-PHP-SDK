@@ -266,7 +266,7 @@ class PhraseanetSDKServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testRecordConfigIsPassedToFactory()
     {
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
+        $storage = $this->createMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
         $storageFactory = $this->getMockBuilder('PhraseanetSDK\Recorder\Storage\StorageFactory')
             ->disableOriginalConstructor()
             ->getMock();

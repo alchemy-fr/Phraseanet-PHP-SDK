@@ -3,6 +3,8 @@
 namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\Application;
+use PhraseanetSDK\Http\GuzzleAdapter;
+use PhraseanetSDK\Exception\InvalidArgumentException;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,15 +17,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         );
         $application = Application::create($config);
 
-        $this->assertInstanceOf('PhraseanetSDK\Application', $application);
+        $this->assertInstanceOf(Application::class, $application);
     }
 
     /**
      * @dataProvider provideVariousInvalidConfigurations
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
+     *
      */
     public function testCreateFailure($config)
     {
+        $this->expectException(InvalidArgumentException::class);
         Application::create($config);
     }
 
@@ -53,10 +56,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     public function testOauth2ConnectorAlwaysTheSame()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @var GuzzleAdapter $adapter */
         $application = new Application($adapter, '12345', '54321');
         $connector = $application->getOauth2Connector();
 
@@ -67,13 +71,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     public function testEntityManagersAlwaysTheSame()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $token1 = 'vpJPb2Wh';
         $token2 = 'E8xuvVVq';
 
+        /** @var GuzzleAdapter $adapter */
         $application = new Application($adapter, 'mQ3ol1F', 'FgwhjuQW');
 
         $em1 = $application->getEntityManager($token1);
@@ -90,13 +95,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadersAreAlwaysTheSame()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $token1 = 'eijbOAMd';
         $token2 = 'loXZ8qa8';
 
+        /** @var GuzzleAdapter $adapter */
         $application = new Application($adapter, 'OePvPlq8', 'oC4h3QYp');
 
         $loader1 = $application->getUploader($token1);
@@ -113,13 +119,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     public function testMonitorAlwaysTheSame()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $token1 = 'rfM7YHPq';
         $token2 = '3PubP90u';
 
+        /** @var GuzzleAdapter $adapter */
         $application = new Application($adapter, 'DMiykp0k', 'sshavAJm');
 
         $mon1 = $application->getMonitor($token1);
@@ -136,14 +143,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideInvalidTokens
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testEntityManagersWithoutTokenThrowsException($token)
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
+        $this->expectException(InvalidArgumentException::class);
+
+        $adapter = $this->getMockBuilder(GuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @var GuzzleAdapter $adapter */
         $application = new Application($adapter, 'JLZqzMDG', '36QCU07C');
 
         $application->getEntityManager($token);

@@ -67,7 +67,8 @@ abstract class AbstractRepository
     {
         try {
             $response = $this->getAdapter()->call($method, $path, $query, $postFields, array(), $headers);
-        } catch (BadResponseException $e) {
+        }
+        catch (BadResponseException $e) {
             $statusCode = $e->getStatusCode();
             switch ($statusCode) {
                 case 404:

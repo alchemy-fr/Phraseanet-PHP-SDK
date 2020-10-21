@@ -114,9 +114,9 @@ class Application implements ApplicationInterface
      * This results in bigger response message but less requests to get
      * relation of queried object.
      *
-     * @param $mode
+     * @param bool $mode
      */
-    public function setExtendedMode($mode)
+    public function setExtendedMode(bool $mode)
     {
         $this->adapter->setExtended($mode);
     }

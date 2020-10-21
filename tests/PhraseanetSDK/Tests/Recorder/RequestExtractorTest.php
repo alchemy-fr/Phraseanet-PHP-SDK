@@ -2,9 +2,11 @@
 
 namespace PhraseanetSDK\Tests\Recorder;
 
+use PHPUnit_Framework_TestCase;
 use PhraseanetSDK\Recorder\RequestExtractor;
+use Psr\Http\Message\RequestInterface;
 
-class RequestExtractorTest extends \PHPUnit_Framework_TestCase
+class RequestExtractorTest extends PHPUnit_Framework_TestCase
 {
     public function testExtract()
     {
@@ -15,7 +17,7 @@ class RequestExtractorTest extends \PHPUnit_Framework_TestCase
             'path'        => '/v1/path/to/request',
         );
 
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
+        $request = $this->createMock(RequestInterface::class);
         $request->expects($this->once())->method('getMethod')->will($this->returnValue('POST'));
         $request->expects($this->once())->method('getPath')->will($this->returnValue('/api/v1/path/to/request'));
 

@@ -27,7 +27,7 @@ class RecordStatusTest extends RepositoryTestCase
         $client = $this->getClient($this->getSampleResponse('empty'));
 
         $statusRepository = new RecordStatus(new EntityManager($client));
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
+        $record = $this->createMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
         $statusRepository->findByRecord(1, 1);
     }
 }

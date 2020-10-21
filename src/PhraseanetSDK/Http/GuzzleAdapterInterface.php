@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Http;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 
 interface GuzzleAdapterInterface
 {
@@ -21,12 +21,5 @@ interface GuzzleAdapterInterface
      * @param array $headers
      * @return string
      */
-    public function call(
-        $method,
-        $path,
-        array $query = array(),
-        array $postFields = array(),
-        array $files = array(),
-        array $headers = array()
-    );
+    public function call($method, $path, array $query = [], array $postFields = [], array $files = [], array $headers = []);
 }

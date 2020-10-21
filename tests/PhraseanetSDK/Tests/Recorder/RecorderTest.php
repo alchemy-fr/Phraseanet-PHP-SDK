@@ -2,17 +2,21 @@
 
 namespace PhraseanetSDK\Tests\Recorder;
 
+use PHPUnit_Framework_TestCase;
 use PhraseanetSDK\Recorder\Recorder;
-use Guzzle\Http\Message\Request;
+use GuzzleHttp\Message\Request;
 use PhraseanetSDK\Recorder\Filters\FilterInterface;
+use Guzzle\Plugin\History\HistoryPlugin;
+use PhraseanetSDK\Recorder\Storage\StorageInterface;
+use PhraseanetSDK\Recorder\RequestExtractor;
 
-class RecorderTest extends \PHPUnit_Framework_TestCase
+class RecorderTest extends PHPUnit_Framework_TestCase
 {
     public function testSave()
     {
-        $history = $this->getMock('Guzzle\Plugin\History\HistoryPlugin');
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
-        $extractor = $this->getMock('PhraseanetSDK\Recorder\RequestExtractor');
+        $history = $this->createMock(HistoryPlugin::class);
+        $storage = $this->createMock(StorageInterface::class);
+        $extractor = $this->createMock(RequestExtractor::class);
         $limit = 3;
 
         $request1 = new Request('GET', '/path1');
@@ -46,15 +50,20 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
                 $request4,
             ));
 
+        /**
+         * @var HistoryPlugin $history
+         * @var StorageInterface $storage
+         * @var RequestExtractor $extractor
+         */
         $recorder = new Recorder($history, $storage, $extractor, $limit);
         $recorder->save();
     }
 
     public function testWithFilter()
     {
-        $history = $this->getMock('Guzzle\Plugin\History\HistoryPlugin');
-        $storage = $this->getMock('PhraseanetSDK\Recorder\Storage\StorageInterface');
-        $extractor = $this->getMock('PhraseanetSDK\Recorder\RequestExtractor');
+        $history = $this->createMock(HistoryPlugin::class);
+        $storage = $this->createMock(StorageInterface::class);
+        $extractor = $this->createMock(RequestExtractor::class);
 
         $request1 = new Request('GET', '/path1');
         $request2 = new Request('GET', '/path2');
@@ -83,6 +92,11 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
                 $request4,
             ));
 
+        /**
+         * @var HistoryPlugin $history
+         * @var StorageInterface $storage
+         * @var RequestExtractor $extractor
+         */
         $recorder = new Recorder($history, $storage, $extractor);
         $recorder->addFilter(new TestFilter());
         $recorder->save();

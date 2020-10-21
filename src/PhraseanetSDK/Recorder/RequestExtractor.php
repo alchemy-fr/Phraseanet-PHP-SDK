@@ -12,8 +12,13 @@
 namespace PhraseanetSDK\Recorder;
 
 use PhraseanetSDK\ApplicationInterface;
-use Guzzle\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
+
+/**
+ * todo : rewrite using middleware
+ * possibly use existing "history" middleware ?
+ */
 
 class RequestExtractor
 {
