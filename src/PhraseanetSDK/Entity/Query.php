@@ -189,4 +189,15 @@ class Query
     {
         return $this->results ?: $this->results = Result::fromValue($this->entityManager, $this->source->results);
     }
+
+	/**
+	 * Set or override value in protected object 'source' (\stdClass type)
+	 *
+	 * @param $pKey	string
+	 * @param $pValue mixed
+	 */
+    public function setSourceEntry($pKey, $pValue)
+	{
+		$this->source->$pKey = $pValue;
+	}
 }
