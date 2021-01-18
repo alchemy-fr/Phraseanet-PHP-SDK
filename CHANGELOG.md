@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [1.0.0] - 2021-01-18
+### Breaking
+  - The sdk now uses "guzzlehttp/guzzle": "7.1.1"
+  - cache, log, record, play, profiling, ... which did rely on guzzle-3 plugings are deleted
+
 ## Unreleased
 ### Changed
   - CHANGELOG.md now uses keepachangelog.com format
