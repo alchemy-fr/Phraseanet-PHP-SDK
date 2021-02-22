@@ -29,7 +29,7 @@ class Application implements ApplicationInterface
      * @param GuzzleAdapter $adapter
      * @return Application
      */
-    public static function create(array $config, GuzzleAdapter $adapter = null)
+    public static function create(array $config, GuzzleAdapter $adapter = null): Application
     {
         foreach (array('client-id', 'secret') as $key) {
             if (!isset($config[$key]) || !is_string($config[$key])) {
@@ -124,7 +124,7 @@ class Application implements ApplicationInterface
     /**
      * {@inheritdoc}
      */
-    public function getOauth2Connector()
+    public function getOauth2Connector(): OAuth2Connector
     {
         if ($this->connector === null) {
             $this->connector = new OAuth2Connector($this->adapter, $this->clientId, $this->secret);
@@ -136,7 +136,7 @@ class Application implements ApplicationInterface
     /**
      * {@inheritdoc}
      */
-    public function getUploader($token)
+    public function getUploader(string $token): Uploader
     {
         self::assertValidToken($token);
 
@@ -150,7 +150,7 @@ class Application implements ApplicationInterface
     /**
      * {@inheritdoc}
      */
-    public function getEntityManager($token)
+    public function getEntityManager(?string $token): EntityManager
     {
         self::assertValidToken($token);
 
@@ -167,7 +167,7 @@ class Application implements ApplicationInterface
     /**
      * {@inheritdoc}
      */
-    public function getMonitor($token)
+    public function getMonitor(string $token): Monitor
     {
         self::assertValidToken($token);
 
@@ -183,12 +183,12 @@ class Application implements ApplicationInterface
      *
      * @return GuzzleAdapter
      */
-    public function getAdapter()
+    public function getAdapter(): GuzzleAdapter
     {
         return $this->adapter;
     }
 
-    private function getAdapterByToken($token)
+    private function getAdapterByToken(string $token): APIGuzzleAdapter
     {
         if (!isset($this->adapters[$token])) {
             $this->adapters[$token] = new APIGuzzleAdapter(

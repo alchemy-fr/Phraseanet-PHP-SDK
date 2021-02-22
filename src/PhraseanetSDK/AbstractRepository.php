@@ -45,7 +45,7 @@ abstract class AbstractRepository
     /**
      * @return APIGuzzleAdapter
      */
-    private function getAdapter()
+    private function getAdapter(): APIGuzzleAdapter
     {
         return $this->adapter;
     }
@@ -53,17 +53,17 @@ abstract class AbstractRepository
     /**
      * Query the API
      *
-     * @param string $method HTTP method type (POST, GET ...)
-     * @param string $path The requested path (/path/to/ressource/1)
-     * @param array $query An array of query parameters
+     * @param string $method    HTTP method type (POST, GET ...)
+     * @param string $path      The requested path (/path/to/ressource/1)
+     * @param array $query      An array of query parameters
      * @param array $postFields An array of request parameters
      * @param array $headers
      *
      * @return APIResponse
      * @throws NotFoundException
-     * @throws UnauthorizedException
+     * @throws UnauthorizedException|TokenExpiredException
      */
-    protected function query($method, $path, $query = array(), $postFields = array(), array $headers = array())
+    protected function query(string $method, string $path, $query = array(), $postFields = array(), array $headers = array()): APIResponse
     {
         try {
             $response = $this->getAdapter()->call($method, $path, $query, $postFields, array(), $headers);
@@ -73,13 +73,10 @@ abstract class AbstractRepository
             switch ($statusCode) {
                 case 404:
                     throw new NotFoundException(sprintf('Resource under %s could not be found', $path));
-                    break;
                 case 401:
                     throw new UnauthorizedException(sprintf('Access to the following resource %s is forbidden', $path));
-                    break;
                 case 400:
                     throw new TokenExpiredException('Token is expired or email validation is already done');
-                    break;
                 default:
                     throw new RuntimeException(sprintf('Something went wrong "%s"', $e->getMessage()));
             }

@@ -13,20 +13,26 @@ namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Entity\FeedEntry;
+use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class Entry extends AbstractRepository
 {
     /**
      * Retrieve the entry identified by its id
      *
-     * @param  integer $id The entry id
-     * @return \PhraseanetSDK\Entity\Feed
+     * @param integer $id The entry id
+     * @return FeedEntry
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findById($id)
+    public function findById(int $id): FeedEntry
     {
         $response = $this->query('GET', sprintf('v1/feeds/entry/%d/', $id));
 
@@ -40,13 +46,16 @@ class Entry extends AbstractRepository
     /**
      * Find all entries that belongs to the feed provided in parameters
      *
-     * @param  integer $feedId The feed id
-     * @param  integer $offsetStart The start offset
-     * @param  integer $perPage The number of entries
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @param integer $feedId      The feed id
+     * @param integer $offsetStart The start offset
+     * @param integer $perPage     The number of entries
+     * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByFeed($feedId, $offsetStart = 0, $perPage = 5)
+    public function findByFeed(int $feedId, int $offsetStart = 0, int $perPage = 5): ArrayCollection
     {
         $response = $this->query('GET', sprintf('v1/feeds/%d/content/', $feedId), array(
             'offset_start' => $offsetStart,
@@ -65,16 +74,19 @@ class Entry extends AbstractRepository
      * @param  integer $offsetStart The start offset
      * @param  integer $perPage The number of entries
      * @param  array $feeds The feed id's to look for
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findInAggregatedFeed($offsetStart = 0, $perPage = 5, array $feeds = array())
+    public function findInAggregatedFeed(int $offsetStart = 0, int $perPage = 5, array $feeds = []): ArrayCollection
     {
-        $response = $this->query('GET', 'v1/feeds/content/', array(
+        $response = $this->query('GET', 'v1/feeds/content/', [
             'offset_start' => $offsetStart,
-            'per_page' => $perPage,
-            'feeds' => $feeds,
-        ));
+            'per_page'     => $perPage,
+            'feeds'        => $feeds,
+        ]);
 
         if (true !== $response->hasProperty('entries')) {
             throw new RuntimeException('Missing "entries" property in response content');

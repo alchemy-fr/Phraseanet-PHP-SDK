@@ -11,23 +11,25 @@
 
 namespace PhraseanetSDK\Http;
 
+use DateTime;
 use PhraseanetSDK\Exception\InvalidArgumentException;
+use stdClass;
 
 /**
  * Response object from a Phraseanet API call
  */
 class APIResponse
 {
-    /** @var \stdClass */
+    /** @var stdClass */
     protected $result;
 
-    /** @var \stdClass */
+    /** @var stdClass */
     private $meta;
 
     /**
-     * @param \stdClass $response
+     * @param stdClass $response
      */
-    public function __construct(\stdClass $response)
+    public function __construct(stdClass $response)
     {
         if (!isset($response->meta) || !isset($response->response)) {
             throw new InvalidArgumentException('The API json response is malformed');
@@ -40,9 +42,9 @@ class APIResponse
     /**
      * Returns the result of the response
      *
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getResult()
+    public function getResult(): stdClass
     {
         return $this->result;
     }
@@ -52,7 +54,7 @@ class APIResponse
      *
      * @return integer
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return (int)$this->meta->http_code;
     }
@@ -62,7 +64,7 @@ class APIResponse
      *
      * @return Boolean
      */
-    public function isOk()
+    public function isOk(): bool
     {
         return $this->getStatusCode() < 400;
     }
@@ -72,7 +74,7 @@ class APIResponse
      *
      * @return Boolean
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return count(get_object_vars($this->result)) === 0;
     }
@@ -82,7 +84,7 @@ class APIResponse
      *
      * @return string|null
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         return $this->meta->error_message;
     }
@@ -92,7 +94,7 @@ class APIResponse
      *
      * @return string|null
      */
-    public function getErrorDetails()
+    public function getErrorDetails(): string
     {
         return $this->meta->error_details;
     }
@@ -100,11 +102,11 @@ class APIResponse
     /**
      * Returns the response datetime
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getResponseTime()
+    public function getResponseTime(): DateTime
     {
-        return \DateTime::createFromFormat(DATE_ATOM, $this->meta->response_time);
+        return DateTime::createFromFormat(DATE_ATOM, $this->meta->response_time);
     }
 
     /**
@@ -112,7 +114,7 @@ class APIResponse
      *
      * @return string
      */
-    public function getUri()
+    public function getUri(): string
     {
         $request = explode(' ', $this->meta->request);
 
@@ -124,7 +126,7 @@ class APIResponse
      *
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         $request = explode(' ', $this->meta->request);
 
@@ -136,7 +138,7 @@ class APIResponse
      *
      * @return string
      */
-    public function getCharset()
+    public function getCharset(): string
     {
         return $this->meta->charset;
     }
@@ -146,7 +148,7 @@ class APIResponse
      *
      * @return string
      */
-    public function getApiVersion()
+    public function getApiVersion(): string
     {
         return $this->meta->api_version;
     }
@@ -158,7 +160,7 @@ class APIResponse
      *
      * @return Boolean
      */
-    public function hasProperty($property)
+    public function hasProperty(string $property): bool
     {
         return property_exists($this->result, $property);
     }
@@ -168,9 +170,9 @@ class APIResponse
      *
      * @param string $property The property name
      *
-     * @return \stdClass|\stdClass[]|null
+     * @return stdClass|stdClass[]|null
      */
-    public function getProperty($property)
+    public function getProperty(string $property)
     {
         return $this->hasProperty($property) ? $this->result->{$property} : null;
     }

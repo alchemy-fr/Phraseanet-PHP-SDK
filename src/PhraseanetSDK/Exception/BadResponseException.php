@@ -11,9 +11,10 @@
 
 namespace PhraseanetSDK\Exception;
 
+use Exception;
 use GuzzleHttp\Exception\BadResponseException as GuzzleBadResponseException;
 
-class BadResponseException extends \Exception implements ExceptionInterface
+class BadResponseException extends Exception implements ExceptionInterface
 {
     /**
      * The content of the bad response
@@ -31,12 +32,12 @@ class BadResponseException extends \Exception implements ExceptionInterface
 
     /**
      *
-     * @param  string                                        $body
-     * @return \PhraseanetSDK\Exception\BadResponseException
+     * @param string|null $body
+     * @return BadResponseException
      */
-    public function setResponseBody($body)
+    public function setResponseBody(?string $body): BadResponseException
     {
-        $this->responseBody = (string) $body;
+        $this->responseBody = $body;
 
         return $this;
     }
@@ -46,7 +47,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
      *
      * @return string
      */
-    public function getResponseBody()
+    public function getResponseBody(): string
     {
         return $this->responseBody;
     }
@@ -56,7 +57,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
      *
      * @return integer
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->httpStatusCode;
     }
@@ -64,10 +65,10 @@ class BadResponseException extends \Exception implements ExceptionInterface
     /**
      * Set the response HTTP status code
      *
-     * @param  integer                                       $httpStatusCode
-     * @return \PhraseanetSDK\Exception\BadResponseException
+     * @param integer|null $httpStatusCode
+     * @return BadResponseException
      */
-    public function setHttpStatusCode($httpStatusCode)
+    public function setHttpStatusCode(?int $httpStatusCode): BadResponseException
     {
         $this->httpStatusCode = $httpStatusCode;
 
@@ -79,7 +80,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
      *
      * @return bool
      */
-    public function isClientError()
+    public function isClientError(): bool
     {
         return substr(strval($this->httpStatusCode), 0, 1) == '4';
     }
@@ -89,12 +90,12 @@ class BadResponseException extends \Exception implements ExceptionInterface
      *
      * @return bool
      */
-    public function isServerError()
+    public function isServerError(): bool
     {
         return substr(strval($this->httpStatusCode), 0, 1) == '5';
     }
 
-    public static function fromGuzzleResponse(GuzzleBadResponseException $e)
+    public static function fromGuzzleResponse(GuzzleBadResponseException $e): BadResponseException
     {
         $response = $e->getResponse();
 

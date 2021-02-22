@@ -2,6 +2,7 @@
 
 namespace PhraseanetSDK\Http;
 
+use GuzzleHttp\ClientInterface;
 use PhraseanetSDK\Exception\RuntimeException;
 
 class APIGuzzleAdapter implements GuzzleAdapterInterface
@@ -14,12 +15,12 @@ class APIGuzzleAdapter implements GuzzleAdapterInterface
         $this->adapter = $adapter;
     }
 
-    public function getGuzzle()
+    public function getGuzzle(): ClientInterface
     {
         return $this->adapter->getGuzzle();
     }
 
-    public function call($method, $path, array $query = [], array $postFields = [], array $files = [], array $headers = [])
+    public function call(string $method, string $path, array $query = [], array $postFields = [], array $files = [], array $headers = []): APIResponse
     {
         $json = @json_decode($this->adapter->call($method, $path, $query, $postFields, $files, $headers));
 

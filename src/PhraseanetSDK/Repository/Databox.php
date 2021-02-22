@@ -11,10 +11,13 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\Databox as DataboxEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class Databox extends AbstractRepository
 {
@@ -23,8 +26,11 @@ class Databox extends AbstractRepository
      *
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findAll()
+    public function findAll(): ArrayCollection
     {
         $response = $this->query('GET', 'v1/databoxes/list/');
 
@@ -32,6 +38,6 @@ class Databox extends AbstractRepository
             throw new RuntimeException('Missing "databoxes" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\Databox::fromList($response->getProperty('databoxes')));
+        return new ArrayCollection(DataboxEntity::fromList($response->getProperty('databoxes')));
     }
 }

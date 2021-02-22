@@ -9,7 +9,7 @@ interface GuzzleAdapterInterface
     /**
      * @return ClientInterface
      */
-    public function getGuzzle();
+    public function getGuzzle(): ClientInterface;
 
     /**
      *
@@ -19,7 +19,7 @@ interface GuzzleAdapterInterface
      * @param array $postFields
      * @param array $files
      * @param array $headers
-     * @return string
+     * @return string|APIResponse
      */
-    public function call($method, $path, array $query = [], array $postFields = [], array $files = [], array $headers = []);
+    public function call(string $method, string $path, array $query = [], array $postFields = [], array $files = [], array $headers = []);
 }

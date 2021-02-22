@@ -11,21 +11,27 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\DataboxStatus as DataboxStatusEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class DataboxStatus extends AbstractRepository
 {
     /**
      * The status of the desired databox
      *
-     * @param  integer          $databoxId the databox id
+     * @param integer $databoxId the databox id
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByDatabox($databoxId)
+    public function findByDatabox(int $databoxId): ArrayCollection
     {
         $response = $this->query('GET', sprintf('v1/databoxes/%d/status/', $databoxId));
 
@@ -33,7 +39,7 @@ class DataboxStatus extends AbstractRepository
             throw new RuntimeException('Missing "status" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\DataboxStatus::fromList(
+        return new ArrayCollection(DataboxStatusEntity::fromList(
             $response->getProperty('status')
         ));
     }

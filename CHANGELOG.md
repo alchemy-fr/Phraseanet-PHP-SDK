@@ -1,9 +1,25 @@
 # CHANGELOG
 
+## [1.1.0] - 2021-02-22
+### Changed
+- big cleanup
+- bump php 7.1
+- dependencies (silex, sami, ...) removed
+- fix upload
+- cs : almost no warnings in phpstorm
+- unit tests ok
+- restored code coverage
+- ...
+
+## [6.x] - 2021-02-16
+### Breaking
+- New branch using gz6 (for drupal), from 1.x
+- The sdk now uses "guzzlehttp/guzzle": "6.3.*"
+
 ## [1.0.0] - 2021-01-18
 ### Breaking
-  - The sdk now uses "guzzlehttp/guzzle": "7.1.1"
-  - cache, log, record, play, profiling, ... which did rely on guzzle-3 plugings are deleted
+- The sdk now uses "guzzlehttp/guzzle": "7.1.1"
+- cache, log, record, play, profiling, ... which did rely on guzzle-3 plugings are deleted
 
 ## Unreleased
 ### Changed

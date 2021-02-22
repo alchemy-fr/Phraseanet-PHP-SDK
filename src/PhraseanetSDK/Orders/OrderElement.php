@@ -18,10 +18,6 @@ namespace PhraseanetSDK\Orders;
 class OrderElement
 {
 
-    const STATUS_ACCEPTED = 'accepted';
-
-    const STATUS_REJECTED = 'rejected';
-
     /***
      * @param \stdClass[] $values
      * @return OrderElement[]

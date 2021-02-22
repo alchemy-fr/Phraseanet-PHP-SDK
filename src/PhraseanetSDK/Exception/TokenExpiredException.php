@@ -11,6 +11,8 @@
 
 namespace PhraseanetSDK\Exception;
 
-class TokenExpiredException extends \Exception implements ExceptionInterface
+use Exception;
+
+class TokenExpiredException extends Exception implements ExceptionInterface
 {
 }

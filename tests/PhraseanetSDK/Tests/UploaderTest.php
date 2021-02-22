@@ -2,21 +2,29 @@
 
 namespace PhraseanetSDK\Tests;
 
-use PhraseanetSDK\Uploader;
-use PhraseanetSDK\Http\APIResponse;
-use PhraseanetSDK\Http\APIGuzzleAdapter;
-use PhraseanetSDK\Repository\RepositoryInterface;
 use PhraseanetSDK\Entity\DataboxCollection;
-use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\Entity\Quarantine;
+use PhraseanetSDK\Entity\Record;
 use PhraseanetSDK\EntityManager;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Repository\Quarantine as QuarantineRepository;
+use PhraseanetSDK\Repository\Record as RecordRepository;
+use PhraseanetSDK\Uploader;
 
 class UploaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideUploadParameters
+     *
+     * @param string $file
+     * @param int|null $behavior
+     * @param int|DataboxCollection $coll
+     * @param string|null $status
+     * @param APIResponse $result
+     * @param Record|Quarantine $expected
      */
-    public function testUpload($file, $behavior, $coll, $status, $result, $expected)
+    public function testUpload(string $file, ?int $behavior, $coll, ?string $status, APIResponse $result, $expected)
     {
         $guzzle = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
@@ -26,15 +34,20 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repo = $this->createMock('PhraseanetSDK\Repository\RepositoryInterface', array('findById'));
+        if($expected instanceof Record) {
+            $repo = $this->createMock(RecordRepository::class);
+        }
+        else {
+            $repo = $this->createMock(QuarantineRepository::class);
+        }
+        $repo->expects($this->once())
+            ->method('findById')
+            ->will($this->returnValue($expected));
+
 
         $em->expects($this->once())
             ->method('getRepository')
             ->will($this->returnValue($repo));
-
-        $repo->expects($this->once())
-            ->method('findById')
-            ->will($this->returnValue($expected));
 
         $guzzle->expects($this->once())
             ->method('call')
@@ -81,12 +94,12 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         return array(
-            array(__FILE__, 0, 42, '010101110001000', $recordResponse, $record),
-            array(__FILE__, null, 42, '010101110001000', $recordResponse, $record),
-            array(__FILE__, null, $coll, '010101110001000', $recordResponse, $record),
-            array(__FILE__, null, $coll, null, $recordResponse, $record),
-            array(__FILE__, 1, 42, '010101110001000', $quarantineResponse, $quarantine),
-            array(__FILE__, null, 42, '010101110001000', $quarantineResponse, $quarantine),
+            array(__FILE__, 0,    42,    '010101110001000', $recordResponse,     $record),
+            array(__FILE__, null, 42,    '010101110001000', $recordResponse,     $record),
+            array(__FILE__, null, $coll, '010101110001000', $recordResponse,     $record),
+            array(__FILE__, null, $coll,  null,             $recordResponse,     $record),
+            array(__FILE__, 1,    42,    '010101110001000', $quarantineResponse, $quarantine),
+            array(__FILE__, null, 42,    '010101110001000', $quarantineResponse, $quarantine),
         );
     }
 }

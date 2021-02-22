@@ -11,21 +11,27 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\DataboxCollection as DataboxCollectionEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class DataboxCollection extends AbstractRepository
 {
     /**
      * Find all collection in the provided databox
      *
-     * @param  integer          $databoxId the databox id
-     * @return ArrayCollection|\PhraseanetSDK\Entity\DataboxCollection[]
+     * @param integer $databoxId the databox id
+     * @return ArrayCollection|DataboxCollectionEntity[]
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByDatabox($databoxId)
+    public function findByDatabox(int $databoxId)
     {
         $response = $this->query('GET', sprintf('v1/databoxes/%d/collections/', $databoxId));
 
@@ -33,7 +39,7 @@ class DataboxCollection extends AbstractRepository
             throw new RuntimeException('Missing "collections" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\DataboxCollection::fromList(
+        return new ArrayCollection(DataboxCollectionEntity::fromList(
             $response->getProperty('collections')
         ));
     }
@@ -42,11 +48,13 @@ class DataboxCollection extends AbstractRepository
      * Finds a collection in all available databoxes
      *
      * @param integer $baseId The base ID of the collection
-     * @return \PhraseanetSDK\Entity\DataboxCollection
-     * @throws \PhraseanetSDK\Exception\NotFoundException
-     * @throws \PhraseanetSDK\Exception\UnauthorizedException
+     * @return DataboxCollectionEntity
+     * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function find($baseId)
+    public function find(int $baseId): DataboxCollectionEntity
     {
         $response = $this->query('GET', sprintf('v1/collections/%d/', $baseId));
 
@@ -54,6 +62,6 @@ class DataboxCollection extends AbstractRepository
             throw new RuntimeException('Missing "collection" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\DataboxCollection::fromValue($response->getProperty('collection'));
+        return DataboxCollectionEntity::fromValue($response->getProperty('collection'));
     }
 }

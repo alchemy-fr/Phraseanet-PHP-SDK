@@ -11,41 +11,48 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
+use Exception;
+use stdClass;
+
 class Permalink
 {
-
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return Permalink
+     */
+    public static function fromValue(stdClass $value): Permalink
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTime
      */
     protected $createdOn;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTime
      */
     protected $updatedOn;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -55,7 +62,7 @@ class Permalink
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
@@ -65,7 +72,7 @@ class Permalink
      *
      * @return Boolean
      */
-    public function isActivated()
+    public function isActivated(): bool
     {
         return $this->source->is_activated;
     }
@@ -75,7 +82,7 @@ class Permalink
      *
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->source->label;
     }
@@ -83,21 +90,23 @@ class Permalink
     /**
      * Last updated date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
@@ -105,7 +114,7 @@ class Permalink
      *
      * @return string
      */
-    public function getPageUrl()
+    public function getPageUrl(): string
     {
         return $this->source->page_url;
     }
@@ -115,7 +124,7 @@ class Permalink
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->source->url;
     }

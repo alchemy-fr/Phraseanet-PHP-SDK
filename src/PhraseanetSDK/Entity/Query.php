@@ -15,16 +15,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\EntityManager;
+use stdClass;
 
 class Query
 {
 
     /**
      * @param EntityManager $entityManager
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return Query
      */
-    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    public static function fromValue(EntityManager $entityManager, stdClass $value): Query
     {
         return new self($entityManager, $value);
     }
@@ -35,7 +36,7 @@ class Query
     protected $entityManager;
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -56,18 +57,18 @@ class Query
 
     /**
      * @param EntityManager $entityManager
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(EntityManager $entityManager, \stdClass $source)
+    public function __construct(EntityManager $entityManager, stdClass $source)
     {
         $this->entityManager = $entityManager;
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -77,7 +78,7 @@ class Query
      *
      * @return integer
      */
-    public function getOffsetStart()
+    public function getOffsetStart(): int
     {
         return $this->source->offset_start;
     }
@@ -87,7 +88,7 @@ class Query
      *
      * @return integer
      */
-    public function getPerPage()
+    public function getPerPage(): int
     {
         return $this->source->per_page;
     }
@@ -97,7 +98,7 @@ class Query
      *
      * @return integer
      */
-    public function getTotalResults()
+    public function getTotalResults(): int
     {
         return $this->source->total_results;
     }
@@ -107,7 +108,7 @@ class Query
      *
      * @return string
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->source->error;
     }
@@ -117,7 +118,7 @@ class Query
      *
      * @return string
      */
-    public function getWarning()
+    public function getWarning(): string
     {
         return $this->source->warning;
     }
@@ -127,7 +128,7 @@ class Query
      *
      * @return float
      */
-    public function getQueryTime()
+    public function getQueryTime(): float
     {
         return $this->source->query_time;
     }
@@ -137,7 +138,7 @@ class Query
      *
      * @return string
      */
-    public function getSearchIndexes()
+    public function getSearchIndexes(): string
     {
         return $this->source->search_indexes;
     }
@@ -147,7 +148,7 @@ class Query
      *
      * @return string
      */
-    public function getQuery()
+    public function getQuery(): string
     {
         return $this->source->query;
     }
@@ -156,7 +157,7 @@ class Query
      * Get query suggestions as a collection of QuerySuggestion
      * objects
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|QuerySuggestion[]
      */
     public function getSuggestions()
     {
@@ -185,18 +186,18 @@ class Query
      *
      * @return Result
      */
-    public function getResults()
+    public function getResults(): Result
     {
         return $this->results ?: $this->results = Result::fromValue($this->entityManager, $this->source->results);
     }
 
-	/**
-	 * Set or override value in protected object 'source' (\stdClass type)
-	 *
-	 * @param $pKey	string
-	 * @param $pValue mixed
-	 */
-    public function setSourceEntry($pKey, $pValue)
+    /**
+     * Set or override value in protected object 'source' (\stdClass type)
+     *
+     * @param $pKey    string
+     * @param $pValue  mixed
+     */
+    public function setSourceEntry(string $pKey, $pValue)
 	{
 		$this->source->$pKey = $pValue;
 	}

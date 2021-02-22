@@ -11,23 +11,30 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Entity\Query;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\Query as QueryEntity;
+use PhraseanetSDK\Entity\Record as RecordEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class Record extends AbstractRepository
 {
     /**
      * Find the record by its id that belongs to the provided databox
      *
-     * @param  integer                      $databoxId The record databox id
-     * @param  integer                      $recordId  The record id
-     * @param  boolean                      $disableCache Bypass cache when fetching a single record
-     * @return \PhraseanetSDK\Entity\Record
+     * @param integer $databoxId    The record databox id
+     * @param integer $recordId     The record id
+     * @param boolean $disableCache Bypass cache when fetching a single record
+     * @return RecordEntity
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findById($databoxId, $recordId, $disableCache = false)
+    public function findById(int $databoxId, int $recordId, $disableCache = false): RecordEntity
     {
         $path = sprintf('v1/records/%s/%s/', $databoxId, $recordId);
         $query = [];
@@ -42,30 +49,33 @@ class Record extends AbstractRepository
             throw new RuntimeException('Missing "record" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\Record::fromValue($response->getProperty('record'));
+        return RecordEntity::fromValue($response->getProperty('record'));
     }
 
     /**
      * Find records
      *
-     * @param  integer          $offsetStart The offset
-     * @param  integer          $perPage     The number of item per page
+     * @param integer $offsetStart The offset
+     * @param integer $perPage     The number of item per page
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function find($offsetStart, $perPage)
+    public function find(int $offsetStart, int $perPage): ArrayCollection
     {
         $response = $this->query('POST', 'v1/records/search/', array(), array(
             'query'        => 'all',
-            'offset_start' => (int) $offsetStart,
-            'per_page'     => (int) $perPage,
+            'offset_start' => $offsetStart,
+            'per_page'     => $perPage,
         ));
 
         if (true !== $response->hasProperty('results')) {
             throw new RuntimeException('Missing "results" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\Record::fromList(
+        return new ArrayCollection(RecordEntity::fromList(
             $response->getProperty('results')
         ));
     }
@@ -75,13 +85,16 @@ class Record extends AbstractRepository
      *
      * @param  array                       $parameters Query parameters
 	 * @param int                          $pAPINumber API number (e.g. 3)
-     * @return \PhraseanetSDK\Entity\Query object
+     * @return QueryEntity object
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function search(array $parameters = array(), $pAPINumber = 1)
+    public function search(array $parameters = [], int $pAPINumber = 1): QueryEntity
     {
-		$response = $this->query('POST', 'v'.$pAPINumber.'/search/', array(), array_merge(
-            array('search_type' => 0),
+		$response = $this->query('POST', 'v'.$pAPINumber.'/search/', [], array_merge(
+            ['search_type' => 0],
             $parameters
         ));
 
@@ -89,6 +102,6 @@ class Record extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return Query::fromValue($this->em, $response->getResult());
+        return QueryEntity::fromValue($this->em, $response->getResult());
     }
 }

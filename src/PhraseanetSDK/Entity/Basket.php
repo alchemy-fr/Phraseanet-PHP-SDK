@@ -11,12 +11,19 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use stdClass;
 
 class Basket
 {
 
-    public static function fromList(array $values)
+    /**
+     * @param array $values
+     * @return Basket[]
+     */
+    public static function fromList(array $values): array
     {
         $baskets = array();
 
@@ -27,13 +34,13 @@ class Basket
         return $baskets;
     }
 
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): Basket
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -48,12 +55,12 @@ class Basket
     protected $pusher;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdOn;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $updatedOn;
 
@@ -63,7 +70,7 @@ class Basket
     protected $validationUsers;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $expiresOn;
 
@@ -72,15 +79,15 @@ class Basket
      */
     protected $validationInitiatorUser;
 
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -90,7 +97,7 @@ class Basket
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->basket_id;
     }
@@ -100,7 +107,7 @@ class Basket
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -110,7 +117,7 @@ class Basket
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->source->description;
     }
@@ -119,11 +126,11 @@ class Basket
      * The user who created the basket when the current basket
      * is a validation basket
      *
-     * @return integer|null
+     * @return User|null
      */
-    public function getPusher()
+    public function getPusher(): ?User
     {
-        return $this->pusher ?: $this->pusher = User::fromValue($this->source->pusher);
+        return $this->pusher ?: ($this->pusher = User::fromValue($this->source->pusher));
     }
 
     /**
@@ -131,7 +138,7 @@ class Basket
      *
      * @return Boolean
      */
-    public function isUnread()
+    public function isUnread(): bool
     {
         return $this->source->unread;
     }
@@ -139,21 +146,23 @@ class Basket
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
      * Last update date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
@@ -161,7 +170,7 @@ class Basket
      *
      * @return Boolean
      */
-    public function isValidationBasket()
+    public function isValidationBasket(): bool
     {
         return $this->source->validation_basket;
     }
@@ -170,9 +179,9 @@ class Basket
      * Return a collection of PhraseanetSDK\entity\BasketValidationParticipant object
      * if the basket is a validation basket otherwise it returns null
      *
-     * @return ArrayCollection|null
+     * @return ArrayCollection|BasketValidationParticipant[]|null
      */
-    public function getValidationUsers()
+    public function getValidationUsers(): ?ArrayCollection
     {
         if (! $this->isValidationBasket()) {
             return null;
@@ -186,11 +195,12 @@ class Basket
     /**
      * The expiration validation date, if the basket is a validation basket
      *
-     * @return \DateTime|null
+     * @return DateTime|null
+     * @throws Exception
      */
-    public function getExpiresOn()
+    public function getExpiresOn(): DateTime
     {
-        return $this->expiresOn ?: $this->expiresOn = new \DateTime($this->source->expires_on);
+        return $this->expiresOn ?: $this->expiresOn = new DateTime($this->source->expires_on);
     }
 
     /**
@@ -199,7 +209,7 @@ class Basket
      *
      * @return string|null
      */
-    public function getValidationInfo()
+    public function getValidationInfo(): ?string
     {
         return $this->source->validation_infos;
     }
@@ -209,7 +219,7 @@ class Basket
      *
      * @return bool
      */
-    public function isValidationConfirmed()
+    public function isValidationConfirmed(): bool
     {
         return (bool) $this->source->validation_confirmed;
     }
@@ -219,7 +229,7 @@ class Basket
      *
      * @return bool
      */
-    public function isValidationInitiator()
+    public function isValidationInitiator(): bool
     {
         return (bool) $this->source->validation_initiator;
     }
@@ -227,18 +237,16 @@ class Basket
     /**
      * @return User|null
      */
-    public function getValidationInitiatorUser()
+    public function getValidationInitiatorUser(): ?User
     {
-        return $this->validationInitiatorUser ?: $this->validationInitiatorUser = User::fromValue(
-            $this->source->validation_initiator_user
-        );
+      return $this->validationInitiatorUser ?: ($this->validationInitiatorUser = User::fromValue($this->source->validation_initiator_user));
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getOwner()
+    public function getOwner(): ?User
     {
-        return $this->owner ?: $this->owner = User::fromValue($this->source->owner);
+        return $this->owner ?: ($this->owner = User::fromValue($this->source->owner));
     }
 }

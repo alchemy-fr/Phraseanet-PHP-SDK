@@ -1,17 +1,11 @@
 VALIDATE = $(shell composer validate 2>&1 | grep -q "lock file" && echo "composer.status")
 
-.PHONY: test clean-deps phpunit phpcs composer.status
+.PHONY: test clean-deps phpunit composer.status
 
-test: deps phpunit phpcs
+test: deps phpunit
 
 phpunit:
 	vendor/bin/phpunit --coverage-text --coverage-clover=tests/output/coverage.clover
-
-phpcs:
-	vendor/bin/phpcs --standard=psr1,psr2 --ignore=src/Bundle/Resources/* src
-
-fixcs:
-	vendor/bin/phpcbf --standard=psr1,psr2 --ignore=src/Bundle/Resources/* src 
 
 deps: composer.lock vendor/composer/installed.json
 
