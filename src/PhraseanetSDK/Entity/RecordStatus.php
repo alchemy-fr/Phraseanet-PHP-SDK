@@ -11,13 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\Id as Id;
+use stdClass;
 
 class RecordStatus
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return RecordStatus[]
+     */
+    public static function fromList(array $values): array
     {
         $statuses = array();
 
@@ -28,37 +30,41 @@ class RecordStatus
         return $statuses;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return RecordStatus
+     */
+    public static function fromValue(stdClass $value): RecordStatus
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      * @deprecated Use getRawData() instead
      */
-    public function getSource()
+    public function getSource(): stdClass
     {
         return $this->source;
     }
@@ -68,7 +74,7 @@ class RecordStatus
      *
      * @return int
      */
-    public function getBit()
+    public function getBit(): int
     {
         return $this->source->bit;
     }
@@ -78,7 +84,7 @@ class RecordStatus
      *
      * @return bool
      */
-    public function getState()
+    public function getState(): bool
     {
         return $this->source->state;
     }

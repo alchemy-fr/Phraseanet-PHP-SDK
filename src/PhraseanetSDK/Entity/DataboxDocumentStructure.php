@@ -12,11 +12,16 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use stdClass;
 
 class DataboxDocumentStructure
 {
 
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return DataboxDocumentStructure[]
+     */
+    public static function fromList(array $values): array
     {
         $structures = array();
 
@@ -27,13 +32,17 @@ class DataboxDocumentStructure
         return $structures;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return DataboxDocumentStructure
+     */
+    public static function fromValue(stdClass $value): DataboxDocumentStructure
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -43,17 +52,17 @@ class DataboxDocumentStructure
     protected $labels;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -63,7 +72,7 @@ class DataboxDocumentStructure
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
@@ -73,7 +82,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getNamespace()
+    public function getNamespace(): string
     {
         return $this->source->namespace;
     }
@@ -83,7 +92,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getSource()
+    public function getSource(): string
     {
         return $this->source->source;
     }
@@ -93,7 +102,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getTagName()
+    public function getTagName(): string
     {
         return $this->source->tagname;
     }
@@ -103,7 +112,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -113,7 +122,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getSeparator()
+    public function getSeparator(): string
     {
         return $this->source->separator;
     }
@@ -123,7 +132,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getThesaurusBranch()
+    public function getThesaurusBranch(): string
     {
         return $this->source->thesaurus_branch;
     }
@@ -133,7 +142,7 @@ class DataboxDocumentStructure
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->source->type;
     }
@@ -143,7 +152,7 @@ class DataboxDocumentStructure
      *
      * @return Boolean
      */
-    public function isSearchable()
+    public function isSearchable(): bool
     {
         return $this->source->indexable;
     }
@@ -153,7 +162,7 @@ class DataboxDocumentStructure
      *
      * @return Boolean
      */
-    public function isMultivalued()
+    public function isMultivalued(): bool
     {
         return $this->source->multivalue;
     }
@@ -163,7 +172,7 @@ class DataboxDocumentStructure
      *
      * @return Boolean
      */
-    public function isReadonly()
+    public function isReadonly(): bool
     {
         return $this->source->readonly;
     }
@@ -173,15 +182,15 @@ class DataboxDocumentStructure
      *
      *  @return Boolean
      */
-    public function isRequired()
+    public function isRequired(): bool
     {
         return $this->source->required;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getLabels()
+    public function getLabels(): ArrayCollection
     {
         return $this->labels ?: $this->labels = new ArrayCollection((array) $this->source->labels);
     }

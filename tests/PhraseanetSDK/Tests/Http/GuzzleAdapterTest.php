@@ -193,6 +193,7 @@ class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $response->withStatus(666);
 
         $guzzleClient->expects($this->once())
             ->method('request')

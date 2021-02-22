@@ -11,25 +11,30 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Exception\RuntimeException;
-use PhraseanetSDK\Exception\NotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\Subdef as SubdefEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class Subdef extends AbstractRepository
 {
     /**
      * Find all subdefs that belong to the provided record
      *
-     * @param  integer $databoxId The databox id
-     * @param  integer $recordId The record id
-     * @param  string[] $devices an array of desired devices
-     * @param  string[] $mimes an array of desired mimetypes
+     * @param integer $databoxId The databox id
+     * @param integer $recordId  The record id
+     * @param string[] $devices  an array of desired devices
+     * @param string[] $mimes    an array of desired mimetypes
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByRecord($databoxId, $recordId, $devices = array(), $mimes = array())
+    public function findByRecord(int $databoxId, int $recordId, $devices = array(), $mimes = array()): ArrayCollection
     {
         $parameters = array();
 
@@ -47,19 +52,22 @@ class Subdef extends AbstractRepository
             throw new RuntimeException('Missing "embed" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\Subdef::fromList($response->getProperty('embed')));
+        return new ArrayCollection(SubdefEntity::fromList($response->getProperty('embed')));
     }
 
     /**
      * Find a subdefs by its name that belong to the provided record
      *
-     * @param  integer $databoxId The record databoxId
-     * @param  integer $recordId The recordId
-     * @param  string $name The name of the subdef
-     * @return \PhraseanetSDK\Entity\Subdef
+     * @param integer $databoxId The record databoxId
+     * @param integer $recordId  The recordId
+     * @param string $name       The name of the subdef
+     * @return SubdefEntity
+     * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
      * @throws NotFoundException
      */
-    public function findByRecordAndName($databoxId, $recordId, $name)
+    public function findByRecordAndName(int $databoxId, int $recordId, string $name): SubdefEntity
     {
         $subdefs = $this->findByRecord($databoxId, $recordId);
 

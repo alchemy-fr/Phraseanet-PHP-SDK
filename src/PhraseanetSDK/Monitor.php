@@ -11,8 +11,14 @@
 
 namespace PhraseanetSDK;
 
+use BadMethodCallException;
+use DateTime;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\Monitor\Scheduler;
+use PhraseanetSDK\Monitor\Task;
+use ReflectionException;
+use ReflectionParameter;
 
 /**
  * @method Monitor getScheduler()
@@ -71,29 +77,38 @@ class Monitor
         $this->adapter = $adapter;
     }
 
-    public function __call($name, $arguments)
+    public function __call(string $name, $arguments)
     {
         if (!isset(static::$mappings[$name])) {
-            throw new \BadMethodCallException(sprintf('Method "%s::%s" does not exist.', get_class($this), $name));
+            throw new BadMethodCallException(sprintf('Method "%s::%s" does not exist.', get_class($this), $name));
         }
 
         return $this->doCall($name, $arguments);
     }
 
-    private function doCall($name, $arguments)
+    /**
+     * @param string $name
+     * @param string[] $arguments
+     * @return ArrayCollection|Scheduler|Task
+     * @throws ReflectionException
+     */
+    private function doCall(string $name, array $arguments)
     {
-        $parameters = array();
-
+        $from = [];
+        $to = [];
         $n = 0;
         foreach (static::$mappings[$name]['query-keys'] as $key) {
-            $parameters[$key] = $arguments[$n];
+            $from[] = '{'.$key.'}';
+            $to = urlencode($arguments[$n]);
             $n++;
         }
+        $path = str_replace($from, $to, static::$mappings[$name]['path']);
 
         $response = $this->adapter->call(
             static::$mappings[$name]['method'],
-            array(static::$mappings[$name]['path'], $parameters)
+            $path
         );
+
         $result = $response->getResult()->{static::$mappings[$name]['result-property']};
 
         if (is_array($result)) {
@@ -108,7 +123,13 @@ class Monitor
         return $output;
     }
 
-    private function getEntity($name, $data)
+    /**
+     * @param string $name
+     * @param $data
+     * @return Scheduler|Task
+     * @throws ReflectionException
+     */
+    private function getEntity(string $name, $data)
     {
         $entity = new static::$mappings[$name]['entity']();
 
@@ -117,10 +138,10 @@ class Monitor
                     return ucfirst($chunk);
             }, preg_split('/[-_]/', $property)));
 
-            $ref = new \ReflectionParameter(array($entity, $method), 0);
+            $ref = new ReflectionParameter(array($entity, $method), 0);
             if (null !== $ref->getClass()) {
                 if ('DateTime' === $ref->getClass()->name) {
-                    $value = \DateTime::createFromFormat(DATE_ATOM, $value) ?: null;
+                    $value = DateTime::createFromFormat(DATE_ATOM, $value) ?: null;
                 }
             }
 

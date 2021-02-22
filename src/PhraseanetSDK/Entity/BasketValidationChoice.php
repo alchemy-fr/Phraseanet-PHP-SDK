@@ -11,10 +11,17 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
+use Exception;
+use stdClass;
+
 class BasketValidationChoice
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return BasketValidationChoice[]
+     */
+    public static function fromList(array $values): array
     {
         $choices = array();
 
@@ -25,18 +32,22 @@ class BasketValidationChoice
         return $choices;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return BasketValidationChoice
+     */
+    public static function fromValue(stdClass $value): BasketValidationChoice
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $updatedOn;
 
@@ -46,17 +57,17 @@ class BasketValidationChoice
     protected $participant;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -64,9 +75,9 @@ class BasketValidationChoice
     /**
      * Get the validation user
      *
-     * @return BasketValidationParticipant
+     * @return BasketValidationParticipant|null
      */
-    public function getParticipant()
+    public function getParticipant(): ?BasketValidationParticipant
     {
         return $this->participant ?: $this->participant = BasketValidationParticipant::fromValue(
             $this->source->validation_user
@@ -76,11 +87,12 @@ class BasketValidationChoice
     /**
      * Get last update date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
@@ -88,7 +100,7 @@ class BasketValidationChoice
      *
      * @return int
      */
-    public function getNote()
+    public function getNote(): int
     {
         return (int) $this->source->note;
     }
@@ -102,7 +114,7 @@ class BasketValidationChoice
      *
      * @return null|boolean
      */
-    public function getAgreement()
+    public function getAgreement(): ?bool
     {
         return $this->source->agreement;
     }

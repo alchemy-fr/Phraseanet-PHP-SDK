@@ -161,24 +161,6 @@ $em = $app->getEntityManager($token);
 $em->getAdapter()->setExtended(true);
 ```
 
-## Silex Provider
-
-A [Silex](http://silex.sensiolabs.org/) provider is bundled within this
-package.
-
-### Basic usage
-
-```php
-$app = new Silex\Application();
-$app->register(new PhraseanetSDK\PhraseanetSDKServiceProvider(), array(
-    // required
-    'sdk.config' => array(
-        'client-id' => $clientId, // Your client id
-        'secret'    => $secret, // You client secret
-        'url'       => $url, // The ur of the phraseanet instance where you have created your application
-    )
-));
-```
 
 
 ## Monitor

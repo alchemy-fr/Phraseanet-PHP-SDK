@@ -36,14 +36,14 @@ class OAuth2Connector
      * @param string $clientId
      * @param string $secret
      */
-    public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
+    public function __construct(GuzzleAdapter $adapter, string $clientId, string $secret)
     {
         $this->adapter = $adapter;
         $this->clientId = $clientId;
         $this->secret = $secret;
     }
 
-    private function getUrl()
+    private function getUrl(): string
     {
         $baseUrl = $this->adapter->getBaseUrl();
 
@@ -59,14 +59,17 @@ class OAuth2Connector
      *
      * @return string
      */
-    public function getAuthorizationUrl($redirectUri, array $parameters = array(), array $scopes = array())
+    public function getAuthorizationUrl(string $redirectUri, array $parameters = [], array $scopes = []): string
     {
-        $oauthParams = array_replace($parameters, array(
-            'redirect_uri' => $redirectUri,
-            'response_type' => 'code',
-            'client_id' => $this->clientId,
-            'scope' => implode(' ', $scopes),
-        ));
+        $oauthParams = array_replace(
+            $parameters,
+            [
+                'redirect_uri'  => $redirectUri,
+                'response_type' => 'code',
+                'client_id'     => $this->clientId,
+                'scope'         => implode(' ', $scopes),
+            ]
+        );
 
         $parameters = http_build_query($oauthParams, null, '&');
 
@@ -76,22 +79,22 @@ class OAuth2Connector
     /**
      * Retrieves your access token from your callback endpoint
      *
-     * @param $code
-     * @param $redirectUri
+     * @param string $code
+     * @param string $redirectUri
      *
      * @return string
      *
      * @throws AuthenticationException
      */
-    public function retrieveAccessToken($code, $redirectUri)
+    public function retrieveAccessToken(string $code, string $redirectUri): string
     {
-        $postFields = array(
-            'grant_type' => static::GRANT_TYPE_AUTHORIZATION,
-            'redirect_uri' => $redirectUri,
-            'client_id' => $this->clientId,
+        $postFields = [
+            'grant_type'    => static::GRANT_TYPE_AUTHORIZATION,
+            'redirect_uri'  => $redirectUri,
+            'client_id'     => $this->clientId,
             'client_secret' => $this->secret,
-            'code' => $code,
-        );
+            'code'          => $code,
+        ];
 
         try {
             $responseContent = $this->adapter->call(
@@ -102,7 +105,8 @@ class OAuth2Connector
             );
             $data = json_decode($responseContent, true);
             $token = $data["access_token"];
-        } catch (BadResponseException $e) {
+        }
+        catch (BadResponseException $e) {
             $response = json_decode($e->getResponseBody(), true);
             $msg = isset($response['error']) ? $response['error'] : (isset($response['msg']) ? $response['msg'] : '');
 

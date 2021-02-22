@@ -12,11 +12,15 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use stdClass;
 
 class DataboxCollection
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return DataboxCollection[]
+     */
+    public static function fromList(array $values): array
     {
         $collections = array();
 
@@ -27,13 +31,17 @@ class DataboxCollection
         return $collections;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return DataboxCollection
+     */
+    public static function fromValue(stdClass $value): DataboxCollection
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -43,17 +51,17 @@ class DataboxCollection
     protected $labels;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -63,7 +71,7 @@ class DataboxCollection
      *
      * @return integer
      */
-    public function getBaseId()
+    public function getBaseId(): int
     {
         return $this->source->base_id;
     }
@@ -73,7 +81,7 @@ class DataboxCollection
      *
      * @return integer
      */
-    public function getDataboxId()
+    public function getDataboxId(): int
     {
         return $this->source->databox_id;
     }
@@ -83,7 +91,7 @@ class DataboxCollection
      *
      * @return integer
      */
-    public function getCollectionId()
+    public function getCollectionId(): int
     {
         return $this->source->collection_id;
     }
@@ -93,7 +101,7 @@ class DataboxCollection
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -103,7 +111,7 @@ class DataboxCollection
      *
      * @return integer
      */
-    public function getRecordAmount()
+    public function getRecordAmount(): int
     {
         return $this->source->record_amount;
     }

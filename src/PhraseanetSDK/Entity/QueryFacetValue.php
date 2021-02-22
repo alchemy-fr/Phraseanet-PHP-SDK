@@ -2,13 +2,15 @@
 
 namespace PhraseanetSDK\Entity;
 
+use stdClass;
+
 class QueryFacetValue
 {
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return QueryFacetValue[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $facetValues = array();
 
@@ -20,31 +22,31 @@ class QueryFacetValue
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return QueryFacetValue
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): QueryFacetValue
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -52,7 +54,7 @@ class QueryFacetValue
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->source->value;
     }
@@ -60,7 +62,7 @@ class QueryFacetValue
     /**
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         return $this->source->count;
     }
@@ -68,7 +70,7 @@ class QueryFacetValue
     /**
      * @return string
      */
-    public function getQuery()
+    public function getQuery(): string
     {
         return $this->source->query;
     }

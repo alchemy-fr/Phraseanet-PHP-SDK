@@ -14,11 +14,15 @@ namespace PhraseanetSDK\Entity;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use stdClass;
 
 class QuarantineSession
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return QuarantineSession[]
+     */
+    public static function fromList(array $values): array
     {
         $sessions = array();
 
@@ -29,13 +33,17 @@ class QuarantineSession
         return $sessions;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return QuarantineSession
+     */
+    public static function fromValue(stdClass $value): QuarantineSession
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -45,17 +53,17 @@ class QuarantineSession
     protected $user;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -65,17 +73,17 @@ class QuarantineSession
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
 
     /**
-     * The user id
+     * The user
      *
-     * @return integer
+     * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user ?: $this->user = User::fromValue($this->source->user);
     }

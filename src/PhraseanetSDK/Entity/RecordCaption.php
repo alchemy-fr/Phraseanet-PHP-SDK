@@ -13,11 +13,15 @@ namespace PhraseanetSDK\Entity;
 
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\Id as Id;
+use stdClass;
 
 class RecordCaption
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return RecordCaption[]
+     */
+    public static function fromList(array $values): array
     {
         $captions = array();
 
@@ -28,37 +32,41 @@ class RecordCaption
         return $captions;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return RecordCaption
+     */
+    public static function fromValue(stdClass $value): RecordCaption
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      * @deprecated Use getRawData() instead
      */
-    public function getSource()
+    public function getSource(): stdClass
     {
         return $this->source;
     }
@@ -68,7 +76,7 @@ class RecordCaption
      *
      * @return integer
      */
-    public function getMetaStructureId()
+    public function getMetaStructureId(): int
     {
         return $this->source->meta_structure_id;
     }
@@ -78,7 +86,7 @@ class RecordCaption
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -88,7 +96,7 @@ class RecordCaption
      *
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->source->value;
     }

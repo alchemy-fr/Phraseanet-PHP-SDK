@@ -11,13 +11,17 @@
 
 namespace PhraseanetSDK\Entity;
 
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\Id as Id;
+use DateTime;
+use Exception;
+use stdClass;
 
 class User
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return User[]
+     */
+    public static function fromList(array $values): array
     {
         $users = array();
 
@@ -28,13 +32,17 @@ class User
         return $users;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass|null $value
+     * @return User|null
+     */
+    public static function fromValue(?stdClass $value): ?User
     {
-        return new self($value);
+        return $value ? new self($value) : null;
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -74,17 +82,17 @@ class User
     protected $hasCollectionDemands = false;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -92,7 +100,7 @@ class User
     /**
      * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->source->address;
     }
@@ -100,7 +108,7 @@ class User
     /**
      * @param string $address
      */
-    public function setAddress($address)
+    public function setAddress(string $address)
     {
         $this->source->address = $address;
     }
@@ -108,7 +116,7 @@ class User
     /**
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->source->city;
     }
@@ -116,7 +124,7 @@ class User
     /**
      * @param string $city
      */
-    public function setCity($city)
+    public function setCity(string $city)
     {
         $this->source->city = $city;
     }
@@ -124,7 +132,7 @@ class User
     /**
      * @return string
      */
-    public function getCompany()
+    public function getCompany(): string
     {
         return $this->source->company;
     }
@@ -132,7 +140,7 @@ class User
     /**
      * @param string $company
      */
-    public function setCompany($company)
+    public function setCompany(string $company)
     {
         $this->source->company = $company;
     }
@@ -140,7 +148,7 @@ class User
     /**
      * @return string
      */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->source->country;
     }
@@ -148,23 +156,24 @@ class User
     /**
      * @param string $country
      */
-    public function setCountry($country)
+    public function setCountry(string $country)
     {
         $this->source->country = $country;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
-     * @param \DateTime $createdOn
+     * @param DateTime $createdOn
      */
-    public function setCreatedOn($createdOn)
+    public function setCreatedOn(DateTime $createdOn)
     {
         $this->createdOn = $createdOn;
     }
@@ -172,7 +181,7 @@ class User
     /**
      * @return string
      */
-    public function getDisplayName()
+    public function getDisplayName(): string
     {
         return $this->source->display_name;
     }
@@ -180,7 +189,7 @@ class User
     /**
      * @param string $displayName
      */
-    public function setDisplayName($displayName)
+    public function setDisplayName(string $displayName)
     {
         $this->source->display_name = $displayName;
     }
@@ -188,7 +197,7 @@ class User
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->source->email;
     }
@@ -196,7 +205,7 @@ class User
     /**
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->source->email = $email;
     }
@@ -204,7 +213,7 @@ class User
     /**
      * @return string
      */
-    public function getFax()
+    public function getFax(): string
     {
         return $this->source->fax;
     }
@@ -212,7 +221,7 @@ class User
     /**
      * @param string $fax
      */
-    public function setFax($fax)
+    public function setFax(string $fax)
     {
         $this->source->fax = $fax;
     }
@@ -220,7 +229,7 @@ class User
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->source->first_name;
     }
@@ -228,7 +237,7 @@ class User
     /**
      * @param string $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName)
     {
         $this->source->first_name = $firstName;
     }
@@ -236,7 +245,7 @@ class User
     /**
      * @return string
      */
-    public function getGender()
+    public function getGender(): string
     {
         return $this->source->gender;
     }
@@ -244,7 +253,7 @@ class User
     /**
      * @param string $gender
      */
-    public function setGender($gender)
+    public function setGender(string $gender)
     {
         $this->source->gender = $gender;
     }
@@ -252,7 +261,7 @@ class User
     /**
      * @return string
      */
-    public function getGeonameId()
+    public function getGeonameId(): string
     {
         return $this->source->geoname_id;
     }
@@ -260,7 +269,7 @@ class User
     /**
      * @param string $geonameId
      */
-    public function setGeonameId($geonameId)
+    public function setGeonameId(string $geonameId)
     {
         $this->source->geoname_id = $geonameId;
     }
@@ -268,7 +277,7 @@ class User
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
@@ -276,7 +285,7 @@ class User
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->source->id = $id;
     }
@@ -284,7 +293,7 @@ class User
     /**
      * @return string
      */
-    public function getJob()
+    public function getJob(): string
     {
         return $this->source->job;
     }
@@ -292,23 +301,24 @@ class User
     /**
      * @param string $job
      */
-    public function setJob($job)
+    public function setJob(string $job)
     {
         $this->source->job = $job;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getLastConnection()
+    public function getLastConnection(): DateTime
     {
-        return $this->lastConnection ?: $this->lastConnection = new \DateTime($this->source->last_connection);
+        return $this->lastConnection ?: $this->lastConnection = new DateTime($this->source->last_connection);
     }
 
     /**
-     * @param \DateTime $lastConnection
+     * @param DateTime $lastConnection
      */
-    public function setLastConnection($lastConnection)
+    public function setLastConnection(DateTime $lastConnection)
     {
         $this->lastConnection = $lastConnection;
     }
@@ -316,7 +326,7 @@ class User
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->source->last_name;
     }
@@ -324,7 +334,7 @@ class User
     /**
      * @param string $lastName
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName)
     {
         $this->source->last_name = $lastName;
     }
@@ -332,7 +342,7 @@ class User
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->source->locale;
     }
@@ -340,7 +350,7 @@ class User
     /**
      * @param string $locale
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         $this->source->locale = $locale;
     }
@@ -348,7 +358,7 @@ class User
     /**
      * @return string
      */
-    public function getLogin()
+    public function getLogin(): string
     {
         return $this->source->login;
     }
@@ -356,7 +366,7 @@ class User
     /**
      * @param string $login
      */
-    public function setLogin($login)
+    public function setLogin(string $login)
     {
         $this->source->login = $login;
     }
@@ -364,7 +374,7 @@ class User
     /**
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->source->phone;
     }
@@ -372,7 +382,7 @@ class User
     /**
      * @param string $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone)
     {
         $this->source->phone = $phone;
     }
@@ -380,7 +390,7 @@ class User
     /**
      * @return string
      */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->source->position;
     }
@@ -388,23 +398,24 @@ class User
     /**
      * @param string $position
      */
-    public function setPosition($position)
+    public function setPosition(string $position)
     {
         $this->source->position = $position;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
-     * @param \DateTime $updatedOn
+     * @param DateTime $updatedOn
      */
-    public function setUpdatedOn($updatedOn)
+    public function setUpdatedOn(DateTime $updatedOn)
     {
         $this->updatedOn = $updatedOn;
     }
@@ -412,7 +423,7 @@ class User
     /**
      * @return string
      */
-    public function getZipCode()
+    public function getZipCode(): string
     {
         return $this->source->zip_code;
     }
@@ -420,7 +431,7 @@ class User
     /**
      * @param string $zipCode
      */
-    public function setZipCode($zipCode)
+    public function setZipCode(string $zipCode)
     {
         $this->source->zip_code = $zipCode;
     }
@@ -437,7 +448,7 @@ class User
     /**
      * @return array
      */
-    public function getCollectionRights()
+    public function getCollectionRights(): array
     {
         return $this->collectionRights;
     }
@@ -445,7 +456,7 @@ class User
     /**
      * @return bool
      */
-    public function hasCollectionRights()
+    public function hasCollectionRights(): bool
     {
         return $this->hasCollectionRights;
     }
@@ -463,7 +474,7 @@ class User
     /**
      * @return array
      */
-    public function getCollectionDemands()
+    public function getCollectionDemands(): array
     {
         return $this->collectionDemands;
     }
@@ -471,7 +482,7 @@ class User
     /**
      * @return bool
      */
-    public function hasCollectionDemands()
+    public function hasCollectionDemands(): bool
     {
         return $this->hasCollectionDemands;
     }

@@ -11,13 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
+use stdClass;
+
 class QuerySuggestion
 {
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return QuerySuggestion[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $suggestions = array();
 
@@ -29,31 +31,31 @@ class QuerySuggestion
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return QuerySuggestion
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): QuerySuggestion
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -63,7 +65,7 @@ class QuerySuggestion
      *
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->source->value;
     }
@@ -73,7 +75,7 @@ class QuerySuggestion
      *
      * @return Boolean
      */
-    public function isCurrent()
+    public function isCurrent(): bool
     {
         return $this->source->current;
     }
@@ -83,7 +85,7 @@ class QuerySuggestion
      *
      * @return integer
      */
-    public function getHits()
+    public function getHits(): int
     {
         return $this->source->hits;
     }

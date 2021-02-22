@@ -11,10 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
+use stdClass;
+
 class BasketValidationParticipant
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return BasketValidationParticipant[]
+     */
+    public static function fromList(array $values): array
     {
         $participants = array();
 
@@ -25,13 +30,17 @@ class BasketValidationParticipant
         return $participants;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass|null $value
+     * @return BasketValidationParticipant|null
+     */
+    public static function fromValue(?stdClass $value): ?BasketValidationParticipant
     {
-        return new self($value);
+        return $value ? new self($value) : null;
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -41,17 +50,17 @@ class BasketValidationParticipant
     protected $user;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -59,9 +68,9 @@ class BasketValidationParticipant
     /**
      * Get the user
      *
-     * @return User
+     * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user ?: $this->user = User::fromValue($this->source->user);
     }
@@ -71,7 +80,7 @@ class BasketValidationParticipant
      *
      * @return bool
      */
-    public function isConfirmed()
+    public function isConfirmed(): bool
     {
         return $this->source->confirmed;
     }
@@ -81,7 +90,7 @@ class BasketValidationParticipant
      *
      * @return bool
      */
-    public function canAgree()
+    public function canAgree(): bool
     {
         return $this->source->can_agree;
     }
@@ -91,7 +100,7 @@ class BasketValidationParticipant
      *
      * @return bool
      */
-    public function canSeeOthers()
+    public function canSeeOthers(): bool
     {
         return $this->source->can_see_others;
     }
@@ -101,7 +110,7 @@ class BasketValidationParticipant
      *
      * @return bool
      */
-    public function isReadOnly()
+    public function isReadOnly(): bool
     {
         return $this->source->readonly;
     }

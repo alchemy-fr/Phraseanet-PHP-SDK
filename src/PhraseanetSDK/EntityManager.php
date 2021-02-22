@@ -11,6 +11,7 @@
 
 namespace PhraseanetSDK;
 
+use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\AbstractRepository;
 use PhraseanetSDK\Orders\OrderRepository;
@@ -50,7 +51,7 @@ class EntityManager
     /**
      * @return LoggerInterface
      */
-    public function getLogger()
+    public function getLogger(): LoggerInterface
     {
         return $this->logger;
     }
@@ -60,7 +61,7 @@ class EntityManager
      *
      * @return APIGuzzleAdapter
      */
-    public function getAdapter()
+    public function getAdapter(): APIGuzzleAdapter
     {
         return $this->adapter;
     }
@@ -68,10 +69,10 @@ class EntityManager
     /**
      * Get a repository by its name
      *
-     * @param  string $name
+     * @param string $name
      * @return AbstractRepository
      */
-    public function getRepository($name)
+    public function getRepository(string $name): AbstractRepository
     {
         if (isset($this->repositories[$name])) {
             return $this->repositories[$name];
@@ -89,7 +90,7 @@ class EntityManager
         }
 
         if (!class_exists($objectName)) {
-            throw new Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Class %s does not exists', $objectName)
             );
         }

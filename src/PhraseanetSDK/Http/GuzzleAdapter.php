@@ -11,23 +11,18 @@
 
 namespace PhraseanetSDK\Http;
 
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException as GuzzleBadResponse;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
+// use GuzzleLogMiddleware\LogMiddleware;
 use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\RequestOptions;
-
-use GuzzleLogMiddleware\LogMiddleware;
-use GuzzleHttp\HandlerStack;
-
+// use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
 class GuzzleAdapter implements GuzzleAdapterInterface
@@ -57,7 +52,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      *
      * @return ClientInterface
      */
-    public function getGuzzle()
+    public function getGuzzle(): ClientInterface
     {
         return $this->guzzleClient;
     }
@@ -68,9 +63,10 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * @param string $baseUrl
      * @return GuzzleAdapter
      */
-    public function setBaseUrl($baseUrl)
+    public function setBaseUrl(string $baseUrl): GuzzleAdapterInterface
     {
         $this->baseUri = $baseUrl;
+
         return $this;
     }
 
@@ -79,10 +75,10 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      *
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         // return $this->guzzleClient->getBaseUrl();  // removed
-        return $this->baseUri ;
+        return $this->baseUri;
     }
 
     /**
@@ -91,19 +87,20 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * @param string $userAgent
      * @return GuzzleAdapter
      */
-    public function setUserAgent($userAgent)
+    public function setUserAgent(string $userAgent): GuzzleAdapterInterface
     {
         // $this->guzzleClient->setUserAgent($userAgent);  // removed
         $this->userAgent = $userAgent;
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getUserAgent()
+    public function getUserAgent(): string
     {
-        return($this->userAgent);
+        return ($this->userAgent);
     }
 
     /**
@@ -115,16 +112,17 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * @param bool $extended
      * @return GuzzleAdapter
      */
-    public function setExtended($extended)
+    public function setExtended(bool $extended): GuzzleAdapterInterface
     {
         $this->extended = $extended;
+
         return $this;
     }
 
     /**
      * @return boolean
      */
-    public function isExtended()
+    public function isExtended(): bool
     {
         return $this->extended;
     }
@@ -141,10 +139,11 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      *
      * @return string The response body
      *
+     * @throws InvalidArgumentException
      * @throws BadResponseException
      * @throws RuntimeException
      */
-    public function call($method, $path, array $query = [], array $postFields = [], array $files = [], array $headers = [])
+    public function call(string $method, string $path, array $query = [], array $postFields = [], array $files = [], array $headers = []): string
     {
         try {
             $acceptHeader = [
@@ -156,29 +155,29 @@ class GuzzleAdapter implements GuzzleAdapterInterface
             ];
 
             // files -- receiving files has no usage found in the code, so format of $files is unknown, so... not implmented
-            if(count($files) > 0) {
-                throw new \GuzzleHttp\Exception\InvalidArgumentException('request with "files" is not implemented' );
+            if (count($files) > 0) {
+                throw new InvalidArgumentException('request with "files" is not implemented');
             }
 
             // postFields
-            if(count($postFields) > 0) {
-                if($method !== 'POST') {
+            if (count($postFields) > 0) {
+                if ($method !== 'POST') {
                     throw new InvalidArgumentException('postFields are only allowed with "POST" method');
                 }
-                if(count($files) > 0) {
+                if (count($files) > 0) {
                     // this will not happen while "files" is not implemented
-                    throw new \GuzzleHttp\Exception\InvalidArgumentException('request can\'t contain both postFields and files' );
+                    throw new InvalidArgumentException('request can\'t contain both postFields and files');
                 }
                 $options[RequestOptions::FORM_PARAMS] = $postFields;
             }
 
             // headers
             $h = array_merge($acceptHeader, $headers);
-            if($this->userAgent !== '' && !array_key_exists('User-Agent', $h)) {
+            if ($this->userAgent !== '' && !array_key_exists('User-Agent', $h)) {
                 // use the defaut user-agent if none is provided in headers
                 $h['User-Agent'] = sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION);
             }
-            if(count($h) > 0) {
+            if (count($h) > 0) {
                 $options[RequestOptions::HEADERS] = $h;
             }
 
@@ -203,10 +202,9 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      * Creates a new instance of GuzzleAdapter
      *
      * @param string $endpoint
-     * @param EventSubscriberInterface[] $plugins
      * @return static
      */
-    public static function create($endpoint, array $plugins = array())
+    public static function create(string $endpoint): GuzzleAdapterInterface
     {
         if (!is_string($endpoint)) {
             throw new InvalidArgumentException('API url endpoint must be a valid url');
@@ -222,7 +220,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         }
 
         $guzzleClient = new GuzzleClient([
-            'base_uri' => $endpoint,
+            'base_uri'              => $endpoint,
             RequestOptions::HEADERS => [
                 'User-Agent' => sprintf('%s version %s', ApplicationInterface::USER_AGENT, ApplicationInterface::VERSION)
             ]
@@ -243,16 +241,17 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         }
         */
 
-        return (new static($guzzleClient, $endpoint))->setBaseUrl($endpoint);
+        return (new static($guzzleClient))->setBaseUrl($endpoint);
     }
 
+    /*
     private function addRequestParameters(RequestInterface $request, $query, $postFields, $files)
     {
         foreach ($query as $name => $value) {
             $request->getQuery()->add($name, $value);
         }
 
-        /* todo : EntityEnclosingRequestInterface ???
+        // todo : EntityEnclosingRequestInterface ???
         if ($request instanceof EntityEnclosingRequestInterface) {
             if ($request->getHeader('Content-Type') == 'application/json') {
                 $request->getHeaders()->offsetUnset('Content-Type');
@@ -270,6 +269,6 @@ class GuzzleAdapter implements GuzzleAdapterInterface
         } elseif (0 < count($postFields)) {
             throw new InvalidArgumentException('Can not add post fields to GET request');
         }
-        */
     }
+    */
 }

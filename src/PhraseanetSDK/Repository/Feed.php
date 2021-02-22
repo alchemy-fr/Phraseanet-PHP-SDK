@@ -12,20 +12,26 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
+use PhraseanetSDK\Entity\Feed as FeedEntity;
 
 class Feed extends AbstractRepository
 {
     /**
      * Find a feed by its identifier
      *
-     * @param  integer                    $id The desired id
-     * @return \PhraseanetSDK\Entity\Feed
+     * @param integer $id The desired id
+     * @return FeedEntity
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findById($id)
+    public function findById(int $id): FeedEntity
     {
         $response = $this->query('GET', sprintf('v1/feeds/%d/content/', $id), array(
             'offset_start' => 0,
@@ -36,7 +42,7 @@ class Feed extends AbstractRepository
             throw new RuntimeException('Missing "feed" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\Feed::fromValue($this->em, $response->getProperty('feed'));
+        return FeedEntity::fromValue($this->em, $response->getProperty('feed'));
     }
 
     /**
@@ -44,8 +50,11 @@ class Feed extends AbstractRepository
      *
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findAll()
+    public function findAll(): ArrayCollection
     {
         $response = $this->query('GET', 'v1/feeds/list/');
 
@@ -53,7 +62,7 @@ class Feed extends AbstractRepository
             throw new RuntimeException('Missing "feeds" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\Feed::fromList(
+        return new ArrayCollection(FeedEntity::fromList(
             $this->em,
             $response->getProperty('feeds')
         ));
