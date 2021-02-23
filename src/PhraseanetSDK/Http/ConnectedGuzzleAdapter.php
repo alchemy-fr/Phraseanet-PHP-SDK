@@ -11,6 +11,8 @@
 
 namespace PhraseanetSDK\Http;
 
+use GuzzleHttp\ClientInterface;
+
 class ConnectedGuzzleAdapter implements GuzzleAdapterInterface
 {
     /** @var GuzzleAdapterInterface */
@@ -28,26 +30,20 @@ class ConnectedGuzzleAdapter implements GuzzleAdapterInterface
         return $this->token;
     }
 
-    public function setToken($token)
+    public function setToken($token): GuzzleAdapterInterface
     {
         $this->token = $token;
 
         return $this;
     }
 
-    public function getGuzzle()
+    public function getGuzzle(): ClientInterface
     {
         return $this->adapter->getGuzzle();
     }
 
-    public function call(
-        $method,
-        $path,
-        array $query = array(),
-        array $postFields = array(),
-        array $files = array(),
-        array $headers = array()
-    ) {
+    public function call(string $method, string $path, array $query = [], array $postFields = [], array $files = [], array $headers = [])
+    {
         $query = array_replace($query, array(
             'oauth_token' => $this->token,
         ));

@@ -11,10 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
+use stdClass;
+
 class DataboxTermsOfUse
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return DataboxTermsOfUse[]
+     */
+    public static function fromList(array $values): array
     {
         $terms = array();
 
@@ -25,28 +30,32 @@ class DataboxTermsOfUse
         return $terms;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return DataboxTermsOfUse
+     */
+    public static function fromValue(stdClass $value): DataboxTermsOfUse
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -54,7 +63,7 @@ class DataboxTermsOfUse
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->source->locale;
     }
@@ -62,7 +71,7 @@ class DataboxTermsOfUse
     /**
      * @return string
      */
-    public function getTerms()
+    public function getTerms(): string
     {
         return $this->source->terms;
     }

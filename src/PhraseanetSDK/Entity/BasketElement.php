@@ -12,14 +12,15 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use stdClass;
 
 class BasketElement
 {
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return BasketElement[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $elements = array();
 
@@ -31,16 +32,16 @@ class BasketElement
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return BasketElement
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): BasketElement
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -55,17 +56,17 @@ class BasketElement
     protected $validationChoices;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -75,7 +76,7 @@ class BasketElement
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return (int) $this->source->basket_element_id;
     }
@@ -85,7 +86,7 @@ class BasketElement
      *
      * @return integer
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return (int) $this->source->order;
     }
@@ -95,9 +96,9 @@ class BasketElement
      *
      * @return bool
      */
-    public function isValidationItem()
+    public function isValidationItem(): bool
     {
-        return $this->source->validation_item;
+        return (bool)$this->source->validation_item;
     }
 
     /**
@@ -105,7 +106,7 @@ class BasketElement
      *
      * @return Record
      */
-    public function getRecord()
+    public function getRecord(): Record
     {
         return $this->record ?: $this->record = Record::fromValue($this->source->record);
     }
@@ -114,7 +115,7 @@ class BasketElement
      * Retrieve the choice of all participants that concern the basket element
      * in a collection PhraseanetSDK\Entity\BasketValidationChoice object
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|BasketValidationChoice[]
      */
     public function getValidationChoices()
     {
@@ -132,7 +133,7 @@ class BasketElement
      *
      * @return int
      */
-    public function getNote()
+    public function getNote(): int
     {
         return (int) $this->source->note;
     }
@@ -146,7 +147,7 @@ class BasketElement
      *
      * @return null|boolean
      */
-    public function getAgreement()
+    public function getAgreement(): ?bool
     {
         return $this->source->agreement;
     }

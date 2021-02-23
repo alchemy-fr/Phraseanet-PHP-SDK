@@ -3,6 +3,11 @@ UPGRADE
 
 This is a list of backwards compatibility (BC) breaks introduced in PhraseanetSDK:
 
+# 1.x
+
+ * The sdk now uses "guzzlehttp/guzzle": "7.1.1"
+ * Cache, log, record, play, profiling, ... which did rely on guzzle-3 plugings are deleted
+
 # 0.5.0
 
  * Cgus entity has been renamed to DataboxTermsOfUse

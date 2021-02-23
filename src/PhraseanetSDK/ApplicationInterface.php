@@ -16,33 +16,33 @@ interface ApplicationInterface
     /**
      * @var string Phraseanet API mount point
      */
-    const API_MOUNT_POINT = '/api';
+    public const API_MOUNT_POINT = '/api';
 
     /**
      * @var string PHP SDK user agent
      */
-    const USER_AGENT = 'Phraseanet SDK';
+    public const USER_AGENT = 'Phraseanet SDK';
 
     /**
      * @var string SDK version
      */
-    const VERSION = '0.9.x';
+    public const VERSION = '1.x';
 
     /**
      * Return an OAuth2Connector
      *
      * @return OAuth2Connector
      */
-    public function getOauth2Connector();
+    public function getOauth2Connector(): OAuth2Connector;
 
     /**
      * Returns a entity manager given a token
      *
-     * @param string $token
+     * @param string|null $token
      *
      * @return EntityManager
      */
-    public function getEntityManager($token);
+    public function getEntityManager(?string $token): EntityManager;
 
     /**
      * Returns a monitor instance given a token
@@ -51,7 +51,7 @@ interface ApplicationInterface
      *
      * @return Monitor
      */
-    public function getMonitor($token);
+    public function getMonitor(string $token): Monitor;
 
     /**
      * Returns an uploader instance given a token
@@ -60,5 +60,5 @@ interface ApplicationInterface
      *
      * @return Uploader
      */
-    public function getUploader($token);
+    public function getUploader(string $token): Uploader;
 }

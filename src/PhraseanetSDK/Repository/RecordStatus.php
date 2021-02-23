@@ -11,22 +11,28 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\RecordStatus as RecordStatusEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class RecordStatus extends AbstractRepository
 {
     /**
      * Find All the status attached to the provided record
      *
-     * @param  integer          $databoxId The record databox id
-     * @param  integer          $recordId  the record id
+     * @param integer $databoxId The record databox id
+     * @param integer $recordId  the record id
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByRecord($databoxId, $recordId)
+    public function findByRecord(int $databoxId, int $recordId): ArrayCollection
     {
         $response = $this->query('GET', sprintf('v1/records/%d/%d/status/', $databoxId, $recordId));
 
@@ -34,6 +40,6 @@ class RecordStatus extends AbstractRepository
             throw new RuntimeException('Missing "status" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\RecordStatus::fromList($response->getProperty('status')));
+        return new ArrayCollection(RecordStatusEntity::fromList($response->getProperty('status')));
     }
 }

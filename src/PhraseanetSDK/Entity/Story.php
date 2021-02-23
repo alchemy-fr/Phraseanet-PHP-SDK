@@ -11,15 +11,25 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\Annotation\ApiField as ApiField;
-use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use Exception;
 use PhraseanetSDK\EntityManager;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
+use PhraseanetSDK\Repository\Caption as CaptionRepository;
+use stdClass;
+use PhraseanetSDK\Repository\RecordStatus as RecordStatusRepository;
 
 class Story
 {
-
-    public static function fromList(EntityManager $entityManager, array $values)
+    /**
+     * @param EntityManager $entityManager
+     * @param stdClass[] $values
+     * @return Story[]
+     */
+    public static function fromList(EntityManager $entityManager, array $values): array
     {
         $stories = array();
 
@@ -30,7 +40,12 @@ class Story
         return $stories;
     }
 
-    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    /**
+     * @param EntityManager $entityManager
+     * @param stdClass $value
+     * @return Story
+     */
+    public static function fromValue(EntityManager $entityManager, stdClass $value): Story
     {
         return new self($entityManager, $value);
     }
@@ -41,17 +56,17 @@ class Story
     protected $entityManager;
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $updatedOn;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdOn;
 
@@ -87,18 +102,18 @@ class Story
 
     /**
      * @param EntityManager $entityManager
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(EntityManager $entityManager, \stdClass $source)
+    public function __construct(EntityManager $entityManager, stdClass $source)
     {
         $this->entityManager = $entityManager;
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -108,7 +123,7 @@ class Story
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->getDataboxId().'_'.$this->getStoryId();
     }
@@ -118,7 +133,7 @@ class Story
      *
      * @return integer
      */
-    public function getStoryId()
+    public function getStoryId(): int
     {
         return $this->source->story_id;
     }
@@ -128,7 +143,7 @@ class Story
      *
      * @return integer
      */
-    public function getDataboxId()
+    public function getDataboxId(): int
     {
         return $this->source->databox_id;
     }
@@ -136,7 +151,7 @@ class Story
     /**
      * @return null|Subdef
      */
-    public function getThumbnail()
+    public function getThumbnail(): ?Subdef
     {
         if (! isset($this->source->thumbnail)) {
             return null;
@@ -148,21 +163,23 @@ class Story
     /**
      * Last updated date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
@@ -170,7 +187,7 @@ class Story
      *
      * @return integer
      */
-    public function getCollectionId()
+    public function getCollectionId(): int
     {
         return $this->source->collection_id;
     }
@@ -180,7 +197,7 @@ class Story
      *
      * @return string
      */
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->source->uuid;
     }
@@ -188,7 +205,7 @@ class Story
     /**
      * @return int
      */
-    public function getRecordCount()
+    public function getRecordCount(): int
     {
         return $this->recordCount !== null ?
             $this->recordCount :
@@ -226,11 +243,16 @@ class Story
 
     /**
      * @return RecordStatus[]|ArrayCollection
+     * @throws NotFoundException
+     * @throws TokenExpiredException
+     * @throws UnauthorizedException
      */
     public function getStatus()
     {
         if (! isset($this->status)) {
-            $this->status = $this->entityManager->getRepository('recordStatus')->findByRecord(
+            /** @var RecordStatusRepository $repo */
+            $repo = $this->entityManager->getRepository('recordStatus');
+            $this->status = $repo->findByRecord(
                 $this->getDataboxId(),
                 $this->getStoryId()
             );
@@ -241,6 +263,9 @@ class Story
 
     /**
      * @return RecordCaption[]|ArrayCollection
+     * @throws NotFoundException
+     * @throws TokenExpiredException
+     * @throws UnauthorizedException
      */
     public function getCaption()
     {
@@ -249,7 +274,9 @@ class Story
         }
 
         if (! isset($this->caption)) {
-            $this->caption = $this->entityManager->getRepository('caption')->findByRecord(
+            /** @var CaptionRepository $repo */
+            $repo = $this->entityManager->getRepository('caption');
+            $this->caption = $repo->findByRecord(
                 $this->getDataboxId(),
                 $this->getStoryId()
             );

@@ -11,16 +11,19 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use stdClass;
 
 class FeedEntry
 {
 
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return FeedEntry[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $entries = array();
 
@@ -32,26 +35,26 @@ class FeedEntry
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return FeedEntry
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): FeedEntry
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdOn;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $updatedOn;
 
@@ -61,17 +64,17 @@ class FeedEntry
     protected $items;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -81,7 +84,7 @@ class FeedEntry
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
@@ -91,7 +94,7 @@ class FeedEntry
      *
      * @return string
      */
-    public function getAuthorEmail()
+    public function getAuthorEmail(): string
     {
         return $this->source->author_email;
     }
@@ -101,7 +104,7 @@ class FeedEntry
      *
      * @return string
      */
-    public function getAuthorName()
+    public function getAuthorName(): string
     {
         return $this->source->author_name;
     }
@@ -111,7 +114,7 @@ class FeedEntry
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->source->title;
     }
@@ -121,7 +124,7 @@ class FeedEntry
      *
      * @return string
      */
-    public function getSubtitle()
+    public function getSubtitle(): string
     {
         return $this->source->subtitle;
     }
@@ -129,21 +132,23 @@ class FeedEntry
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
      * Last update date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
@@ -166,7 +171,7 @@ class FeedEntry
      *
      * @return integer
      */
-    public function getFeedId()
+    public function getFeedId(): int
     {
         return $this->source->feed_id;
     }
@@ -174,7 +179,7 @@ class FeedEntry
     /**
      * @return string
      */
-    public function getFeedTitle()
+    public function getFeedTitle(): string
     {
         return $this->source->feed_title;
     }
@@ -182,7 +187,7 @@ class FeedEntry
     /**
      * @return string
      */
-    public function getFeedUrl()
+    public function getFeedUrl(): string
     {
         return $this->source->feed_url;
     }
@@ -190,7 +195,7 @@ class FeedEntry
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->source->url;
     }

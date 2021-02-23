@@ -11,12 +11,18 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use stdClass;
 
 class Quarantine
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return Quarantine[]
+     */
+    public static function fromList(array $values): array
     {
         $quarantines = array();
 
@@ -27,13 +33,17 @@ class Quarantine
         return $quarantines;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return Quarantine
+     */
+    public static function fromValue(stdClass $value): Quarantine
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -48,27 +58,27 @@ class Quarantine
     protected $checks;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdOn;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $updatedOn;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -78,7 +88,7 @@ class Quarantine
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
@@ -88,7 +98,7 @@ class Quarantine
      *
      * @return QuarantineSession
      */
-    public function getSession()
+    public function getSession(): QuarantineSession
     {
         return $this->session ?: $this->session = QuarantineSession::fromValue($this->source->quarantine_session);
     }
@@ -98,7 +108,7 @@ class Quarantine
      *
      * @return integer
      */
-    public function getBaseId()
+    public function getBaseId(): int
     {
         return $this->source->base_id;
     }
@@ -108,7 +118,7 @@ class Quarantine
      *
      * @return string
      */
-    public function getOriginalName()
+    public function getOriginalName(): string
     {
         return $this->source->original_name;
     }
@@ -118,7 +128,7 @@ class Quarantine
      *
      * @return string
      */
-    public function getSha256()
+    public function getSha256(): string
     {
         return $this->source->sha256;
     }
@@ -128,7 +138,7 @@ class Quarantine
      *
      * @return string
      */
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->source->uuid;
     }
@@ -138,7 +148,7 @@ class Quarantine
      *
      * @return Boolean
      */
-    public function isForced()
+    public function isForced(): bool
     {
         return $this->source->forced;
     }
@@ -146,7 +156,7 @@ class Quarantine
     /**
      * Get the check messages as a collection of string
      *
-     * @return string[]
+     * @return ArrayCollection|string[]
      */
     public function getChecks()
     {
@@ -156,20 +166,22 @@ class Quarantine
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: new \DateTime($this->source->created_on);
+        return $this->createdOn ?: new DateTime($this->source->created_on);
     }
 
     /**
      * Last updated date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: new DateTime($this->source->updated_on);
     }
 }

@@ -11,13 +11,21 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use PhraseanetSDK\EntityManager;
+use PhraseanetSDK\Repository\Entry as EntryRepository;
+use stdClass;
 
 class Feed
 {
-
-    public static function fromList(EntityManager $entityManager, array $values)
+    /**
+     * @param EntityManager $entityManager
+     * @param stdClass[] $values
+     * @return Feed[]
+     */
+    public static function fromList(EntityManager $entityManager, array $values): array
     {
         $feeds = array();
 
@@ -28,7 +36,12 @@ class Feed
         return $feeds;
     }
 
-    public static function fromValue(EntityManager $entityManager, \stdClass $value)
+    /**
+     * @param EntityManager $entityManager
+     * @param stdClass $value
+     * @return Feed
+     */
+    public static function fromValue(EntityManager $entityManager, stdClass $value): Feed
     {
         return new self($entityManager, $value);
     }
@@ -39,34 +52,34 @@ class Feed
     protected $entityManager;
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $createdOn;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     protected $updatedOn;
 
     /**
      * @param EntityManager $entityManager
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(EntityManager $entityManager, \stdClass $source)
+    public function __construct(EntityManager $entityManager, stdClass $source)
     {
         $this->entityManager = $entityManager;
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -76,7 +89,7 @@ class Feed
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->id;
     }
@@ -86,7 +99,7 @@ class Feed
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->source->title;
     }
@@ -96,7 +109,7 @@ class Feed
      *
      * @return string
      */
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->source->icon;
     }
@@ -106,7 +119,7 @@ class Feed
      *
      * @return string
      */
-    public function getSubTitle()
+    public function getSubTitle(): string
     {
         return $this->source->subtitle;
     }
@@ -116,7 +129,7 @@ class Feed
      *
      * @return integer
      */
-    public function getTotalEntries()
+    public function getTotalEntries(): int
     {
         return $this->source->total_entries;
     }
@@ -124,21 +137,23 @@ class Feed
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
      * Last updated date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
@@ -146,7 +161,7 @@ class Feed
      *
      * @return Boolean
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return $this->source->public;
     }
@@ -156,7 +171,7 @@ class Feed
      *
      * @return Boolean
      */
-    public function isReadonly()
+    public function isReadonly(): bool
     {
         return $this->source->readonly;
     }
@@ -166,7 +181,7 @@ class Feed
      *
      * @return Boolean
      */
-    public function isDeletable()
+    public function isDeletable(): bool
     {
         return $this->source->deletable;
     }
@@ -178,8 +193,8 @@ class Feed
      */
     public function getEntries($offset = 0, $perPage = 0)
     {
-        return $this->entityManager
-            ->getRepository('entry')
-            ->findByFeed($this->getId(), $offset, $perPage);
+        /** @var EntryRepository $repo */
+        $repo = $this->entityManager->getRepository('entry');
+        return $$repo->findByFeed($this->getId(), $offset, $perPage);
     }
 }

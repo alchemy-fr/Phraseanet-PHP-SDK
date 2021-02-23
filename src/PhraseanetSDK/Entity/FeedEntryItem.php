@@ -11,10 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
+use stdClass;
+
 class FeedEntryItem
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return FeedEntryItem[]
+     */
+    public static function fromList(array $values): array
     {
         $items = array();
 
@@ -25,13 +30,17 @@ class FeedEntryItem
         return $items;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return FeedEntryItem
+     */
+    public static function fromValue(stdClass $value): FeedEntryItem
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -41,17 +50,17 @@ class FeedEntryItem
     protected $record;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -61,7 +70,7 @@ class FeedEntryItem
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->item_id;
     }
@@ -71,7 +80,7 @@ class FeedEntryItem
      *
      * @return Record
      */
-    public function getRecord()
+    public function getRecord(): Record
     {
         return $this->record ?: $this->record = Record::fromValue($this->source->record);
     }

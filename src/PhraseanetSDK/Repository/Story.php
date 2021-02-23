@@ -11,10 +11,14 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Entity\Query;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\Query as QueryEntity;
+use PhraseanetSDK\Entity\Story as StoryEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 use PhraseanetSDK\Search\SearchResult;
 
 class Story extends AbstractRepository
@@ -22,12 +26,15 @@ class Story extends AbstractRepository
     /**
      * Find the story by its id that belongs to the provided databox
      *
-     * @param  integer $databoxId The record databox id
-     * @param  integer $recordId  The record id
-     * @return \PhraseanetSDK\Entity\Story
+     * @param integer $databoxId The record databox id
+     * @param integer $recordId  The record id
+     * @return StoryEntity
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findById($databoxId, $recordId)
+    public function findById(int $databoxId, int $recordId): StoryEntity
     {
         $path = sprintf('v1/stories/%s/%s/', $databoxId, $recordId);
 
@@ -37,31 +44,34 @@ class Story extends AbstractRepository
             throw new RuntimeException('Missing "story" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\Story::fromValue($this->em, $response->getProperty('story'));
+        return StoryEntity::fromValue($this->em, $response->getProperty('story'));
     }
 
     /**
      * Find stories
      *
-     * @param  integer $offsetStart The offset
-     * @param  integer $perPage The number of item per page
-     * @return ArrayCollection|Story[]
+     * @param integer $offsetStart The offset
+     * @param integer $perPage     The number of item per page
+     * @return ArrayCollection|StoryEntity[]
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function find($offsetStart, $perPage)
+    public function find(int $offsetStart, int $perPage)
     {
         $response = $this->query('POST', 'v1/search/', array(), array(
             'query'        => '',
             'search_type'  => SearchResult::TYPE_STORY,
-            'offset_start' => (int) $offsetStart,
-            'per_page'     => (int) $perPage,
+            'offset_start' => $offsetStart,
+            'per_page'     => $perPage,
         ));
 
         if (true !== $response->hasProperty('results')) {
             throw new RuntimeException('Missing "results" property in response content');
         }
 
-        return Query::fromValue($this->em, $response->getResult())->getResults()->getStories();
+        return QueryEntity::fromValue($this->em, $response->getResult())->getResults()->getStories();
     }
 
     /**
@@ -69,10 +79,13 @@ class Story extends AbstractRepository
      *
      * @param  array $parameters Query parameters
 	 * @param int $pAPINumber API number (e.g. 3)
-     * @return \PhraseanetSDK\Entity\Query object
+     * @return QueryEntity object
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function search(array $parameters = array(), $pAPINumber = 1)
+    public function search(array $parameters = array(), $pAPINumber = 1): QueryEntity
     {
         $response = $this->query('POST', 'v'.$pAPINumber.'/search/', array(), array_merge(
             $parameters,
@@ -83,6 +96,6 @@ class Story extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return Query::fromValue($this->em, $response->getResult());
+        return QueryEntity::fromValue($this->em, $response->getResult());
     }
 }

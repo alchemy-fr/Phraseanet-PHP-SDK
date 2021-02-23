@@ -11,15 +11,19 @@
 
 namespace PhraseanetSDK\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use stdClass;
 
 class Record
 {
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return Record[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $records = array();
 
@@ -31,26 +35,26 @@ class Record
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return Record
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): Record
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTime
      */
     protected $updatedOn;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTime
      */
     protected $createdOn;
 
@@ -85,17 +89,17 @@ class Record
     protected $caption;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -105,7 +109,7 @@ class Record
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->getDataboxId() . '_' . $this->getRecordId();
     }
@@ -115,7 +119,7 @@ class Record
      *
      * @return integer
      */
-    public function getRecordId()
+    public function getRecordId(): int
     {
         return $this->source->record_id;
     }
@@ -125,7 +129,7 @@ class Record
      *
      * @return integer
      */
-    public function getDataboxId()
+    public function getDataboxId(): int
     {
         return $this->source->databox_id;
     }
@@ -135,7 +139,7 @@ class Record
      *
      * @return integer
      */
-    public function getBaseId()
+    public function getBaseId(): int
     {
         return $this->source->base_id;
     }
@@ -145,7 +149,7 @@ class Record
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->source->title;
     }
@@ -155,7 +159,7 @@ class Record
      *
      * @return string
      */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->source->mime_type;
     }
@@ -165,7 +169,7 @@ class Record
      *
      * @return string
      */
-    public function getOriginalName()
+    public function getOriginalName(): string
     {
         return $this->source->original_name;
     }
@@ -173,21 +177,23 @@ class Record
     /**
      * Last updated date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getUpdatedOn()
+    public function getUpdatedOn(): DateTime
     {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
+        return $this->updatedOn ?: $this->updatedOn = new DateTime($this->source->updated_on);
     }
 
     /**
      * Creation date
      *
-     * @return \DateTime
+     * @return DateTime
+     * @throws Exception
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return $this->createdOn ?: $this->createdOn = new DateTime($this->source->created_on);
     }
 
     /**
@@ -195,7 +201,7 @@ class Record
      *
      * @return integer
      */
-    public function getCollectionId()
+    public function getCollectionId(): int
     {
         return $this->source->collection_id;
     }
@@ -205,7 +211,7 @@ class Record
      *
      * @return string
      */
-    public function getSha256()
+    public function getSha256(): string
     {
         return $this->source->sha256;
     }
@@ -216,7 +222,7 @@ class Record
      *
      * @return Subdef|null
      */
-    public function getThumbnail()
+    public function getThumbnail(): ?Subdef
     {
         if (! isset($this->source->thumbnail)) {
             return null;
@@ -230,7 +236,7 @@ class Record
      *
      * @return string
      */
-    public function getPhraseaType()
+    public function getPhraseaType(): string
     {
         return $this->source->phrasea_type;
     }
@@ -240,7 +246,7 @@ class Record
      *
      * @return string
      */
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->source->uuid;
     }

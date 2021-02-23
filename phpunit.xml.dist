@@ -11,7 +11,7 @@
          syntaxCheck="true"
          verbose="true"
          bootstrap="tests/bootstrap.php"
->
+    >
     <php>
       <ini name="display_errors" value="on"/>
     </php>
@@ -23,10 +23,13 @@
     </testsuites>
 
     <filter>
-    <blacklist>
-      <directory>./vendor</directory>
-    </blacklist>
-  </filter>
+        <blacklist>
+            <directory>./vendor</directory>
+        </blacklist>
+        <whitelist>
+            <directory>./src</directory>
+        </whitelist>
+    </filter>
 </phpunit>
 
 

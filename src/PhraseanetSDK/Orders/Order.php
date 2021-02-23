@@ -18,10 +18,6 @@ namespace PhraseanetSDK\Orders;
 class Order
 {
 
-    const STATUS_PENDING = 'pending';
-
-    const STATUS_FINISHED = 'finished';
-
     /**
      * @param array $values
      * @return array

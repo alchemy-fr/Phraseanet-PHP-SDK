@@ -11,10 +11,13 @@
 
 namespace PhraseanetSDK\Repository;
 
-use PhraseanetSDK\AbstractRepository;
-use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Entity\DataboxTermsOfUse as DataboxTermsOfUseEntity;
+use PhraseanetSDK\Exception\NotFoundException;
+use PhraseanetSDK\Exception\RuntimeException;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
 
 class DataboxTermsOfUse extends AbstractRepository
 {
@@ -22,11 +25,14 @@ class DataboxTermsOfUse extends AbstractRepository
     /**
      * Find All the cgus for the choosen databox
      *
-     * @param  integer          $databoxId The databox id
+     * @param integer $databoxId The databox id
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByDatabox($databoxId)
+    public function findByDatabox(int $databoxId): ArrayCollection
     {
         $response = $this->query('GET', sprintf('v1/databoxes/%d/termsOfUse/', $databoxId));
 
@@ -34,7 +40,7 @@ class DataboxTermsOfUse extends AbstractRepository
             throw new RuntimeException('Missing "termsOfuse" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\DataboxTermsOfUse::fromList(
+        return new ArrayCollection(DataboxTermsOfUseEntity::fromList(
             $response->getProperty('termsOfUse')
         ));
     }

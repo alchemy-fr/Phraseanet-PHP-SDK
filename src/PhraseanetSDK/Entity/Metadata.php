@@ -11,10 +11,15 @@
 
 namespace PhraseanetSDK\Entity;
 
+use stdClass;
+
 class Metadata
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return Metadata[]
+     */
+    public static function fromList(array $values): array
     {
         $metadata = array();
 
@@ -25,25 +30,29 @@ class Metadata
         return $metadata;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return Metadata
+     */
+    public static function fromValue(stdClass $value): Metadata
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -53,7 +62,7 @@ class Metadata
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->meta_id;
     }
@@ -63,7 +72,7 @@ class Metadata
      *
      * @return integer
      */
-    public function getMetaStructureId()
+    public function getMetaStructureId(): int
     {
         return $this->source->meta_structure_id;
     }
@@ -73,7 +82,7 @@ class Metadata
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -83,7 +92,7 @@ class Metadata
      *
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->source->value;
     }
@@ -91,7 +100,7 @@ class Metadata
     /**
      * @return string[]
      */
-    public function getLabels()
+    public function getLabels(): array
     {
         return $this->source->labels;
     }

@@ -38,16 +38,16 @@ class Uploader
     /**
      * Uploads a file to Phraseanet.
      *
-     * @param string $file The path to the file to upload
+     * @param string $file                          The path to the file to upload
      * @param integer|DataboxCollection $collection The base_id of the collection or a DataboxCollection object
-     * @param int|null $behavior Set to 0 to force record and bypass checks, Set to 1 to force quarantine.
-     * @param int|null $status A binary string to set status bits.
+     * @param int|null $behavior                    Set to 0 to force record and bypass checks, Set to 1 to force quarantine.
+     * @param int|null $status                      A binary string to set status bits.
      *
      * @return Record|Quarantine
      *
      * @throws RuntimeException In case an error occurred
      */
-    public function upload($file, $collection, $behavior = null, $status = null)
+    public function upload(string $file, $collection, $behavior = null, $status = null)
     {
         $postFields = array(
             'base_id' => $collection instanceof DataboxCollection ? $collection->getBaseId() : $collection,

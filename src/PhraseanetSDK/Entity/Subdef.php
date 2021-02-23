@@ -14,11 +14,15 @@ namespace PhraseanetSDK\Entity;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
 use PhraseanetSDK\Annotation\Id as Id;
+use stdClass;
 
 class Subdef
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return Subdef[]
+     */
+    public static function fromList(array $values): array
     {
         $subdefs = array();
 
@@ -33,13 +37,17 @@ class Subdef
         return $subdefs;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return Subdef
+     */
+    public static function fromValue(stdClass $value): Subdef
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -49,26 +57,26 @@ class Subdef
     protected $permalink;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      * @deprecated Use getRawData() instead
      */
-    public function getSource()
+    public function getSource(): stdClass
     {
         return $this->source;
     }
@@ -78,7 +86,7 @@ class Subdef
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -88,7 +96,7 @@ class Subdef
      *
      * @return integer
      */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->source->height;
     }
@@ -98,7 +106,7 @@ class Subdef
      *
      * @return integer
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->source->width;
     }
@@ -108,7 +116,7 @@ class Subdef
      *
      * @return integer
      */
-    public function getFileSize()
+    public function getFileSize(): int
     {
         return $this->source->filesize;
     }
@@ -118,7 +126,7 @@ class Subdef
      *
      * @return string
      */
-    public function getPlayerType()
+    public function getPlayerType(): string
     {
         return $this->source->player_type;
     }
@@ -128,7 +136,7 @@ class Subdef
      *
      * @return string
      */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->source->mime_type;
     }
@@ -138,7 +146,7 @@ class Subdef
      *
      * @return Permalink
      */
-    public function getPermalink()
+    public function getPermalink(): Permalink
     {
         return $this->permalink ?: $this->permalink = Permalink::fromValue($this->source->permalink);
     }

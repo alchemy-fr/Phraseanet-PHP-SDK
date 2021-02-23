@@ -12,14 +12,15 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use stdClass;
 
 class DataboxStatus
 {
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return DataboxStatus[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $statuses = array();
 
@@ -31,16 +32,16 @@ class DataboxStatus
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return DataboxStatus
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): DataboxStatus
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -50,17 +51,17 @@ class DataboxStatus
     protected $labels;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -80,7 +81,7 @@ class DataboxStatus
      *
      * @return string
      */
-    public function getLabelOn()
+    public function getLabelOn(): string
     {
         return $this->source->label_on;
     }
@@ -90,7 +91,7 @@ class DataboxStatus
      *
      * @return string
      */
-    public function getLabelOff()
+    public function getLabelOff(): string
     {
         return $this->source->label_off;
     }
@@ -100,7 +101,7 @@ class DataboxStatus
      *
      * @return string
      */
-    public function getImgOn()
+    public function getImgOn(): string
     {
         return $this->source->img_on;
     }
@@ -110,7 +111,7 @@ class DataboxStatus
      *
      * @return string
      */
-    public function getImgOff()
+    public function getImgOff(): string
     {
         return $this->source->img_off;
     }
@@ -120,7 +121,7 @@ class DataboxStatus
      *
      * @return Boolean
      */
-    public function isSearchable()
+    public function isSearchable(): bool
     {
         return $this->source->searchable;
     }
@@ -130,15 +131,15 @@ class DataboxStatus
      *
      * @return Boolean
      */
-    public function isPrintable()
+    public function isPrintable(): bool
     {
         return $this->source->printable;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getLabels()
+    public function getLabels(): ArrayCollection
     {
         return $this->labels ?: $this->labels = new ArrayCollection((array) $this->source->labels);
     }

@@ -5,14 +5,15 @@ namespace PhraseanetSDK\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Annotation\ApiField as ApiField;
 use PhraseanetSDK\Annotation\ApiRelation as ApiRelation;
+use stdClass;
 
 class QueryFacet
 {
     /**
-     * @param \stdClass[] $values
+     * @param stdClass[] $values
      * @return QueryFacet[]
      */
-    public static function fromList(array $values)
+    public static function fromList(array $values): array
     {
         $facets = array();
 
@@ -24,16 +25,16 @@ class QueryFacet
     }
 
     /**
-     * @param \stdClass $value
+     * @param stdClass $value
      * @return QueryFacet
      */
-    public static function fromValue(\stdClass $value)
+    public static function fromValue(stdClass $value): QueryFacet
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -43,17 +44,17 @@ class QueryFacet
     protected $values;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass|null $source
      */
-    public function __construct(\stdClass $source = null)
+    public function __construct(stdClass $source = null)
     {
-        $this->source = $source ?: new \stdClass();
+        $this->source = $source ?: new stdClass();
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -61,7 +62,7 @@ class QueryFacet
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return isset($this->source->name) ? $this->source->name : '';
     }

@@ -3,6 +3,25 @@
 namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\EntityManager;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
+
+use PhraseanetSDK\Repository\Feed;
+use PhraseanetSDK\Repository\Basket;
+use PhraseanetSDK\Repository\BasketElement;
+use PhraseanetSDK\Repository\Caption;
+use PhraseanetSDK\Repository\DataboxTermsOfUse;
+use PhraseanetSDK\Repository\Databox;
+use PhraseanetSDK\Repository\DataboxCollection;
+use PhraseanetSDK\Repository\DataboxDocumentStructure;
+use PhraseanetSDK\Repository\DataboxStatus;
+use PhraseanetSDK\Repository\Entry;
+use PhraseanetSDK\Repository\Metadata;
+use PhraseanetSDK\Repository\Quarantine;
+use PhraseanetSDK\Repository\Record;
+use PhraseanetSDK\Repository\RecordStatus;
+use PhraseanetSDK\Repository\Subdef;
+use PhraseanetSDK\Repository\Story;
+
 
 class EntityManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,29 +43,29 @@ class EntityManagerTest extends \PHPUnit_Framework_TestCase
     public function provideRepositories()
     {
         return array(
-            array('Feed', 'PhraseanetSDK\Repository\Feed'),
-            array('feed', 'PhraseanetSDK\Repository\Feed'),
-            array('basket', 'PhraseanetSDK\Repository\Basket'),
-            array('basketElement', 'PhraseanetSDK\Repository\BasketElement'),
-            array('caption', 'PhraseanetSDK\Repository\Caption'),
-            array('databoxTermsOfUse', 'PhraseanetSDK\Repository\DataboxTermsOfUse'),
-            array('databox', 'PhraseanetSDK\Repository\Databox'),
-            array('databoxCollection', 'PhraseanetSDK\Repository\DataboxCollection'),
-            array('databoxDocumentStructure', 'PhraseanetSDK\Repository\DataboxDocumentStructure'),
-            array('databoxStatus', 'PhraseanetSDK\Repository\DataboxStatus'),
-            array('entry', 'PhraseanetSDK\Repository\Entry'),
-            array('metadata', 'PhraseanetSDK\Repository\Metadata'),
-            array('quarantine', 'PhraseanetSDK\Repository\Quarantine'),
-            array('record', 'PhraseanetSDK\Repository\Record'),
-            array('recordStatus', 'PhraseanetSDK\Repository\RecordStatus'),
-            array('subdef', 'PhraseanetSDK\Repository\Subdef'),
-            array('story', 'PhraseanetSDK\Repository\Story'),
+            array('Feed', Feed::class),
+            array('feed', Feed::class),
+            array('basket', Basket::class),
+            array('basketElement', BasketElement::class),
+            array('caption', Caption::class),
+            array('databoxTermsOfUse', DataboxTermsOfUse::class),
+            array('databox', Databox::class),
+            array('databoxCollection', DataboxCollection::class),
+            array('databoxDocumentStructure', DataboxDocumentStructure::class),
+            array('databoxStatus', DataboxStatus::class),
+            array('entry', Entry::class),
+            array('metadata', Metadata::class),
+            array('quarantine', Quarantine::class),
+            array('record', Record::class),
+            array('recordStatus', RecordStatus::class),
+            array('subdef', Subdef::class),
+            array('story', Story::class),
         );
     }
 
     private function createAdapterMock()
     {
-        return $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        return $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

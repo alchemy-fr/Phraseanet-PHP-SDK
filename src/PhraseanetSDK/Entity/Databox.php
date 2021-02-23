@@ -12,11 +12,15 @@
 namespace PhraseanetSDK\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use stdClass;
 
 class Databox
 {
-
-    public static function fromList(array $values)
+    /**
+     * @param stdClass[] $values
+     * @return Databox[]
+     */
+    public static function fromList(array $values): array
     {
         $databoxes = array();
 
@@ -27,13 +31,17 @@ class Databox
         return $databoxes;
     }
 
-    public static function fromValue(\stdClass $value)
+    /**
+     * @param stdClass $value
+     * @return Databox
+     */
+    public static function fromValue(stdClass $value): Databox
     {
         return new self($value);
     }
 
     /**
-     * @var \stdClass
+     * @var stdClass
      */
     protected $source;
 
@@ -43,17 +51,17 @@ class Databox
     protected $labels;
 
     /**
-     * @param \stdClass $source
+     * @param stdClass $source
      */
-    public function __construct(\stdClass $source)
+    public function __construct(stdClass $source)
     {
         $this->source = $source;
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass
      */
-    public function getRawData()
+    public function getRawData(): stdClass
     {
         return $this->source;
     }
@@ -63,7 +71,7 @@ class Databox
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->source->databox_id;
     }
@@ -73,7 +81,7 @@ class Databox
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->source->name;
     }
@@ -83,13 +91,13 @@ class Databox
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->source->version;
     }
 
     /**
-     * @return string[]
+     * @return ArrayCollection|string[]
      */
     public function getLabels()
     {

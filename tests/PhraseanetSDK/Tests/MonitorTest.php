@@ -7,20 +7,22 @@ use PhraseanetSDK\Monitor\Scheduler;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Monitor\Task;
 use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\APIGuzzleAdapter;
 
 class MonitorTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetScheduler()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $adapter = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('GET', array('v1/monitor/scheduler/', array()))
+            ->with('GET', 'v1/monitor/scheduler/')
             ->will($this->returnValue($this->getFixture('scheduler')));
 
+        /** @var APIGuzzleAdapter $adapter */
         $mon = new Monitor($adapter);
 
         $expected = new Scheduler();
@@ -33,15 +35,16 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTasks()
     {
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $adapter = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('GET', array('v1/monitor/tasks/', array()))
+            ->with('GET', 'v1/monitor/tasks/')
             ->will($this->returnValue($this->getFixture('tasks')));
 
+        /** @var APIGuzzleAdapter $adapter */
         $mon = new Monitor($adapter);
 
         $expected = new ArrayCollection();
@@ -78,15 +81,16 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     {
         $task_id = 2;
 
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $adapter = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('GET', array('v1/monitor/task/{task_id}/', array('task_id' => $task_id)))
+            ->with('GET', 'v1/monitor/task/2/')
             ->will($this->returnValue($this->getFixture('task')));
 
+        /** @var APIGuzzleAdapter $adapter */
         $mon = new Monitor($adapter);
 
         $expected = new Task();
@@ -107,15 +111,16 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     {
         $task_id = 2;
 
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $adapter = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('POST', array('v1/monitor/task/{task_id}/start/', array('task_id' => $task_id)))
+            ->with('POST', 'v1/monitor/task/2/start/')
             ->will($this->returnValue($this->getFixture('start-task')));
 
+        /** @var APIGuzzleAdapter $adapter */
         $mon = new Monitor($adapter);
 
         $expected = new Task();
@@ -133,15 +138,16 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     {
         $task_id = 2;
 
-        $adapter = $this->getMockBuilder('PhraseanetSDK\Http\APIGuzzleAdapter')
+        $adapter = $this->getMockBuilder(APIGuzzleAdapter::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $adapter->expects($this->once())
             ->method('call')
-            ->with('POST', array('v1/monitor/task/{task_id}/stop/', array('task_id' => $task_id)))
+            ->with('POST', 'v1/monitor/task/2/stop/')
             ->will($this->returnValue($this->getFixture('stop-task')));
 
+        /** @var APIGuzzleAdapter $adapter */
         $mon = new Monitor($adapter);
 
         $expected = new Task();

@@ -12,9 +12,13 @@
 namespace PhraseanetSDK\Repository;
 
 use PhraseanetSDK\AbstractRepository;
+use PhraseanetSDK\Exception\NotFoundException;
 use PhraseanetSDK\Exception\RuntimeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\EntityHydrator;
+use PhraseanetSDK\Exception\TokenExpiredException;
+use PhraseanetSDK\Exception\UnauthorizedException;
+use PhraseanetSDK\Entity\Quarantine as QuarantineEntity;
 
 class Quarantine extends AbstractRepository
 {
@@ -26,19 +30,22 @@ class Quarantine extends AbstractRepository
      * @param  integer          $perPage
      * @return ArrayCollection
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findByOffset($offsetStart = 0, $perPage = 10)
+    public function findByOffset(int $offsetStart = 0, int $perPage = 10): ArrayCollection
     {
-        $response = $this->query('GET', 'v1/quarantine/list/', array(
+        $response = $this->query('GET', 'v1/quarantine/list/', [
             'offset_start' => $offsetStart,
             'per_page'     => $perPage,
-            ));
+            ]);
 
         if (true !== $response->hasProperty('quarantine_items')) {
             throw new RuntimeException('Missing "quarantine_items" property in response content');
         }
 
-        return new ArrayCollection(\PhraseanetSDK\Entity\Quarantine::fromList(
+        return new ArrayCollection(QuarantineEntity::fromList(
             $response->getProperty('quarantine_items')
         ));
     }
@@ -46,11 +53,14 @@ class Quarantine extends AbstractRepository
     /**
      * Find a quarantine item by its identifier
      *
-     * @param  integer                          $id The desired id
-     * @return \PhraseanetSDK\Entity\Quarantine
+     * @param integer $id The desired id
+     * @return QuarantineEntity
      * @throws RuntimeException
+     * @throws UnauthorizedException
+     * @throws TokenExpiredException
+     * @throws NotFoundException
      */
-    public function findById($id)
+    public function findById(int $id): QuarantineEntity
     {
         $response = $this->query('GET', sprintf('v1/quarantine/item/%d/', $id));
 
@@ -58,6 +68,6 @@ class Quarantine extends AbstractRepository
             throw new RuntimeException('Missing "quarantine_item" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\Quarantine::fromValue($response->getProperty('quarantine_item'));
+        return QuarantineEntity::fromValue($response->getProperty('quarantine_item'));
     }
 }

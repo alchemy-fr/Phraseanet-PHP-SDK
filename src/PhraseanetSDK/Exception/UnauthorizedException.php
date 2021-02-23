@@ -11,6 +11,8 @@
 
 namespace PhraseanetSDK\Exception;
 
-class UnauthorizedException extends \Exception implements ExceptionInterface
+use Exception;
+
+class UnauthorizedException extends Exception implements ExceptionInterface
 {
 }
