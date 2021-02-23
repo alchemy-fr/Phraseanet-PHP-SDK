@@ -16,7 +16,7 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
+    "php": "^7.1",
     "doctrine/cache": "~1.0",
     "doctrine/collections": "~1.0",
     "guzzlehttp/guzzle": "^6",
@@ -24,16 +24,11 @@
   },
   "require-dev": {
     "psr/log": "^1.1",
-    "phpunit/phpunit": "~5.4.0"
+    "phpunit/phpunit": "~5.5"
   },
   "autoload": {
     "psr-0": {
       "PhraseanetSDK": "src"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.9.x-dev"
     }
   }
 }
