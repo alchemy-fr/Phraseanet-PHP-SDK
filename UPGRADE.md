@@ -3,10 +3,18 @@ UPGRADE
 
 This is a list of backwards compatibility (BC) breaks introduced in PhraseanetSDK:
 
-# 1.x
+# 7.x
 
- * The sdk now uses "guzzlehttp/guzzle": "7.1.1"
- * Cache, log, record, play, profiling, ... which did rely on guzzle-3 plugings are deleted
+* This sdk now uses "guzzlehttp/guzzle": "7.x"
+
+# 6.x
+
+* This sdk now uses "guzzlehttp/guzzle": "6.x"
+
+# 1.x (clean base for next 6.x ; 7.x)
+
+* The sdk now uses "guzzlehttp/guzzle": "6.x"
+* Cache, log, record, play, profiling, ... which did rely on guzzle-3 plugings are deleted
 
 # 0.5.0
 
