@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class DataboxCollection
 {
 
-    public static function fromList(array $values)
+    public static function fromList($values)
     {
         $collections = array();
 
