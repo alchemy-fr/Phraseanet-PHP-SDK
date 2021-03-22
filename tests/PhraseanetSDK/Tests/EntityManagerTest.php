@@ -18,7 +18,7 @@ class EntityManagerTest extends \PHPUnit_Framework_TestCase
     {
         $adapter = $this->createAdapterMock();
         $em = new EntityManager($adapter);
-        $this->assertSame($adapter, $em->getAdapter());
+        $this->assertSame($adapter, $em->getClient());
     }
 
     public function provideRepositories()

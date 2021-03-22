@@ -16,6 +16,22 @@ use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponseException;
 class BadResponseException extends \Exception implements ExceptionInterface
 {
     /**
+     * @param GuzzleBadResponseException $e
+     * @return BadResponseException
+     */
+    public static function fromGuzzleResponse(GuzzleBadResponseException $e)
+    {
+        $response = $e->getResponse();
+
+        $exception = new self($response->getReasonPhrase(), $e->getCode(), $e);
+        $exception
+            ->setHttpStatusCode($response->getStatusCode())
+            ->setResponseBody($response->getBody());
+
+        return $exception;
+    }
+
+    /**
      * The content of the bad response
      *
      * @param string $body
@@ -31,12 +47,12 @@ class BadResponseException extends \Exception implements ExceptionInterface
 
     /**
      *
-     * @param  string                                        $body
-     * @return \PhraseanetSDK\Exception\BadResponseException
+     * @param  string $body
+     * @return $this
      */
     public function setResponseBody($body)
     {
-        $this->responseBody = (string) $body;
+        $this->responseBody = (string)$body;
 
         return $this;
     }
@@ -64,8 +80,8 @@ class BadResponseException extends \Exception implements ExceptionInterface
     /**
      * Set the response HTTP status code
      *
-     * @param  integer                                       $httpStatusCode
-     * @return \PhraseanetSDK\Exception\BadResponseException
+     * @param  integer $httpStatusCode
+     * @return $this
      */
     public function setHttpStatusCode($httpStatusCode)
     {
@@ -92,17 +108,5 @@ class BadResponseException extends \Exception implements ExceptionInterface
     public function isServerError()
     {
         return substr(strval($this->httpStatusCode), 0, 1) == '5';
-    }
-
-    public static function fromGuzzleResponse(GuzzleBadResponseException $e)
-    {
-        $response = $e->getResponse();
-
-        $exception = new static($response->getReasonPhrase(), $e->getCode(), $e);
-        $exception
-            ->setResponseBody($response->getBody())
-            ->setHttpStatusCode($response->getStatusCode());
-
-        return $exception;
     }
 }

@@ -27,6 +27,6 @@ class SearchRepository extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return SearchResults::fromValue($this->em, $parameters['search_type'], $response->getResult());
+        return SearchResults::fromValue($this->entityManager, $parameters['search_type'], $response->getResult());
     }
 }

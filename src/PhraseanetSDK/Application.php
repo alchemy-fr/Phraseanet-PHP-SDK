@@ -11,10 +11,14 @@
 
 namespace PhraseanetSDK;
 
-use PhraseanetSDK\Http\GuzzleAdapter;
 use PhraseanetSDK\Exception\InvalidArgumentException;
-use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use PhraseanetSDK\Http\ApiClient;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\Client;
+use PhraseanetSDK\Http\ClientFactory;
+use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use PhraseanetSDK\Http\Endpoint;
+use PhraseanetSDK\Http\Guzzle\GuzzleClient;
 use Psr\Log\NullLogger;
 
 /**
@@ -26,10 +30,10 @@ class Application implements ApplicationInterface
      * Creates the application.
      *
      * @param array $config
-     * @param GuzzleAdapter $adapter
+     * @param ApiClient $client
      * @return Application
      */
-    public static function create(array $config, GuzzleAdapter $adapter = null)
+    public static function create(array $config, ApiClient $client = null)
     {
         foreach (array('client-id', 'secret') as $key) {
             if (!isset($config[$key]) || !is_string($config[$key])) {
@@ -37,16 +41,17 @@ class Application implements ApplicationInterface
             }
         }
 
-        if (null === $adapter) {
+        if (null === $client) {
             if (!isset($config['url']) || !is_string($config['url'])) {
                 throw new InvalidArgumentException(sprintf('Missing or invalid parameter "url"'));
             }
 
-            $adapter = GuzzleAdapter::create($config['url']);
+            $clientFactory = new ClientFactory();
+            $client = $clientFactory->createClient(new Endpoint($config['url']));
         }
 
         return new static(
-            $adapter,
+            $client,
             $config['client-id'],
             $config['secret']
         );
@@ -63,9 +68,9 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * @var GuzzleAdapter
+     * @var Client
      */
-    private $adapter;
+    private $client;
 
     /**
      * @var string Application client ID. Used by Oauth2Connector
@@ -102,9 +107,14 @@ class Application implements ApplicationInterface
      */
     private $monitors = array();
 
-    public function __construct(GuzzleAdapter $adapter, $clientId, $secret)
+    /**
+     * @param ApiClient $client
+     * @param string $clientId
+     * @param string $secret
+     */
+    public function __construct(ApiClient $client, $clientId, $secret)
     {
-        $this->adapter = $adapter;
+        $this->client = $client;
         $this->clientId = $clientId;
         $this->secret = $secret;
     }
@@ -118,7 +128,11 @@ class Application implements ApplicationInterface
      */
     public function setExtendedMode($mode)
     {
-        $this->adapter->setExtended($mode);
+        if ($mode) {
+            $this->client->enableExtendedMode();
+        } else {
+            $this->client->disableExtendedMode();
+        }
     }
 
     /**
@@ -127,7 +141,7 @@ class Application implements ApplicationInterface
     public function getOauth2Connector()
     {
         if ($this->connector === null) {
-            $this->connector = new OAuth2Connector($this->adapter, $this->clientId, $this->secret);
+            $this->connector = new OAuth2Connector($this->client, $this->clientId, $this->secret);
         }
 
         return $this->connector;
@@ -181,11 +195,11 @@ class Application implements ApplicationInterface
     /**
      * Returns the guzzle adapter
      *
-     * @return GuzzleAdapter
+     * @return GuzzleClient
      */
     public function getAdapter()
     {
-        return $this->adapter;
+        return $this->client;
     }
 
     private function getAdapterByToken($token)
@@ -194,7 +208,7 @@ class Application implements ApplicationInterface
             $this->adapters[$token] = new APIGuzzleAdapter(
                 new ConnectedGuzzleAdapter(
                     $token,
-                    $this->adapter
+                    $this->client
                 )
             );
         }

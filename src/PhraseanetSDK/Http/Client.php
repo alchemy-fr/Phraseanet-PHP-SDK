@@ -1,18 +1,24 @@
 <?php
 
+/*
+ * This file is part of Phraseanet-PHP-SDK.
+ *
+ * (c) Alchemy <info@alchemy.fr>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace PhraseanetSDK\Http;
 
-use Guzzle\Http\ClientInterface;
-
-interface GuzzleAdapterInterface
+interface Client 
 {
     /**
-     * @return ClientInterface
+     * @return Endpoint
      */
-    public function getGuzzle();
+    public function getEndpoint();
 
     /**
-     *
      * @param string $method
      * @param string $path
      * @param array $query

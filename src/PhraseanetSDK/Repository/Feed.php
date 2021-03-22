@@ -36,7 +36,7 @@ class Feed extends AbstractRepository
             throw new RuntimeException('Missing "feed" property in response content');
         }
 
-        return \PhraseanetSDK\Entity\Feed::fromValue($this->em, $response->getProperty('feed'));
+        return \PhraseanetSDK\Entity\Feed::fromValue($this->entityManager, $response->getProperty('feed'));
     }
 
     /**
@@ -54,7 +54,7 @@ class Feed extends AbstractRepository
         }
 
         return new ArrayCollection(\PhraseanetSDK\Entity\Feed::fromList(
-            $this->em,
+            $this->entityManager,
             $response->getProperty('feeds')
         ));
     }

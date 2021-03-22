@@ -6,7 +6,7 @@ use PhraseanetSDK\Monitor;
 use PhraseanetSDK\Monitor\Scheduler;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Monitor\Task;
-use PhraseanetSDK\Http\APIResponse;
+use PhraseanetSDK\Http\ApiResponse;
 
 class MonitorTest extends \PHPUnit_Framework_TestCase
 {
@@ -157,6 +157,6 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
     private function getFixture($name)
     {
-        return new APIResponse(json_decode(file_get_contents(__DIR__.'/../../resources/response_samples/monitor/'.$name.'.json')));
+        return new ApiResponse(json_decode(file_get_contents(__DIR__.'/../../resources/response_samples/monitor/'.$name.'.json')));
     }
 }

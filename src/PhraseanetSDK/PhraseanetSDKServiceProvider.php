@@ -15,19 +15,21 @@ use Guzzle\Cache\DoctrineCacheAdapter;
 use Guzzle\Plugin\Cache\CachePlugin;
 use Guzzle\Plugin\History\HistoryPlugin;
 use PhraseanetSDK\Cache\BackendCacheFactory;
-use PhraseanetSDK\Cache\RevalidationFactory;
 use PhraseanetSDK\Cache\CanCacheStrategy;
-use PhraseanetSDK\Http\GuzzleAdapter;
-use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use PhraseanetSDK\Cache\RevalidationFactory;
+use PhraseanetSDK\Http\ApiClient;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
+use PhraseanetSDK\Http\AuthenticatedClient;
+use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
+use PhraseanetSDK\Http\Guzzle\GuzzleClient;
 use PhraseanetSDK\Profiler\PhraseanetSDKDataCollector;
-use PhraseanetSDK\Recorder\Recorder;
-use PhraseanetSDK\Recorder\Player;
-use PhraseanetSDK\Recorder\RequestExtractor;
-use PhraseanetSDK\Recorder\Storage\StorageFactory;
-use PhraseanetSDK\Recorder\Filters\MonitorFilter;
 use PhraseanetSDK\Recorder\Filters\DuplicateFilter;
 use PhraseanetSDK\Recorder\Filters\LimitFilter;
+use PhraseanetSDK\Recorder\Filters\MonitorFilter;
+use PhraseanetSDK\Recorder\Player;
+use PhraseanetSDK\Recorder\Recorder;
+use PhraseanetSDK\Recorder\RequestExtractor;
+use PhraseanetSDK\Recorder\Storage\StorageFactory;
 use Silex\Application as SilexApplication;
 use Silex\ServiceProviderInterface;
 
@@ -146,18 +148,18 @@ class PhraseanetSDKServiceProvider implements ServiceProviderInterface
         });
 
         $app['phraseanet-sdk.guzzle-adapter'] = $app->share(function (SilexApplication $app) {
-            return GuzzleAdapter::create(
+            return GuzzleClient::create(
                 $app['phraseanet-sdk.config']['url'],
                 $app['phraseanet-sdk.guzzle.plugins']
             );
         });
 
         $app['phraseanet-sdk.guzzle-connected-adapter'] = $app->protect(function ($token) use ($app) {
-            return new ConnectedGuzzleAdapter($token, $app['phraseanet-sdk.guzzle-adapter']);
+            return new AuthenticatedClient($token, $app['phraseanet-sdk.guzzle-adapter']);
         });
 
         $app['phraseanet-sdk.guzzle-api-adapter'] = $app->protect(function ($token) use ($app) {
-            return new APIGuzzleAdapter($app['phraseanet-sdk.guzzle-connected-adapter']($token));
+            return new ApiClient($app['phraseanet-sdk.guzzle-connected-adapter']($token));
         });
 
         $app['phraseanet-sdk'] = $app->share(function (SilexApplication $app) {
