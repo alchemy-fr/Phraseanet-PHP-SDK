@@ -109,6 +109,11 @@ class Application implements ApplicationInterface
         $this->secret = $secret;
     }
 
+    public function setSslVerification($sslVerification)
+    {
+        $this->adapter->setSslVerification($sslVerification);
+    }
+
     /**
      * Activate extended graph object by adding required accept headers.
      * This results in bigger response message but less requests to get
