@@ -29,6 +29,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     /** @var ClientInterface */
     private $guzzle;
     private $extended = false;
+    private $sslVerification = false;
 
     public function __construct(ClientInterface $guzzle)
     {
@@ -87,6 +88,16 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     }
 
     /**
+     * Sets setSslVerification mode
+     *
+     * @param boolean $sslVerification
+     */
+    public function setSslVerification($sslVerification)
+    {
+        $this->sslVerification = (boolean)$sslVerification;
+    }
+
+    /**
      * Performs an HTTP request, returns the body response
      *
      * @param string $method The method
@@ -114,6 +125,9 @@ class GuzzleAdapter implements GuzzleAdapterInterface
                 'Accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
             );
 
+            if(!$this->sslVerification) {
+                $this->guzzle->setSslVerification(false,false,0);
+            }
             $request = $this->guzzle->createRequest($method, $path, array_merge($acceptHeader, $headers));
             $this->addRequestParameters($request, $query, $postFields, $files);
             $response = $request->send();
