@@ -147,7 +147,7 @@ class Record
      */
     public function getTitle()
     {
-        return $this->source->title;
+        return isset($this->source->title->default) ? $this->source->title->default : $this->source->title;
     }
 
     /**
@@ -157,7 +157,7 @@ class Record
      */
     public function getMimeType()
     {
-        return $this->source->mime_type;
+        return isset($this->source->mime) ? $this->source->mime : $this->source->mime_type;
     }
 
     /**
@@ -218,11 +218,16 @@ class Record
      */
     public function getThumbnail()
     {
-        if (! isset($this->source->thumbnail)) {
+        if (isset($this->source->subdefs->thumbnail)) {
+            $thumbnail = $this->source->subdefs->thumbnail;
+            $thumbnail->name = 'thumbnail';
+        } elseif (isset($this->source->thumbnail)) {
+            $thumbnail = $this->source->thumbnail;
+        } else {
             return null;
         }
 
-        return $this->thumbnail ?: $this->thumbnail = Subdef::fromValue($this->source->thumbnail);
+        return $this->thumbnail ?: $this->thumbnail = Subdef::fromValue($thumbnail);
     }
 
     /**
@@ -232,7 +237,7 @@ class Record
      */
     public function getPhraseaType()
     {
-        return $this->source->phrasea_type;
+        return isset($this->source->type) ? $this->source->type : $this->source->phrasea_type;
     }
 
     /**
@@ -252,12 +257,16 @@ class Record
      */
     public function getTechnicalInformation()
     {
-        if (! isset($this->source->technical_informations)) {
+        if (isset($this->source->technical_informations)) {
+            $technicalInformations = $this->source->technical_informations;
+        } elseif (isset($this->source->metadata_tags)) {
+            $technicalInformations = $this->source->metadata_tags;
+        } else {
             $this->technicalInformation = new ArrayCollection();
         }
 
         return $this->technicalInformation ?: new ArrayCollection(Technical::fromList(
-            $this->source->technical_informations
+            $technicalInformations
         ));
     }
 
@@ -270,9 +279,14 @@ class Record
     {
         if (! isset($this->source->subdefs)) {
             $this->subdefs = new ArrayCollection();
+        } else {
+            $subdefs = $this->source->subdefs;
+            if (is_object($this->source->subdefs)) {
+                $subdefs = get_object_vars($this->source->subdefs);
+            }
         }
 
-        return $this->subdefs ?: new ArrayCollection(Subdef::fromList($this->source->subdefs));
+        return $this->subdefs ?: new ArrayCollection(Subdef::fromList($subdefs));
     }
 
     /**
@@ -294,9 +308,14 @@ class Record
     {
         if (! isset($this->source->caption)) {
             $this->caption = new ArrayCollection();
+        } else {
+            $caption = $this->source->caption;
+            if (is_object($this->source->caption)) {
+                $caption = get_object_vars($this->source->caption);
+            }
         }
 
-        return $this->caption ?: new ArrayCollection(RecordCaption::fromList($this->source->caption));
+        return $this->caption ?: new ArrayCollection(RecordCaption::fromList($caption));
     }
 
     /**

@@ -25,16 +25,6 @@ class Permalink
     protected $source;
 
     /**
-     * @var \DateTimeInterface
-     */
-    protected $createdOn;
-
-    /**
-     * @var \DateTimeInterface
-     */
-    protected $updatedOn;
-
-    /**
      * @param \stdClass $source
      */
     public function __construct(\stdClass $source)
@@ -57,7 +47,7 @@ class Permalink
      */
     public function getId()
     {
-        return $this->source->id;
+        return isset($this->source->id) ? $this->source->id : 0;
     }
 
     /**
@@ -67,7 +57,7 @@ class Permalink
      */
     public function isActivated()
     {
-        return $this->source->is_activated;
+        return !empty($this->getUrl()) ? true : false;
     }
 
     /**
@@ -77,27 +67,7 @@ class Permalink
      */
     public function getLabel()
     {
-        return $this->source->label;
-    }
-
-    /**
-     * Last updated date
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedOn()
-    {
-        return $this->updatedOn ?: $this->updatedOn = new \DateTime($this->source->updated_on);
-    }
-
-    /**
-     * Creation date
-     *
-     * @return \DateTime
-     */
-    public function getCreatedOn()
-    {
-        return $this->createdOn ?: $this->createdOn = new \DateTime($this->source->created_on);
+        return isset($this->source->label) ? $this->source->label : '';
     }
 
     /**
@@ -117,6 +87,6 @@ class Permalink
      */
     public function getUrl()
     {
-        return $this->source->url;
+        return isset($this->source->url) ? $this->source->url : '' ;
     }
 }
