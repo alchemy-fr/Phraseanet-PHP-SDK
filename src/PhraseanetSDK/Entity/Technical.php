@@ -18,8 +18,14 @@ class Technical
     {
         $technical = array();
 
-        foreach ($values as $value) {
-            $technical[] = self::fromValue($value);
+        foreach ($values as $name => $value) {
+            if (is_object($value)) {
+                $techValue = $value;
+            } else {
+                $techValue = (object) ['name' => $name, 'value' => $value];
+            }
+
+            $technical[] = self::fromValue($techValue);
         }
 
         return $technical;

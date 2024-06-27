@@ -21,8 +21,12 @@ class RecordCaption
     {
         $captions = array();
 
-        foreach ($values as $value) {
-            $captions[$value->meta_structure_id] = self::fromValue($value);
+        foreach ($values as $name => $value) {
+            if (is_object($value)) {
+                $captions[$value->meta_structure_id] = self::fromValue($value);
+            } else {
+                $captions[] = self::fromValue((object) ['name' => $name, 'value' => implode(";", $value)]);
+            }
         }
 
         return $captions;
@@ -70,7 +74,7 @@ class RecordCaption
      */
     public function getMetaStructureId()
     {
-        return $this->source->meta_structure_id;
+        return isset($this->source->meta_structure_id) ? $this->source->meta_structure_id : 0;
     }
 
     /**

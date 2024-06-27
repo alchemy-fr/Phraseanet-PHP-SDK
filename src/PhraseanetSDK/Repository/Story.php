@@ -74,7 +74,7 @@ class Story extends AbstractRepository
      */
     public function search(array $parameters = array(), $pAPINumber = 1)
     {
-        $response = $this->query('POST', 'v'.$pAPINumber.'/search/', array(), array_merge(
+        $response = $this->query('POST', 'v'.$pAPINumber.'/searchraw/', array(), array_merge(
             $parameters,
 			array('search_type' => SearchResult::TYPE_STORY)
         ));
@@ -83,6 +83,16 @@ class Story extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return Query::fromValue($this->em, $response->getResult());
+        $results = $res = $response->getResult();
+        if ($pAPINumber == 3) {
+            $results = new \stdClass();
+            foreach ($res->results as $key => $r) {
+                $results->results->stories[$key] = $r->_source;
+            }
+
+            $results->results->records = [];
+        }
+
+        return Query::fromValue($this->em, $results);
     }
 }

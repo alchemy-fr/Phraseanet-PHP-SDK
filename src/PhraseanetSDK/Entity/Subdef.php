@@ -22,12 +22,19 @@ class Subdef
     {
         $subdefs = array();
 
-        foreach ($values as $value) {
+        foreach ($values as $key => $value) {
             if ($value == null) {
                 continue;
             }
 
-            $subdefs[$value->name] = self::fromValue($value);
+            if (!is_int($key)) {
+                $name = $key;
+                $value->name = $name;
+            } else {
+                $name =  $value->name;
+            }
+
+            $subdefs[$name] = self::fromValue($value);
         }
 
         return $subdefs;
@@ -110,7 +117,7 @@ class Subdef
      */
     public function getFileSize()
     {
-        return $this->source->filesize;
+        return isset($this->source->size) ? $this->source->size : $this->source->filesize ;
     }
 
     /**
@@ -120,6 +127,10 @@ class Subdef
      */
     public function getPlayerType()
     {
+        if (!isset($this->source->player_type)) {
+            return '';
+        }
+
         return $this->source->player_type;
     }
 
@@ -130,7 +141,7 @@ class Subdef
      */
     public function getMimeType()
     {
-        return $this->source->mime_type;
+        return isset($this->source->mime) ? $this->source->mime : $this->source->mime_type;
     }
 
     /**
@@ -140,6 +151,16 @@ class Subdef
      */
     public function getPermalink()
     {
-        return $this->permalink ?: $this->permalink = Permalink::fromValue($this->source->permalink);
+        if ($this->permalink) {
+            return $this->permalink;
+        } else {
+            if (!is_object($this->source->permalink)) {
+                $permalink = (object) ['url' => $this->source->permalink];
+            } else {
+                $permalink = $this->source->permalink;
+            }
+
+            return Permalink::fromValue($permalink);
+        }
     }
 }

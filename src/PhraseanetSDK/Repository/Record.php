@@ -80,7 +80,7 @@ class Record extends AbstractRepository
      */
     public function search(array $parameters = array(), $pAPINumber = 1)
     {
-		$response = $this->query('POST', 'v'.$pAPINumber.'/search/', array(), array_merge(
+		$response = $this->query('POST', 'v'.$pAPINumber.'/searchraw/', array(), array_merge(
             array('search_type' => 0),
             $parameters
         ));
@@ -89,6 +89,21 @@ class Record extends AbstractRepository
             throw new RuntimeException('Response content is empty');
         }
 
-        return Query::fromValue($this->em, $response->getResult());
+        $results = $res = $response->getResult();
+        if ($pAPINumber == 3) {
+            $results = new \stdClass();
+            foreach ($res->results as $key => $r) {
+                $results->results->records[$key] = $r->_source;
+            }
+
+            $results->results->stories = [];
+            $results->count = $res->count;
+            $results->total = $res->total;
+            $results->limit = isset($res->limit) ? $res->limit : 10;  // TODO: just $res->limit after a phraseanet PR in searchraw
+            $results->offset = isset($res->offset) ? $res->offset : 0;  // TODO: just $res->offset after a phraseanet PR
+        }
+
+
+        return Query::fromValue($this->em, $results);
     }
 }

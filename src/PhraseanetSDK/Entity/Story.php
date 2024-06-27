@@ -120,7 +120,7 @@ class Story
      */
     public function getStoryId()
     {
-        return $this->source->story_id;
+        return isset($this->source->story_id) ? $this->source->story_id : $this->source->record_id;
     }
 
     /**
@@ -138,11 +138,16 @@ class Story
      */
     public function getThumbnail()
     {
-        if (! isset($this->source->thumbnail)) {
+        if (isset($this->source->subdefs->thumbnail)) {
+            $thumbnail = $this->source->subdefs->thumbnail;
+            $thumbnail->name = 'thumbnail';
+        } elseif (isset($this->source->thumbnail)) {
+            $thumbnail = $this->source->thumbnail;
+        } else {
             return null;
         }
 
-        return $this->thumbnail ?: $this->thumbnail = Subdef::fromValue($this->source->thumbnail);
+        return $this->thumbnail ?: $this->thumbnail = Subdef::fromValue($thumbnail);
     }
 
     /**
@@ -245,7 +250,12 @@ class Story
     public function getCaption()
     {
         if (! isset($this->caption) && isset($this->source->caption)) {
-            $this->caption = RecordCaption::fromList((array) $this->source->caption);
+            $caption = $this->source->caption;
+            if (is_object($this->source->caption)) {
+                $caption = get_object_vars($this->source->caption);
+            }
+
+            $this->caption = RecordCaption::fromList($caption);
         }
 
         if (! isset($this->caption)) {
