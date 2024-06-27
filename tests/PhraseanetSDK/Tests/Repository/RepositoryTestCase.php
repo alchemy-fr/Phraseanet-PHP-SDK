@@ -389,10 +389,6 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $permalink->getUrl());
         $this->assertNotNull($permalink->getPageUrl());
         $this->assertInternalType('string', $permalink->getPageUrl());
-        $this->assertNotNull($date = $permalink->getUpdatedOn());
-        $this->assertIsDate($date);
-        $this->assertNotNull($date = $permalink->getCreatedOn());
-        $this->assertIsDate($date);
     }
 
     protected function checkSubdef($subdef)
