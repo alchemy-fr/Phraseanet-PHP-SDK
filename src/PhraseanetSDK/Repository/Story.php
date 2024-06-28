@@ -86,8 +86,13 @@ class Story extends AbstractRepository
         $results = $res = $response->getResult();
         if ($pAPINumber == 3) {
             $results = new \stdClass();
+            $results->results = new \stdClass();
             foreach ($res->results as $key => $r) {
                 $results->results->stories[$key] = $r->_source;
+            }
+
+            if (!isset($results->results->stories)) {
+                $results->results->stories = [];
             }
 
             $results->results->records = [];
