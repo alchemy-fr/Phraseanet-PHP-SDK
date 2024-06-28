@@ -92,8 +92,13 @@ class Record extends AbstractRepository
         $results = $res = $response->getResult();
         if ($pAPINumber == 3) {
             $results = new \stdClass();
+            $results->results = new \stdClass();
             foreach ($res->results as $key => $r) {
                 $results->results->records[$key] = $r->_source;
+            }
+
+            if (!isset($results->results->records)) {
+                $results->results->records = [];
             }
 
             $results->results->stories = [];
