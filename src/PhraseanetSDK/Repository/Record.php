@@ -102,6 +102,7 @@ class Record extends AbstractRepository
             }
 
             $results->results->stories = [];
+            $results->facets = $res->facets;
             $results->count = $res->count;
             $results->total = $res->total;
             $results->limit = isset($res->limit) ? $res->limit : 10;  // TODO: just $res->limit after a phraseanet PR in searchraw

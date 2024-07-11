@@ -96,6 +96,7 @@ class Story extends AbstractRepository
             }
 
             $results->results->records = [];
+            $results->facets = $res->facets;
         }
 
         return Query::fromValue($this->em, $results);
