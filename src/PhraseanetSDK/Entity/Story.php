@@ -221,7 +221,8 @@ class Story
     public function getMetadata()
     {
         if (! isset($this->source->metadata)) {
-            $this->metadata = new ArrayCollection();
+            // fallback on caption source
+            $this->metadata = $this->getCaption();
         }
 
         return $this->metadata ?: $this->metadata = new ArrayCollection(
