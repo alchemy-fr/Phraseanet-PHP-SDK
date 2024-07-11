@@ -26,7 +26,7 @@ interface ApplicationInterface
     /**
      * @var string SDK version
      */
-    const VERSION = '0.9.x';
+    const VERSION = '0.10.x';
 
     /**
      * Return an OAuth2Connector
