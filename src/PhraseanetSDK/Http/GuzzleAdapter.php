@@ -76,7 +76,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function setExtended($extended)
     {
-        $this->extended = (boolean)$extended;
+        $this->extended = (bool)$extended;
     }
 
     /**
@@ -94,7 +94,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function setSslVerification($sslVerification)
     {
-        $this->sslVerification = (boolean)$sslVerification;
+        $this->sslVerification = (bool)$sslVerification;
     }
 
     /**
