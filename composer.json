@@ -25,7 +25,7 @@
         "psr/cache": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.0"
+        "phpunit/phpunit": "^11.5"
     },
     "suggest": {
         "silex/web-profiler": "To use the WebProfiler with silex",
