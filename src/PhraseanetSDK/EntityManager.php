@@ -41,7 +41,7 @@ class EntityManager
      */
     public function __construct(
         APIGuzzleAdapter $adapter,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->adapter = $adapter;
         $this->logger = $logger ?: new NullLogger();

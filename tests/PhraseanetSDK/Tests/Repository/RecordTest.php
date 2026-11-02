@@ -16,11 +16,10 @@ class RecordTest extends RepositoryTestCase
         $this->checkRecord($record);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindIdByDataboxException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $recordRepo = new Record(new EntityManager($client));
         $recordRepo->findById(1, 1);
@@ -37,11 +36,10 @@ class RecordTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $recordRepo = new Record(new EntityManager($client));
         $recordRepo->find(1, 10);
@@ -55,11 +53,10 @@ class RecordTest extends RepositoryTestCase
         $this->checkQueryObject($query);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testSearchException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $recordRepo = new Record(new EntityManager($client));
         $recordRepo->search();

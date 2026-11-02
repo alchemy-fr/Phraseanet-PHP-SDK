@@ -88,7 +88,7 @@ class Task
         return $this->lastExecTime;
     }
 
-    public function setLastExecTime(\DateTime $lastExecTime = null)
+    public function setLastExecTime(?\DateTime $lastExecTime = null)
     {
         $this->lastExecTime = $lastExecTime;
 

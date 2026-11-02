@@ -20,11 +20,10 @@ class BasketTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByRecordRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $basketRepository = new Basket(new EntityManager($client));
         $basketRepository->findByRecord(1, 1);
@@ -44,11 +43,10 @@ class BasketTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindAllRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $basketRepository = new Basket(new EntityManager($client));
         $basketRepository->findAll();

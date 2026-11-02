@@ -4,13 +4,12 @@ namespace PhraseanetSDK\Tests\Http;
 
 use PhraseanetSDK\Http\APIResponse;
 
-class APIResponseTest extends \PHPUnit_Framework_TestCase
+class APIResponseTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @expectedException \PhraseanetSDK\Exception\InvalidArgumentException
-     */
     public function testBadResponse()
     {
+        $this->expectException('PhraseanetSDK\Exception\InvalidArgumentException');
+
         new APIResponse(new \stdClass());
     }
 

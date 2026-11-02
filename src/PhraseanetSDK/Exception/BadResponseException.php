@@ -11,7 +11,7 @@
 
 namespace PhraseanetSDK\Exception;
 
-use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponseException;
+use GuzzleHttp\Exception\BadResponseException as GuzzleBadResponseException;
 
 class BadResponseException extends \Exception implements ExceptionInterface
 {
@@ -100,7 +100,7 @@ class BadResponseException extends \Exception implements ExceptionInterface
 
         $exception = new static($response->getReasonPhrase(), $e->getCode(), $e);
         $exception
-            ->setResponseBody($response->getBody())
+            ->setResponseBody((string) $response->getBody())
             ->setHttpStatusCode($response->getStatusCode());
 
         return $exception;

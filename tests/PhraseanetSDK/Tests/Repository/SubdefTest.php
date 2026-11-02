@@ -19,11 +19,10 @@ class SubdefTest extends RepositoryTestCase
         $this->checkSubdef($subdef);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\NotFoundException
-     */
     public function testFindSubdefByRecordByNameException()
     {
+        $this->expectException('PhraseanetSDK\Exception\NotFoundException');
+
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'), 200);
 
         $subdefRepository = new Subdef(new EntityManager($client));
@@ -42,48 +41,44 @@ class SubdefTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindSubdefByRecordUnauthorizedRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindSubdefByRecordUnauthorizedException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
         $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindSubdefByRecordRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('500'), 500);
         $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testQueryRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         //throw curl exception
         $client = $this->getClient($this->getSampleResponse('repository/subdef/findAll'), 200, true);
         $subdefRepository = new Subdef(new EntityManager($client));
         $subdefRepository->findByRecord(1, 1);
     }
 
-    public function subdefNameProvider()
+    public static function subdefNameProvider()
     {
         return array(
             array('preview'),

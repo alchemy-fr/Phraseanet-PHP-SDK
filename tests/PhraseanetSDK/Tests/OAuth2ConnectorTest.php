@@ -5,7 +5,7 @@ namespace PhraseanetSDK\Tests;
 use PhraseanetSDK\OAuth2Connector;
 use PhraseanetSDK\Exception\AuthenticationException;
 
-class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
+class OAuth2ConnectorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideAuthorizationUrlParameters
@@ -27,7 +27,7 @@ class OAuth2ConnectorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedUrl, $url);
     }
 
-    public function provideAuthorizationUrlParameters()
+    public static function provideAuthorizationUrlParameters()
     {
         return array(
             array(

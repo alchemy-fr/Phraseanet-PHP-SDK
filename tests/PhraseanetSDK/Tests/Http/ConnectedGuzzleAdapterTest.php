@@ -4,7 +4,7 @@ namespace PhraseanetSDK\Tests\Http;
 
 use PhraseanetSDK\Http\ConnectedGuzzleAdapter;
 
-class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
+class ConnectedGuzzleAdapterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideCallParameters
@@ -13,7 +13,7 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $response = mt_rand() . 'response';
 
-        $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
+        $adapter = $this->createMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('call')
             ->with($method, $path, array_replace($query, array('oauth_token' => $token)), $postFields, $files)
@@ -23,7 +23,7 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $connected->call($method, $path, $query, $postFields, $files);
     }
 
-    public function provideCallParameters()
+    public static function provideCallParameters()
     {
         return array(
             array('GET', '/path/to/resource', array(), array(), 'token-' . mt_rand(), array()),
@@ -56,7 +56,7 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSetToken()
     {
-        $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
+        $adapter = $this->createMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
 
         $connected = new ConnectedGuzzleAdapter('$token', $adapter);
         $this->assertEquals('$token', $connected->getToken());
@@ -66,9 +66,9 @@ class ConnectedGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testGetGuzzle()
     {
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
+        $guzzle = $this->createMock('GuzzleHttp\ClientInterface');
 
-        $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
+        $adapter = $this->createMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('getGuzzle')
             ->will($this->returnValue($guzzle));

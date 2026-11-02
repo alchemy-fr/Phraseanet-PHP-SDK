@@ -4,7 +4,7 @@ namespace PhraseanetSDK\Tests\Entity;
 
 use PhraseanetSDK\Entity\QueryFacetValue;
 
-class QueryFacetValueTest extends \PHPUnit_Framework_TestCase
+class QueryFacetValueTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testConstructorArgumentsAreAssignedToProperties()

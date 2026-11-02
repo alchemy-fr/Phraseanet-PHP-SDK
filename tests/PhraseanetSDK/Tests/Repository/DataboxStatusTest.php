@@ -19,21 +19,19 @@ class DataboxStatusTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindByDataboxException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
         $databoxStatusRepository = new DataboxStatus(new EntityManager($client));
         $databoxStatusRepository->findByDatabox(1);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByDataboxRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $databoxStatusRepository = new DataboxStatus(new EntityManager($client));
         $databoxStatusRepository->findByDatabox(1);

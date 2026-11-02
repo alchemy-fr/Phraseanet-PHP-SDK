@@ -22,7 +22,7 @@ class Scheduler
         return $this->updatedOn;
     }
 
-    public function setUpdatedOn(\DateTime $updatedOn = null)
+    public function setUpdatedOn(?\DateTime $updatedOn = null)
     {
         $this->updatedOn = $updatedOn;
 

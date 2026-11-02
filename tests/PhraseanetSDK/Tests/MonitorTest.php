@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Monitor\Task;
 use PhraseanetSDK\Http\APIResponse;
 
-class MonitorTest extends \PHPUnit_Framework_TestCase
+class MonitorTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetScheduler()
     {

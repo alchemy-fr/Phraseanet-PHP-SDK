@@ -4,7 +4,7 @@ namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\EntityManager;
 
-class EntityManagerTest extends \PHPUnit_Framework_TestCase
+class EntityManagerTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @dataProvider provideRepositories */
@@ -21,7 +21,7 @@ class EntityManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($adapter, $em->getAdapter());
     }
 
-    public function provideRepositories()
+    public static function provideRepositories()
     {
         return array(
             array('Feed', 'PhraseanetSDK\Repository\Feed'),

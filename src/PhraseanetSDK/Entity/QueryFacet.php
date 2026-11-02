@@ -45,7 +45,7 @@ class QueryFacet
     /**
      * @param \stdClass $source
      */
-    public function __construct(\stdClass $source = null)
+    public function __construct(?\stdClass $source = null)
     {
         $this->source = $source ?: new \stdClass();
     }

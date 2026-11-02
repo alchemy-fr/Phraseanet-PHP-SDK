@@ -19,15 +19,14 @@ class RecordStatusTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByRecordException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
 
         $statusRepository = new RecordStatus(new EntityManager($client));
-        $record = $this->getMock('\\PhraseanetSDK\\Entity\Record', array(), array(), '', false);
+        $record = $this->createMock('\\PhraseanetSDK\\Entity\Record');
         $statusRepository->findByRecord(1, 1);
     }
 }

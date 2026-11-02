@@ -29,7 +29,7 @@ class Application implements ApplicationInterface
      * @param GuzzleAdapter $adapter
      * @return Application
      */
-    public static function create(array $config, GuzzleAdapter $adapter = null)
+    public static function create(array $config, ?GuzzleAdapter $adapter = null)
     {
         foreach (array('client-id', 'secret') as $key) {
             if (!isset($config[$key]) || !is_string($config[$key])) {
