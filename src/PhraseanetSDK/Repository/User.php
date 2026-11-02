@@ -130,7 +130,7 @@ class User extends AbstractRepository
      * @throws \PhraseanetSDK\Exception\NotFoundException
      * @throws \PhraseanetSDK\Exception\UnauthorizedException
      */
-    public function createUser(\PhraseanetSDK\Entity\User $user, $password, array $collections = null)
+    public function createUser(\PhraseanetSDK\Entity\User $user, $password, ?array $collections = null)
     {
         $data = array(
             'email' => $user->getEmail(),

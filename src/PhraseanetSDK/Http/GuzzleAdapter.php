@@ -11,18 +11,17 @@
 
 namespace PhraseanetSDK\Http;
 
-use Guzzle\Common\Exception\GuzzleException;
-use Guzzle\Http\Client as Guzzle;
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponse;
-use Guzzle\Http\Exception\CurlException;
-use Guzzle\Http\Message\EntityEnclosingRequestInterface;
-use Guzzle\Http\Message\RequestInterface;
+use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\BadResponseException as GuzzleBadResponse;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\RequestOptions;
 use PhraseanetSDK\ApplicationInterface;
 use PhraseanetSDK\Exception\BadResponseException;
 use PhraseanetSDK\Exception\InvalidArgumentException;
 use PhraseanetSDK\Exception\RuntimeException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GuzzleAdapter implements GuzzleAdapterInterface
 {
@@ -30,6 +29,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
     private $guzzle;
     private $extended = false;
     private $sslVerification = false;
+    private $userAgent;
 
     public function __construct(ClientInterface $guzzle)
     {
@@ -53,7 +53,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function getBaseUrl()
     {
-        return $this->guzzle->getBaseUrl();
+        return (string) $this->guzzle->getConfig('base_uri');
     }
 
     /**
@@ -63,7 +63,7 @@ class GuzzleAdapter implements GuzzleAdapterInterface
      */
     public function setUserAgent($userAgent)
     {
-        $this->guzzle->setUserAgent($userAgent);
+        $this->userAgent = $userAgent;
     }
 
     /**
@@ -125,34 +125,37 @@ class GuzzleAdapter implements GuzzleAdapterInterface
                 'Accept' => $this->extended ? 'application/vnd.phraseanet.record-extended+json' : 'application/json'
             );
 
-            if(!$this->sslVerification) {
-                $this->guzzle->setSslVerification(false,false,0);
+            if ($this->userAgent !== null) {
+                $acceptHeader['User-Agent'] = $this->userAgent;
             }
-            $request = $this->guzzle->createRequest($method, $path, array_merge($acceptHeader, $headers));
-            $this->addRequestParameters($request, $query, $postFields, $files);
-            $response = $request->send();
-        } catch (CurlException $e) {
-            throw new RuntimeException($e->getMessage(), $e->getErrorNo(), $e);
+
+            $headers = array_merge($acceptHeader, $headers);
+            $options = array_merge(
+                array(RequestOptions::HEADERS => $headers, RequestOptions::VERIFY => $this->sslVerification),
+                $this->buildRequestOptions($method, $query, $postFields, $files, $headers)
+            );
+            $response = $this->guzzle->request($method, $path, $options);
+        } catch (ConnectException $e) {
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         } catch (GuzzleBadResponse $e) {
             throw BadResponseException::fromGuzzleResponse($e);
         } catch (GuzzleException $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $response->getBody(true);
+        return (string) $response->getBody();
     }
 
     /**
      * Creates a new instance of GuzzleAdapter
      *
      * @param string $endpoint
-     * @param EventSubscriberInterface[] $plugins
-     * @param int $endpointVersion
+     * @param callable[] $middlewares Guzzle middlewares
      * @return static
      */
     public static function create(
         $endpoint,
-        array $plugins = array()
+        array $middlewares = array()
     ) {
         if (!is_string($endpoint)) {
             throw new InvalidArgumentException('API url endpoint must be a valid url');
@@ -167,42 +170,68 @@ class GuzzleAdapter implements GuzzleAdapterInterface
             $endpoint = sprintf('%s%s/', trim($endpoint, '/'), $versionMountPoint);
         }
 
-        $guzzle = new Guzzle($endpoint);
-        $guzzle->setUserAgent(sprintf(
+        $stack = HandlerStack::create();
+
+        foreach ($middlewares as $middleware) {
+            $stack->push($middleware);
+        }
+
+        $adapter = new static(new Guzzle(array('base_uri' => $endpoint, 'handler' => $stack)));
+        $adapter->setUserAgent(sprintf(
             '%s version %s',
             ApplicationInterface::USER_AGENT,
             ApplicationInterface::VERSION
         ));
 
-        foreach ($plugins as $plugin) {
-            $guzzle->addSubscriber($plugin);
-        }
-
-        return new static($guzzle);
+        return $adapter;
     }
 
-    private function addRequestParameters(RequestInterface $request, $query, $postFields, $files)
+    private function buildRequestOptions($method, array $query, array $postFields, array $files, array $headers)
     {
-        foreach ($query as $name => $value) {
-            $request->getQuery()->add($name, $value);
+        $options = array();
+
+        if (0 < count($query)) {
+            $options[RequestOptions::QUERY] = http_build_query($query);
         }
 
-        if ($request instanceof EntityEnclosingRequestInterface) {
-            if ($request->getHeader('Content-Type') == 'application/json') {
-                $request->getHeaders()->offsetUnset('Content-Type');
-                $request->setBody(json_encode($postFields));
-
-                return;
+        if (!in_array(strtoupper($method), array('POST', 'PUT', 'PATCH', 'DELETE'), true)) {
+            if (0 < count($postFields)) {
+                throw new InvalidArgumentException('Can not add post fields to GET request');
             }
 
-            foreach ($postFields as $name => $value) {
-                $request->getPostFields()->add($name, $value);
-            }
-            foreach ($files as $name => $filename) {
-                $request->addPostFile($name, $filename);
-            }
+            return $options;
+        }
+
+        if (($headers['Content-Type'] ?? null) === 'application/json') {
+            $options[RequestOptions::BODY] = json_encode($postFields);
+
+            return $options;
+        }
+
+        if (0 < count($files)) {
+            $options[RequestOptions::MULTIPART] = $this->buildMultipart($postFields, $files);
         } elseif (0 < count($postFields)) {
-            throw new InvalidArgumentException('Can not add post fields to GET request');
+            $options[RequestOptions::FORM_PARAMS] = $postFields;
         }
+
+        return $options;
+    }
+
+    private function buildMultipart(array $postFields, array $files)
+    {
+        $parts = array();
+
+        foreach (explode('&', http_build_query($postFields)) as $pair) {
+            if ($pair !== '') {
+                list($name, $value) = array_map('urldecode', explode('=', $pair, 2));
+                $parts[] = array('name' => $name, 'contents' => $value);
+            }
+        }
+
+        foreach ($files as $name => $filename) {
+            $parts[] = array('name' => $name, 'contents' => fopen($filename, 'r'), 'filename' => basename($filename));
+        }
+
+        return $parts;
     }
 }

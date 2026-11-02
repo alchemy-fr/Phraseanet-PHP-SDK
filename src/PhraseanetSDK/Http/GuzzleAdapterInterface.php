@@ -2,7 +2,7 @@
 
 namespace PhraseanetSDK\Http;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 
 interface GuzzleAdapterInterface
 {

@@ -36,7 +36,7 @@ abstract class AbstractRepository
      * @param EntityManager $em
      * @param APIGuzzleAdapter $adapter
      */
-    public function __construct(EntityManager $em, APIGuzzleAdapter $adapter = null)
+    public function __construct(EntityManager $em, ?APIGuzzleAdapter $adapter = null)
     {
         $this->em = $em;
         $this->adapter = $adapter ?: $this->em->getAdapter();
