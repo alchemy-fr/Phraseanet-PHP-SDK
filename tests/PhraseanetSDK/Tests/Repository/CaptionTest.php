@@ -19,22 +19,20 @@ class CaptionTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testfindCationByRecordExcpetion()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
 
         $metaRepository = new Caption(new EntityManager($client));
         $metaRepository->findByRecord(1, 1);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testfindCationByRecordRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
 
         $metaRepository = new Caption(new EntityManager($client));

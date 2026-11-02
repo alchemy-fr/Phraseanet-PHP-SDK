@@ -4,7 +4,7 @@ namespace PhraseanetSDK\Tests;
 
 use PhraseanetSDK\Application;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase
+class ApplicationTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
@@ -20,14 +20,15 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideVariousInvalidConfigurations
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testCreateFailure($config)
     {
+        $this->expectException('PhraseanetSDK\Exception\InvalidArgumentException');
+
         Application::create($config);
     }
 
-    public function provideVariousInvalidConfigurations()
+    public static function provideVariousInvalidConfigurations()
     {
         return array(
             array(
@@ -136,10 +137,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideInvalidTokens
-     * @expectedException PhraseanetSDK\Exception\InvalidArgumentException
      */
     public function testEntityManagersWithoutTokenThrowsException($token)
     {
+        $this->expectException('PhraseanetSDK\Exception\InvalidArgumentException');
+
         $adapter = $this->getMockBuilder('PhraseanetSDK\Http\GuzzleAdapter')
             ->disableOriginalConstructor()
             ->getMock();
@@ -149,7 +151,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $application->getEntityManager($token);
     }
 
-    public function provideInvalidTokens()
+    public static function provideInvalidTokens()
     {
         return array(
             array(null),

@@ -18,21 +18,19 @@ class DataboxCollectionTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindByDataboxException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
         $collectionRepository = new DataboxCollection(new EntityManager($client));
         $collectionRepository->findByDatabox(1);
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByDataboxRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $collectionRepository = new DataboxCollection(new EntityManager($client));
         $collectionRepository->findByDatabox(1);

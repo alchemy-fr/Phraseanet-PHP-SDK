@@ -30,51 +30,46 @@ class QuarantineTest extends RepositoryTestCase
         $this->checkQuarantine($item);
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByIdRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findById(1);
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\NotFoundException
-     */
     public function testFindByOffsetByNameException()
     {
+        $this->expectException('PhraseanetSDK\Exception\NotFoundException');
+
         $client = $this->getClient($this->getSampleResponse('repository/quarantine/findAll'), 404);
         $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindByOffsetdException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
         $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByOffsetdQueryRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('bad'), 200);
         $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByOffsetdRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'), 200);
         $quarantineRepository = new Quarantine(new EntityManager($client));
         $quarantineRepository->findByOffset(0, 10);

@@ -18,21 +18,19 @@ class DataboxTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindAllException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
         $feedRepository = new Databox(new EntityManager($client));
         $feedRepository->findAll();
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindAllRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $feedRepository = new Databox(new EntityManager($client));
         $feedRepository->findAll();

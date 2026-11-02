@@ -14,11 +14,11 @@ class BasketElementTest extends RepositoryTestCase
         /* @var $basketElement \PhraseanetSDK\Entity\BasketElement */
 
         $this->assertNotNull($basketElement->getOrder());
-        $this->assertInternalType('integer', $basketElement->getOrder());
+        $this->assertIsInt($basketElement->getOrder());
         $this->assertNotNull($basketElement->getId());
-        $this->assertInternalType('integer', $basketElement->getId());
+        $this->assertIsInt($basketElement->getId());
         $this->assertNotNull($basketElement->isValidationItem());
-        $this->assertInternalType('boolean', $basketElement->isValidationItem());
+        $this->assertIsBool($basketElement->isValidationItem());
         $this->assertNotNull($record = $basketElement->getRecord());
         $this->checkRecord($record);
 
@@ -32,7 +32,7 @@ class BasketElementTest extends RepositoryTestCase
 
             $this->assertTrue(in_array($basketElement->getAgreement(), array(null, true, false)));
             $this->assertNotNull($basketElement->getNote());
-            $this->assertInternalType('integer', $basketElement->getNote());
+            $this->assertIsInt($basketElement->getNote());
         }
     }
 
@@ -49,11 +49,10 @@ class BasketElementTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException \PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByBasketRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
         $basketElementRepository = new BasketElement(new EntityManager($client));
         $basketElementRepository->findByBasket(1);

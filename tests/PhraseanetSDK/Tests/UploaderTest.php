@@ -5,7 +5,7 @@ namespace PhraseanetSDK\Tests;
 use PhraseanetSDK\Uploader;
 use PhraseanetSDK\Http\APIResponse;
 
-class UploaderTest extends \PHPUnit_Framework_TestCase
+class UploaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideUploadParameters
@@ -20,7 +20,7 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repo = $this->getMock('PhraseanetSDK\Repository\RepositoryInterface', array('findById'));
+        $repo = $this->getMockBuilder('PhraseanetSDK\Repository\Record')->disableOriginalConstructor()->onlyMethods(['findById'])->getMock();
 
         $em->expects($this->once())
             ->method('getRepository')
@@ -39,14 +39,9 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $loader->upload($file, $coll, $behavior, $status));
     }
 
-    public function provideUploadParameters()
+    public static function provideUploadParameters()
     {
-        $coll = $this->getMockBuilder('PhraseanetSDK\Entity\DataboxCollection')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $coll->expects($this->any())
-            ->method('getBaseId')
-            ->will($this->returnValue(42));
+        $coll = \PhraseanetSDK\Entity\DataboxCollection::fromValue((object) array('base_id' => 42));
 
         $recordResponse = new APIResponse(json_decode(json_encode(array(
             'meta' => array(),
@@ -64,13 +59,9 @@ class UploaderTest extends \PHPUnit_Framework_TestCase
             ),
         ))));
 
-        $record = $this->getMockBuilder('PhraseanetSDK\Entity\Record')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $record = (new \ReflectionClass('PhraseanetSDK\Entity\Record'))->newInstanceWithoutConstructor();
 
-        $quarantine = $this->getMockBuilder('PhraseanetSDK\Entity\Quarantine')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $quarantine = (new \ReflectionClass('PhraseanetSDK\Entity\Quarantine'))->newInstanceWithoutConstructor();
 
         return array(
             array(__FILE__, 0, 42, '010101110001000', $recordResponse, $record),

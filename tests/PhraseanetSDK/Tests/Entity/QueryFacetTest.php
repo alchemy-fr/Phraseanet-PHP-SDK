@@ -5,7 +5,7 @@ namespace PhraseanetSDK\Tests\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhraseanetSDK\Entity\QueryFacet;
 
-class QueryFacetTest extends \PHPUnit_Framework_TestCase
+class QueryFacetTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testFacetsAreInitializedWithDefaultValues()

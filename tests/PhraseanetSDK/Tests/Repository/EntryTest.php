@@ -16,21 +16,19 @@ class EntryTest extends RepositoryTestCase
         $this->checkFeedEntry($entry);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindByIdException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
         $feedRepository = new Entry(new EntityManager($client));
         $feedRepository->findById(44);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindByIdRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
 
         $feedRepository = new Entry(new EntityManager($client));
@@ -48,22 +46,20 @@ class EntryTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\UnauthorizedException
-     */
     public function testFindAllException()
     {
+        $this->expectException('PhraseanetSDK\Exception\UnauthorizedException');
+
         $client = $this->getClient($this->getSampleResponse('401'), 401);
 
         $feedRepository = new Entry(new EntityManager($client));
         $feedRepository->findByFeed(44);
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindAllRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
 
         $feedRepository = new Entry(new EntityManager($client));
@@ -82,11 +78,10 @@ class EntryTest extends RepositoryTestCase
         }
     }
 
-    /**
-     * @expectedException PhraseanetSDK\Exception\RuntimeException
-     */
     public function testFindInAggregatedRuntimeException()
     {
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
+
         $client = $this->getClient($this->getSampleResponse('empty'));
 
         $feedRepository = new Entry(new EntityManager($client));

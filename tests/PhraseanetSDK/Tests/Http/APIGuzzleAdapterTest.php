@@ -5,13 +5,13 @@ namespace PhraseanetSDK\Tests\Http;
 use PhraseanetSDK\Http\APIGuzzleAdapter;
 use PhraseanetSDK\Http\APIResponse;
 
-class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
+class APIGuzzleAdapterTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetGuzzle()
     {
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
+        $guzzle = $this->createMock('GuzzleHttp\ClientInterface');
 
-        $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
+        $adapter = $this->createMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('getGuzzle')
             ->will($this->returnValue($guzzle));
@@ -29,7 +29,7 @@ class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $files = array('file' => '/path/to/file');
         $response = array('meta' => array(), 'response' => array());
 
-        $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
+        $adapter = $this->createMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('call')
             ->with($method, $path, $query, $postFields, $files)
@@ -50,14 +50,14 @@ class APIGuzzleAdapterTest extends \PHPUnit_Framework_TestCase
         $postFields = array('post' => 'field');
         $files = array('file' => '/path/to/file');
 
-        $adapter = $this->getMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
+        $adapter = $this->createMock('PhraseanetSDK\Http\GuzzleAdapterInterface');
         $adapter->expects($this->once())
             ->method('call')
             ->with($method, $path, $query, $postFields, $files)
             ->will($this->returnValue('non json string'));
 
         $connected = new APIGuzzleAdapter($adapter);
-        $this->setExpectedException('PhraseanetSDK\Exception\RuntimeException');
+        $this->expectException('PhraseanetSDK\Exception\RuntimeException');
         $connected->call($method, $path, $query, $postFields, $files);
     }
 }

@@ -2,253 +2,184 @@
 
 namespace PhraseanetSDK\Tests\Http;
 
-use Guzzle\Plugin\Cache\CachePlugin;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use PhraseanetSDK\Cache\CacheMiddleware;
+use PhraseanetSDK\Exception\BadResponseException;
+use PhraseanetSDK\Exception\InvalidArgumentException;
+use PhraseanetSDK\Exception\RuntimeException;
 use PhraseanetSDK\Http\GuzzleAdapter;
-use Guzzle\Http\Exception\CurlException;
-use Guzzle\Common\Exception\GuzzleException;
-use Guzzle\Http\Exception\BadResponseException as GuzzleBadResponseException;
-use Guzzle\Http\Message\Response;
-use Guzzle\Plugin\Mock\MockPlugin;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
+class GuzzleAdapterTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetters()
-    {
-        $baseUrl = 'http://phraseanet.com/api/v1/';
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->any())
-            ->method('getBaseUrl')
-            ->will($this->returnValue($baseUrl));
+    private array $history = [];
 
-        $adapter = new GuzzleAdapter($guzzle);
-        $this->assertSame($guzzle, $adapter->getGuzzle());
-        $this->assertSame($baseUrl, $adapter->getBaseUrl());
+    private function adapter(array $answers): GuzzleAdapter
+    {
+        $this->history = [];
+        $stack = HandlerStack::create(new MockHandler($answers));
+        $stack->push(Middleware::history($this->history));
+
+        return new GuzzleAdapter(new Client(['base_uri' => 'http://domain.tld/api/', 'handler' => $stack]));
     }
 
-    public function testCreate()
+    private function lastRequest()
     {
-        $endpoint = 'http://phraseanet.com/api/';
-        $adapter = GuzzleAdapter::create($endpoint);
-        $this->assertEquals($endpoint, $adapter->getBaseUrl());
-
-        $endpoint = 'http://phraseanet.com';
-        $adapter = GuzzleAdapter::create($endpoint);
-        $this->assertEquals($endpoint . '/api/', $adapter->getBaseUrl());
+        return end($this->history)['request'];
     }
 
-    public function testSetUserAgent()
+    public function testCreateAddsTheApiMountPointOnce()
     {
-        $userAgent = 'Special agent cooper';
-
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->once())
-            ->method('setUserAgent')
-            ->with($userAgent);
-
-        $adapter = new GuzzleAdapter($guzzle);
-        $adapter->setUserAgent($userAgent);
+        $this->assertSame('http://domain.tld/api/', GuzzleAdapter::create('http://domain.tld/')->getBaseUrl());
+        $this->assertSame('http://domain.tld/api/', GuzzleAdapter::create('http://domain.tld/api/')->getBaseUrl());
     }
 
-    /**
-     * @dataProvider provideCallParameters
-     */
-    public function testCall($method, $path, $query, $postFields, $files)
+    public function testCreateRejectsAnInvalidEndpoint()
     {
-        if ('GET' === $method) {
-            $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
-        } else {
-            $request = $this->getMock('Guzzle\Http\Message\EntityEnclosingRequestInterface');
+        $this->expectException(InvalidArgumentException::class);
 
-            $queryPostFields = $this->getMock('Guzzle\Http\QueryString');
+        GuzzleAdapter::create(42);
+    }
 
-            $request->expects($this->exactly(count($postFields)))
-                ->method('getPostFields')
-                ->will($this->returnValue($queryPostFields));
+    public function testUserAgentAndAcceptHeadersAreSent()
+    {
+        $adapter = $this->adapter([new Response(200), new Response(200)]);
+        $adapter->setUserAgent('agent');
 
-            $request->expects($this->exactly(count($files)))
-                ->method('addPostFile');
+        $adapter->call('GET', 'v1/x/');
+        $this->assertSame('agent', $this->lastRequest()->getHeaderLine('User-Agent'));
+        $this->assertSame('application/json', $this->lastRequest()->getHeaderLine('Accept'));
+
+        $adapter->setExtended(true);
+        $adapter->call('GET', 'v1/x/');
+        $this->assertSame('application/vnd.phraseanet.record-extended+json', $this->lastRequest()->getHeaderLine('Accept'));
+    }
+
+    public function testGetSendsTheQueryAndReturnsTheBody()
+    {
+        $adapter = $this->adapter([new Response(200, [], 'body')]);
+
+        $this->assertSame('body', $adapter->call('GET', 'v1/x/', ['a' => 'b', 'c' => ['d', 'e']]));
+
+        $request = $this->lastRequest();
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('/api/v1/x/', $request->getUri()->getPath());
+        parse_str($request->getUri()->getQuery(), $query);
+        $this->assertSame(['a' => 'b', 'c' => ['d', 'e']], $query);
+    }
+
+    public function testPostSendsAForm()
+    {
+        $adapter = $this->adapter([new Response(200)]);
+
+        $adapter->call('POST', 'v1/x/', [], ['bases' => [1, 2], 'query' => 'a b']);
+
+        parse_str((string) $this->lastRequest()->getBody(), $fields);
+        $this->assertSame(['bases' => ['1', '2'], 'query' => 'a b'], $fields);
+    }
+
+    public function testPostSendsJsonWhenAsked()
+    {
+        $adapter = $this->adapter([new Response(200)]);
+
+        $adapter->call('POST', 'v1/x/', [], ['a' => 'b'], [], ['Content-Type' => 'application/json']);
+
+        $this->assertSame('{"a":"b"}', (string) $this->lastRequest()->getBody());
+        $this->assertSame('application/json', $this->lastRequest()->getHeaderLine('Content-Type'));
+    }
+
+    public function testPostSendsFilesAsMultipart()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'sdk');
+        file_put_contents($file, 'content');
+        $adapter = $this->adapter([new Response(200)]);
+
+        $adapter->call('POST', 'v1/x/', [], ['base' => 1], ['file' => $file]);
+        unlink($file);
+
+        $body = (string) $this->lastRequest()->getBody();
+        $this->assertStringContainsString('name="base"', $body);
+        $this->assertStringContainsString('name="file"', $body);
+        $this->assertStringContainsString('content', $body);
+    }
+
+    public function testPostFieldsOnGetAreRefused()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->adapter([new Response(200)])->call('GET', 'v1/x/', [], ['a' => 'b']);
+    }
+
+    public function testConnectionErrorsBecomeRuntimeExceptions()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $this->adapter([new ConnectException('down', new Request('GET', 'x'))])->call('GET', 'v1/x/');
+    }
+
+    public function testBadResponsesKeepTheStatusAndTheBody()
+    {
+        try {
+            $this->adapter([new Response(404, [], 'missing')])->call('GET', 'v1/x/');
+            $this->fail('An exception was expected.');
+        } catch (BadResponseException $exception) {
+            $this->assertSame(404, $exception->getStatusCode());
+            $this->assertSame('missing', $exception->getResponseBody());
         }
-
-        $body = 'body ' . mt_rand();
-
-        $queryString = $this->getMock('Guzzle\Http\QueryString');
-
-        $request->expects($this->exactly(count($query)))
-            ->method('getQuery')
-            ->will($this->returnValue($queryString));
-
-        $response = $this->getMockBuilder('Guzzle\Http\Message\Response')
-            ->disableOriginalConstructor()->getMock();
-        $response->expects($this->any())
-            ->method('getBody')
-            ->with(true)
-            ->will($this->returnValue($body));
-
-        $request->expects($this->once())
-            ->method('send')
-            ->will($this->returnValue($response));
-
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->once())
-            ->method('createRequest')
-            ->with($method, $path, array('Accept' => 'application/json'))
-            ->will($this->returnValue($request));
-
-        $adapter = new GuzzleAdapter($guzzle);
-        $this->assertEquals($body, $adapter->call($method, $path, $query, $postFields, $files));
     }
 
-    public function provideCallParameters()
+    public function testCacheAvoidsTheSecondGet()
     {
-        return array(
-            array('GET', 'path/to/resource', array(), array(), array()),
-            array('GET', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array()),
-            array('POST', 'path/to/resource', array(), array(), array()),
-            array('POST', 'path/to/resource', array('query1' => 'param1', 'query2' => 'param2'), array(), array()),
-            array(
-                'POST',
-                'path/to/resource',
-                array(),
-                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
-                array()
-            ),
-            array(
-                'POST',
-                'path/to/resource',
-                array('query1' => 'param1', 'query2' => 'param2'),
-                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
-                array()
-            ),
-            array(
-                'POST',
-                'path/to/resource',
-                array('query1' => 'param1', 'query2' => 'param2'),
-                array(),
-                array('file' => '/path/to/file')
-            ),
-            array(
-                'POST',
-                'path/to/resource',
-                array(),
-                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
-                array('file' => '/path/to/file')
-            ),
-            array(
-                'POST',
-                'path/to/resource',
-                array('query1' => 'param1', 'query2' => 'param2'),
-                array('post1' => 'value1', 'post2' => 'value2', 'post3' => 'value3'),
-                array('file' => '/path/to/file')
-            ),
-        );
+        $calls = 0;
+        $adapter = $this->cachedAdapter($calls);
+
+        $this->assertSame('one', $adapter->call('GET', 'v1/x/'));
+        $this->assertSame('one', $adapter->call('GET', 'v1/x/'));
+        $this->assertSame(1, $calls);
     }
 
-    public function testPostFieldsOnGETRequestThrowsException()
+    public function testCacheSeparatesQueriesAndAcceptHeaders()
     {
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
+        $calls = 0;
+        $adapter = $this->cachedAdapter($calls);
 
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->once())
-            ->method('createRequest')
-            ->will($this->returnValue($request));
-
-        $adapter = new GuzzleAdapter($guzzle);
-
-        $this->setExpectedException('PhraseanetSDK\Exception\InvalidArgumentException');
-        $adapter->call('GET', '/path/to/resource', array(), array('post' => 'value'));
+        $adapter->call('GET', 'v1/x/', ['oauth_token' => 'a']);
+        $adapter->call('GET', 'v1/x/', ['oauth_token' => 'b']);
+        $adapter->setExtended(true);
+        $adapter->call('GET', 'v1/x/', ['oauth_token' => 'a']);
+        $this->assertSame(3, $calls);
     }
 
-    public function testCallWithExceptionsCurlException()
+    public function testCacheIgnoresPostMonitorAndErrors()
     {
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
+        $calls = 0;
+        $adapter = $this->cachedAdapter($calls);
 
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->once())
-            ->method('createRequest')
-            ->will($this->returnValue($request));
+        $adapter->call('POST', 'v1/x/');
+        $adapter->call('POST', 'v1/x/');
+        $this->assertSame(2, $calls);
 
-        $request->expects($this->once())
-            ->method('send')
-            ->will($this->throwException(new CurlException()));
-
-        $adapter = new GuzzleAdapter($guzzle);
-
-        $this->setExpectedException('PhraseanetSDK\Exception\RuntimeException');
-        $adapter->call('GET', '/path/to/resource');
+        $adapter->call('GET', 'v1/monitor/phraseanet/');
+        $adapter->call('GET', 'v1/monitor/phraseanet/');
+        $this->assertSame(4, $calls);
     }
 
-    public function testCallWithExceptionsBadResponseException()
+    private function cachedAdapter(int &$calls): GuzzleAdapter
     {
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
+        $handler = function ($request) use (&$calls) {
+            $calls++;
 
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->once())
-            ->method('createRequest')
-            ->will($this->returnValue($request));
+            return \GuzzleHttp\Promise\Create::promiseFor(new Response(200, [], $calls === 1 ? 'one' : 'other'));
+        };
+        $stack = HandlerStack::create($handler);
+        $stack->push(new CacheMiddleware(new ArrayAdapter(), 60));
 
-        $response = $this->getMockBuilder('Guzzle\Http\Message\Response')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->once())
-            ->method('send')
-            ->will($this->throwException(GuzzleBadResponseException::factory($request, $response)));
-
-        $adapter = new GuzzleAdapter($guzzle);
-
-        $this->setExpectedException('PhraseanetSDK\Exception\BadResponseException');
-        $adapter->call('GET', '/path/to/resource');
+        return new GuzzleAdapter(new Client(['base_uri' => 'http://domain.tld/api/', 'handler' => $stack]));
     }
-
-    public function testCallWithExceptionsGuzzleException()
-    {
-        $request = $this->getMock('Guzzle\Http\Message\RequestInterface');
-
-        $guzzle = $this->getMock('Guzzle\Http\ClientInterface');
-        $guzzle->expects($this->once())
-            ->method('createRequest')
-            ->will($this->returnValue($request));
-
-        $request->expects($this->once())
-            ->method('send')
-            ->will($this->throwException(new TestException()));
-
-        $adapter = new GuzzleAdapter($guzzle);
-
-        $this->setExpectedException('PhraseanetSDK\Exception\RuntimeException');
-        $adapter->call('GET', '/path/to/resource');
-    }
-
-    public function testClientWithCacheDoNotExecuteQueries()
-    {
-        $cache = $this->getMockBuilder('Guzzle\Cache\CacheAdapterInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $cache->expects($this->atLeast(3))
-            ->method('fetch');
-
-        $mock = new MockPlugin();
-        $response = new Response(200, null, json_encode(array(
-            'meta' => array(),
-            'response' => array(),
-        )));
-        $mock->addResponse($response);
-        $mock->addResponse($response);
-        $mock->addResponse($response);
-
-        $endpoint = 'http://phraseanet.com/api/v1/';
-        $adapter = GuzzleAdapter::create($endpoint);
-
-        $adapter->getGuzzle()->addSubscriber($mock);
-        $adapter->getGuzzle()->addSubscriber(new CachePlugin($cache));
-
-        $adapter->call('GET', '/url');
-        $adapter->call('GET', '/url');
-        $adapter->call('GET', '/url');
-    }
-}
-
-class TestException extends \Exception implements GuzzleException
-{
 }
