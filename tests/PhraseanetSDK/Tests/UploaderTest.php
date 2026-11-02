@@ -20,7 +20,7 @@ class UploaderTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repo = $this->getMockBuilder('PhraseanetSDK\Repository\Record')->disableOriginalConstructor()->onlyMethods(['findById'])->getMock();
+        $repo = $this->getMockBuilder(UploaderRepositoryStub::class)->onlyMethods(['findById'])->getMock();
 
         $em->expects($this->once())
             ->method('getRepository')
@@ -71,5 +71,12 @@ class UploaderTest extends \PHPUnit\Framework\TestCase
             array(__FILE__, 1, 42, '010101110001000', $quarantineResponse, $quarantine),
             array(__FILE__, null, 42, '010101110001000', $quarantineResponse, $quarantine),
         );
+    }
+}
+
+class UploaderRepositoryStub
+{
+    public function findById(...$arguments)
+    {
     }
 }
